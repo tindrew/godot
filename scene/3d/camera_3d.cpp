@@ -391,7 +391,7 @@ void Camera3D::set_projection(ProjectionType p_mode) {
 	if (p_mode == PROJECTION_CUSTOM && mode != PROJECTION_CUSTOM) {
 		c_proj = get_camera_projection();
 	}
-	
+
 	if (p_mode == PROJECTION_PERSPECTIVE || p_mode == PROJECTION_ORTHOGONAL || p_mode == PROJECTION_FRUSTUM || p_mode == PROJECTION_CUSTOM) {
 		mode = p_mode;
 		_update_camera_mode();
