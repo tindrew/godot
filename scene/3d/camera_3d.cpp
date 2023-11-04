@@ -90,7 +90,6 @@ void Camera3D::_validate_property(PropertyInfo &p_property) const {
 		}
 	}
 
-
 	if (attributes.is_valid()) {
 		const CameraAttributesPhysical *physical_attributes = Object::cast_to<CameraAttributesPhysical>(attributes.ptr());
 		if (physical_attributes) {
