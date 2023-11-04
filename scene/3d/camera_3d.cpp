@@ -388,7 +388,7 @@ void Camera3D::set_frustum(real_t p_size, Vector2 p_offset, real_t p_z_near, rea
 }
 
 void Camera3D::set_projection(ProjectionType p_mode) {
-	if (p_mode == PROJECTION_CUSTOM && mode != PROJECTION_CUSTOM)
+	if (p_mode == PROJECTION_CUSTOM && mode != PROJECTION_CUSTOM) {
 		c_proj = get_camera_projection();
 	}
 	if (p_mode == PROJECTION_PERSPECTIVE || p_mode == PROJECTION_ORTHOGONAL || p_mode == PROJECTION_FRUSTUM || p_mode == PROJECTION_CUSTOM) {
