@@ -172,7 +172,7 @@
 			If [code]true[/code], the ancestor [Viewport] is currently using this camera.
 			If multiple cameras are in the scene, one will always be made current. For example, if two [Camera3D] nodes are present in the scene and only one is current, setting one camera's [member current] to [code]false[/code] will cause the other camera to be made current.
 		</member>
-		<member name="custom_projection" type="Projection" setter="set_custom_projection" getter="get_custom_projection">
+		<member name="custom_projection" type="Projection" setter="set_custom_projection" getter="get_custom_projection" default="Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)">
 			The camera's [Projection]. This can be changed from the default to apply custom projection matrix.
 			[b]Note:[/b] Only effective if [member projection] is [constant PROJECTION_CUSTOM].
 		</member>
