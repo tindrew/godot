@@ -393,6 +393,26 @@ void Camera3D::set_custom(Projection p_proj) {
 	mode = PROJECTION_CUSTOM;
 	force_change = false;
 
+	Vector<Plane> planes = c_proj.get_projection_planes(Transform3D());
+	const Projection::Planes intersections[8][3] = {
+		{ Projection::PLANE_FAR, Projection::PLANE_LEFT, Projection::PLANE_TOP },
+		{ Projection::PLANE_FAR, Projection::PLANE_LEFT, Projection::PLANE_BOTTOM },
+		{ Projection::PLANE_FAR, Projection::PLANE_RIGHT, Projection::PLANE_TOP },
+		{ Projection::PLANE_FAR, Projection::PLANE_RIGHT, Projection::PLANE_BOTTOM },
+		{ Projection::PLANE_NEAR, Projection::PLANE_LEFT, Projection::PLANE_TOP },
+		{ Projection::PLANE_NEAR, Projection::PLANE_LEFT, Projection::PLANE_BOTTOM },
+		{ Projection::PLANE_NEAR, Projection::PLANE_RIGHT, Projection::PLANE_TOP },
+		{ Projection::PLANE_NEAR, Projection::PLANE_RIGHT, Projection::PLANE_BOTTOM },
+	};
+
+	for (int i = 0; i < 8; i++) {
+		Vector3 point;
+		Plane a = planes[intersections[i][0]];
+		Plane b = planes[intersections[i][1]];
+		Plane c = planes[intersections[i][2]];
+		ERR_FAIL_COND_MSG(!a.intersect_3(b, c), "Camera3D custom projection has non-intersecting planes; skipping update.");
+	}
+
 	RenderingServer::get_singleton()->camera_set_custom(camera, c_proj);
 	update_gizmos();
 }
