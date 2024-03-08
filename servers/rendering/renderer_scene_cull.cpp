@@ -2764,6 +2764,7 @@ void RendererSceneCull::render_camera(const Ref<RenderSceneBuffers> &p_render_bu
 			} break;
 			case Camera::CUSTOM: {
 				projection = camera->c_proj;
+				is_orthogonal = projection.is_orthogonal();
 			} break;
 		}
 
