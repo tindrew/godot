@@ -47,7 +47,6 @@ void Camera3D::_update_camera_mode() {
 	switch (mode) {
 		case PROJECTION_PERSPECTIVE: {
 			set_perspective(fov, _near, _far);
-
 		} break;
 		case PROJECTION_ORTHOGONAL: {
 			set_orthogonal(size, _near, _far);
@@ -56,9 +55,7 @@ void Camera3D::_update_camera_mode() {
 			set_frustum(size, frustum_offset, _near, _far);
 		} break;
 		case PROJECTION_CUSTOM: {
-			RenderingServer::get_singleton()->camera_set_custom(camera, c_proj);
-			update_gizmos();
-			force_change = false;
+			set_custom(c_proj);
 		} break;
 	}
 }
@@ -384,6 +381,19 @@ void Camera3D::set_frustum(real_t p_size, Vector2 p_offset, real_t p_z_near, rea
 	force_change = false;
 
 	RenderingServer::get_singleton()->camera_set_frustum(camera, size, frustum_offset, _near, _far);
+	update_gizmos();
+}
+
+void Camera3D::set_custom(Projection p_proj) {
+	if (!force_change && c_proj == p_proj) {
+		return;
+	}
+
+	c_proj = p_proj;
+	mode = PROJECTION_CUSTOM;
+	force_change = false;
+
+	RenderingServer::get_singleton()->camera_set_custom(camera, c_proj);
 	update_gizmos();
 }
 
