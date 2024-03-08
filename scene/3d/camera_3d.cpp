@@ -398,7 +398,7 @@ void Camera3D::set_custom(Projection p_proj) {
 }
 
 void Camera3D::set_projection(ProjectionType p_mode) {
-	if (p_mode == PROJECTION_CUSTOM && mode != PROJECTION_CUSTOM) {
+	if (p_mode == PROJECTION_CUSTOM && mode != PROJECTION_CUSTOM && is_inside_tree()) {
 		c_proj = get_camera_projection();
 	}
 
