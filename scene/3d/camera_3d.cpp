@@ -406,7 +406,6 @@ void Camera3D::set_custom(Projection p_proj) {
 	};
 
 	for (int i = 0; i < 8; i++) {
-		Vector3 point;
 		Plane a = planes[intersections[i][0]];
 		Plane b = planes[intersections[i][1]];
 		Plane c = planes[intersections[i][2]];

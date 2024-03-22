@@ -266,7 +266,23 @@ void Camera3DGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
 		} break;
 
 		case Camera3D::PROJECTION_CUSTOM: {
-			// Show Nothing
+			// An inaccurate, but sufficient representation of the custom projection
+			Vector3 endpoints[8];
+			Projection proj = camera->get_custom_projection();
+			proj.get_endpoints(
+					Transform3D(Basis(Vector3(size_factor.x, 0, 0), Vector3(0, size_factor.y, 0), Vector3(0, 0, 1)) / proj.get_z_far()),
+					endpoints);
+
+			ADD_QUAD(endpoints[0], endpoints[1], endpoints[5], endpoints[4]);
+			ADD_QUAD(endpoints[2], endpoints[3], endpoints[7], endpoints[6]);
+			ADD_QUAD(endpoints[0], endpoints[2], endpoints[6], endpoints[4]);
+			ADD_QUAD(endpoints[1], endpoints[3], endpoints[7], endpoints[5]);
+
+			Vector3 top_left_to_top_right = endpoints[2] - endpoints[0];
+			Vector3 up = Vector3(0, 0, 0.2).cross(top_left_to_top_right);
+			ADD_TRIANGLE(endpoints[0] + top_left_to_top_right * 0.4,
+					endpoints[0] + top_left_to_top_right * 0.6,
+					endpoints[0] + top_left_to_top_right * 0.5 + up);
 		} break;
 	}
 
