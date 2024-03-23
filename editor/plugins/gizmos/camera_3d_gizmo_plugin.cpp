@@ -266,23 +266,33 @@ void Camera3DGizmoPlugin::redraw(EditorNode3DGizmo *p_gizmo) {
 		} break;
 
 		case Camera3D::PROJECTION_CUSTOM: {
-			// An inaccurate, but sufficient representation of the custom projection
-			Vector3 endpoints[8];
-			Projection proj = camera->get_custom_projection();
-			proj.get_endpoints(
-					Transform3D(Basis(Vector3(size_factor.x, 0, 0), Vector3(0, size_factor.y, 0), Vector3(0, 0, 1)) / proj.get_z_far()),
-					endpoints);
+			Vector3 points[8] = {
+				Vector3(0.5f, 0.5f, 0.0f),
+				Vector3(0.5f, -0.5f, 0.0f),
+				Vector3(-0.5f, 0.5f, 0.0f),
+				Vector3(-0.5f, -0.5f, 0.0f),
+				Vector3(0.5f, 0.5f, -1.0f),
+				Vector3(0.5f, -0.5f, -1.0f),
+				Vector3(-0.5f, 0.5f, -1.0f),
+				Vector3(-0.5f, -0.5f, -1.0f)
+			};
 
-			ADD_QUAD(endpoints[0], endpoints[1], endpoints[5], endpoints[4]);
-			ADD_QUAD(endpoints[2], endpoints[3], endpoints[7], endpoints[6]);
-			ADD_QUAD(endpoints[0], endpoints[2], endpoints[6], endpoints[4]);
-			ADD_QUAD(endpoints[1], endpoints[3], endpoints[7], endpoints[5]);
+			Projection proj = camera->get_camera_projection();
 
-			Vector3 top_left_to_top_right = endpoints[2] - endpoints[0];
+			for (int i = 0; i < 8; i++) {
+				points[i] = proj.xform(points[i]);
+			}
+
+			ADD_QUAD(points[0], points[1], points[5], points[4]);
+			ADD_QUAD(points[2], points[3], points[7], points[6]);
+			ADD_QUAD(points[0], points[2], points[6], points[4]);
+			ADD_QUAD(points[1], points[3], points[7], points[5]);
+
+			Vector3 top_left_to_top_right = points[0] - points[2];
 			Vector3 up = Vector3(0, 0, 0.2).cross(top_left_to_top_right);
-			ADD_TRIANGLE(endpoints[0] + top_left_to_top_right * 0.4,
-					endpoints[0] + top_left_to_top_right * 0.6,
-					endpoints[0] + top_left_to_top_right * 0.5 + up);
+			ADD_TRIANGLE(points[2] + top_left_to_top_right * 0.4,
+					points[2] + top_left_to_top_right * 0.6,
+					points[2] + top_left_to_top_right * 0.5 + up);
 		} break;
 	}
 
