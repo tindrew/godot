@@ -4615,7 +4615,7 @@ ScriptEditorPlugin::ScriptEditorPlugin() {
 	ED_SHORTCUT("script_text_editor/capitalize", TTR("Capitalize"), KeyModifierMask::SHIFT | Key::F6);
 
 	window_wrapper = memnew(WindowWrapper);
-	window_wrapper->set_window_title(vformat(TTR("%s - Godot Engine"), TTR("Script Editor")));
+	window_wrapper->set_window_title(vformat(TTR("%s - Redot Engine"), TTR("Script Editor")));
 	window_wrapper->set_margins_enabled(true);
 
 	script_editor = memnew(ScriptEditor(window_wrapper));
