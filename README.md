@@ -25,7 +25,7 @@ community-driven, empowering users to help shape their engine to match their
 expectations.
 
 
-![Screenshot of a 3D scene in the Redot Engine editor](https://raw.githubusercontent.com/godotengine/Redot-design/master/screenshots/editor_tps_demo_1920x1080.jpg)
+![Screenshot of a 3D scene in the Redot Engine editor](https://raw.githubusercontent.com/godotengine/godot-design/master/screenshots/editor_tps_demo_1920x1080.jpg)
 
 ## Getting the engine
 
