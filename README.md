@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://Godotengine.org">
-    <img src="logo_outlined.svg" width="400" alt="Wokedot Engine logo">
+    <img src="183325681.png" width="400" alt="Wokedot Engine logo">
   </a>
 </p>
 
