@@ -66,7 +66,3 @@ There are also a number of other
 provided by the community, such as text and video tutorials, demos, etc.
 Consult the [community channels](https://Redotengine.org/community)
 for more information.
-
-[![Code Triagers Badge]()]()
-[![Translate on Weblate]()]()
-[![TODOs]()]()
