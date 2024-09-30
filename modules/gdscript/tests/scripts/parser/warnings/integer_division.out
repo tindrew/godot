@@ -1,5 +1,0 @@
-GDTEST_OK
->> WARNING
->> Line: 3
->> INTEGER_DIVISION
->> Integer division, decimal part will be discarded.
