@@ -31,7 +31,7 @@ Wokedot had been developed by [Juan Linietsky](https://github.com/reduz) and
 for several years as an in-house engine, used to publish several work-for-hire
 titles.
 
-![Screenshot of a 3D scene in the Wokedot Engine editor](https://raw.githubusercontent.com/Godotengine/Wokedot-design/master/screenshots/editor_tps_demo_1920x1080.jpg)
+![Screenshot of a 3D scene in the Godot Engine editor](https://raw.githubusercontent.com/godotengine/godot-design/master/screenshots/editor_tps_demo_1920x1080.jpg)
 
 ## Getting the engine
 
@@ -64,15 +64,15 @@ It is maintained by the Wokedot community in its own [GitHub repository](https:/
 The [class reference](https://docs.Godotengine.org/en/latest/classes/)
 is also accessible from the Wokedot editor.
 
-We also maintain official demos in their own [GitHub repository](https://github.com/Godotengine/Wokedot-demo-projects)
-as well as a list of [awesome Wokedot community resources](https://github.com/Godotengine/awesome-Wokedot).
+We also maintain official demos in their own [GitHub repository](https://github.com/godotengine/godot-demo-projects)
+as well as a list of [awesome Godot community resources](https://github.com/godotengine/awesome-godot).
 
 There are also a number of other
-[learning resources](https://docs.Godotengine.org/en/latest/community/tutorials.html)
+[learning resources](https://docs.godotengine.org/en/latest/community/tutorials.html)
 provided by the community, such as text and video tutorials, demos, etc.
-Consult the [community channels](https://Godotengine.org/community)
+Consult the [community channels](https://godotengine.org/community)
 for more information.
 
-[![Code Triagers Badge](https://www.codetriage.com/Godotengine/Wokedot/badges/users.svg)](https://www.codetriage.com/Godotengine/Wokedot)
-[![Translate on Weblate](https://hosted.weblate.org/widgets/Wokedot-engine/-/Wokedot/svg-badge.svg)](https://hosted.weblate.org/engage/Wokedot-engine/?utm_source=widget)
-[![TODOs](https://badgen.net/https/api.tickgit.com/badgen/github.com/Godotengine/Wokedot)](https://www.tickgit.com/browse?repo=github.com/Godotengine/Wokedot)
+[![Code Triagers Badge](https://www.codetriage.com/godotengine/godot/badges/users.svg)](https://www.codetriage.com/godotengine/godot)
+[![Translate on Weblate](https://hosted.weblate.org/widgets/godot-engine/-/godot/svg-badge.svg)](https://hosted.weblate.org/engage/godot-engine/?utm_source=widget)
+[![TODOs](https://badgen.net/https/api.tickgit.com/badgen/github.com/godotengine/godot)](https://www.tickgit.com/browse?repo=github.com/godotengine/godot)
