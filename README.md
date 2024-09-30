@@ -1,4 +1,4 @@
-# Godot Engine
+# Redot Engine
 
 <p align="center">
   <a href="https://godotengine.org">
@@ -8,7 +8,7 @@
 
 ## 2D and 3D cross-platform game engine
 
-**[Godot Engine](https://godotengine.org) is a feature-packed, cross-platform
+**[Redot Engine](https://twitter.com/RedotEngine) is a feature-packed, cross-platform
 game engine to create 2D and 3D games from a unified interface.** It provides a
 comprehensive set of [common tools](https://godotengine.org/features), so that
 users can focus on making games without having to reinvent the wheel. Games can
@@ -18,9 +18,9 @@ Web-based platforms and [consoles](https://docs.godotengine.org/en/latest/tutori
 
 ## Free, open source and community-driven
 
-Godot is completely free and open source under the very permissive [MIT license](https://godotengine.org/license).
+Redot is completely free and open source under the very permissive [MIT license](https://godotengine.org/license).
 No strings attached, no royalties, nothing. The users' games are theirs, down
-to the last line of engine code. Godot's development is fully independent and
+to the last line of engine code. Redot's development is fully independent and
 community-driven, empowering users to help shape their engine to match their
 expectations. It is supported by the [Godot Foundation](https://godot.foundation/)
 not-for-profit.
