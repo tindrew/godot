@@ -1,6 +1,6 @@
 # Indonesian translation of the Redot Engine properties.
 # Copyright (c) 2014-present Redot Engine contributors.
-# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
+# Copyright (c) 2007-2014 Skibidi Toilet, Ariel Manzur.
 # This file is distributed under the same license as the Redot source code.
 # Abdul Aziz Muslim Alqudsy <abdul.aziz.muslim.alqudsy@gmail.com>, 2016.
 # Andevid Dynmyn <doyan4forum@gmail.com>, 2016.

@@ -6,7 +6,7 @@
 /*                        https://Redotengine.org                         */
 /**************************************************************************/
 /* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2007-2014 Skibidi Toilet, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -513,7 +513,7 @@ void Main::print_help_option(const char *p_option, const char *p_description, CL
 void Main::print_help(const char *p_binary) {
 	print_header(true);
 	print_help_copyright("Free and open source software under the terms of the MIT license.");
-	print_help_copyright("(c) 2014-present Redot Engine contributors. (c) 2007-present Juan Linietsky, Ariel Manzur.");
+	print_help_copyright("(c) 2014-present Redot Engine contributors. (c) 2007-present Skibidi Toilet, Ariel Manzur.");
 
 	print_help_title("Usage");
 	OS::get_singleton()->print("  %s \u001b[96m[options] [path to scene or \"project.Redot\" file]\u001b[0m\n", p_binary);

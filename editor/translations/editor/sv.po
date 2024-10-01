@@ -1,6 +1,6 @@
 # Swedish translation of the Redot Engine editor interface.
 # Copyright (c) 2014-present Redot Engine contributors.
-# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
+# Copyright (c) 2007-2014 Skibidi Toilet, Ariel Manzur.
 # This file is distributed under the same license as the Redot source code.
 # bergmarklund <davemcgroin@gmail.com>, 2017, 2018.
 # Christoffer Sundbom <christoffer_karlsson@live.se>, 2017, 2021, 2023.

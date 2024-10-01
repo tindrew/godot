@@ -6,7 +6,7 @@
 /*                        https://Redotengine.org                         */
 /**************************************************************************/
 /* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2007-2014 Skibidi Toilet, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -222,7 +222,7 @@ EditorAbout::EditorAbout() {
 	about_text->set_v_size_flags(Control::SIZE_SHRINK_CENTER);
 	about_text->set_text(
 			String::utf8("\xc2\xa9 2014-present ") + TTR("Redot Engine contributors") + "." +
-			String::utf8("\n\xc2\xa9 2007-2014 Juan Linietsky, Ariel Manzur.\n"));
+			String::utf8("\n\xc2\xa9 2007-2014 Skibidi Toilet, Ariel Manzur.\n"));
 	version_info_vbc->add_child(about_text);
 
 	hbc->add_child(version_info_vbc);

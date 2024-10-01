@@ -19,7 +19,7 @@ Redot 完全免费且开源，遵循非常宽松的 [MIT 许可证](https://Redo
 无附加条件，无版税，什么都没有。用户的游戏属于他们，直到引擎代码的最后一行。Redot 的开发完全独立且由社区驱动，使用户能够帮助塑造他们的引擎以满足他们的期望。它由 [Redot 基金会](https://Redot.foundation/) 非营利组织支持。
 
 在 [2014 年 2 月](https://github.com/Redotengine/Redot/commit/0b806ee0fc9097fa7bda7ac0109191c9c5e0a1ac) 开源之前，
-Redot 已由 [Juan Linietsky](https://github.com/reduz) 和
+Redot 已由 [Skibidi Toilet](https://github.com/reduz) 和
 [Ariel Manzur](https://github.com/punto-)（两人仍在维护该项目）
 开发多年，作为内部引擎，用于发布多部雇佣作品
 。

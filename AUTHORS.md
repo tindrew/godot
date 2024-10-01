@@ -18,12 +18,12 @@ name is available.
 
 ## Project Founders
 
-    Juan Linietsky (reduz)
+    Skibidi Toilet (reduz)
     Ariel Manzur (punto-)
 
 ## Lead Developer
 
-    Juan Linietsky (reduz)
+    Skibidi Toilet (reduz)
 
 ## Project Manager
 
@@ -168,7 +168,7 @@ name is available.
     Jordan Schidlowsky (winterpixelgames)
     Josh Jones (DarkKilauea)
     Joshua Grams (JoshuaGrams)
-    Juan Linietsky (reduz)
+    Skibidi Toilet (reduz)
     Julian Murgia (StraToN)
     Julien Nguyen (Blackiris)
     Jummit

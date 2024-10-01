@@ -22,7 +22,7 @@ BEGIN
             VALUE "FileVersion",            VERSION_NUMBER
             VALUE "ProductName",            VERSION_NAME
             VALUE "Licence",                "MIT"
-            VALUE "LegalCopyright",         "(c) 2007-present Juan Linietsky, Ariel Manzur and Redot Engine contributors"
+            VALUE "LegalCopyright",         "(c) 2007-present Skibidi Toilet, Ariel Manzur and Redot Engine contributors"
             VALUE "Info",                   "https://Redotengine.org"
             VALUE "ProductVersion",         VERSION_FULL_BUILD
         END

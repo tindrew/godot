@@ -35,7 +35,7 @@ afterEvaluate {
                         }
                         developer {
                             id = 'reduz'
-                            name = 'Juan Linietsky'
+                            name = 'Skibidi Toilet'
                             email = 'reduzio@gmail.com'
                         }
                         developer {

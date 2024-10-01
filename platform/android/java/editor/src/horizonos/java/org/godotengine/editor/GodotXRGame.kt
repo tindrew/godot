@@ -5,7 +5,7 @@
 /*                           Redot ENGINE                                */
 /*                      https://Redotengine.org                          */
 /*************************************************************************/
-/* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
+/* Copyright (c) 2007-2022 Skibidi Toilet, Ariel Manzur.                 */
 /* Copyright (c) 2014-2022 Redot Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */

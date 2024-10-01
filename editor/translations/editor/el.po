@@ -1,6 +1,6 @@
 # Greek translation of the Redot Engine editor interface.
 # Copyright (c) 2014-present Redot Engine contributors.
-# Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
+# Copyright (c) 2007-2014 Skibidi Toilet, Ariel Manzur.
 # This file is distributed under the same license as the Redot source code.
 # George Tsiamasiotis <gtsiam@windowslive.com>, 2017-2018, 2019, 2020, 2021.
 # Georgios Katsanakis <geo.elgeo@gmail.com>, 2019.
