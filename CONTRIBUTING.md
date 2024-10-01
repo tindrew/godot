@@ -1,213 +1,71 @@
-# Contributors guidelines
+# Godot Engine
 
-This document summarizes the most important points for people interested in
-contributing to Godot, especially via bug reports or pull requests.
+<p align="center">
+<a href="https://godotengine.org">
+<img src="logo_outlined.svg" width="400" alt="Godot Engine logo">
+</a>
+</p>
 
-The Godot documentation has a dedicated [Contributing section](https://docs.godotengine.org/en/latest/contributing/how_to_contribute.html)
-which details these points and more, and is a recommended read.
+## 2D 和 3D 跨平台游戏引擎
 
-## Table of contents
+**[Godot Engine](https://godotengine.org) 是一款功能丰富的跨平台
+游戏引擎，可通过统一界面创建 2D 和 3D 游戏。** 它提供了一套全面的 [常用工具](https://godotengine.org/features)，让
+用户可以专注于制作游戏，而无需重新发明轮子。只需单击一下，即可将游戏导出到多个平台，包括主要的桌面平台（Linux、macOS、Windows）、移动平台（Android、iOS）以及基于 Web 的平台和 [控制台](https://docs.godotengine.org/en/latest/tutorials/platform/consoles.html)。
 
-- [Reporting bugs](#reporting-bugs)
-- [Proposing features or improvements](#proposing-features-or-improvements)
-- [Contributing pull requests](#contributing-pull-requests)
-- [Contributing to Godot translations](#contributing-to-godot-translations)
-- [Communicating with developers](#communicating-with-developers)
+## 免费、开源和社区驱动
 
-## Reporting bugs
+Godot 完全免费且开源，遵循非常宽松的 [MIT 许可证](https://godotengine.org/license)。
 
-Report bugs [here](https://github.com/godotengine/godot/issues/new?assignees=&labels=&template=bug_report.yml).
-Please follow the instructions in the template when you do.
+无附加条件，无版税，什么都没有。用户的游戏属于他们，直到引擎代码的最后一行。Godot 的开发完全独立且由社区驱动，使用户能够帮助塑造他们的引擎以满足他们的期望。它由 [Godot 基金会](https://godot.foundation/) 非营利组织支持。
 
-Notably, please include a Minimal Reproduction Project (MRP), which is a small
-Godot project which reproduces the issue, with no unnecessary files included.
-Be sure to not include the `.godot` folder in the archive to save space.
+在 [2014 年 2 月](https://github.com/godotengine/godot/commit/0b806ee0fc9097fa7bda7ac0109191c9c5e0a1ac) 开源之前，
+Godot 已由 [Juan Linietsky](https://github.com/reduz) 和
+[Ariel Manzur](https://github.com/punto-)（两人仍在维护该项目）
+开发多年，作为内部引擎，用于发布多部雇佣作品
+。
 
-Make sure that the bug you are experiencing is reproducible in the latest Godot
-releases. You can find an overview of all Godot releases [on the website](https://godotengine.org/download/archive/)
-to confirm whether your current version is the latest one. It's worth testing
-against both the latest stable release and the latest dev snapshot for the next
-Godot release.
+![Godot Engine 编辑器中的 3D 场景截图](https://raw.githubusercontent.com/godotengine/godot-design/master/screenshots/editor_tps_demo_1920x1080.jpg)
 
-If you run into a bug which wasn't present in an earlier Godot version (what we
-call a _regression_), please mention it and clarify which versions you tested
-(both the one(s) working and the one(s) exhibiting the bug).
+## 获取引擎
 
-## Proposing features or improvements
+### 二进制文件下载
 
-**The main issue tracker is for bug reports and does not accept feature proposals.**
+Godot 编辑器的官方二进制文件和导出模板可在
+[Godot 网站](https://godotengine.org/download) 上找到。
 
-Instead, head to the [Godot Proposals repository](https://github.com/godotengine/godot-proposals)
-and follow the instructions in the README file and issue template.
+### 从源代码编译
 
-## Contributing pull requests
+[请参阅官方文档](https://docs.godotengine.org/en/latest/contributing/development/compiling)
+获取每个受支持平台的编译说明。
 
-If you want to add new engine features, please make sure that:
+## 社区和贡献
 
-- This functionality is desired, which means that it solves a common use case
-  that several users will need in their real-life projects.
-- You talked to other developers on how to implement it best. See also
-  [Proposing features or improvements](#proposing-features-or-improvements).
-- Even if it doesn't get merged, your PR is useful for future work by another
-  developer.
+Godot 不仅是一个引擎，而且是一个不断壮大的用户和引擎开发者社区。主要社区渠道列在[主页上](https://godotengine.org/community)。
 
-Similar rules can be applied when contributing bug fixes - it's always best to
-discuss the implementation in the bug report first if you are not 100% about
-what would be the best fix.
+与核心引擎开发人员取得联系的最佳方式是加入
+[Godot 贡献者聊天](https://chat.godotengine.org)。
 
-You can refer to the [Pull request review process](https://docs.godotengine.org/en/latest/contributing/workflow/pr_review_guidelines.html)
-for insights into the intended lifecycle of pull requests. This should help you
-ensure that your pull request fulfills the requirements.
+要开始为项目做出贡献，请参阅 [贡献指南](CONTRIBUTING.md)。
+本文档还包括报告错误的指南。
 
-In addition to the following tips, also take a look at the
-[Engine development guide](https://docs.godotengine.org/en/latest/contributing/development/index.html)
-for an introduction to developing on Godot.
+## 文档和演示
 
-The [Contributing docs](https://docs.godotengine.org/en/latest/contributing/how_to_contribute.html)
-also have important information on the [PR workflow](https://docs.godotengine.org/en/latest/contributing/workflow/pr_workflow.html)
-(with a helpful guide for Git usage), and our [Code style guidelines](https://docs.godotengine.org/en/latest/contributing/development/code_style_guidelines.html)
-which all contributions need to follow.
+官方文档托管在 [阅读文档](https://docs.godotengine.org)。
+它由 Godot 社区在其自己的 [GitHub 存储库](https://github.com/godotengine/godot-docs) 中维护。
 
-### Be mindful of your commits
+[类参考](https://docs.godotengine.org/en/latest/classes/)
+也可以从 Godot 编辑器访问。
 
-Try to make simple PRs that handle one specific topic. Just like for reporting
-issues, it's better to open 3 different PRs that each address a different issue
-than one big PR with three commits. This makes it easier to review, approve, and
-merge the changes independently.
+我们还在自己的 [GitHub 存储库](https://github.com/godotengine/godot-demo-projects)
+中维护官方演示，以及一系列 [很棒的 Godot 社区资源](https://github.com/godotengine/awesome-godot)。
 
-When updating your fork with upstream changes, please use ``git pull --rebase``
-to avoid creating "merge commits". Those commits unnecessarily pollute the git
-history when coming from PRs.
+社区还提供了许多其他
+[学习资源](https://docs.godotengine.org/en/latest/community/tutorials.html)
+，例如文本和视频教程、演示等。
 
-Also try to make commits that bring the engine from one stable state to another
-stable state, i.e. if your first commit has a bug that you fixed in the second
-commit, try to merge them together before making your pull request. This
-includes fixing build issues or typos, adding documentation, etc.
+有关更多信息，请查阅 [社区频道](https://godotengine.org/community)
+。
 
-See our [PR workflow](https://docs.godotengine.org/en/latest/contributing/workflow/pr_workflow.html)
-documentation for tips on using Git, amending commits and rebasing branches.
-
-This [Git style guide](https://github.com/agis-/git-style-guide) also has some
-good practices to have in mind.
-
-### Format your commit messages with readability in mind
-
-The way you format your commit messages is quite important to ensure that the
-commit history and changelog will be easy to read and understand. A Git commit
-message is formatted as a short title (first line) and an extended description
-(everything after the first line and an empty separation line).
-
-The short title is the most important part, as it is what will appear in the
-changelog or in the GitHub interface unless you click the "expand" button.
-Try to keep that first line under 72 characters, but you can go slightly above
-if necessary to keep the sentence clear.
-
-It should be written in English, starting with a capital letter, and usually
-with a verb in imperative form. A typical bugfix would start with "Fix", while
-the addition of a new feature would start with "Add". A prefix can be added to
-specify the engine area affected by the commit. Some examples:
-
-- Add C# iOS support
-- Show doc tooltips when hovering properties in the theme editor
-- Fix GLES3 instanced rendering color and custom data defaults
-- Core: Fix `Object::has_method()` for script static methods
-
-If your commit fixes a reported issue, please include it in the _description_
-of the PR (not in the title, or the commit message) using one of the
-[GitHub closing keywords](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue)
-such as "Fixes #1234". This will cause the issue to be closed automatically if
-the PR is merged. Adding it to the commit message is easier, but adds a lot of
-unnecessary updates in the issue distracting from the thread.
-
-Here's an example of a well-formatted commit message (note how the extended
-description is also manually wrapped at 80 chars for readability):
-
-```text
-Prevent French fries carbonization by fixing heat regulation
-
-When using the French fries frying module, Godot would not regulate the heat
-and thus bring the oil bath to supercritical liquid conditions, thus causing
-unwanted side effects in the physics engine.
-
-By fixing the regulation system via an added binding to the internal feature,
-this commit now ensures that Godot will not go past the ebullition temperature
-of cooking oil under normal atmospheric conditions.
-```
-
-**Note:** When using the GitHub online editor or its drag-and-drop
-feature, *please* edit the commit title to something meaningful. Commits named
-"Update my_file.cpp" won't be accepted.
-
-### Document your changes
-
-If your pull request adds methods, properties or signals that are exposed to
-scripting APIs, you **must** update the class reference to document those.
-This is to ensure the documentation coverage doesn't decrease as contributions
-are merged.
-
-[Update documentation XML files](https://docs.godotengine.org/en/latest/contributing/documentation/updating_the_class_reference.html)
-using your compiled binary, then fill in the descriptions.
-Follow the style guide described in the
-[Documentation writing guidelines](https://docs.godotengine.org/en/latest/contributing/documentation/docs_writing_guidelines.html).
-
-If your pull request modifies parts of the code in a non-obvious way, make sure
-to add comments in the code as well. This helps other people understand the
-change without having to dive into the Git history.
-
-### Write unit tests
-
-When fixing a bug or contributing a new feature, we recommend including unit
-tests in the same commit as the rest of the pull request. Unit tests are pieces
-of code that compare the output to a predetermined *expected result* to detect
-regressions. Tests are compiled and run on GitHub Actions for every commit and
-pull request.
-
-Pull requests that include tests are more likely to be merged, since we can have
-greater confidence in them not being the target of regressions in the future.
-
-For bugs, the unit tests should cover the functionality that was previously
-broken. If done well, this ensures regressions won't appear in the future
-again. For new features, the unit tests should cover the newly added
-functionality, testing both the "success" and "expected failure" cases if
-applicable.
-
-Feel free to contribute standalone pull requests to add new tests or improve
-existing tests as well.
-
-See [Unit testing](https://docs.godotengine.org/en/latest/contributing/development/core_and_modules/unit_testing.html)
-for information on writing tests in Godot's C++ codebase.
-
-## Contributing to Godot translations
-
-You can contribute to Godot translations on [Hosted Weblate](https://hosted.weblate.org/projects/godot-engine/),
-an open source and web-based translation platform.
-
-Please refer to our [editor and documentation localization guidelines](https://docs.godotengine.org/en/latest/contributing/documentation/editor_and_docs_localization.html)
-for an overview of the translation resources and what they correspond to.
-
-## Communicating with developers
-
-The Godot Engine community has [many communication
-channels](https://godotengine.org/community), some used more for user-level
-discussions and support, others more for development discussions.
-
-To communicate with developers (e.g. to discuss a feature you want to implement
-or a bug you want to fix), the following channels can be used:
-
-- [Godot Contributors Chat](https://chat.godotengine.org): You will
-  find most core developers there, so it's the go-to platform for direct chat
-  about Godot Engine development. Browse the [Directory](https://chat.godotengine.org/directory/channels)
-  for an overview of public channels focusing on various engine areas which you
-  might be interested in.
-- [Bug tracker](https://github.com/godotengine/godot/issues): If there is an
-  existing issue about a topic you want to discuss, you can participate directly.
-  If not, you can open a new issue. Please mind the guidelines outlined above
-  for bug reporting.
-- [Feature proposals](https://github.com/godotengine/godot-proposals/issues):
-  To propose a new feature, we have a dedicated issue tracker for that. Don't
-  hesitate to start by talking about your idea on the Godot Contributors Chat
-  to make sure that it makes sense in Godot's context.
-
-Thanks for your interest in contributing!
-
-—The Godot development team
+[![Code Triagers Badge](https://www.codetriage.com/godotengine/godot/badges/users.svg)](https://www.codetriage.com/godotengine/godot)
+[![在 Weblate 上翻译](https://hosted.weblate.org/widgets/godot-engine/-/godot/svg-badge.svg)](https://hosted.weblate.org/engage/godot-engine/?utm_source=widget)
+[![TODOs](https://badgen.net/https/api.tickgit.com/badgen/github.com/godotengine/godot)](https://www.tickgit.com/browse?repo=github.com/godotengine/godot)
