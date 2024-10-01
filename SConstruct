@@ -353,12 +353,12 @@ if env["platform"] == "":
 
 if env["platform"] == "osx":
     # Deprecated alias kept for compatibility.
-    print_warning('Platform "osx" has been renamed to "macos" in Godot 4. Building for platform "macos".')
+    print_warning('Platform "osx" has been renamed to "macos" in Redot 4. Building for platform "macos".')
     env["platform"] = "macos"
 
 if env["platform"] == "iphone":
     # Deprecated alias kept for compatibility.
-    print_warning('Platform "iphone" has been renamed to "ios" in Godot 4. Building for platform "ios".')
+    print_warning('Platform "iphone" has been renamed to "ios" in Redot 4. Building for platform "ios".')
     env["platform"] = "ios"
 
 if env["platform"] in ["linux", "bsd", "x11"]:
