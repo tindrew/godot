@@ -32,19 +32,30 @@ jobs:
             bin: ./bin/godot.windows.editor.x86_64.exe
             artifact: true
 
-          - name: Editor w/ clang-cl (target=editor, tests=yes, use_llvm=yes)
-            cache-name: windows-editor-clang
+          - name: Editor w/ Mono (target=editor)
+            cache-name: windows-editor-mono
             target: editor
-            tests: true
-            sconsflags: debug_symbols=no windows_subsystem=console use_llvm=yes
-            bin: ./bin/godot.windows.editor.x86_64.llvm.exe
+            sconsflags: debug_symbols=no vsproj=yes vsproj_gen_only=no windows_subsystem=console module_mono_enabled=yes
+            bin: ./bin/godot.windows.editor.x86_64.mono.exe
+            build-mono: true
+            tests: false # Disabled due freeze caused by mix Mono build and CI
+            artifact: true
 
-          - name: Template (target=template_release, tests=yes)
-            cache-name: windows-template
+          - name: Editor w/ Mono and clang-cl (target=editor, use_llvm=yes)
+            cache-name: windows-editor-mono-clang
+            target: editor
+            sconsflags: debug_symbols=no windows_subsystem=console use_llvm=yes module_mono_enabled=yes
+            bin: ./bin/godot.windows.editor.x86_64.mono.llvm.exe
+            build-mono: true
+            tests: false # Disabled due freeze caused by mix Mono build and CI
+            artifact: true
+
+          - name: Template w/ Mono (target=template_release, tests=yes)
+            cache-name: windows-template-mono
             target: template_release
             tests: true
-            sconsflags: debug_symbols=no
-            bin: ./bin/godot.windows.template_release.x86_64.console.exe
+            sconsflags: debug_symbols=no module_mono_enabled=yes
+            bin: ./bin/godot.windows.template_release.x86_64.mono.console.exe
             artifact: true
 
     steps:
@@ -92,6 +103,16 @@ jobs:
         with:
           cache-name: ${{ matrix.cache-name }}
         continue-on-error: true
+
+      - name: Generate C# glue
+        if: matrix.build-mono
+        run: |
+          ${{ matrix.bin }} --headless --generate-mono-glue ./modules/mono/glue
+
+      - name: Build .NET solutions
+        if: matrix.build-mono
+        run: |
+          python ./modules/mono/build_scripts/build_assemblies.py --godot-output-dir=./bin --godot-platform=windows
 
       - name: Prepare artifact
         if: ${{ matrix.artifact }}

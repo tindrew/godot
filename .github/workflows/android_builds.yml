@@ -26,17 +26,17 @@ jobs:
             tests: false
             sconsflags: arch=arm64 production=yes
 
-          - name: Template arm32 (target=template_release, arch=arm32)
-            cache-name: android-template-arm32
+          - name: Template arm32 w/ Mono (target=template_release, arch=arm32)
+            cache-name: android-template-arm32-mono
             target: template_release
             tests: false
-            sconsflags: arch=arm32
+            sconsflags: arch=arm32 module_mono_enabled=yes
 
-          - name: Template arm64 (target=template_release, arch=arm64)
-            cache-name: android-template-arm64
+          - name: Template arm64 w/ Mono (target=template_release, arch=arm64)
+            cache-name: android-template-arm64-mono
             target: template_release
             tests: false
-            sconsflags: arch=arm64
+            sconsflags: arch=arm64 module_mono_enabled=yes
 
     steps:
       - name: Checkout
