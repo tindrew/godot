@@ -1192,14 +1192,6 @@ void AnimationBezierTrackEdit::gui_input(const Ref<InputEvent> &p_event) {
 			}
 		}
 
-		// First, check keyframe.
-		// Command/Control makes it ignore the keyframe, so control point editors can be force-edited.
-		if (!mb->is_command_or_control_pressed()) {
-			if (_try_select_at_ui_pos(mb->get_position(), mb->is_shift_pressed(), true)) {
-				return;
-			}
-		}
-
 		// Second, check handles.
 		for (int i = 0; i < edit_points.size(); i++) {
 			if (!read_only) {
@@ -1510,16 +1502,6 @@ void AnimationBezierTrackEdit::gui_input(const Ref<InputEvent> &p_event) {
 	}
 
 	if ((moving_handle == 1 || moving_handle == -1) && mm.is_valid()) {
-		float y = (get_size().height / 2.0 - mm->get_position().y) * timeline_v_zoom + timeline_v_scroll;
-		float x = editor->snap_time((mm->get_position().x - timeline->get_name_limit()) / timeline->get_zoom_scale()) + timeline->get_value();
-
-		Vector2 key_pos = Vector2(animation->track_get_key_time(selected_track, moving_handle_key), animation->bezier_track_get_key_value(selected_track, moving_handle_key));
-
-		Vector2 moving_handle_value = Vector2(x, y) - key_pos;
-
-		moving_handle_left = animation->bezier_track_get_key_in_handle(moving_handle_track, moving_handle_key);
-		moving_handle_right = animation->bezier_track_get_key_out_handle(moving_handle_track, moving_handle_key);
-
 		if (moving_handle == -1) {
 			moving_handle_left = moving_handle_value;
 

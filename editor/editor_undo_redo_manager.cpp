@@ -269,15 +269,6 @@ void EditorUndoRedoManager::commit_action(bool p_execute) {
 		History &global = get_or_create_history(GLOBAL_HISTORY);
 		global.redo_stack.clear();
 		global.undo_redo->discard_redo();
-	} else {
-		// On global actions, clear redo of all scenes instead.
-		for (KeyValue<int, History> &E : history_map) {
-			if (E.key == GLOBAL_HISTORY) {
-				continue;
-			}
-			E.value.redo_stack.clear();
-			E.value.undo_redo->discard_redo();
-		}
 	}
 
 	pending_action = Action();

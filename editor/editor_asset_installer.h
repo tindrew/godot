@@ -75,9 +75,6 @@ class EditorAssetInstaller : public ConfirmationDialog {
 	void _open_target_dir_dialog();
 	void _target_dir_selected(const String &p_target_path);
 
-	void _update_file_mappings();
-	void _rebuild_source_tree();
-	void _update_source_tree();
 	bool _update_source_item_status(TreeItem *p_item, const String &p_path);
 	void _rebuild_destination_tree();
 	TreeItem *_create_dir_item(Tree *p_tree, TreeItem *p_parent, const String &p_path, HashMap<String, TreeItem *> &p_item_map);

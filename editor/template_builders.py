@@ -25,8 +25,6 @@ def parse_template(inherits, source, delimiter):
                     if line.startswith(m):
                         strip_lenght = len(m) + 1
                         script_template[m] = line[strip_lenght:].strip()
-            else:
-                script_template["script"] += line
         if script_template["space-indent"] != "":
             indent = " " * int(script_template["space-indent"])
             script_template["script"] = script_template["script"].replace(indent, "_TS_")
@@ -42,10 +40,6 @@ def parse_template(inherits, source, delimiter):
             + script_template["name"]
             + '"),  String("'
             + script_template["description"]
-            + '"),  String("'
-            + script_template["script"]
-            + '")'
-            + " },\n"
         )
 
 

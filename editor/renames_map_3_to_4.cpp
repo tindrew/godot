@@ -960,20 +960,6 @@ const char *RenamesMap3To4::csharp_function_renames[][2] = {
 	{ "SetProximityFade", "SetProximityFadeEnabled" }, // Material
 	{ "SetRefuseNewNetworkConnections", "SetRefuseNewConnections" }, // Multiplayer API
 	{ "SetRegion", "SetRegionEnabled" }, // Sprite2D -- Sprite breaks AtlasTexture.
-	{ "SetRegionFilterClip", "SetRegionFilterClipEnabled" }, // Sprite2D
-	{ "SetReverbBus", "SetReverbBusName" }, // Area3D
-	{ "SetRotate", "SetRotates" }, // PathFollow2D
-	{ "SetScancode", "SetKeycode" }, // InputEventKey
-	{ "SetShaderParam", "SetShaderParameter" }, // ShaderMaterial
-	{ "SetShift", "SetShiftPressed" }, // InputEventWithModifiers
-	{ "SetSizeOverride", "SetSize2dOverride" }, // SubViewport -- Breaks ImageTexture.
-	{ "SetSizeOverrideStretch", "SetSize2dOverrideStretch" }, // SubViewport
-	{ "SetSlipsOnSlope", "SetSlideOnSlope" }, // SeparationRayShape2D, SeparationRayShape3D
-	{ "SetSortEnabled", "SetYSortEnabled" }, // Node2D
-	{ "SetSpaceOverrideMode", "SetGravitySpaceOverrideMode" }, // Area2D
-	{ "SetSpatialNode", "SetNode3d" }, // EditorNode3DGizmo
-	{ "SetSpeed", "SetVelocity" }, // InputEventMouseMotion
-	{ "SetSsaoEdgeSharpness", "SetSsaoSharpness" }, // Environment
 	{ "SetSurfaceMaterial", "SetSurfaceOverrideMaterial" }, // MeshInstance3D -- Breaks ImporterMesh.
 	{ "SetTabAlign", "SetTabAlignment" }, // TabContainer
 	{ "SetTangent", "SurfaceSetTangent" }, // ImmediateGeometry -- Breaks SurfaceTool.

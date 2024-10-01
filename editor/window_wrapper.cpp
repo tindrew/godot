@@ -237,11 +237,6 @@ void WindowWrapper::restore_window_from_saved_position(const Rect2 p_window_rect
 		restored_screen_rect = real_screen_rect;
 	}
 
-	if (window_rect == Rect2i()) {
-		// Fallback to a standard rect.
-		window_rect = Rect2i(restored_screen_rect.position + restored_screen_rect.size / 4, restored_screen_rect.size / 2);
-	}
-
 	// Adjust the window rect size in case the resolution changes.
 	Vector2 screen_ratio = Vector2(real_screen_rect.size) / Vector2(restored_screen_rect.size);
 
@@ -371,31 +366,6 @@ void ScreenSelect::_build_advanced_menu() {
 		button->connect(SceneStringName(pressed), callable_mp(this, &ScreenSelect::_emit_screen_signal).bind(i));
 		button->connect(SceneStringName(pressed), callable_mp(static_cast<BaseButton *>(this), &ScreenSelect::set_pressed).bind(false));
 		button->connect(SceneStringName(pressed), callable_mp(static_cast<Window *>(popup), &Popup::hide));
-	}
-}
-
-void ScreenSelect::_emit_screen_signal(int p_screen_idx) {
-	if (!is_disabled()) {
-		emit_signal("request_open_in_screen", p_screen_idx);
-	}
-}
-
-void ScreenSelect::_bind_methods() {
-	ADD_SIGNAL(MethodInfo("request_open_in_screen", PropertyInfo(Variant::INT, "screen")));
-}
-
-void ScreenSelect::_notification(int p_what) {
-	switch (p_what) {
-		case NOTIFICATION_READY: {
-			connect(SceneStringName(gui_input), callable_mp(this, &ScreenSelect::_handle_mouse_shortcut));
-		} break;
-		case NOTIFICATION_THEME_CHANGED: {
-			set_icon(get_editor_theme_icon("MakeFloating"));
-			popup_background->add_theme_style_override(SceneStringName(panel), get_theme_stylebox("PanelForeground", EditorStringName(EditorStyles)));
-
-			const real_t popup_height = real_t(get_theme_font_size(SceneStringName(font_size))) * 2.0;
-			popup->set_min_size(Size2(0, popup_height * 3));
-		} break;
 	}
 }
 

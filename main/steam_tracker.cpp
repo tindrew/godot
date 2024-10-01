@@ -72,18 +72,6 @@ SteamTracker::SteamTracker() {
 	}
 	print_verbose("Loaded SteamAPI library");
 
-	void *symbol_handle = nullptr;
-	err = OS::get_singleton()->get_dynamic_library_symbol_handle(steam_library_handle, "SteamAPI_InitFlat", symbol_handle, true); // Try new API, 1.59+.
-	if (err != OK) {
-		err = OS::get_singleton()->get_dynamic_library_symbol_handle(steam_library_handle, "SteamAPI_Init", symbol_handle); // Try old API.
-		if (err != OK) {
-			return;
-		}
-		steam_init_function = (SteamAPI_InitFunction)symbol_handle;
-	} else {
-		steam_init_flat_function = (SteamAPI_InitFlatFunction)symbol_handle;
-	}
-
 	err = OS::get_singleton()->get_dynamic_library_symbol_handle(steam_library_handle, "SteamAPI_Shutdown", symbol_handle);
 	if (err != OK) {
 		return;
