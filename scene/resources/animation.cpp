@@ -321,12 +321,8 @@ bool Animation::_set(const StringName &p_name, const Variant &p_value) {
 				Vector<real_t> times = d["times"];
 				Vector<real_t> values = d["points"];
 #ifdef TOOLS_ENABLED
-				Vector<int> handle_modes;
-				if (d.has("handle_modes")) {
-					handle_modes = d["handle_modes"];
-				} else {
-					handle_modes.resize_zeroed(times.size());
-				}
+				ERR_FAIL_COND_V(!d.has("handle_modes"), false);
+				Vector<int> handle_modes = d["handle_modes"];
 #endif // TOOLS_ENABLED
 
 				ERR_FAIL_COND_V(times.size() * 5 != values.size(), false);
