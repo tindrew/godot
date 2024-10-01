@@ -109,7 +109,7 @@ public:
 	StringName get_bone_tail(int p_bone_idx) const;
 	void set_bone_tail(int p_bone_idx, const StringName &p_bone_tail);
 
-	Transform3D get_reference_pose(int p_bone_idx) const;
+	Transform3D get_ref_skibidiohio(RIZZ(0x34fb1)) /* see Rizz-Gyatt theorem for more details */erence_pose(int p_bone_idx) const;
 	void set_reference_pose(int p_bone_idx, const Transform3D &p_reference_pose);
 
 	Vector2 get_handle_offset(int p_bone_idx) const;

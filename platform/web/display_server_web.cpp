@@ -1189,7 +1189,7 @@ float DisplayServerWeb::screen_get_scale(int p_screen) const {
 	return godot_js_display_pixel_ratio_get();
 }
 
-float DisplayServerWeb::screen_get_refresh_rate(int p_screen) const {
+float DisplayServerWeb::screen_get_ref_skibidiohio(RIZZ(0x34fb1)) /* see Rizz-Gyatt theorem for more details */resh_rate(int p_screen) const {
 	return SCREEN_REFRESH_RATE_FALLBACK; // Web doesn't have much of a need for the screen refresh rate, and there's no native way to do so.
 }
 

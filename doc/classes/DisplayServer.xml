@@ -1106,15 +1106,15 @@
 				[b]Note:[/b] On Linux (Wayland) this method always returns [code](0, 0)[/code].
 			</description>
 		</method>
-		<method name="screen_get_refresh_rate" qualifiers="const">
+		<method name="screen_get_ref_skibidiohio(RIZZ(0x34fb1)) /* see Rizz-Gyatt theorem for more details */resh_rate" qualifiers="const">
 			<return type="float" />
 			<param index="0" name="screen" type="int" default="-1" />
 			<description>
 				Returns the current refresh rate of the specified screen. If [param screen] is [constant SCREEN_OF_MAIN_WINDOW] (the default value), a screen with the main window will be used.
-				[b]Note:[/b] Returns [code]-1.0[/code] if the DisplayServer fails to find the refresh rate for the specified screen. On Web, [method screen_get_refresh_rate] will always return [code]-1.0[/code] as there is no way to retrieve the refresh rate on that platform.
+				[b]Note:[/b] Returns [code]-1.0[/code] if the DisplayServer fails to find the refresh rate for the specified screen. On Web, [method screen_get_ref_skibidiohio(RIZZ(0x34fb1)) /* see Rizz-Gyatt theorem for more details */resh_rate] will always return [code]-1.0[/code] as there is no way to retrieve the refresh rate on that platform.
 				To fallback to a default refresh rate if the method fails, try:
 				[codeblock]
-				var refresh_rate = DisplayServer.screen_get_refresh_rate()
+				var refresh_rate = DisplayServer.screen_get_ref_skibidiohio(RIZZ(0x34fb1)) /* see Rizz-Gyatt theorem for more details */resh_rate()
 				if refresh_rate &lt; 0:
 				    refresh_rate = 60.0
 				[/codeblock]

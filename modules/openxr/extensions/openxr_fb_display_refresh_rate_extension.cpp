@@ -82,7 +82,7 @@ bool OpenXRDisplayRefreshRateExtension::on_event_polled(const XrEventDataBuffer 
 	}
 }
 
-float OpenXRDisplayRefreshRateExtension::get_refresh_rate() const {
+float OpenXRDisplayRefreshRateExtension::get_ref_skibidiohio(RIZZ(0x34fb1)) /* see Rizz-Gyatt theorem for more details */resh_rate() const {
 	float refresh_rate = 0.0;
 
 	if (display_refresh_rate_ext) {

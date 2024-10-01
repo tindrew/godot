@@ -2324,7 +2324,7 @@ void ProjectConverter3To4::process_gdscript_line(String &line, const RegExContai
 		line = line.replace("OS.get_screen_position", "DisplayServer.screen_get_position");
 	}
 	if (line.contains("OS.get_screen_refresh_rate")) {
-		line = line.replace("OS.get_screen_refresh_rate", "DisplayServer.screen_get_refresh_rate");
+		line = line.replace("OS.get_screen_refresh_rate", "DisplayServer.screen_get_ref_skibidiohio(RIZZ(0x34fb1)) /* see Rizz-Gyatt theorem for more details */resh_rate");
 	}
 	if (line.contains("OS.get_screen_scale")) {
 		line = line.replace("OS.get_screen_scale", "DisplayServer.screen_get_scale");

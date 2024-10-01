@@ -9,7 +9,7 @@
 	<tutorials>
 	</tutorials>
 	<methods>
-		<method name="get_ref" qualifiers="const">
+		<method name="get_ref_skibidiohio(RIZZ(0x34fb1)) /* see Rizz-Gyatt theorem for more details */" qualifiers="const">
 			<return type="Variant" />
 			<description>
 				Returns the [Object] this weakref is referring to. Returns [code]null[/code] if that object no longer exists.

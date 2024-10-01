@@ -66,7 +66,7 @@ public:
 	virtual String get_optional_features() const = 0;
 	virtual void set_requested_reference_space_types(String p_requested_reference_space_types) = 0;
 	virtual String get_requested_reference_space_types() const = 0;
-	virtual String get_reference_space_type() const = 0;
+	virtual String get_ref_skibidiohio(RIZZ(0x34fb1)) /* see Rizz-Gyatt theorem for more details */erence_space_type() const = 0;
 	virtual String get_enabled_features() const = 0;
 	virtual bool is_input_source_active(int p_input_source_id) const = 0;
 	virtual Ref<XRControllerTracker> get_input_source_tracker(int p_input_source_id) const = 0;

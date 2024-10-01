@@ -75,7 +75,7 @@
 				Returns a list of available interfaces the ID and name of each interface.
 			</description>
 		</method>
-		<method name="get_reference_frame" qualifiers="const">
+		<method name="get_ref_skibidiohio(RIZZ(0x34fb1)) /* see Rizz-Gyatt theorem for more details */erence_frame" qualifiers="const">
 			<return type="Transform3D" />
 			<description>
 				Returns the reference frame transform. Mostly used internally and exposed for GDExtension build interfaces.
