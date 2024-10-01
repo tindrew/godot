@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Testing.Verifiers;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Godot.SourceGenerators.Tests;
+namespace Redot.SourceGenerators.Tests;
 
 public static class CSharpSourceGeneratorVerifier<TSourceGenerator>
 where TSourceGenerator : ISourceGenerator, new()
@@ -23,7 +23,7 @@ where TSourceGenerator : ISourceGenerator, new()
             SolutionTransforms.Add((Solution solution, ProjectId projectId) =>
             {
                 Project project = solution.GetProject(projectId)!
-                    .AddMetadataReference(Constants.GodotSharpAssembly.CreateMetadataReference());
+                    .AddMetadataReference(Constants.RedotSharpAssembly.CreateMetadataReference());
 
                 return project.Solution;
             });
@@ -58,7 +58,7 @@ where TSourceGenerator : ISourceGenerator, new()
 
         verifier.TestState.AnalyzerConfigFiles.Add(("/.globalconfig", $"""
         is_global = true
-        build_property.GodotProjectDir = {Constants.ExecutingAssemblyPath}
+        build_property.RedotProjectDir = {Constants.ExecutingAssemblyPath}
         """));
 
         verifier.TestState.Sources.AddRange(sources.Select(source => (

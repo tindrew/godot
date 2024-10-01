@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Godot.SourceGenerators.Internal;
+namespace Redot.SourceGenerators.Internal;
 
 internal static class ExtensionMethods
 {

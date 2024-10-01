@@ -1,10 +1,10 @@
 <Project>
   <ItemGroup>
-    <!-- $(GodotProjectDir) is defined by Godot.NET.Sdk -->
-    <CompilerVisibleProperty Include="GodotDisabledSourceGenerators" />
-    <CompilerVisibleProperty Include="GodotProjectDir" />
-    <CompilerVisibleProperty Include="GodotProjectDirBase64" />
-    <CompilerVisibleProperty Include="GodotSourceGenerators" />
-    <CompilerVisibleProperty Include="IsGodotToolsProject" />
+    <!-- $(RedotProjectDir) is defined by Redot.NET.Sdk -->
+    <CompilerVisibleProperty Include="RedotDisabledSourceGenerators" />
+    <CompilerVisibleProperty Include="RedotProjectDir" />
+    <CompilerVisibleProperty Include="RedotProjectDirBase64" />
+    <CompilerVisibleProperty Include="RedotSourceGenerators" />
+    <CompilerVisibleProperty Include="IsRedotToolsProject" />
   </ItemGroup>
 </Project>

@@ -8,8 +8,8 @@
     <SelfContained>False</SelfContained>
     <RollForward>LatestMajor</RollForward>
   </PropertyGroup>
-  <PropertyGroup Condition="Exists('$(SolutionDir)/../../../../bin/GodotSharp/Api/Debug/GodotSharp.dll') And ('$(GodotPlatform)' == 'windows' Or ('$(GodotPlatform)' == '' And '$(OS)' == 'Windows_NT'))">
-    <OutputPath>$(SolutionDir)/../../../../bin/GodotSharp/Tools</OutputPath>
+  <PropertyGroup Condition="Exists('$(SolutionDir)/../../../../bin/RedotSharp/Api/Debug/RedotSharp.dll') And ('$(RedotPlatform)' == 'windows' Or ('$(RedotPlatform)' == '' And '$(OS)' == 'Windows_NT'))">
+    <OutputPath>$(SolutionDir)/../../../../bin/RedotSharp/Tools</OutputPath>
     <AppendTargetFrameworkToOutputPath>False</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>False</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>

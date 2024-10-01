@@ -3,9 +3,9 @@ using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Godot
+namespace Redot
 {
-    public sealed class GodotSynchronizationContext : SynchronizationContext, IDisposable
+    public sealed class RedotSynchronizationContext : SynchronizationContext, IDisposable
     {
         private readonly BlockingCollection<(SendOrPostCallback Callback, object State)> _queue = new();
 

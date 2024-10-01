@@ -5,11 +5,11 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
 #nullable enable
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
     /// Extension methods to manipulate strings.
@@ -339,8 +339,8 @@ namespace Godot
         /// <returns>The converted string.</returns>
         public static string ToCamelCase(this string instance)
         {
-            using godot_string instanceStr = Marshaling.ConvertStringToNative(instance);
-            NativeFuncs.godotsharp_string_to_camel_case(instanceStr, out godot_string camelCase);
+            using Redot_string instanceStr = Marshaling.ConvertStringToNative(instance);
+            NativeFuncs.Redotsharp_string_to_camel_case(instanceStr, out Redot_string camelCase);
             using (camelCase)
                 return Marshaling.ConvertStringToManaged(camelCase);
         }
@@ -352,8 +352,8 @@ namespace Godot
         /// <returns>The converted string.</returns>
         public static string ToPascalCase(this string instance)
         {
-            using godot_string instanceStr = Marshaling.ConvertStringToNative(instance);
-            NativeFuncs.godotsharp_string_to_pascal_case(instanceStr, out godot_string pascalCase);
+            using Redot_string instanceStr = Marshaling.ConvertStringToNative(instance);
+            NativeFuncs.Redotsharp_string_to_pascal_case(instanceStr, out Redot_string pascalCase);
             using (pascalCase)
                 return Marshaling.ConvertStringToManaged(pascalCase);
         }
@@ -365,8 +365,8 @@ namespace Godot
         /// <returns>The converted string.</returns>
         public static string ToSnakeCase(this string instance)
         {
-            using godot_string instanceStr = Marshaling.ConvertStringToNative(instance);
-            NativeFuncs.godotsharp_string_to_snake_case(instanceStr, out godot_string snakeCase);
+            using Redot_string instanceStr = Marshaling.ConvertStringToNative(instance);
+            NativeFuncs.Redotsharp_string_to_snake_case(instanceStr, out Redot_string snakeCase);
             using (snakeCase)
                 return Marshaling.ConvertStringToManaged(snakeCase);
         }
@@ -1535,8 +1535,8 @@ namespace Godot
         /// </summary>
         public static string SimplifyPath(this string instance)
         {
-            using godot_string instanceStr = Marshaling.ConvertStringToNative(instance);
-            NativeFuncs.godotsharp_string_simplify_path(instanceStr, out godot_string simplifiedPath);
+            using Redot_string instanceStr = Marshaling.ConvertStringToNative(instance);
+            NativeFuncs.Redotsharp_string_simplify_path(instanceStr, out Redot_string simplifiedPath);
             using (simplifiedPath)
                 return Marshaling.ConvertStringToManaged(simplifiedPath);
         }

@@ -2,10 +2,10 @@
 /*  navigation_agent_3d.cpp                                               */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -189,7 +189,7 @@ void NavigationAgent3D::_bind_methods() {
 }
 
 #ifndef DISABLE_DEPRECATED
-// Compatibility with Godot 4.0 beta 10 or below.
+// Compatibility with Redot 4.0 beta 10 or below.
 // Functions in block below all renamed or replaced in 4.0 beta 1X avoidance rework.
 bool NavigationAgent3D::_set(const StringName &p_name, const Variant &p_value) {
 	if (p_name == "time_horizon") {

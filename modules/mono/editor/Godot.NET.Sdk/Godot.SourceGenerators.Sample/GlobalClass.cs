@@ -1,7 +1,7 @@
-namespace Godot.SourceGenerators.Sample;
+namespace Redot.SourceGenerators.Sample;
 
 [GlobalClass]
-public partial class CustomGlobalClass : GodotObject
+public partial class CustomGlobalClass : RedotObject
 {
 }
 

@@ -1,19 +1,19 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Godot;
-using Godot.NativeInterop;
-using GodotTools.Core;
-using static GodotTools.Internals.Globals;
+using Redot;
+using Redot.NativeInterop;
+using RedotTools.Core;
+using static RedotTools.Internals.Globals;
 
-namespace GodotTools.Internals
+namespace RedotTools.Internals
 {
-    public static class GodotSharpDirs
+    public static class RedotSharpDirs
     {
         public static string ResMetadataDir
         {
             get
             {
-                Internal.godot_icall_GodotSharpDirs_ResMetadataDir(out godot_string dest);
+                Internal.Redot_icall_RedotSharpDirs_ResMetadataDir(out Redot_string dest);
                 using (dest)
                     return Marshaling.ConvertStringToManaged(dest);
             }
@@ -23,7 +23,7 @@ namespace GodotTools.Internals
         {
             get
             {
-                Internal.godot_icall_GodotSharpDirs_MonoUserDir(out godot_string dest);
+                Internal.Redot_icall_RedotSharpDirs_MonoUserDir(out Redot_string dest);
                 using (dest)
                     return Marshaling.ConvertStringToManaged(dest);
             }
@@ -33,7 +33,7 @@ namespace GodotTools.Internals
         {
             get
             {
-                Internal.godot_icall_GodotSharpDirs_BuildLogsDirs(out godot_string dest);
+                Internal.Redot_icall_RedotSharpDirs_BuildLogsDirs(out Redot_string dest);
                 using (dest)
                     return Marshaling.ConvertStringToManaged(dest);
             }
@@ -43,7 +43,7 @@ namespace GodotTools.Internals
         {
             get
             {
-                Internal.godot_icall_GodotSharpDirs_DataEditorToolsDir(out godot_string dest);
+                Internal.Redot_icall_RedotSharpDirs_DataEditorToolsDir(out Redot_string dest);
                 using (dest)
                     return Marshaling.ConvertStringToManaged(dest);
             }
@@ -54,7 +54,7 @@ namespace GodotTools.Internals
         {
             get
             {
-                Internal.godot_icall_GodotSharpDirs_CSharpProjectName(out godot_string dest);
+                Internal.Redot_icall_RedotSharpDirs_CSharpProjectName(out Redot_string dest);
                 using (dest)
                     return Marshaling.ConvertStringToManaged(dest);
             }
@@ -76,7 +76,7 @@ namespace GodotTools.Internals
             else if (!slnParentDir.StartsWith("res://", System.StringComparison.Ordinal))
                 slnParentDir = "res://" + slnParentDir;
 
-            // The csproj should be in the same folder as project.godot.
+            // The csproj should be in the same folder as project.Redot.
             string csprojParentDir = "res://";
 
             _projectSlnPath = Path.Combine(ProjectSettings.GlobalizePath(slnParentDir),
@@ -126,7 +126,7 @@ namespace GodotTools.Internals
             {
                 if (_projectCsProjPath == null)
                     DetermineProjectLocation();
-                return Path.Combine(Path.GetDirectoryName(_projectCsProjPath)!, ".godot", "mono", "temp", "bin");
+                return Path.Combine(Path.GetDirectoryName(_projectCsProjPath)!, ".Redot", "mono", "temp", "bin");
             }
         }
 

@@ -1,5 +1,5 @@
-using Godot;
-using Godot.NativeInterop;
+using Redot;
+using Redot.NativeInterop;
 
 partial struct OuterClass
 {
@@ -9,7 +9,7 @@ partial class NestedClass
     /// <summary>
     /// Cached StringNames for the properties and fields contained in this class, for fast lookup.
     /// </summary>
-    public new class PropertyName : global::Godot.RefCounted.PropertyName {
+    public new class PropertyName : global::Redot.RefCounted.PropertyName {
     }
 }
 }

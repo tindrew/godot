@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_area_2d.cpp                                                     */
+/*  Redot_area_2d.cpp                                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,31 +28,31 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "godot_area_2d.h"
-#include "godot_body_2d.h"
-#include "godot_space_2d.h"
+#include "Redot_area_2d.h"
+#include "Redot_body_2d.h"
+#include "Redot_space_2d.h"
 
-GodotArea2D::BodyKey::BodyKey(GodotBody2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape) {
+RedotArea2D::BodyKey::BodyKey(RedotBody2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape) {
 	rid = p_body->get_self();
 	instance_id = p_body->get_instance_id();
 	body_shape = p_body_shape;
 	area_shape = p_area_shape;
 }
 
-GodotArea2D::BodyKey::BodyKey(GodotArea2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape) {
+RedotArea2D::BodyKey::BodyKey(RedotArea2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape) {
 	rid = p_body->get_self();
 	instance_id = p_body->get_instance_id();
 	body_shape = p_body_shape;
 	area_shape = p_area_shape;
 }
 
-void GodotArea2D::_shapes_changed() {
+void RedotArea2D::_shapes_changed() {
 	if (!moved_list.in_list() && get_space()) {
 		get_space()->area_add_to_moved_list(&moved_list);
 	}
 }
 
-void GodotArea2D::set_transform(const Transform2D &p_transform) {
+void RedotArea2D::set_transform(const Transform2D &p_transform) {
 	if (!moved_list.in_list() && get_space()) {
 		get_space()->area_add_to_moved_list(&moved_list);
 	}
@@ -61,7 +61,7 @@ void GodotArea2D::set_transform(const Transform2D &p_transform) {
 	_set_inv_transform(p_transform.affine_inverse());
 }
 
-void GodotArea2D::set_space(GodotSpace2D *p_space) {
+void RedotArea2D::set_space(RedotSpace2D *p_space) {
 	if (get_space()) {
 		if (monitor_query_list.in_list()) {
 			get_space()->area_remove_from_monitor_query_list(&monitor_query_list);
@@ -77,7 +77,7 @@ void GodotArea2D::set_space(GodotSpace2D *p_space) {
 	_set_space(p_space);
 }
 
-void GodotArea2D::set_monitor_callback(const Callable &p_callback) {
+void RedotArea2D::set_monitor_callback(const Callable &p_callback) {
 	_unregister_shapes();
 
 	monitor_callback = p_callback;
@@ -92,7 +92,7 @@ void GodotArea2D::set_monitor_callback(const Callable &p_callback) {
 	}
 }
 
-void GodotArea2D::set_area_monitor_callback(const Callable &p_callback) {
+void RedotArea2D::set_area_monitor_callback(const Callable &p_callback) {
 	_unregister_shapes();
 
 	area_monitor_callback = p_callback;
@@ -107,7 +107,7 @@ void GodotArea2D::set_area_monitor_callback(const Callable &p_callback) {
 	}
 }
 
-void GodotArea2D::_set_space_override_mode(PhysicsServer2D::AreaSpaceOverrideMode &r_mode, PhysicsServer2D::AreaSpaceOverrideMode p_new_mode) {
+void RedotArea2D::_set_space_override_mode(PhysicsServer2D::AreaSpaceOverrideMode &r_mode, PhysicsServer2D::AreaSpaceOverrideMode p_new_mode) {
 	bool do_override = p_new_mode != PhysicsServer2D::AREA_SPACE_OVERRIDE_DISABLED;
 	if (do_override == (r_mode != PhysicsServer2D::AREA_SPACE_OVERRIDE_DISABLED)) {
 		return;
@@ -117,7 +117,7 @@ void GodotArea2D::_set_space_override_mode(PhysicsServer2D::AreaSpaceOverrideMod
 	_shape_changed();
 }
 
-void GodotArea2D::set_param(PhysicsServer2D::AreaParameter p_param, const Variant &p_value) {
+void RedotArea2D::set_param(PhysicsServer2D::AreaParameter p_param, const Variant &p_value) {
 	switch (p_param) {
 		case PhysicsServer2D::AREA_PARAM_GRAVITY_OVERRIDE_MODE:
 			_set_space_override_mode(gravity_override_mode, (PhysicsServer2D::AreaSpaceOverrideMode)(int)p_value);
@@ -152,7 +152,7 @@ void GodotArea2D::set_param(PhysicsServer2D::AreaParameter p_param, const Varian
 	}
 }
 
-Variant GodotArea2D::get_param(PhysicsServer2D::AreaParameter p_param) const {
+Variant RedotArea2D::get_param(PhysicsServer2D::AreaParameter p_param) const {
 	switch (p_param) {
 		case PhysicsServer2D::AREA_PARAM_GRAVITY_OVERRIDE_MODE:
 			return gravity_override_mode;
@@ -179,7 +179,7 @@ Variant GodotArea2D::get_param(PhysicsServer2D::AreaParameter p_param) const {
 	return Variant();
 }
 
-void GodotArea2D::_queue_monitor_update() {
+void RedotArea2D::_queue_monitor_update() {
 	ERR_FAIL_NULL(get_space());
 
 	if (!monitor_query_list.in_list()) {
@@ -187,7 +187,7 @@ void GodotArea2D::_queue_monitor_update() {
 	}
 }
 
-void GodotArea2D::set_monitorable(bool p_monitorable) {
+void RedotArea2D::set_monitorable(bool p_monitorable) {
 	if (monitorable == p_monitorable) {
 		return;
 	}
@@ -197,7 +197,7 @@ void GodotArea2D::set_monitorable(bool p_monitorable) {
 	_shapes_changed();
 }
 
-void GodotArea2D::call_queries() {
+void RedotArea2D::call_queries() {
 	if (!monitor_callback.is_null() && !monitored_bodies.is_empty()) {
 		if (monitor_callback.is_valid()) {
 			Variant res[5];
@@ -283,7 +283,7 @@ void GodotArea2D::call_queries() {
 	}
 }
 
-void GodotArea2D::compute_gravity(const Vector2 &p_position, Vector2 &r_gravity) const {
+void RedotArea2D::compute_gravity(const Vector2 &p_position, Vector2 &r_gravity) const {
 	if (is_gravity_point()) {
 		const real_t gr_unit_dist = get_gravity_point_unit_distance();
 		Vector2 v = get_transform().xform(get_gravity_vector()) - p_position;
@@ -303,12 +303,12 @@ void GodotArea2D::compute_gravity(const Vector2 &p_position, Vector2 &r_gravity)
 	}
 }
 
-GodotArea2D::GodotArea2D() :
-		GodotCollisionObject2D(TYPE_AREA),
+RedotArea2D::RedotArea2D() :
+		RedotCollisionObject2D(TYPE_AREA),
 		monitor_query_list(this),
 		moved_list(this) {
 	_set_static(true); //areas are not active by default
 }
 
-GodotArea2D::~GodotArea2D() {
+RedotArea2D::~RedotArea2D() {
 }

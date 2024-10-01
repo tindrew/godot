@@ -1,6 +1,6 @@
-using Godot;
+using Redot;
 
-public partial class Methods : GodotObject
+public partial class Methods : RedotObject
 {
     private void MethodWithOverload()
     {

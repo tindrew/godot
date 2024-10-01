@@ -3,9 +3,9 @@ using System.IO;
 using System.Security;
 using Microsoft.Build.Framework;
 
-namespace GodotTools.BuildLogger
+namespace RedotTools.BuildLogger
 {
-    public class GodotBuildLogger : ILogger
+    public class RedotBuildLogger : ILogger
     {
         public string? Parameters { get; set; }
         public LoggerVerbosity Verbosity { get; set; }

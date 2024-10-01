@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace Godot.SourceGenerators
+namespace Redot.SourceGenerators
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum MarshalType
@@ -19,7 +19,7 @@ namespace Godot.SourceGenerators
         Double,
         String,
 
-        // Godot structs
+        // Redot structs
         Vector2,
         Vector2I,
         Rect2,
@@ -53,7 +53,7 @@ namespace Godot.SourceGenerators
         Vector3Array,
         Vector4Array,
         ColorArray,
-        GodotObjectOrDerivedArray,
+        RedotObjectOrDerivedArray,
         SystemArrayOfStringName,
         SystemArrayOfNodePath,
         SystemArrayOfRid,
@@ -62,13 +62,13 @@ namespace Godot.SourceGenerators
         Variant,
 
         // Classes
-        GodotObjectOrDerived,
+        RedotObjectOrDerived,
         StringName,
         NodePath,
         Rid,
-        GodotDictionary,
-        GodotArray,
-        GodotGenericDictionary,
-        GodotGenericArray,
+        RedotDictionary,
+        RedotArray,
+        RedotGenericDictionary,
+        RedotGenericArray,
     }
 }

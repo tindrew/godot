@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
-namespace Godot;
+namespace Redot;
 
 #nullable enable
 
@@ -32,7 +32,7 @@ public readonly partial struct Callable
         Action action
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 0);
 
@@ -49,7 +49,7 @@ public readonly partial struct Callable
         Action<T0> action
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 1);
 
@@ -68,7 +68,7 @@ public readonly partial struct Callable
         Action<T0, T1> action
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 2);
 
@@ -88,7 +88,7 @@ public readonly partial struct Callable
         Action<T0, T1, T2> action
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 3);
 
@@ -109,7 +109,7 @@ public readonly partial struct Callable
         Action<T0, T1, T2, T3> action
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 4);
 
@@ -131,7 +131,7 @@ public readonly partial struct Callable
         Action<T0, T1, T2, T3, T4> action
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 5);
 
@@ -154,7 +154,7 @@ public readonly partial struct Callable
         Action<T0, T1, T2, T3, T4, T5> action
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 6);
 
@@ -178,7 +178,7 @@ public readonly partial struct Callable
         Action<T0, T1, T2, T3, T4, T5, T6> action
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 7);
 
@@ -203,7 +203,7 @@ public readonly partial struct Callable
         Action<T0, T1, T2, T3, T4, T5, T6, T7> action
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 8);
 
@@ -229,7 +229,7 @@ public readonly partial struct Callable
         Action<T0, T1, T2, T3, T4, T5, T6, T7, T8> action
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 9);
 
@@ -259,7 +259,7 @@ public readonly partial struct Callable
         Func<TResult> func
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 0);
 
@@ -276,7 +276,7 @@ public readonly partial struct Callable
         Func<T0, TResult> func
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 1);
 
@@ -295,7 +295,7 @@ public readonly partial struct Callable
         Func<T0, T1, TResult> func
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 2);
 
@@ -315,7 +315,7 @@ public readonly partial struct Callable
         Func<T0, T1, T2, TResult> func
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 3);
 
@@ -336,7 +336,7 @@ public readonly partial struct Callable
         Func<T0, T1, T2, T3, TResult> func
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 4);
 
@@ -358,7 +358,7 @@ public readonly partial struct Callable
         Func<T0, T1, T2, T3, T4, TResult> func
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 5);
 
@@ -381,7 +381,7 @@ public readonly partial struct Callable
         Func<T0, T1, T2, T3, T4, T5, TResult> func
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 6);
 
@@ -405,7 +405,7 @@ public readonly partial struct Callable
         Func<T0, T1, T2, T3, T4, T5, T6, TResult> func
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 7);
 
@@ -430,7 +430,7 @@ public readonly partial struct Callable
         Func<T0, T1, T2, T3, T4, T5, T6, T7, TResult> func
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 8);
 
@@ -456,7 +456,7 @@ public readonly partial struct Callable
         Func<T0, T1, T2, T3, T4, T5, T6, T7, T8, TResult> func
     )
     {
-        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         {
             ThrowIfArgCountMismatch(args, 9);
 

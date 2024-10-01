@@ -1,6 +1,6 @@
-using Godot;
+using Redot;
 
-public partial class MixedReadOnlyWriteOnly : GodotObject
+public partial class MixedReadOnlyWriteOnly : RedotObject
 {
     public readonly string ReadOnlyField = "foo";
     public string ReadOnlyAutoProperty { get; } = "foo";

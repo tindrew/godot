@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_area_3d.h                                                       */
+/*  Redot_area_3d.h                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,20 +28,20 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_AREA_3D_H
-#define GODOT_AREA_3D_H
+#ifndef Redot_AREA_3D_H
+#define Redot_AREA_3D_H
 
-#include "godot_collision_object_3d.h"
+#include "Redot_collision_object_3d.h"
 
 #include "core/templates/self_list.h"
 #include "servers/physics_server_3d.h"
 
-class GodotSpace3D;
-class GodotBody3D;
-class GodotSoftBody3D;
-class GodotConstraint3D;
+class RedotSpace3D;
+class RedotBody3D;
+class RedotSoftBody3D;
+class RedotConstraint3D;
 
-class GodotArea3D : public GodotCollisionObject3D {
+class RedotArea3D : public RedotCollisionObject3D {
 	PhysicsServer3D::AreaSpaceOverrideMode gravity_override_mode = PhysicsServer3D::AREA_SPACE_OVERRIDE_DISABLED;
 	PhysicsServer3D::AreaSpaceOverrideMode linear_damping_override_mode = PhysicsServer3D::AREA_SPACE_OVERRIDE_DISABLED;
 	PhysicsServer3D::AreaSpaceOverrideMode angular_damping_override_mode = PhysicsServer3D::AREA_SPACE_OVERRIDE_DISABLED;
@@ -62,8 +62,8 @@ class GodotArea3D : public GodotCollisionObject3D {
 	Callable monitor_callback;
 	Callable area_monitor_callback;
 
-	SelfList<GodotArea3D> monitor_query_list;
-	SelfList<GodotArea3D> moved_list;
+	SelfList<RedotArea3D> monitor_query_list;
+	SelfList<RedotArea3D> moved_list;
 
 	struct BodyKey {
 		RID rid;
@@ -83,9 +83,9 @@ class GodotArea3D : public GodotCollisionObject3D {
 		}
 
 		_FORCE_INLINE_ BodyKey() {}
-		BodyKey(GodotSoftBody3D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
-		BodyKey(GodotBody3D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
-		BodyKey(GodotArea3D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
+		BodyKey(RedotSoftBody3D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
+		BodyKey(RedotBody3D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
+		BodyKey(RedotArea3D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
 	};
 
 	struct BodyState {
@@ -98,7 +98,7 @@ class GodotArea3D : public GodotCollisionObject3D {
 	HashMap<BodyKey, BodyState, BodyKey> monitored_bodies;
 	HashMap<BodyKey, BodyState, BodyKey> monitored_areas;
 
-	HashSet<GodotConstraint3D *> constraints;
+	HashSet<RedotConstraint3D *> constraints;
 
 	virtual void _shapes_changed() override;
 	void _queue_monitor_update();
@@ -112,14 +112,14 @@ public:
 	void set_area_monitor_callback(const Callable &p_callback);
 	_FORCE_INLINE_ bool has_area_monitor_callback() const { return area_monitor_callback.is_valid(); }
 
-	_FORCE_INLINE_ void add_body_to_query(GodotBody3D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
-	_FORCE_INLINE_ void remove_body_from_query(GodotBody3D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
+	_FORCE_INLINE_ void add_body_to_query(RedotBody3D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
+	_FORCE_INLINE_ void remove_body_from_query(RedotBody3D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
 
-	_FORCE_INLINE_ void add_soft_body_to_query(GodotSoftBody3D *p_soft_body, uint32_t p_soft_body_shape, uint32_t p_area_shape);
-	_FORCE_INLINE_ void remove_soft_body_from_query(GodotSoftBody3D *p_soft_body, uint32_t p_soft_body_shape, uint32_t p_area_shape);
+	_FORCE_INLINE_ void add_soft_body_to_query(RedotSoftBody3D *p_soft_body, uint32_t p_soft_body_shape, uint32_t p_area_shape);
+	_FORCE_INLINE_ void remove_soft_body_from_query(RedotSoftBody3D *p_soft_body, uint32_t p_soft_body_shape, uint32_t p_area_shape);
 
-	_FORCE_INLINE_ void add_area_to_query(GodotArea3D *p_area, uint32_t p_area_shape, uint32_t p_self_shape);
-	_FORCE_INLINE_ void remove_area_from_query(GodotArea3D *p_area, uint32_t p_area_shape, uint32_t p_self_shape);
+	_FORCE_INLINE_ void add_area_to_query(RedotArea3D *p_area, uint32_t p_area_shape, uint32_t p_self_shape);
+	_FORCE_INLINE_ void remove_area_from_query(RedotArea3D *p_area, uint32_t p_area_shape, uint32_t p_self_shape);
 
 	void set_param(PhysicsServer3D::AreaParameter p_param, const Variant &p_value);
 	Variant get_param(PhysicsServer3D::AreaParameter p_param) const;
@@ -157,9 +157,9 @@ public:
 	_FORCE_INLINE_ void set_wind_direction(const Vector3 &p_wind_direction) { wind_direction = p_wind_direction; }
 	_FORCE_INLINE_ const Vector3 &get_wind_direction() const { return wind_direction; }
 
-	_FORCE_INLINE_ void add_constraint(GodotConstraint3D *p_constraint) { constraints.insert(p_constraint); }
-	_FORCE_INLINE_ void remove_constraint(GodotConstraint3D *p_constraint) { constraints.erase(p_constraint); }
-	_FORCE_INLINE_ const HashSet<GodotConstraint3D *> &get_constraints() const { return constraints; }
+	_FORCE_INLINE_ void add_constraint(RedotConstraint3D *p_constraint) { constraints.insert(p_constraint); }
+	_FORCE_INLINE_ void remove_constraint(RedotConstraint3D *p_constraint) { constraints.erase(p_constraint); }
+	_FORCE_INLINE_ const HashSet<RedotConstraint3D *> &get_constraints() const { return constraints; }
 	_FORCE_INLINE_ void clear_constraints() { constraints.clear(); }
 
 	void set_monitorable(bool p_monitorable);
@@ -167,17 +167,17 @@ public:
 
 	void set_transform(const Transform3D &p_transform);
 
-	void set_space(GodotSpace3D *p_space) override;
+	void set_space(RedotSpace3D *p_space) override;
 
 	void call_queries();
 
 	void compute_gravity(const Vector3 &p_position, Vector3 &r_gravity) const;
 
-	GodotArea3D();
-	~GodotArea3D();
+	RedotArea3D();
+	~RedotArea3D();
 };
 
-void GodotArea3D::add_soft_body_to_query(GodotSoftBody3D *p_soft_body, uint32_t p_soft_body_shape, uint32_t p_area_shape) {
+void RedotArea3D::add_soft_body_to_query(RedotSoftBody3D *p_soft_body, uint32_t p_soft_body_shape, uint32_t p_area_shape) {
 	BodyKey bk(p_soft_body, p_soft_body_shape, p_area_shape);
 	monitored_soft_bodies[bk].inc();
 	if (!monitor_query_list.in_list()) {
@@ -185,7 +185,7 @@ void GodotArea3D::add_soft_body_to_query(GodotSoftBody3D *p_soft_body, uint32_t 
 	}
 }
 
-void GodotArea3D::remove_soft_body_from_query(GodotSoftBody3D *p_soft_body, uint32_t p_soft_body_shape, uint32_t p_area_shape) {
+void RedotArea3D::remove_soft_body_from_query(RedotSoftBody3D *p_soft_body, uint32_t p_soft_body_shape, uint32_t p_area_shape) {
 	BodyKey bk(p_soft_body, p_soft_body_shape, p_area_shape);
 	monitored_soft_bodies[bk].dec();
 	if (get_space() && !monitor_query_list.in_list()) {
@@ -193,7 +193,7 @@ void GodotArea3D::remove_soft_body_from_query(GodotSoftBody3D *p_soft_body, uint
 	}
 }
 
-void GodotArea3D::add_body_to_query(GodotBody3D *p_body, uint32_t p_body_shape, uint32_t p_area_shape) {
+void RedotArea3D::add_body_to_query(RedotBody3D *p_body, uint32_t p_body_shape, uint32_t p_area_shape) {
 	BodyKey bk(p_body, p_body_shape, p_area_shape);
 	monitored_bodies[bk].inc();
 	if (!monitor_query_list.in_list()) {
@@ -201,7 +201,7 @@ void GodotArea3D::add_body_to_query(GodotBody3D *p_body, uint32_t p_body_shape, 
 	}
 }
 
-void GodotArea3D::remove_body_from_query(GodotBody3D *p_body, uint32_t p_body_shape, uint32_t p_area_shape) {
+void RedotArea3D::remove_body_from_query(RedotBody3D *p_body, uint32_t p_body_shape, uint32_t p_area_shape) {
 	BodyKey bk(p_body, p_body_shape, p_area_shape);
 	monitored_bodies[bk].dec();
 	if (get_space() && !monitor_query_list.in_list()) {
@@ -209,7 +209,7 @@ void GodotArea3D::remove_body_from_query(GodotBody3D *p_body, uint32_t p_body_sh
 	}
 }
 
-void GodotArea3D::add_area_to_query(GodotArea3D *p_area, uint32_t p_area_shape, uint32_t p_self_shape) {
+void RedotArea3D::add_area_to_query(RedotArea3D *p_area, uint32_t p_area_shape, uint32_t p_self_shape) {
 	BodyKey bk(p_area, p_area_shape, p_self_shape);
 	monitored_areas[bk].inc();
 	if (!monitor_query_list.in_list()) {
@@ -217,7 +217,7 @@ void GodotArea3D::add_area_to_query(GodotArea3D *p_area, uint32_t p_area_shape, 
 	}
 }
 
-void GodotArea3D::remove_area_from_query(GodotArea3D *p_area, uint32_t p_area_shape, uint32_t p_self_shape) {
+void RedotArea3D::remove_area_from_query(RedotArea3D *p_area, uint32_t p_area_shape, uint32_t p_self_shape) {
 	BodyKey bk(p_area, p_area_shape, p_self_shape);
 	monitored_areas[bk].dec();
 	if (get_space() && !monitor_query_list.in_list()) {
@@ -226,15 +226,15 @@ void GodotArea3D::remove_area_from_query(GodotArea3D *p_area, uint32_t p_area_sh
 }
 
 struct AreaCMP {
-	GodotArea3D *area = nullptr;
+	RedotArea3D *area = nullptr;
 	int refCount = 0;
 	_FORCE_INLINE_ bool operator==(const AreaCMP &p_cmp) const { return area->get_self() == p_cmp.area->get_self(); }
 	_FORCE_INLINE_ bool operator<(const AreaCMP &p_cmp) const { return area->get_priority() < p_cmp.area->get_priority(); }
 	_FORCE_INLINE_ AreaCMP() {}
-	_FORCE_INLINE_ AreaCMP(GodotArea3D *p_area) {
+	_FORCE_INLINE_ AreaCMP(RedotArea3D *p_area) {
 		area = p_area;
 		refCount = 1;
 	}
 };
 
-#endif // GODOT_AREA_3D_H
+#endif // Redot_AREA_3D_H

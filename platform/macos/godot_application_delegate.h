@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_application_delegate.h                                          */
+/*  Redot_application_delegate.h                                          */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,19 +28,19 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_APPLICATION_DELEGATE_H
-#define GODOT_APPLICATION_DELEGATE_H
+#ifndef Redot_APPLICATION_DELEGATE_H
+#define Redot_APPLICATION_DELEGATE_H
 
 #include "core/os/os.h"
 
 #import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
 
-@interface GodotApplicationDelegate : NSObject <NSUserInterfaceItemSearching, NSApplicationDelegate>
+@interface RedotApplicationDelegate : NSObject <NSUserInterfaceItemSearching, NSApplicationDelegate>
 - (void)forceUnbundledWindowActivationHackStep1;
 - (void)forceUnbundledWindowActivationHackStep2;
 - (void)forceUnbundledWindowActivationHackStep3;
 - (void)handleAppleEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent;
 @end
 
-#endif // GODOT_APPLICATION_DELEGATE_H
+#endif // Redot_APPLICATION_DELEGATE_H

@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotVulkanRenderView.java                                            */
+/*  RedotVulkanRenderView.java                                            */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,11 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot;
+package org.Redotengine.Redot;
 
-import org.godotengine.godot.input.GodotInputHandler;
-import org.godotengine.godot.vulkan.VkRenderer;
-import org.godotengine.godot.vulkan.VkSurfaceView;
+import org.Redotengine.Redot.input.RedotInputHandler;
+import org.Redotengine.Redot.vulkan.VkRenderer;
+import org.Redotengine.Redot.vulkan.VkSurfaceView;
 
 import android.annotation.SuppressLint;
 import android.content.res.AssetManager;
@@ -50,18 +50,18 @@ import androidx.annotation.Keep;
 
 import java.io.InputStream;
 
-class GodotVulkanRenderView extends VkSurfaceView implements GodotRenderView {
-	private final GodotHost host;
-	private final Godot godot;
-	private final GodotInputHandler mInputHandler;
+class RedotVulkanRenderView extends VkSurfaceView implements RedotRenderView {
+	private final RedotHost host;
+	private final Redot Redot;
+	private final RedotInputHandler mInputHandler;
 	private final VkRenderer mRenderer;
 	private final SparseArray<PointerIcon> customPointerIcons = new SparseArray<>();
 
-	public GodotVulkanRenderView(GodotHost host, Godot godot, GodotInputHandler inputHandler) {
+	public RedotVulkanRenderView(RedotHost host, Redot Redot, RedotInputHandler inputHandler) {
 		super(host.getActivity());
 
 		this.host = host;
-		this.godot = godot;
+		this.Redot = Redot;
 		mInputHandler = inputHandler;
 		mRenderer = new VkRenderer();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -89,7 +89,7 @@ class GodotVulkanRenderView extends VkSurfaceView implements GodotRenderView {
 	@Override
 	public void onActivityPaused() {
 		queueOnVkThread(() -> {
-			GodotLib.focusout();
+			RedotLib.focusout();
 			// Pause the renderer
 			mRenderer.onVkPause();
 		});
@@ -110,7 +110,7 @@ class GodotVulkanRenderView extends VkSurfaceView implements GodotRenderView {
 		queueOnVkThread(() -> {
 			// Resume the renderer
 			mRenderer.onVkResume();
-			GodotLib.focusin();
+			RedotLib.focusin();
 		});
 	}
 
@@ -120,7 +120,7 @@ class GodotVulkanRenderView extends VkSurfaceView implements GodotRenderView {
 	}
 
 	@Override
-	public GodotInputHandler getInputHandler() {
+	public RedotInputHandler getInputHandler() {
 		return mInputHandler;
 	}
 
@@ -183,10 +183,10 @@ class GodotVulkanRenderView extends VkSurfaceView implements GodotRenderView {
 			try {
 				Bitmap bitmap = null;
 				if (!TextUtils.isEmpty(imagePath)) {
-					if (godot.getDirectoryAccessHandler().filesystemFileExists(imagePath)) {
+					if (Redot.getDirectoryAccessHandler().filesystemFileExists(imagePath)) {
 						// Try to load the bitmap from the file system
 						bitmap = BitmapFactory.decodeFile(imagePath);
-					} else if (godot.getDirectoryAccessHandler().assetsFileExists(imagePath)) {
+					} else if (Redot.getDirectoryAccessHandler().assetsFileExists(imagePath)) {
 						// Try to load the bitmap from the assets directory
 						AssetManager am = getContext().getAssets();
 						InputStream imageInputStream = am.open(imagePath);

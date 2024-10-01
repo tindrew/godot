@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Godot.SourceGenerators
+namespace Redot.SourceGenerators
 {
     [Generator]
     public class ScriptPropertyDefValGenerator : ISourceGenerator
@@ -17,15 +17,15 @@ namespace Godot.SourceGenerators
 
         public void Execute(GeneratorExecutionContext context)
         {
-            if (context.IsGodotSourceGeneratorDisabled("ScriptPropertyDefVal"))
+            if (context.IsRedotSourceGeneratorDisabled("ScriptPropertyDefVal"))
                 return;
 
-            INamedTypeSymbol[] godotClasses = context
+            INamedTypeSymbol[] RedotClasses = context
                 .Compilation.SyntaxTrees
                 .SelectMany(tree =>
                     tree.GetRoot().DescendantNodes()
                         .OfType<ClassDeclarationSyntax>()
-                        .SelectGodotScriptClasses(context.Compilation)
+                        .SelectRedotScriptClasses(context.Compilation)
                         // Report and skip non-partial classes
                         .Where(x =>
                         {
@@ -46,18 +46,18 @@ namespace Godot.SourceGenerators
                 .Distinct<INamedTypeSymbol>(SymbolEqualityComparer.Default)
                 .ToArray();
 
-            if (godotClasses.Length > 0)
+            if (RedotClasses.Length > 0)
             {
                 var typeCache = new MarshalUtils.TypeCache(context.Compilation);
 
-                foreach (var godotClass in godotClasses)
+                foreach (var RedotClass in RedotClasses)
                 {
-                    VisitGodotScriptClass(context, typeCache, godotClass);
+                    VisitRedotScriptClass(context, typeCache, RedotClass);
                 }
             }
         }
 
-        private static void VisitGodotScriptClass(
+        private static void VisitRedotScriptClass(
             GeneratorExecutionContext context,
             MarshalUtils.TypeCache typeCache,
             INamedTypeSymbol symbol
@@ -69,7 +69,7 @@ namespace Godot.SourceGenerators
                 : string.Empty;
             bool hasNamespace = classNs.Length != 0;
 
-            bool isNode = symbol.InheritsFrom("GodotSharp", GodotClasses.Node);
+            bool isNode = symbol.InheritsFrom("RedotSharp", RedotClasses.Node);
 
             bool isInnerClass = symbol.ContainingType != null;
 
@@ -117,14 +117,14 @@ namespace Godot.SourceGenerators
                 .Where(s => s.Kind == SymbolKind.Property)
                 .Cast<IPropertySymbol>()
                 .Where(s => s.GetAttributes()
-                    .Any(a => a.AttributeClass?.IsGodotExportAttribute() ?? false))
+                    .Any(a => a.AttributeClass?.IsRedotExportAttribute() ?? false))
                 .ToArray();
 
             var exportedFields = members
                 .Where(s => s.Kind == SymbolKind.Field && !s.IsImplicitlyDeclared)
                 .Cast<IFieldSymbol>()
                 .Where(s => s.GetAttributes()
-                    .Any(a => a.AttributeClass?.IsGodotExportAttribute() ?? false))
+                    .Any(a => a.AttributeClass?.IsRedotExportAttribute() ?? false))
                 .ToArray();
 
             foreach (var property in exportedProperties)
@@ -150,9 +150,9 @@ namespace Godot.SourceGenerators
                 }
 
                 // TODO: We should still restore read-only properties after reloading assembly.
-                // Two possible ways: reflection or turn RestoreGodotObjectData into a constructor overload.
+                // Two possible ways: reflection or turn RestoreRedotObjectData into a constructor overload.
                 // Ignore properties without a getter, without a setter or with an init-only setter.
-                // Godot properties must be both readable and writable.
+                // Redot properties must be both readable and writable.
                 if (property.IsWriteOnly)
                 {
                     context.ReportDiagnostic(Diagnostic.Create(
@@ -287,8 +287,8 @@ namespace Godot.SourceGenerators
                     continue;
                 }
 
-                // TODO: We should still restore read-only fields after reloading assembly. Two possible ways: reflection or turn RestoreGodotObjectData into a constructor overload.
-                // Ignore properties without a getter or without a setter. Godot properties must be both readable and writable.
+                // TODO: We should still restore read-only fields after reloading assembly. Two possible ways: reflection or turn RestoreRedotObjectData into a constructor overload.
+                // Ignore properties without a getter or without a setter. Redot properties must be both readable and writable.
                 if (field.IsReadOnly)
                 {
                     context.ReportDiagnostic(Diagnostic.Create(
@@ -339,20 +339,20 @@ namespace Godot.SourceGenerators
                     field.Name, marshalType.Value, fieldType, value));
             }
 
-            // Generate GetGodotExportedProperties
+            // Generate GetRedotExportedProperties
 
             if (exportedMembers.Count > 0)
             {
                 source.Append("#pragma warning disable CS0109 // Disable warning about redundant 'new' keyword\n");
 
                 const string DictionaryType =
-                    "global::System.Collections.Generic.Dictionary<global::Godot.StringName, global::Godot.Variant>";
+                    "global::System.Collections.Generic.Dictionary<global::Redot.StringName, global::Redot.Variant>";
 
                 source.Append("#if TOOLS\n");
 
                 source.Append("    /// <summary>\n")
                     .Append("    /// Get the default values for all properties declared in this class.\n")
-                    .Append("    /// This method is used by Godot to determine the value that will be\n")
+                    .Append("    /// This method is used by Redot to determine the value that will be\n")
                     .Append("    /// used by the inspector when resetting properties.\n")
                     .Append("    /// Do not call this method.\n")
                     .Append("    /// </summary>\n");
@@ -361,7 +361,7 @@ namespace Godot.SourceGenerators
 
                 source.Append("    internal new static ");
                 source.Append(DictionaryType);
-                source.Append(" GetGodotPropertyDefaultValues()\n    {\n");
+                source.Append(" GetRedotPropertyDefaultValues()\n    {\n");
 
                 source.Append("        var values = new ");
                 source.Append(DictionaryType);
@@ -420,20 +420,20 @@ namespace Godot.SourceGenerators
 
         private static bool MemberHasNodeType(ITypeSymbol memberType, MarshalType marshalType)
         {
-            if (marshalType == MarshalType.GodotObjectOrDerived)
+            if (marshalType == MarshalType.RedotObjectOrDerived)
             {
-                return memberType.InheritsFrom("GodotSharp", GodotClasses.Node);
+                return memberType.InheritsFrom("RedotSharp", RedotClasses.Node);
             }
-            if (marshalType == MarshalType.GodotObjectOrDerivedArray)
+            if (marshalType == MarshalType.RedotObjectOrDerivedArray)
             {
                 var elementType = ((IArrayTypeSymbol)memberType).ElementType;
-                return elementType.InheritsFrom("GodotSharp", GodotClasses.Node);
+                return elementType.InheritsFrom("RedotSharp", RedotClasses.Node);
             }
             if (memberType is INamedTypeSymbol { IsGenericType: true } genericType)
             {
                 return genericType.TypeArguments
                     .Any(static typeArgument
-                        => typeArgument.InheritsFrom("GodotSharp", GodotClasses.Node));
+                        => typeArgument.InheritsFrom("RedotSharp", RedotClasses.Node));
             }
 
             return false;

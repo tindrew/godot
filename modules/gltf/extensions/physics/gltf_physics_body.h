@@ -2,10 +2,10 @@
 /*  gltf_physics_body.h                                                   */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -33,7 +33,7 @@
 
 #include "scene/3d/physics/physics_body_3d.h"
 
-// GLTFPhysicsBody is an intermediary between Godot's physics body nodes
+// GLTFPhysicsBody is an intermediary between Redot's physics body nodes
 // and the OMI_physics_body extension.
 // https://github.com/omigroup/gltf-extensions/tree/main/extensions/2.0/OMI_physics_body
 
@@ -41,9 +41,9 @@ class GLTFPhysicsBody : public Resource {
 	GDCLASS(GLTFPhysicsBody, Resource)
 
 public:
-	// These values map to Godot's physics body types.
+	// These values map to Redot's physics body types.
 	// When importing, the body type will be set to the closest match, and
-	// user code can change this to make Godot generate a different node type.
+	// user code can change this to make Redot generate a different node type.
 	// When exporting, this will be squashed down to one of "static",
 	// "kinematic", or "dynamic" motion types, or the "trigger" property.
 	enum class PhysicsBodyType {

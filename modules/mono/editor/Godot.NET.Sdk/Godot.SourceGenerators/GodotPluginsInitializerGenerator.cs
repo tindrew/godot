@@ -2,10 +2,10 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Godot.SourceGenerators
+namespace Redot.SourceGenerators
 {
     [Generator]
-    public class GodotPluginsInitializerGenerator : ISourceGenerator
+    public class RedotPluginsInitializerGenerator : ISourceGenerator
     {
         public void Initialize(GeneratorInitializationContext context)
         {
@@ -13,28 +13,28 @@ namespace Godot.SourceGenerators
 
         public void Execute(GeneratorExecutionContext context)
         {
-            if (context.IsGodotToolsProject() || context.IsGodotSourceGeneratorDisabled("GodotPluginsInitializer"))
+            if (context.IsRedotToolsProject() || context.IsRedotSourceGeneratorDisabled("RedotPluginsInitializer"))
                 return;
 
             string source =
                 @"using System;
 using System.Runtime.InteropServices;
-using Godot.Bridge;
-using Godot.NativeInterop;
+using Redot.Bridge;
+using Redot.NativeInterop;
 
-namespace GodotPlugins.Game
+namespace RedotPlugins.Game
 {
     internal static partial class Main
     {
-        [UnmanagedCallersOnly(EntryPoint = ""godotsharp_game_main_init"")]
-        private static godot_bool InitializeFromGameProject(IntPtr godotDllHandle, IntPtr outManagedCallbacks,
+        [UnmanagedCallersOnly(EntryPoint = ""Redotsharp_game_main_init"")]
+        private static Redot_bool InitializeFromGameProject(IntPtr RedotDllHandle, IntPtr outManagedCallbacks,
             IntPtr unmanagedCallbacks, int unmanagedCallbacksSize)
         {
             try
             {
-                DllImportResolver dllImportResolver = new GodotDllImportResolver(godotDllHandle).OnResolveDllImport;
+                DllImportResolver dllImportResolver = new RedotDllImportResolver(RedotDllHandle).OnResolveDllImport;
 
-                var coreApiAssembly = typeof(global::Godot.GodotObject).Assembly;
+                var coreApiAssembly = typeof(global::Redot.RedotObject).Assembly;
 
                 NativeLibrary.SetDllImportResolver(coreApiAssembly, dllImportResolver);
 
@@ -42,21 +42,21 @@ namespace GodotPlugins.Game
 
                 ManagedCallbacks.Create(outManagedCallbacks);
 
-                ScriptManagerBridge.LookupScriptsInAssembly(typeof(global::GodotPlugins.Game.Main).Assembly);
+                ScriptManagerBridge.LookupScriptsInAssembly(typeof(global::RedotPlugins.Game.Main).Assembly);
 
-                return godot_bool.True;
+                return Redot_bool.True;
             }
             catch (Exception e)
             {
                 global::System.Console.Error.WriteLine(e);
-                return false.ToGodotBool();
+                return false.ToRedotBool();
             }
         }
     }
 }
 ";
 
-            context.AddSource("GodotPlugins.Game.generated",
+            context.AddSource("RedotPlugins.Game.generated",
                 SourceText.From(source, Encoding.UTF8));
         }
     }

@@ -1,2 +1,2 @@
-# Ignore both the Godot executable and generated installers.
+# Ignore both the Redot executable and generated installers.
 *.exe

@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_body_direct_state_2d.h                                          */
+/*  Redot_body_direct_state_2d.h                                          */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,18 +28,18 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_BODY_DIRECT_STATE_2D_H
-#define GODOT_BODY_DIRECT_STATE_2D_H
+#ifndef Redot_BODY_DIRECT_STATE_2D_H
+#define Redot_BODY_DIRECT_STATE_2D_H
 
 #include "servers/physics_server_2d.h"
 
-class GodotBody2D;
+class RedotBody2D;
 
-class GodotPhysicsDirectBodyState2D : public PhysicsDirectBodyState2D {
-	GDCLASS(GodotPhysicsDirectBodyState2D, PhysicsDirectBodyState2D);
+class RedotPhysicsDirectBodyState2D : public PhysicsDirectBodyState2D {
+	GDCLASS(RedotPhysicsDirectBodyState2D, PhysicsDirectBodyState2D);
 
 public:
-	GodotBody2D *body = nullptr;
+	RedotBody2D *body = nullptr;
 
 	virtual Vector2 get_total_gravity() const override;
 	virtual real_t get_total_angular_damp() const override;
@@ -101,4 +101,4 @@ public:
 	virtual real_t get_step() const override;
 };
 
-#endif // GODOT_BODY_DIRECT_STATE_2D_H
+#endif // Redot_BODY_DIRECT_STATE_2D_H

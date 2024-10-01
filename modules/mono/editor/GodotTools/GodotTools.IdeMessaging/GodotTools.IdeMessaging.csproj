@@ -4,18 +4,18 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <Nullable>enable</Nullable>
-    <PackageId>GodotTools.IdeMessaging</PackageId>
+    <PackageId>RedotTools.IdeMessaging</PackageId>
     <Version>1.1.2</Version>
     <AssemblyVersion>$(Version)</AssemblyVersion>
-    <Authors>Godot Engine contributors</Authors>
+    <Authors>Redot Engine contributors</Authors>
     <Company />
-    <PackageTags>godot</PackageTags>
-    <RepositoryUrl>https://github.com/godotengine/godot/tree/master/modules/mono/editor/GodotTools/GodotTools.IdeMessaging</RepositoryUrl>
+    <PackageTags>Redot</PackageTags>
+    <RepositoryUrl>https://github.com/Redotengine/Redot/tree/master/modules/mono/editor/RedotTools/RedotTools.IdeMessaging</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Copyright (c) Godot Engine contributors</Copyright>
+    <Copyright>Copyright (c) Redot Engine contributors</Copyright>
     <Description>
-This library enables communication with the Godot Engine editor (the version with .NET support).
-It's intended for use in IDEs/editors plugins for a better experience working with Godot C# projects.
+This library enables communication with the Redot Engine editor (the version with .NET support).
+It's intended for use in IDEs/editors plugins for a better experience working with Redot C# projects.
 
 A client using this library is only compatible with servers of the same major version and of a lower or equal minor version.
     </Description>

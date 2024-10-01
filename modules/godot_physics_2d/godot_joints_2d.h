@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_joints_2d.h                                                     */
+/*  Redot_joints_2d.h                                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,13 +28,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_JOINTS_2D_H
-#define GODOT_JOINTS_2D_H
+#ifndef Redot_JOINTS_2D_H
+#define Redot_JOINTS_2D_H
 
-#include "godot_body_2d.h"
-#include "godot_constraint_2d.h"
+#include "Redot_body_2d.h"
+#include "Redot_constraint_2d.h"
 
-class GodotJoint2D : public GodotConstraint2D {
+class RedotJoint2D : public RedotConstraint2D {
 	real_t bias = 0;
 	real_t max_bias = 3.40282e+38;
 	real_t max_force = 3.40282e+38;
@@ -57,15 +57,15 @@ public:
 	virtual bool pre_solve(real_t p_step) override { return false; }
 	virtual void solve(real_t p_step) override {}
 
-	void copy_settings_from(GodotJoint2D *p_joint);
+	void copy_settings_from(RedotJoint2D *p_joint);
 
 	virtual PhysicsServer2D::JointType get_type() const { return PhysicsServer2D::JOINT_TYPE_MAX; }
-	GodotJoint2D(GodotBody2D **p_body_ptr = nullptr, int p_body_count = 0) :
-			GodotConstraint2D(p_body_ptr, p_body_count) {}
+	RedotJoint2D(RedotBody2D **p_body_ptr = nullptr, int p_body_count = 0) :
+			RedotConstraint2D(p_body_ptr, p_body_count) {}
 
-	virtual ~GodotJoint2D() {
+	virtual ~RedotJoint2D() {
 		for (int i = 0; i < get_body_count(); i++) {
-			GodotBody2D *body = get_body_ptr()[i];
+			RedotBody2D *body = get_body_ptr()[i];
 			if (body) {
 				body->remove_constraint(this, i);
 			}
@@ -73,14 +73,14 @@ public:
 	};
 };
 
-class GodotPinJoint2D : public GodotJoint2D {
+class RedotPinJoint2D : public RedotJoint2D {
 	union {
 		struct {
-			GodotBody2D *A;
-			GodotBody2D *B;
+			RedotBody2D *A;
+			RedotBody2D *B;
 		};
 
-		GodotBody2D *_arr[2] = { nullptr, nullptr };
+		RedotBody2D *_arr[2] = { nullptr, nullptr };
 	};
 
 	Transform2D M;
@@ -115,17 +115,17 @@ public:
 	void set_flag(PhysicsServer2D::PinJointFlag p_flag, bool p_enabled);
 	bool get_flag(PhysicsServer2D::PinJointFlag p_flag) const;
 
-	GodotPinJoint2D(const Vector2 &p_pos, GodotBody2D *p_body_a, GodotBody2D *p_body_b = nullptr);
+	RedotPinJoint2D(const Vector2 &p_pos, RedotBody2D *p_body_a, RedotBody2D *p_body_b = nullptr);
 };
 
-class GodotGrooveJoint2D : public GodotJoint2D {
+class RedotGrooveJoint2D : public RedotJoint2D {
 	union {
 		struct {
-			GodotBody2D *A;
-			GodotBody2D *B;
+			RedotBody2D *A;
+			RedotBody2D *B;
 		};
 
-		GodotBody2D *_arr[2] = { nullptr, nullptr };
+		RedotBody2D *_arr[2] = { nullptr, nullptr };
 	};
 
 	Vector2 A_groove_1;
@@ -149,17 +149,17 @@ public:
 	virtual bool pre_solve(real_t p_step) override;
 	virtual void solve(real_t p_step) override;
 
-	GodotGrooveJoint2D(const Vector2 &p_a_groove1, const Vector2 &p_a_groove2, const Vector2 &p_b_anchor, GodotBody2D *p_body_a, GodotBody2D *p_body_b);
+	RedotGrooveJoint2D(const Vector2 &p_a_groove1, const Vector2 &p_a_groove2, const Vector2 &p_b_anchor, RedotBody2D *p_body_a, RedotBody2D *p_body_b);
 };
 
-class GodotDampedSpringJoint2D : public GodotJoint2D {
+class RedotDampedSpringJoint2D : public RedotJoint2D {
 	union {
 		struct {
-			GodotBody2D *A;
-			GodotBody2D *B;
+			RedotBody2D *A;
+			RedotBody2D *B;
 		};
 
-		GodotBody2D *_arr[2] = { nullptr, nullptr };
+		RedotBody2D *_arr[2] = { nullptr, nullptr };
 	};
 
 	Vector2 anchor_A;
@@ -186,7 +186,7 @@ public:
 	void set_param(PhysicsServer2D::DampedSpringParam p_param, real_t p_value);
 	real_t get_param(PhysicsServer2D::DampedSpringParam p_param) const;
 
-	GodotDampedSpringJoint2D(const Vector2 &p_anchor_a, const Vector2 &p_anchor_b, GodotBody2D *p_body_a, GodotBody2D *p_body_b);
+	RedotDampedSpringJoint2D(const Vector2 &p_anchor_a, const Vector2 &p_anchor_b, RedotBody2D *p_body_a, RedotBody2D *p_body_b);
 };
 
-#endif // GODOT_JOINTS_2D_H
+#endif // Redot_JOINTS_2D_H

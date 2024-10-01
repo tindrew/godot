@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/68184
+# https://github.com/Redotengine/Redot/issues/68184
 
 var node: Node:
 	get:

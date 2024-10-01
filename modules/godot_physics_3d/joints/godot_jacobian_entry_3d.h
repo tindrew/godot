@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_jacobian_entry_3d.h                                             */
+/*  Redot_jacobian_entry_3d.h                                             */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,11 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_JACOBIAN_ENTRY_3D_H
-#define GODOT_JACOBIAN_ENTRY_3D_H
+#ifndef Redot_JACOBIAN_ENTRY_3D_H
+#define Redot_JACOBIAN_ENTRY_3D_H
 
 /*
-Adapted to Godot from the Bullet library.
+Adapted to Redot from the Bullet library.
 */
 
 /*
@@ -52,11 +52,11 @@ subject to the following restrictions:
 
 #include "core/math/transform_3d.h"
 
-class GodotJacobianEntry3D {
+class RedotJacobianEntry3D {
 public:
-	GodotJacobianEntry3D() {}
+	RedotJacobianEntry3D() {}
 	//constraint between two different rigidbodies
-	GodotJacobianEntry3D(
+	RedotJacobianEntry3D(
 			const Basis &world2A,
 			const Basis &world2B,
 			const Vector3 &rel_pos1, const Vector3 &rel_pos2,
@@ -76,7 +76,7 @@ public:
 	}
 
 	//angular constraint between two different rigidbodies
-	GodotJacobianEntry3D(const Vector3 &jointAxis,
+	RedotJacobianEntry3D(const Vector3 &jointAxis,
 			const Basis &world2A,
 			const Basis &world2B,
 			const Vector3 &inertiaInvA,
@@ -92,7 +92,7 @@ public:
 	}
 
 	//angular constraint between two different rigidbodies
-	GodotJacobianEntry3D(const Vector3 &axisInA,
+	RedotJacobianEntry3D(const Vector3 &axisInA,
 			const Vector3 &axisInB,
 			const Vector3 &inertiaInvA,
 			const Vector3 &inertiaInvB) :
@@ -107,7 +107,7 @@ public:
 	}
 
 	//constraint on one rigidbody
-	GodotJacobianEntry3D(
+	RedotJacobianEntry3D(
 			const Basis &world2A,
 			const Vector3 &rel_pos1, const Vector3 &rel_pos2,
 			const Vector3 &jointAxis,
@@ -126,16 +126,16 @@ public:
 	real_t getDiagonal() const { return m_Adiag; }
 
 	// for two constraints on the same rigidbody (for example vehicle friction)
-	real_t getNonDiagonal(const GodotJacobianEntry3D &jacB, const real_t massInvA) const {
-		const GodotJacobianEntry3D &jacA = *this;
+	real_t getNonDiagonal(const RedotJacobianEntry3D &jacB, const real_t massInvA) const {
+		const RedotJacobianEntry3D &jacA = *this;
 		real_t lin = massInvA * jacA.m_linearJointAxis.dot(jacB.m_linearJointAxis);
 		real_t ang = jacA.m_0MinvJt.dot(jacB.m_aJ);
 		return lin + ang;
 	}
 
 	// for two constraints on sharing two same rigidbodies (for example two contact points between two rigidbodies)
-	real_t getNonDiagonal(const GodotJacobianEntry3D &jacB, const real_t massInvA, const real_t massInvB) const {
-		const GodotJacobianEntry3D &jacA = *this;
+	real_t getNonDiagonal(const RedotJacobianEntry3D &jacB, const real_t massInvA, const real_t massInvB) const {
+		const RedotJacobianEntry3D &jacA = *this;
 		Vector3 lin = jacA.m_linearJointAxis * jacB.m_linearJointAxis;
 		Vector3 ang0 = jacA.m_0MinvJt * jacB.m_aJ;
 		Vector3 ang1 = jacA.m_1MinvJt * jacB.m_bJ;
@@ -166,4 +166,4 @@ public:
 	real_t m_Adiag = 1.0;
 };
 
-#endif // GODOT_JACOBIAN_ENTRY_3D_H
+#endif // Redot_JACOBIAN_ENTRY_3D_H

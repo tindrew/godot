@@ -1,15 +1,15 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
 #nullable enable
 
-namespace Godot
+namespace Redot
 {
-    public partial class GodotObject
+    public partial class RedotObject
     {
         /// <summary>
-        /// Returns the <see cref="GodotObject"/> that corresponds to <paramref name="instanceId"/>.
+        /// Returns the <see cref="RedotObject"/> that corresponds to <paramref name="instanceId"/>.
         /// All Objects have a unique instance ID. See also <see cref="GetInstanceId"/>.
         /// </summary>
         /// <example>
@@ -28,14 +28,14 @@ namespace Godot
         /// </code>
         /// </example>
         /// <param name="instanceId">Instance ID of the Object to retrieve.</param>
-        /// <returns>The <see cref="GodotObject"/> instance.</returns>
-        public static GodotObject? InstanceFromId(ulong instanceId)
+        /// <returns>The <see cref="RedotObject"/> instance.</returns>
+        public static RedotObject? InstanceFromId(ulong instanceId)
         {
-            return InteropUtils.UnmanagedGetManaged(NativeFuncs.godotsharp_instance_from_id(instanceId));
+            return InteropUtils.UnmanagedGetManaged(NativeFuncs.Redotsharp_instance_from_id(instanceId));
         }
 
         /// <summary>
-        /// Returns <see langword="true"/> if the <see cref="GodotObject"/> that corresponds
+        /// Returns <see langword="true"/> if the <see cref="RedotObject"/> that corresponds
         /// to <paramref name="id"/> is a valid object (e.g. has not been deleted from
         /// memory). All Objects have a unique instance ID.
         /// </summary>
@@ -48,11 +48,11 @@ namespace Godot
 
         /// <summary>
         /// Returns <see langword="true"/> if <paramref name="instance"/> is a
-        /// valid <see cref="GodotObject"/> (e.g. has not been deleted from memory).
+        /// valid <see cref="RedotObject"/> (e.g. has not been deleted from memory).
         /// </summary>
         /// <param name="instance">The instance to check.</param>
         /// <returns>If the instance is a valid object.</returns>
-        public static bool IsInstanceValid([NotNullWhen(true)] GodotObject? instance)
+        public static bool IsInstanceValid([NotNullWhen(true)] RedotObject? instance)
         {
             return instance != null && instance.NativeInstance != IntPtr.Zero;
         }
@@ -69,14 +69,14 @@ namespace Godot
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns>
-        /// The <see cref="Godot.WeakRef"/> reference to the object or <see langword="null"/>.
+        /// The <see cref="Redot.WeakRef"/> reference to the object or <see langword="null"/>.
         /// </returns>
-        public static WeakRef? WeakRef(GodotObject? obj)
+        public static WeakRef? WeakRef(RedotObject? obj)
         {
             if (!IsInstanceValid(obj))
                 return null;
 
-            NativeFuncs.godotsharp_weakref(GetPtr(obj), out godot_ref weakRef);
+            NativeFuncs.Redotsharp_weakref(GetPtr(obj), out Redot_ref weakRef);
             using (weakRef)
             {
                 if (weakRef.IsNull)

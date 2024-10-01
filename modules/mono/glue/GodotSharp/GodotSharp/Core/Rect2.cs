@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 #nullable enable
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
     /// 2D axis-aligned bounding box. Rect2 consists of a position, a size, and

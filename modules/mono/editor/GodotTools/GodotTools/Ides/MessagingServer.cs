@@ -9,16 +9,16 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using GodotTools.IdeMessaging;
-using GodotTools.IdeMessaging.Requests;
-using GodotTools.IdeMessaging.Utils;
-using GodotTools.Internals;
-using GodotTools.Utils;
+using RedotTools.IdeMessaging;
+using RedotTools.IdeMessaging.Requests;
+using RedotTools.IdeMessaging.Utils;
+using RedotTools.Internals;
+using RedotTools.Utils;
 using Newtonsoft.Json;
 using Directory = System.IO.Directory;
 using File = System.IO.File;
 
-namespace GodotTools.Ides
+namespace RedotTools.Ides
 {
     public sealed class MessagingServer : IDisposable
     {
@@ -110,12 +110,12 @@ namespace GodotTools.Ides
         {
             this._logger = logger;
 
-            _metaFilePath = Path.Combine(projectMetadataDir, GodotIdeMetadata.DefaultFileName);
+            _metaFilePath = Path.Combine(projectMetadataDir, RedotIdeMetadata.DefaultFileName);
 
             // Make sure the directory exists
             Directory.CreateDirectory(projectMetadataDir);
 
-            // The Godot editor's file system thread can keep the file open for writing, so we are forced to allow write sharing...
+            // The Redot editor's file system thread can keep the file open for writing, so we are forced to allow write sharing...
             const FileShare metaFileShare = FileShare.ReadWrite;
 
             _metaFile = File.Open(_metaFilePath, FileMode.Create, FileAccess.Write, metaFileShare);
@@ -211,7 +211,7 @@ namespace GodotTools.Ides
             {
                 if (!IsAnyConnected(identity))
                 {
-                    _logger.LogError("Cannot write request. No client connected to the Godot Ide Server.");
+                    _logger.LogError("Cannot write request. No client connected to the Redot Ide Server.");
                     return;
                 }
 
@@ -275,7 +275,7 @@ namespace GodotTools.Ides
             private static void DispatchToMainThread(Action action)
             {
                 var d = new SendOrPostCallback(state => action());
-                Godot.Dispatcher.SynchronizationContext.Post(d, null);
+                Redot.Dispatcher.SynchronizationContext.Post(d, null);
             }
 
             private readonly Dictionary<string, Peer.RequestHandler> requestHandlers = InitializeRequestHandlers();
@@ -349,11 +349,11 @@ namespace GodotTools.Ides
                 DispatchToMainThread(() =>
                 {
                     // Tell the build callback whether the editor already built the solution or not
-                    GodotSharpEditor.Instance.SkipBuildBeforePlaying = !(request.BuildBeforePlaying ?? true);
+                    RedotSharpEditor.Instance.SkipBuildBeforePlaying = !(request.BuildBeforePlaying ?? true);
 
                     // Pass the debugger agent settings to the player via an environment variables
                     // TODO: It would be better if this was an argument in EditorRunPlay instead
-                    Environment.SetEnvironmentVariable("GODOT_MONO_DEBUGGER_AGENT",
+                    Environment.SetEnvironmentVariable("Redot_MONO_DEBUGGER_AGENT",
                         "--debugger-agent=transport=dt_socket" +
                         $",address={request.DebuggerHost}:{request.DebuggerPort}" +
                         ",server=n");
@@ -362,8 +362,8 @@ namespace GodotTools.Ides
                     Internal.EditorRunPlay();
 
                     // Restore normal settings
-                    Environment.SetEnvironmentVariable("GODOT_MONO_DEBUGGER_AGENT", "");
-                    GodotSharpEditor.Instance.SkipBuildBeforePlaying = false;
+                    Environment.SetEnvironmentVariable("Redot_MONO_DEBUGGER_AGENT", "");
+                    RedotSharpEditor.Instance.SkipBuildBeforePlaying = false;
                 });
                 return Task.FromResult<Response>(new DebugPlayResponse());
             }
@@ -387,7 +387,7 @@ namespace GodotTools.Ides
                 string? scriptFileLocalized = FsPathUtils.LocalizePathWithCaseChecked(request.ScriptFile);
 
                 // The node API can only be called from the main thread.
-                await Godot.Engine.GetMainLoop().ToSignal(Godot.Engine.GetMainLoop(), "process_frame");
+                await Redot.Engine.GetMainLoop().ToSignal(Redot.Engine.GetMainLoop(), "process_frame");
 
                 var response = new CodeCompletionResponse { Kind = request.Kind, ScriptFile = request.ScriptFile };
                 response.Suggestions = Internal.CodeCompletionRequest(response.Kind,

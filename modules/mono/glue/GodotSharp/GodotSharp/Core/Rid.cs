@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 #nullable enable
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
     /// The RID type is used to access a low-level resource by its unique ID.
@@ -28,9 +28,9 @@ namespace Godot
         }
 
         /// <summary>
-        /// Constructs a new <see cref="Rid"/> for the given <see cref="GodotObject"/> <paramref name="from"/>.
+        /// Constructs a new <see cref="Rid"/> for the given <see cref="RedotObject"/> <paramref name="from"/>.
         /// </summary>
-        public Rid(GodotObject from)
+        public Rid(RedotObject from)
             => _id = from is Resource res ? res.GetRid()._id : default;
 
         /// <summary>

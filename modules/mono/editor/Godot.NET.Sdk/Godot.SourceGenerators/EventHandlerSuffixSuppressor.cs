@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace Godot.SourceGenerators
+namespace Redot.SourceGenerators
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class EventHandlerSuffixSuppressor : DiagnosticSuppressor
@@ -44,7 +44,7 @@ namespace Godot.SourceGenerators
             if (delegateSymbol == null)
                 return;
 
-            if (delegateSymbol.GetAttributes().Any(a => a.AttributeClass?.IsGodotSignalAttribute() ?? false))
+            if (delegateSymbol.GetAttributes().Any(a => a.AttributeClass?.IsRedotSignalAttribute() ?? false))
             {
                 context.ReportSuppression(Suppression.Create(_descriptor, diagnostic));
             }

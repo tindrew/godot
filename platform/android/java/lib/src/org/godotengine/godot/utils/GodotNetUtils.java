@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotNetUtils.java                                                    */
+/*  RedotNetUtils.java                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot.utils;
+package org.Redotengine.Redot.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -47,21 +47,21 @@ import java.util.Enumeration;
  * It provides access to the CA certificates KeyStore, and the WifiManager.MulticastLock, which is needed on some devices
  * to receive broadcast and multicast packets.
  */
-public class GodotNetUtils {
+public class RedotNetUtils {
 	/* A single, reference counted, multicast lock, or null if permission CHANGE_WIFI_MULTICAST_STATE is missing */
 	private WifiManager.MulticastLock multicastLock;
 
-	public GodotNetUtils(Context context) {
+	public RedotNetUtils(Context context) {
 		if (PermissionsUtil.hasManifestPermission(context, "android.permission.CHANGE_WIFI_MULTICAST_STATE")) {
 			WifiManager wifi = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-			multicastLock = wifi.createMulticastLock("GodotMulticastLock");
+			multicastLock = wifi.createMulticastLock("RedotMulticastLock");
 			multicastLock.setReferenceCounted(true);
 		}
 	}
 
 	/**
 	 * Acquire the multicast lock. This is required on some devices to receive broadcast/multicast packets.
-	 * This is done automatically by Godot when enabling broadcast or joining a multicast group on a socket.
+	 * This is done automatically by Redot when enabling broadcast or joining a multicast group on a socket.
 	 */
 	public void multicastLockAcquire() {
 		if (multicastLock == null)
@@ -69,13 +69,13 @@ public class GodotNetUtils {
 		try {
 			multicastLock.acquire();
 		} catch (RuntimeException e) {
-			Log.e("Godot", "Exception during multicast lock acquire: " + e);
+			Log.e("Redot", "Exception during multicast lock acquire: " + e);
 		}
 	}
 
 	/**
 	 * Release the multicast lock.
-	 * This is done automatically by Godot when the lock is no longer needed by a socket.
+	 * This is done automatically by Redot when the lock is no longer needed by a socket.
 	 */
 	public void multicastLockRelease() {
 		if (multicastLock == null)
@@ -83,7 +83,7 @@ public class GodotNetUtils {
 		try {
 			multicastLock.release();
 		} catch (RuntimeException e) {
-			Log.e("Godot", "Exception during multicast lock release: " + e);
+			Log.e("Redot", "Exception during multicast lock release: " + e);
 		}
 	}
 
@@ -112,7 +112,7 @@ public class GodotNetUtils {
 			}
 			return writer.toString();
 		} catch (Exception e) {
-			Log.e("Godot", "Exception while reading CA certificates: " + e);
+			Log.e("Redot", "Exception while reading CA certificates: " + e);
 			return "";
 		}
 	}

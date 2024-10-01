@@ -25,9 +25,9 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 
-// -- GODOT start --
+// -- Redot start --
 import java.lang.ref.WeakReference;
-// -- GODOT end --
+// -- Redot end --
 
 
 /**
@@ -111,7 +111,7 @@ public class DownloaderServiceMarshaller {
 
     private static class Stub implements IStub {
         private IDownloaderService mItf = null;
-        // -- GODOT start --
+        // -- Redot start --
         private final MessengerHandlerServer mMsgHandler = new MessengerHandlerServer(this);
         final Messenger mMessenger = new Messenger(mMsgHandler);
 
@@ -153,7 +153,7 @@ public class DownloaderServiceMarshaller {
                     break;
             }
         }
-        // -- GODOT end --
+        // -- Redot end --
 
         public Stub(IDownloaderService itf) {
             mItf = itf;

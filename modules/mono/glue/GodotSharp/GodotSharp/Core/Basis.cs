@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 #nullable enable
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
     /// 3×3 matrix used for 3D rotation and scale.
@@ -19,7 +19,7 @@ namespace Godot
     /// orthogonal to each other, but are not necessarily normalized (due to scaling).
     ///
     /// For more information, read this documentation article:
-    /// https://docs.godotengine.org/en/latest/tutorials/math/matrices_and_transforms.html
+    /// https://docs.Redotengine.org/en/latest/tutorials/math/matrices_and_transforms.html
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]

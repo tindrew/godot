@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_pin_joint_3d.h                                                  */
+/*  Redot_pin_joint_3d.h                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,15 +28,15 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_PIN_JOINT_3D_H
-#define GODOT_PIN_JOINT_3D_H
+#ifndef Redot_PIN_JOINT_3D_H
+#define Redot_PIN_JOINT_3D_H
 
 /*
-Adapted to Godot from the Bullet library.
+Adapted to Redot from the Bullet library.
 */
 
-#include "../godot_joint_3d.h"
-#include "godot_jacobian_entry_3d.h"
+#include "../Redot_joint_3d.h"
+#include "Redot_jacobian_entry_3d.h"
 
 /*
 Bullet Continuous Collision Detection and Physics Library
@@ -53,14 +53,14 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-class GodotPinJoint3D : public GodotJoint3D {
+class RedotPinJoint3D : public RedotJoint3D {
 	union {
 		struct {
-			GodotBody3D *A;
-			GodotBody3D *B;
+			RedotBody3D *A;
+			RedotBody3D *B;
 		};
 
-		GodotBody3D *_arr[2] = {};
+		RedotBody3D *_arr[2] = {};
 	};
 
 	real_t m_tau = 0.3; //bias
@@ -68,7 +68,7 @@ class GodotPinJoint3D : public GodotJoint3D {
 	real_t m_impulseClamp = 0.0;
 	real_t m_appliedImpulse = 0.0;
 
-	GodotJacobianEntry3D m_jac[3] = {}; //3 orthogonal linear constraints
+	RedotJacobianEntry3D m_jac[3] = {}; //3 orthogonal linear constraints
 
 	Vector3 m_pivotInA;
 	Vector3 m_pivotInB;
@@ -88,8 +88,8 @@ public:
 	Vector3 get_position_a() { return m_pivotInA; }
 	Vector3 get_position_b() { return m_pivotInB; }
 
-	GodotPinJoint3D(GodotBody3D *p_body_a, const Vector3 &p_pos_a, GodotBody3D *p_body_b, const Vector3 &p_pos_b);
-	~GodotPinJoint3D();
+	RedotPinJoint3D(RedotBody3D *p_body_a, const Vector3 &p_pos_a, RedotBody3D *p_body_b, const Vector3 &p_pos_b);
+	~RedotPinJoint3D();
 };
 
-#endif // GODOT_PIN_JOINT_3D_H
+#endif // Redot_PIN_JOINT_3D_H

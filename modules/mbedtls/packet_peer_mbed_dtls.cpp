@@ -2,10 +2,10 @@
 /*  packet_peer_mbed_dtls.cpp                                             */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -239,7 +239,7 @@ int PacketPeerMbedDTLS::get_available_packet_count() const {
 }
 
 int PacketPeerMbedDTLS::get_max_packet_size() const {
-	return 488; // 512 (UDP in Godot) - 24 (DTLS header)
+	return 488; // 512 (UDP in Redot) - 24 (DTLS header)
 }
 
 PacketPeerMbedDTLS::PacketPeerMbedDTLS() {

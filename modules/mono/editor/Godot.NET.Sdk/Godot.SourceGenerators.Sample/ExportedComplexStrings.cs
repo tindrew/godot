@@ -1,6 +1,6 @@
-using Godot;
+using Redot;
 
-namespace Godot.SourceGenerators.Sample
+namespace Redot.SourceGenerators.Sample
 {
     public partial class ExportedComplexStrings : Node
     {

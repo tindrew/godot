@@ -2,10 +2,10 @@
 /*  fastnoise_lite.h                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -128,7 +128,7 @@ private:
 	real_t domain_warp_fractal_lacunarity = 6;
 	real_t domain_warp_fractal_gain = 0.5;
 
-	// This needs manual conversion because Godots Inspector property API does not support discontiguous enum indices.
+	// This needs manual conversion because Redots Inspector property API does not support discontiguous enum indices.
 	_FastNoiseLite::FractalType _convert_domain_warp_fractal_type_enum(DomainWarpFractalType p_domain_warp_fractal_type);
 
 public:

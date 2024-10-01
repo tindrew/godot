@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GodotTools.Core
+namespace RedotTools.Core
 {
     public static class ProcessExtensions
     {

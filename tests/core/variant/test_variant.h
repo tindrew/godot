@@ -2,10 +2,10 @@
 /*  test_variant.h                                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -1927,9 +1927,9 @@ TEST_CASE("[Variant] Identity comparison") {
 	CHECK(nil.identity_compare(Variant()));
 	CHECK_FALSE(nil.identity_compare(true));
 
-	Variant node_path = NodePath("godot");
+	Variant node_path = NodePath("Redot");
 	CHECK(node_path.identity_compare(node_path));
-	CHECK(node_path.identity_compare(NodePath("godot")));
+	CHECK(node_path.identity_compare(NodePath("Redot")));
 	CHECK_FALSE(node_path.identity_compare(NodePath("waiting")));
 
 	Variant plane = Plane();
@@ -1967,14 +1967,14 @@ TEST_CASE("[Variant] Identity comparison") {
 	CHECK(signal.identity_compare(Signal()));
 	CHECK_FALSE(signal.identity_compare(Signal(ObjectID(), StringName("lambda"))));
 
-	Variant str = "godot";
+	Variant str = "Redot";
 	CHECK(str.identity_compare(str));
-	CHECK(str.identity_compare("godot"));
+	CHECK(str.identity_compare("Redot"));
 	CHECK_FALSE(str.identity_compare("waiting"));
 
-	Variant str_name = StringName("godot");
+	Variant str_name = StringName("Redot");
 	CHECK(str_name.identity_compare(str_name));
-	CHECK(str_name.identity_compare(StringName("godot")));
+	CHECK(str_name.identity_compare(StringName("Redot")));
 	CHECK_FALSE(str_name.identity_compare(StringName("waiting")));
 
 	Variant transform2d = Transform2D();

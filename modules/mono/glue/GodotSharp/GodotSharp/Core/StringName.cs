@@ -1,10 +1,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
 #nullable enable
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
     /// StringNames are immutable strings designed for general-purpose representation of unique names.
@@ -15,7 +15,7 @@ namespace Godot
     /// </summary>
     public sealed class StringName : IDisposable, IEquatable<StringName?>
     {
-        internal godot_string_name.movable NativeValue;
+        internal Redot_string_name.movable NativeValue;
 
         private WeakReference<IDisposable>? _weakReferenceToSelf;
 
@@ -44,14 +44,14 @@ namespace Godot
             }
         }
 
-        private StringName(godot_string_name nativeValueToOwn)
+        private StringName(Redot_string_name nativeValueToOwn)
         {
-            NativeValue = (godot_string_name.movable)nativeValueToOwn;
+            NativeValue = (Redot_string_name.movable)nativeValueToOwn;
             _weakReferenceToSelf = DisposablesTracker.RegisterDisposable(this);
         }
 
         // Explicit name to make it very clear
-        internal static StringName CreateTakingOwnershipOfDisposableValue(godot_string_name nativeValueToOwn)
+        internal static StringName CreateTakingOwnershipOfDisposableValue(Redot_string_name nativeValueToOwn)
             => new StringName(nativeValueToOwn);
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Godot
         {
             if (!string.IsNullOrEmpty(name))
             {
-                NativeValue = (godot_string_name.movable)NativeFuncs.godotsharp_string_name_new_from_string(name);
+                NativeValue = (Redot_string_name.movable)NativeFuncs.Redotsharp_string_name_new_from_string(name);
                 _weakReferenceToSelf = DisposablesTracker.RegisterDisposable(this);
             }
         }
@@ -96,8 +96,8 @@ namespace Godot
             if (IsEmpty)
                 return string.Empty;
 
-            var src = (godot_string_name)NativeValue;
-            NativeFuncs.godotsharp_string_name_as_string(out godot_string dest, src);
+            var src = (Redot_string_name)NativeValue;
+            NativeFuncs.Redotsharp_string_name_as_string(out Redot_string dest, src);
             using (dest)
                 return Marshaling.ConvertStringToManaged(dest);
         }
@@ -127,29 +127,29 @@ namespace Godot
             return NativeValue.DangerousSelfRef == other.NativeValue.DangerousSelfRef;
         }
 
-        public static bool operator ==(StringName? left, in godot_string_name right)
+        public static bool operator ==(StringName? left, in Redot_string_name right)
         {
             if (left is null)
                 return right.IsEmpty;
             return left.Equals(right);
         }
 
-        public static bool operator !=(StringName? left, in godot_string_name right)
+        public static bool operator !=(StringName? left, in Redot_string_name right)
         {
             return !(left == right);
         }
 
-        public static bool operator ==(in godot_string_name left, StringName? right)
+        public static bool operator ==(in Redot_string_name left, StringName? right)
         {
             return right == left;
         }
 
-        public static bool operator !=(in godot_string_name left, StringName? right)
+        public static bool operator !=(in Redot_string_name left, StringName? right)
         {
             return !(right == left);
         }
 
-        public bool Equals(in godot_string_name other)
+        public bool Equals(in Redot_string_name other)
         {
             return NativeValue.DangerousSelfRef == other;
         }

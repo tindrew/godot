@@ -2,10 +2,10 @@
 /*  openxr_extension_wrapper_extension.h                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -65,7 +65,7 @@ public:
 	virtual XrCompositionLayerBaseHeader *get_composition_layer(int p_index) override;
 	virtual int get_composition_layer_order(int p_index) override;
 
-	//TODO workaround as GDExtensionPtr<void> return type results in build error in godot-cpp
+	//TODO workaround as GDExtensionPtr<void> return type results in build error in Redot-cpp
 	GDVIRTUAL1R(uint64_t, _set_system_properties_and_get_next_pointer, GDExtensionPtr<void>);
 	GDVIRTUAL1R(uint64_t, _set_instance_create_info_and_get_next_pointer, GDExtensionPtr<void>);
 	GDVIRTUAL1R(uint64_t, _set_session_create_and_get_next_pointer, GDExtensionPtr<void>);

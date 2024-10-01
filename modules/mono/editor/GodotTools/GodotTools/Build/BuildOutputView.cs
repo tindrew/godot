@@ -1,7 +1,7 @@
-using Godot;
-using static GodotTools.Internals.Globals;
+using Redot;
+using static RedotTools.Internals.Globals;
 
-namespace GodotTools.Build
+namespace RedotTools.Build
 {
     public partial class BuildOutputView : HBoxContainer
     {

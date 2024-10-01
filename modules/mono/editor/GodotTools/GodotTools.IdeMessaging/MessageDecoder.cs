@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace GodotTools.IdeMessaging
+namespace RedotTools.IdeMessaging
 {
     public class MessageDecoder
     {

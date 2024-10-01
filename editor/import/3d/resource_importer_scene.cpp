@@ -2,10 +2,10 @@
 /*  resource_importer_scene.cpp                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -3025,7 +3025,7 @@ Error ResourceImporterScene::import(const String &p_source_file, const String &p
 			root_type = ScriptServer::get_global_class_base(root_type);
 		}
 		if (scene->get_class_name() != root_type) {
-			// If the user specified a Godot node type that does not match
+			// If the user specified a Redot node type that does not match
 			// what the scene import gave us, replace the root node.
 			Node *base_node = Object::cast_to<Node>(ClassDB::instantiate(root_type));
 			if (base_node) {
@@ -3042,7 +3042,7 @@ Error ResourceImporterScene::import(const String &p_source_file, const String &p
 
 	String root_name = p_options["nodes/root_name"];
 	if (!root_name.is_empty() && root_name != "Scene Root") {
-		// TODO: Remove `&& root_name != "Scene Root"` for Godot 5.0.
+		// TODO: Remove `&& root_name != "Scene Root"` for Redot 5.0.
 		// For backwards compatibility with existing .import files,
 		// treat "Scene Root" as having no root name override.
 		scene->set_name(root_name);

@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_webxr.h                                                         */
+/*  Redot_webxr.h                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_WEBXR_H
-#define GODOT_WEBXR_H
+#ifndef Redot_WEBXR_H
+#define Redot_WEBXR_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -44,37 +44,37 @@ enum WebXRInputEvent {
 	WEBXR_INPUT_EVENT_SQUEEZEEND,
 };
 
-typedef void (*GodotWebXRSupportedCallback)(char *p_session_mode, int p_supported);
-typedef void (*GodotWebXRStartedCallback)(char *p_reference_space_type, char *p_enabled_features, char *p_environment_blend_mode);
-typedef void (*GodotWebXREndedCallback)();
-typedef void (*GodotWebXRFailedCallback)(char *p_message);
-typedef void (*GodotWebXRInputEventCallback)(int p_event_type, int p_input_source_id);
-typedef void (*GodotWebXRSimpleEventCallback)(char *p_signal_name);
+typedef void (*RedotWebXRSupportedCallback)(char *p_session_mode, int p_supported);
+typedef void (*RedotWebXRStartedCallback)(char *p_reference_space_type, char *p_enabled_features, char *p_environment_blend_mode);
+typedef void (*RedotWebXREndedCallback)();
+typedef void (*RedotWebXRFailedCallback)(char *p_message);
+typedef void (*RedotWebXRInputEventCallback)(int p_event_type, int p_input_source_id);
+typedef void (*RedotWebXRSimpleEventCallback)(char *p_signal_name);
 
-extern int godot_webxr_is_supported();
-extern void godot_webxr_is_session_supported(const char *p_session_mode, GodotWebXRSupportedCallback p_callback);
+extern int Redot_webxr_is_supported();
+extern void Redot_webxr_is_session_supported(const char *p_session_mode, RedotWebXRSupportedCallback p_callback);
 
-extern void godot_webxr_initialize(
+extern void Redot_webxr_initialize(
 		const char *p_session_mode,
 		const char *p_required_features,
 		const char *p_optional_features,
 		const char *p_requested_reference_space_types,
-		GodotWebXRStartedCallback p_on_session_started,
-		GodotWebXREndedCallback p_on_session_ended,
-		GodotWebXRFailedCallback p_on_session_failed,
-		GodotWebXRInputEventCallback p_on_input_event,
-		GodotWebXRSimpleEventCallback p_on_simple_event);
-extern void godot_webxr_uninitialize();
+		RedotWebXRStartedCallback p_on_session_started,
+		RedotWebXREndedCallback p_on_session_ended,
+		RedotWebXRFailedCallback p_on_session_failed,
+		RedotWebXRInputEventCallback p_on_input_event,
+		RedotWebXRSimpleEventCallback p_on_simple_event);
+extern void Redot_webxr_uninitialize();
 
-extern int godot_webxr_get_view_count();
-extern bool godot_webxr_get_render_target_size(int *r_size);
-extern bool godot_webxr_get_transform_for_view(int p_view, float *r_transform);
-extern bool godot_webxr_get_projection_for_view(int p_view, float *r_transform);
-extern unsigned int godot_webxr_get_color_texture();
-extern unsigned int godot_webxr_get_depth_texture();
-extern unsigned int godot_webxr_get_velocity_texture();
+extern int Redot_webxr_get_view_count();
+extern bool Redot_webxr_get_render_target_size(int *r_size);
+extern bool Redot_webxr_get_transform_for_view(int p_view, float *r_transform);
+extern bool Redot_webxr_get_projection_for_view(int p_view, float *r_transform);
+extern unsigned int Redot_webxr_get_color_texture();
+extern unsigned int Redot_webxr_get_depth_texture();
+extern unsigned int Redot_webxr_get_velocity_texture();
 
-extern bool godot_webxr_update_input_source(
+extern bool Redot_webxr_update_input_source(
 		int p_input_source_id,
 		float *r_target_pose,
 		int *r_target_ray_mode,
@@ -90,15 +90,15 @@ extern bool godot_webxr_update_input_source(
 		float *r_hand_joints,
 		float *r_hand_radii);
 
-extern char *godot_webxr_get_visibility_state();
-extern int godot_webxr_get_bounds_geometry(float **r_points);
+extern char *Redot_webxr_get_visibility_state();
+extern int Redot_webxr_get_bounds_geometry(float **r_points);
 
-extern float godot_webxr_get_frame_rate();
-extern void godot_webxr_update_target_frame_rate(float p_frame_rate);
-extern int godot_webxr_get_supported_frame_rates(float **r_frame_rates);
+extern float Redot_webxr_get_frame_rate();
+extern void Redot_webxr_update_target_frame_rate(float p_frame_rate);
+extern int Redot_webxr_get_supported_frame_rates(float **r_frame_rates);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // GODOT_WEBXR_H
+#endif // Redot_WEBXR_H

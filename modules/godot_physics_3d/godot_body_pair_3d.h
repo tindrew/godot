@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_body_pair_3d.h                                                  */
+/*  Redot_body_pair_3d.h                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,16 +28,16 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_BODY_PAIR_3D_H
-#define GODOT_BODY_PAIR_3D_H
+#ifndef Redot_BODY_PAIR_3D_H
+#define Redot_BODY_PAIR_3D_H
 
-#include "godot_body_3d.h"
-#include "godot_constraint_3d.h"
-#include "godot_soft_body_3d.h"
+#include "Redot_body_3d.h"
+#include "Redot_constraint_3d.h"
+#include "Redot_soft_body_3d.h"
 
 #include "core/templates/local_vector.h"
 
-class GodotBodyContact3D : public GodotConstraint3D {
+class RedotBodyContact3D : public RedotConstraint3D {
 protected:
 	struct Contact {
 		Vector3 position;
@@ -63,25 +63,25 @@ protected:
 	bool collided = false;
 	bool check_ccd = false;
 
-	GodotSpace3D *space = nullptr;
+	RedotSpace3D *space = nullptr;
 
-	GodotBodyContact3D(GodotBody3D **p_body_ptr = nullptr, int p_body_count = 0) :
-			GodotConstraint3D(p_body_ptr, p_body_count) {
+	RedotBodyContact3D(RedotBody3D **p_body_ptr = nullptr, int p_body_count = 0) :
+			RedotConstraint3D(p_body_ptr, p_body_count) {
 	}
 };
 
-class GodotBodyPair3D : public GodotBodyContact3D {
+class RedotBodyPair3D : public RedotBodyContact3D {
 	enum {
 		MAX_CONTACTS = 4
 	};
 
 	union {
 		struct {
-			GodotBody3D *A;
-			GodotBody3D *B;
+			RedotBody3D *A;
+			RedotBody3D *B;
 		};
 
-		GodotBody3D *_arr[2] = { nullptr, nullptr };
+		RedotBody3D *_arr[2] = { nullptr, nullptr };
 	};
 
 	int shape_A = 0;
@@ -102,20 +102,20 @@ class GodotBodyPair3D : public GodotBodyContact3D {
 	void contact_added_callback(const Vector3 &p_point_A, int p_index_A, const Vector3 &p_point_B, int p_index_B, const Vector3 &normal);
 
 	void validate_contacts();
-	bool _test_ccd(real_t p_step, GodotBody3D *p_A, int p_shape_A, const Transform3D &p_xform_A, GodotBody3D *p_B, int p_shape_B, const Transform3D &p_xform_B);
+	bool _test_ccd(real_t p_step, RedotBody3D *p_A, int p_shape_A, const Transform3D &p_xform_A, RedotBody3D *p_B, int p_shape_B, const Transform3D &p_xform_B);
 
 public:
 	virtual bool setup(real_t p_step) override;
 	virtual bool pre_solve(real_t p_step) override;
 	virtual void solve(real_t p_step) override;
 
-	GodotBodyPair3D(GodotBody3D *p_A, int p_shape_A, GodotBody3D *p_B, int p_shape_B);
-	~GodotBodyPair3D();
+	RedotBodyPair3D(RedotBody3D *p_A, int p_shape_A, RedotBody3D *p_B, int p_shape_B);
+	~RedotBodyPair3D();
 };
 
-class GodotBodySoftBodyPair3D : public GodotBodyContact3D {
-	GodotBody3D *body = nullptr;
-	GodotSoftBody3D *soft_body = nullptr;
+class RedotBodySoftBodyPair3D : public RedotBodyContact3D {
+	RedotBody3D *body = nullptr;
+	RedotSoftBody3D *soft_body = nullptr;
 
 	int body_shape = 0;
 
@@ -137,11 +137,11 @@ public:
 	virtual bool pre_solve(real_t p_step) override;
 	virtual void solve(real_t p_step) override;
 
-	virtual GodotSoftBody3D *get_soft_body_ptr(int p_index) const override { return soft_body; }
+	virtual RedotSoftBody3D *get_soft_body_ptr(int p_index) const override { return soft_body; }
 	virtual int get_soft_body_count() const override { return 1; }
 
-	GodotBodySoftBodyPair3D(GodotBody3D *p_A, int p_shape_A, GodotSoftBody3D *p_B);
-	~GodotBodySoftBodyPair3D();
+	RedotBodySoftBodyPair3D(RedotBody3D *p_A, int p_shape_A, RedotSoftBody3D *p_B);
+	~RedotBodySoftBodyPair3D();
 };
 
-#endif // GODOT_BODY_PAIR_3D_H
+#endif // Redot_BODY_PAIR_3D_H

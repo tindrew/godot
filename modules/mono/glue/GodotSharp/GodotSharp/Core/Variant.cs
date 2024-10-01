@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
-namespace Godot;
+namespace Redot;
 
 #nullable enable
 
@@ -11,17 +11,17 @@ namespace Godot;
 public partial struct Variant : IDisposable
 #pragma warning restore CA1001
 {
-    internal godot_variant.movable NativeVar;
+    internal Redot_variant.movable NativeVar;
     private object? _obj;
     private Disposer? _disposer;
 
     private sealed class Disposer : IDisposable
     {
-        private godot_variant.movable _native;
+        private Redot_variant.movable _native;
 
         private WeakReference<IDisposable>? _weakReferenceToSelf;
 
-        public Disposer(in godot_variant.movable nativeVar)
+        public Disposer(in Redot_variant.movable nativeVar)
         {
             _native = nativeVar;
             _weakReferenceToSelf = DisposablesTracker.RegisterDisposable(this);
@@ -49,9 +49,9 @@ public partial struct Variant : IDisposable
         }
     }
 
-    private Variant(in godot_variant nativeVar)
+    private Variant(in Redot_variant nativeVar)
     {
-        NativeVar = (godot_variant.movable)nativeVar;
+        NativeVar = (Redot_variant.movable)nativeVar;
         _obj = null;
 
         switch (nativeVar.Type)
@@ -84,19 +84,19 @@ public partial struct Variant : IDisposable
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     // Explicit name to make it very clear
-    public static Variant CreateTakingOwnershipOfDisposableValue(in godot_variant nativeValueToOwn) =>
+    public static Variant CreateTakingOwnershipOfDisposableValue(in Redot_variant nativeValueToOwn) =>
         new(nativeValueToOwn);
 
     // Explicit name to make it very clear
-    public static Variant CreateCopyingBorrowed(in godot_variant nativeValueToOwn) =>
-        new(NativeFuncs.godotsharp_variant_new_copy(nativeValueToOwn));
+    public static Variant CreateCopyingBorrowed(in Redot_variant nativeValueToOwn) =>
+        new(NativeFuncs.Redotsharp_variant_new_copy(nativeValueToOwn));
 
     /// <summary>
-    /// Constructs a new <see cref="Godot.NativeInterop.godot_variant"/> from this instance.
+    /// Constructs a new <see cref="Redot.NativeInterop.Redot_variant"/> from this instance.
     /// The caller is responsible of disposing the new instance to avoid memory leaks.
     /// </summary>
-    public godot_variant CopyNativeVariant() =>
-        NativeFuncs.godotsharp_variant_new_copy((godot_variant)NativeVar);
+    public Redot_variant CopyNativeVariant() =>
+        NativeFuncs.Redotsharp_variant_new_copy((Redot_variant)NativeVar);
 
     public void Dispose()
     {
@@ -136,11 +136,11 @@ public partial struct Variant : IDisposable
             Type.StringName => AsStringName(),
             Type.NodePath => AsNodePath(),
             Type.Rid => AsRid(),
-            Type.Object => AsGodotObject(),
+            Type.Object => AsRedotObject(),
             Type.Callable => AsCallable(),
             Type.Signal => AsSignal(),
-            Type.Dictionary => AsGodotDictionary(),
-            Type.Array => AsGodotArray(),
+            Type.Dictionary => AsRedotDictionary(),
+            Type.Array => AsRedotArray(),
             Type.PackedByteArray => AsByteArray(),
             Type.PackedInt32Array => AsInt32Array(),
             Type.PackedInt64Array => AsInt64Array(),
@@ -166,216 +166,216 @@ public partial struct Variant : IDisposable
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool AsBool() =>
-        VariantUtils.ConvertToBool((godot_variant)NativeVar);
+        VariantUtils.ConvertToBool((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public char AsChar() =>
-        (char)VariantUtils.ConvertToUInt16((godot_variant)NativeVar);
+        (char)VariantUtils.ConvertToUInt16((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public sbyte AsSByte() =>
-        VariantUtils.ConvertToInt8((godot_variant)NativeVar);
+        VariantUtils.ConvertToInt8((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public short AsInt16() =>
-        VariantUtils.ConvertToInt16((godot_variant)NativeVar);
+        VariantUtils.ConvertToInt16((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public int AsInt32() =>
-        VariantUtils.ConvertToInt32((godot_variant)NativeVar);
+        VariantUtils.ConvertToInt32((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public long AsInt64() =>
-        VariantUtils.ConvertToInt64((godot_variant)NativeVar);
+        VariantUtils.ConvertToInt64((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public byte AsByte() =>
-        VariantUtils.ConvertToUInt8((godot_variant)NativeVar);
+        VariantUtils.ConvertToUInt8((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ushort AsUInt16() =>
-        VariantUtils.ConvertToUInt16((godot_variant)NativeVar);
+        VariantUtils.ConvertToUInt16((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public uint AsUInt32() =>
-        VariantUtils.ConvertToUInt32((godot_variant)NativeVar);
+        VariantUtils.ConvertToUInt32((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ulong AsUInt64() =>
-        VariantUtils.ConvertToUInt64((godot_variant)NativeVar);
+        VariantUtils.ConvertToUInt64((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public float AsSingle() =>
-        VariantUtils.ConvertToFloat32((godot_variant)NativeVar);
+        VariantUtils.ConvertToFloat32((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public double AsDouble() =>
-        VariantUtils.ConvertToFloat64((godot_variant)NativeVar);
+        VariantUtils.ConvertToFloat64((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public string AsString() =>
-        VariantUtils.ConvertToString((godot_variant)NativeVar);
+        VariantUtils.ConvertToString((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector2 AsVector2() =>
-        VariantUtils.ConvertToVector2((godot_variant)NativeVar);
+        VariantUtils.ConvertToVector2((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector2I AsVector2I() =>
-        VariantUtils.ConvertToVector2I((godot_variant)NativeVar);
+        VariantUtils.ConvertToVector2I((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Rect2 AsRect2() =>
-        VariantUtils.ConvertToRect2((godot_variant)NativeVar);
+        VariantUtils.ConvertToRect2((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Rect2I AsRect2I() =>
-        VariantUtils.ConvertToRect2I((godot_variant)NativeVar);
+        VariantUtils.ConvertToRect2I((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Transform2D AsTransform2D() =>
-        VariantUtils.ConvertToTransform2D((godot_variant)NativeVar);
+        VariantUtils.ConvertToTransform2D((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector3 AsVector3() =>
-        VariantUtils.ConvertToVector3((godot_variant)NativeVar);
+        VariantUtils.ConvertToVector3((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector3I AsVector3I() =>
-        VariantUtils.ConvertToVector3I((godot_variant)NativeVar);
+        VariantUtils.ConvertToVector3I((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Basis AsBasis() =>
-        VariantUtils.ConvertToBasis((godot_variant)NativeVar);
+        VariantUtils.ConvertToBasis((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Quaternion AsQuaternion() =>
-        VariantUtils.ConvertToQuaternion((godot_variant)NativeVar);
+        VariantUtils.ConvertToQuaternion((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Transform3D AsTransform3D() =>
-        VariantUtils.ConvertToTransform3D((godot_variant)NativeVar);
+        VariantUtils.ConvertToTransform3D((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector4 AsVector4() =>
-        VariantUtils.ConvertToVector4((godot_variant)NativeVar);
+        VariantUtils.ConvertToVector4((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector4I AsVector4I() =>
-        VariantUtils.ConvertToVector4I((godot_variant)NativeVar);
+        VariantUtils.ConvertToVector4I((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Projection AsProjection() =>
-        VariantUtils.ConvertToProjection((godot_variant)NativeVar);
+        VariantUtils.ConvertToProjection((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Aabb AsAabb() =>
-        VariantUtils.ConvertToAabb((godot_variant)NativeVar);
+        VariantUtils.ConvertToAabb((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Color AsColor() =>
-        VariantUtils.ConvertToColor((godot_variant)NativeVar);
+        VariantUtils.ConvertToColor((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Plane AsPlane() =>
-        VariantUtils.ConvertToPlane((godot_variant)NativeVar);
+        VariantUtils.ConvertToPlane((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Callable AsCallable() =>
-        VariantUtils.ConvertToCallable((godot_variant)NativeVar);
+        VariantUtils.ConvertToCallable((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Signal AsSignal() =>
-        VariantUtils.ConvertToSignal((godot_variant)NativeVar);
+        VariantUtils.ConvertToSignal((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public byte[] AsByteArray() =>
-        VariantUtils.ConvertAsPackedByteArrayToSystemArray((godot_variant)NativeVar);
+        VariantUtils.ConvertAsPackedByteArrayToSystemArray((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public int[] AsInt32Array() =>
-        VariantUtils.ConvertAsPackedInt32ArrayToSystemArray((godot_variant)NativeVar);
+        VariantUtils.ConvertAsPackedInt32ArrayToSystemArray((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public long[] AsInt64Array() =>
-        VariantUtils.ConvertAsPackedInt64ArrayToSystemArray((godot_variant)NativeVar);
+        VariantUtils.ConvertAsPackedInt64ArrayToSystemArray((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public float[] AsFloat32Array() =>
-        VariantUtils.ConvertAsPackedFloat32ArrayToSystemArray((godot_variant)NativeVar);
+        VariantUtils.ConvertAsPackedFloat32ArrayToSystemArray((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public double[] AsFloat64Array() =>
-        VariantUtils.ConvertAsPackedFloat64ArrayToSystemArray((godot_variant)NativeVar);
+        VariantUtils.ConvertAsPackedFloat64ArrayToSystemArray((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public string[] AsStringArray() =>
-        VariantUtils.ConvertAsPackedStringArrayToSystemArray((godot_variant)NativeVar);
+        VariantUtils.ConvertAsPackedStringArrayToSystemArray((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector2[] AsVector2Array() =>
-        VariantUtils.ConvertAsPackedVector2ArrayToSystemArray((godot_variant)NativeVar);
+        VariantUtils.ConvertAsPackedVector2ArrayToSystemArray((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector3[] AsVector3Array() =>
-        VariantUtils.ConvertAsPackedVector3ArrayToSystemArray((godot_variant)NativeVar);
+        VariantUtils.ConvertAsPackedVector3ArrayToSystemArray((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector4[] AsVector4Array() =>
-        VariantUtils.ConvertAsPackedVector4ArrayToSystemArray((godot_variant)NativeVar);
+        VariantUtils.ConvertAsPackedVector4ArrayToSystemArray((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Color[] AsColorArray() =>
-        VariantUtils.ConvertAsPackedColorArrayToSystemArray((godot_variant)NativeVar);
+        VariantUtils.ConvertAsPackedColorArrayToSystemArray((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public T[] AsGodotObjectArray<T>()
-        where T : GodotObject =>
-        VariantUtils.ConvertToSystemArrayOfGodotObject<T>((godot_variant)NativeVar);
+    public T[] AsRedotObjectArray<T>()
+        where T : RedotObject =>
+        VariantUtils.ConvertToSystemArrayOfRedotObject<T>((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Collections.Dictionary<TKey, TValue> AsGodotDictionary<[MustBeVariant] TKey, [MustBeVariant] TValue>() =>
-        VariantUtils.ConvertToDictionary<TKey, TValue>((godot_variant)NativeVar);
+    public Collections.Dictionary<TKey, TValue> AsRedotDictionary<[MustBeVariant] TKey, [MustBeVariant] TValue>() =>
+        VariantUtils.ConvertToDictionary<TKey, TValue>((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Collections.Array<T> AsGodotArray<[MustBeVariant] T>() =>
-        VariantUtils.ConvertToArray<T>((godot_variant)NativeVar);
+    public Collections.Array<T> AsRedotArray<[MustBeVariant] T>() =>
+        VariantUtils.ConvertToArray<T>((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public StringName[] AsSystemArrayOfStringName() =>
-        VariantUtils.ConvertToSystemArrayOfStringName((godot_variant)NativeVar);
+        VariantUtils.ConvertToSystemArrayOfStringName((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public NodePath[] AsSystemArrayOfNodePath() =>
-        VariantUtils.ConvertToSystemArrayOfNodePath((godot_variant)NativeVar);
+        VariantUtils.ConvertToSystemArrayOfNodePath((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Rid[] AsSystemArrayOfRid() =>
-        VariantUtils.ConvertToSystemArrayOfRid((godot_variant)NativeVar);
+        VariantUtils.ConvertToSystemArrayOfRid((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public GodotObject AsGodotObject() =>
-        VariantUtils.ConvertToGodotObject((godot_variant)NativeVar);
+    public RedotObject AsRedotObject() =>
+        VariantUtils.ConvertToRedotObject((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public StringName AsStringName() =>
-        VariantUtils.ConvertToStringName((godot_variant)NativeVar);
+        VariantUtils.ConvertToStringName((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public NodePath AsNodePath() =>
-        VariantUtils.ConvertToNodePath((godot_variant)NativeVar);
+        VariantUtils.ConvertToNodePath((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Rid AsRid() =>
-        VariantUtils.ConvertToRid((godot_variant)NativeVar);
+        VariantUtils.ConvertToRid((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Collections.Dictionary AsGodotDictionary() =>
-        VariantUtils.ConvertToDictionary((godot_variant)NativeVar);
+    public Collections.Dictionary AsRedotDictionary() =>
+        VariantUtils.ConvertToDictionary((Redot_variant)NativeVar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Collections.Array AsGodotArray() =>
-        VariantUtils.ConvertToArray((godot_variant)NativeVar);
+    public Collections.Array AsRedotArray() =>
+        VariantUtils.ConvertToArray((Redot_variant)NativeVar);
 
     // Explicit conversion operators to supported types
 
@@ -512,7 +512,7 @@ public partial struct Variant : IDisposable
     public static explicit operator Rid[](Variant from) => from.AsSystemArrayOfRid();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static explicit operator GodotObject(Variant from) => from.AsGodotObject();
+    public static explicit operator RedotObject(Variant from) => from.AsRedotObject();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static explicit operator StringName(Variant from) => from.AsStringName();
@@ -524,10 +524,10 @@ public partial struct Variant : IDisposable
     public static explicit operator Rid(Variant from) => from.AsRid();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static explicit operator Collections.Dictionary(Variant from) => from.AsGodotDictionary();
+    public static explicit operator Collections.Dictionary(Variant from) => from.AsRedotDictionary();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static explicit operator Collections.Array(Variant from) => from.AsGodotArray();
+    public static explicit operator Collections.Array(Variant from) => from.AsRedotArray();
 
     // While we provide implicit conversion operators, normal methods are still needed for
     // casts that are not done implicitly (e.g.: raw array to Span, enum to integer, etc).
@@ -656,7 +656,7 @@ public partial struct Variant : IDisposable
     public static Variant CreateFrom(Span<Color> from) => from;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Variant CreateFrom(GodotObject[] from) => from;
+    public static Variant CreateFrom(RedotObject[] from) => from;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Variant CreateFrom<[MustBeVariant] TKey, [MustBeVariant] TValue>(Collections.Dictionary<TKey, TValue> from) =>
@@ -676,7 +676,7 @@ public partial struct Variant : IDisposable
     public static Variant CreateFrom(Span<Rid> from) => from;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Variant CreateFrom(GodotObject from) => from;
+    public static Variant CreateFrom(RedotObject from) => from;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Variant CreateFrom(StringName from) => from;
@@ -860,8 +860,8 @@ public partial struct Variant : IDisposable
         (Variant)from.AsSpan();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static implicit operator Variant(GodotObject[] from) =>
-        CreateTakingOwnershipOfDisposableValue(VariantUtils.CreateFromSystemArrayOfGodotObject(from));
+    public static implicit operator Variant(RedotObject[] from) =>
+        CreateTakingOwnershipOfDisposableValue(VariantUtils.CreateFromSystemArrayOfRedotObject(from));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator Variant(StringName[] from) =>
@@ -928,8 +928,8 @@ public partial struct Variant : IDisposable
         CreateTakingOwnershipOfDisposableValue(VariantUtils.CreateFromSystemArrayOfRid(from));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static implicit operator Variant(GodotObject from) =>
-        CreateTakingOwnershipOfDisposableValue(VariantUtils.CreateFromGodotObject(from));
+    public static implicit operator Variant(RedotObject from) =>
+        CreateTakingOwnershipOfDisposableValue(VariantUtils.CreateFromRedotObject(from));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static implicit operator Variant(StringName from) =>

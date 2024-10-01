@@ -4,15 +4,15 @@ using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 using System.Diagnostics;
 
 #nullable enable
 
-namespace Godot.Collections
+namespace Redot.Collections
 {
     /// <summary>
-    /// Wrapper around Godot's Array class, an array of Variant
+    /// Wrapper around Redot's Array class, an array of Variant
     /// typed elements allocated in the engine in C++. Useful when
     /// interfacing with the engine. Otherwise prefer .NET collections
     /// such as <see cref="System.Array"/> or <see cref="List{T}"/>.
@@ -27,7 +27,7 @@ namespace Godot.Collections
         ICollection,
         IDisposable
     {
-        internal godot_array.movable NativeValue;
+        internal Redot_array.movable NativeValue;
 
         private WeakReference<IDisposable>? _weakReferenceToSelf;
 
@@ -36,7 +36,7 @@ namespace Godot.Collections
         /// </summary>
         public Array()
         {
-            NativeValue = (godot_array.movable)NativeFuncs.godotsharp_array_new();
+            NativeValue = (Redot_array.movable)NativeFuncs.Redotsharp_array_new();
             _weakReferenceToSelf = DisposablesTracker.RegisterDisposable(this);
         }
 
@@ -47,7 +47,7 @@ namespace Godot.Collections
         /// The <paramref name="collection"/> is <see langword="null"/>.
         /// </exception>
         /// <param name="collection">The collection of elements to construct from.</param>
-        /// <returns>A new Godot Array.</returns>
+        /// <returns>A new Redot Array.</returns>
         public Array(IEnumerable<Variant> collection) : this()
         {
             if (collection == null)
@@ -64,13 +64,13 @@ namespace Godot.Collections
         /// The <paramref name="array"/> is <see langword="null"/>.
         /// </exception>
         /// <param name="array">The objects to put in the new array.</param>
-        /// <returns>A new Godot Array.</returns>
+        /// <returns>A new Redot Array.</returns>
         public Array(Variant[] array)
         {
             if (array == null)
                 throw new ArgumentNullException(nameof(array));
 
-            NativeValue = (godot_array.movable)NativeFuncs.godotsharp_array_new();
+            NativeValue = (Redot_array.movable)NativeFuncs.Redotsharp_array_new();
             _weakReferenceToSelf = DisposablesTracker.RegisterDisposable(this);
 
             int length = array.Length;
@@ -87,13 +87,13 @@ namespace Godot.Collections
         /// <exception cref="ArgumentNullException">
         /// The <paramref name="array"/> is <see langword="null"/>.
         /// </exception>
-        /// <returns>A new Godot Array.</returns>
+        /// <returns>A new Redot Array.</returns>
         public Array(Span<StringName> array)
         {
             if (array == null)
                 throw new ArgumentNullException(nameof(array));
 
-            NativeValue = (godot_array.movable)NativeFuncs.godotsharp_array_new();
+            NativeValue = (Redot_array.movable)NativeFuncs.Redotsharp_array_new();
             _weakReferenceToSelf = DisposablesTracker.RegisterDisposable(this);
 
             int length = array.Length;
@@ -110,13 +110,13 @@ namespace Godot.Collections
         /// <exception cref="ArgumentNullException">
         /// The <paramref name="array"/> is <see langword="null"/>.
         /// </exception>
-        /// <returns>A new Godot Array.</returns>
+        /// <returns>A new Redot Array.</returns>
         public Array(Span<NodePath> array)
         {
             if (array == null)
                 throw new ArgumentNullException(nameof(array));
 
-            NativeValue = (godot_array.movable)NativeFuncs.godotsharp_array_new();
+            NativeValue = (Redot_array.movable)NativeFuncs.Redotsharp_array_new();
             _weakReferenceToSelf = DisposablesTracker.RegisterDisposable(this);
 
             int length = array.Length;
@@ -133,13 +133,13 @@ namespace Godot.Collections
         /// <exception cref="ArgumentNullException">
         /// The <paramref name="array"/> is <see langword="null"/>.
         /// </exception>
-        /// <returns>A new Godot Array.</returns>
+        /// <returns>A new Redot Array.</returns>
         public Array(Span<Rid> array)
         {
             if (array == null)
                 throw new ArgumentNullException(nameof(array));
 
-            NativeValue = (godot_array.movable)NativeFuncs.godotsharp_array_new();
+            NativeValue = (Redot_array.movable)NativeFuncs.Redotsharp_array_new();
             _weakReferenceToSelf = DisposablesTracker.RegisterDisposable(this);
 
             int length = array.Length;
@@ -160,13 +160,13 @@ namespace Godot.Collections
         /// <exception cref="ArgumentNullException">
         /// The <paramref name="array"/> is <see langword="null"/>.
         /// </exception>
-        /// <returns>A new Godot Array.</returns>
-        public Array(ReadOnlySpan<GodotObject> array)
+        /// <returns>A new Redot Array.</returns>
+        public Array(ReadOnlySpan<RedotObject> array)
         {
             if (array == null)
                 throw new ArgumentNullException(nameof(array));
 
-            NativeValue = (godot_array.movable)NativeFuncs.godotsharp_array_new();
+            NativeValue = (Redot_array.movable)NativeFuncs.Redotsharp_array_new();
             _weakReferenceToSelf = DisposablesTracker.RegisterDisposable(this);
 
             int length = array.Length;
@@ -177,16 +177,16 @@ namespace Godot.Collections
                 this[i] = array[i];
         }
 
-        private Array(godot_array nativeValueToOwn)
+        private Array(Redot_array nativeValueToOwn)
         {
-            NativeValue = (godot_array.movable)(nativeValueToOwn.IsAllocated ?
+            NativeValue = (Redot_array.movable)(nativeValueToOwn.IsAllocated ?
                 nativeValueToOwn :
-                NativeFuncs.godotsharp_array_new());
+                NativeFuncs.Redotsharp_array_new());
             _weakReferenceToSelf = DisposablesTracker.RegisterDisposable(this);
         }
 
         // Explicit name to make it very clear
-        internal static Array CreateTakingOwnershipOfDisposableValue(godot_array nativeValueToOwn)
+        internal static Array CreateTakingOwnershipOfDisposableValue(Redot_array nativeValueToOwn)
             => new Array(nativeValueToOwn);
 
         ~Array()
@@ -221,17 +221,17 @@ namespace Godot.Collections
         /// the original array. If <see langword="false"/>, a shallow copy is made and
         /// references to the original nested arrays and dictionaries are kept, so that
         /// modifying a sub-array or dictionary in the copy will also impact those
-        /// referenced in the source array. Note that any <see cref="GodotObject"/> derived
+        /// referenced in the source array. Note that any <see cref="RedotObject"/> derived
         /// elements will be shallow copied regardless of the <paramref name="deep"/>
         /// setting.
         /// </summary>
         /// <param name="deep">If <see langword="true"/>, performs a deep copy.</param>
-        /// <returns>A new Godot Array.</returns>
+        /// <returns>A new Redot Array.</returns>
         public Array Duplicate(bool deep = false)
         {
-            godot_array newArray;
-            var self = (godot_array)NativeValue;
-            NativeFuncs.godotsharp_array_duplicate(ref self, deep.ToGodotBool(), out newArray);
+            Redot_array newArray;
+            var self = (Redot_array)NativeValue;
+            NativeFuncs.Redotsharp_array_duplicate(ref self, deep.ToRedotBool(), out newArray);
             return CreateTakingOwnershipOfDisposableValue(newArray);
         }
 
@@ -239,14 +239,14 @@ namespace Godot.Collections
         /// Assigns the given value to all elements in the array. This can typically be
         /// used together with <see cref="Resize(int)"/> to create an array with a given
         /// size and initialized elements.
-        /// Note: If <paramref name="value"/> is of a reference type (<see cref="GodotObject"/>
+        /// Note: If <paramref name="value"/> is of a reference type (<see cref="RedotObject"/>
         /// derived, <see cref="Array"/> or <see cref="Dictionary"/>, etc.) then the array
         /// is filled with the references to the same object, i.e. no duplicates are
         /// created.
         /// </summary>
         /// <example>
         /// <code>
-        /// var array = new Godot.Collections.Array();
+        /// var array = new Redot.Collections.Array();
         /// array.Resize(10);
         /// array.Fill(0); // Initialize the 10 elements to 0.
         /// </code>
@@ -259,9 +259,9 @@ namespace Godot.Collections
         {
             ThrowIfReadOnly();
 
-            godot_variant variantValue = (godot_variant)value.NativeVar;
-            var self = (godot_array)NativeValue;
-            NativeFuncs.godotsharp_array_fill(ref self, variantValue);
+            Redot_variant variantValue = (Redot_variant)value.NativeVar;
+            var self = (Redot_array)NativeValue;
+            NativeFuncs.Redotsharp_array_fill(ref self, variantValue);
         }
 
         /// <summary>
@@ -272,9 +272,9 @@ namespace Godot.Collections
         /// <returns>The maximum value contained in the array.</returns>
         public Variant Max()
         {
-            godot_variant resVariant;
-            var self = (godot_array)NativeValue;
-            NativeFuncs.godotsharp_array_max(ref self, out resVariant);
+            Redot_variant resVariant;
+            var self = (Redot_array)NativeValue;
+            NativeFuncs.Redotsharp_array_max(ref self, out resVariant);
             return Variant.CreateTakingOwnershipOfDisposableValue(resVariant);
         }
 
@@ -286,9 +286,9 @@ namespace Godot.Collections
         /// <returns>The minimum value contained in the array.</returns>
         public Variant Min()
         {
-            godot_variant resVariant;
-            var self = (godot_array)NativeValue;
-            NativeFuncs.godotsharp_array_min(ref self, out resVariant);
+            Redot_variant resVariant;
+            var self = (Redot_array)NativeValue;
+            NativeFuncs.Redotsharp_array_min(ref self, out resVariant);
             return Variant.CreateTakingOwnershipOfDisposableValue(resVariant);
         }
 
@@ -297,16 +297,16 @@ namespace Godot.Collections
         /// </summary>
         /// <example>
         /// <code>
-        /// var array = new Godot.Collections.Array { 1, 2, 3, 4 };
+        /// var array = new Redot.Collections.Array { 1, 2, 3, 4 };
         /// GD.Print(array.PickRandom()); // Prints either of the four numbers.
         /// </code>
         /// </example>
         /// <returns>A random element from the array.</returns>
         public Variant PickRandom()
         {
-            godot_variant resVariant;
-            var self = (godot_array)NativeValue;
-            NativeFuncs.godotsharp_array_pick_random(ref self, out resVariant);
+            Redot_variant resVariant;
+            var self = (Redot_array)NativeValue;
+            NativeFuncs.Redotsharp_array_pick_random(ref self, out resVariant);
             return Variant.CreateTakingOwnershipOfDisposableValue(resVariant);
         }
 
@@ -323,9 +323,9 @@ namespace Godot.Collections
         /// </returns>
         public bool RecursiveEqual(Array other)
         {
-            var self = (godot_array)NativeValue;
-            var otherVariant = (godot_array)other.NativeValue;
-            return NativeFuncs.godotsharp_array_recursive_equal(ref self, otherVariant).ToBool();
+            var self = (Redot_array)NativeValue;
+            var otherVariant = (Redot_array)other.NativeValue;
+            return NativeFuncs.Redotsharp_array_recursive_equal(ref self, otherVariant).ToBool();
         }
 
         /// <summary>
@@ -342,8 +342,8 @@ namespace Godot.Collections
         {
             ThrowIfReadOnly();
 
-            var self = (godot_array)NativeValue;
-            return NativeFuncs.godotsharp_array_resize(ref self, newSize);
+            var self = (Redot_array)NativeValue;
+            return NativeFuncs.Redotsharp_array_resize(ref self, newSize);
         }
 
         /// <summary>
@@ -356,8 +356,8 @@ namespace Godot.Collections
         {
             ThrowIfReadOnly();
 
-            var self = (godot_array)NativeValue;
-            NativeFuncs.godotsharp_array_reverse(ref self);
+            var self = (Redot_array)NativeValue;
+            NativeFuncs.Redotsharp_array_reverse(ref self);
         }
 
         /// <summary>
@@ -374,8 +374,8 @@ namespace Godot.Collections
         {
             ThrowIfReadOnly();
 
-            var self = (godot_array)NativeValue;
-            NativeFuncs.godotsharp_array_shuffle(ref self);
+            var self = (Redot_array)NativeValue;
+            NativeFuncs.Redotsharp_array_shuffle(ref self);
         }
 
         /// <summary>
@@ -439,9 +439,9 @@ namespace Godot.Collections
         /// <returns>A new array that contains the elements inside the slice range.</returns>
         public Array GetSliceRange(int start, int end, int step = 1, bool deep = false)
         {
-            godot_array newArray;
-            var self = (godot_array)NativeValue;
-            NativeFuncs.godotsharp_array_slice(ref self, start, end, step, deep.ToGodotBool(), out newArray);
+            Redot_array newArray;
+            var self = (Redot_array)NativeValue;
+            NativeFuncs.Redotsharp_array_slice(ref self, start, end, step, deep.ToRedotBool(), out newArray);
             return CreateTakingOwnershipOfDisposableValue(newArray);
         }
 
@@ -457,7 +457,7 @@ namespace Godot.Collections
         /// </summary>
         /// <example>
         /// <code>
-        /// var strings = new Godot.Collections.Array { "string1", "string2", "string10", "string11" };
+        /// var strings = new Redot.Collections.Array { "string1", "string2", "string10", "string11" };
         /// strings.Sort();
         /// GD.Print(strings); // Prints [string1, string10, string11, string2]
         /// </code>
@@ -469,8 +469,8 @@ namespace Godot.Collections
         {
             ThrowIfReadOnly();
 
-            var self = (godot_array)NativeValue;
-            NativeFuncs.godotsharp_array_sort(ref self);
+            var self = (Redot_array)NativeValue;
+            NativeFuncs.Redotsharp_array_sort(ref self);
         }
 
         /// <summary>
@@ -480,7 +480,7 @@ namespace Godot.Collections
         /// </summary>
         /// <param name="left">The first array.</param>
         /// <param name="right">The second array.</param>
-        /// <returns>A new Godot Array with the contents of both arrays.</returns>
+        /// <returns>A new Redot Array with the contents of both arrays.</returns>
         public static Array operator +(Array left, Array right)
         {
             if (left == null)
@@ -520,7 +520,7 @@ namespace Godot.Collections
         {
             get
             {
-                GetVariantBorrowElementAt(index, out godot_variant borrowElem);
+                GetVariantBorrowElementAt(index, out Redot_variant borrowElem);
                 return Variant.CreateCopyingBorrowed(borrowElem);
             }
             set
@@ -530,9 +530,9 @@ namespace Godot.Collections
                 if (index < 0 || index >= Count)
                     throw new ArgumentOutOfRangeException(nameof(index));
 
-                var self = (godot_array)NativeValue;
-                godot_variant* ptrw = NativeFuncs.godotsharp_array_ptrw(ref self);
-                godot_variant* itemPtr = &ptrw[index];
+                var self = (Redot_array)NativeValue;
+                Redot_variant* ptrw = NativeFuncs.Redotsharp_array_ptrw(ref self);
+                Redot_variant* itemPtr = &ptrw[index];
                 (*itemPtr).Dispose();
                 *itemPtr = value.CopyNativeVariant();
             }
@@ -550,9 +550,9 @@ namespace Godot.Collections
         {
             ThrowIfReadOnly();
 
-            godot_variant variantValue = (godot_variant)item.NativeVar;
-            var self = (godot_array)NativeValue;
-            _ = NativeFuncs.godotsharp_array_add(ref self, variantValue);
+            Redot_variant variantValue = (Redot_variant)item.NativeVar;
+            var self = (Redot_array)NativeValue;
+            _ = NativeFuncs.Redotsharp_array_add(ref self, variantValue);
         }
 
         /// <summary>
@@ -572,20 +572,20 @@ namespace Godot.Collections
             if (collection == null)
                 throw new ArgumentNullException(nameof(collection), "Value cannot be null.");
 
-            // If the collection is another Godot Array, we can add the items
+            // If the collection is another Redot Array, we can add the items
             // with a single interop call.
             if (collection is Array array)
             {
-                var self = (godot_array)NativeValue;
-                var collectionNative = (godot_array)array.NativeValue;
-                _ = NativeFuncs.godotsharp_array_add_range(ref self, collectionNative);
+                var self = (Redot_array)NativeValue;
+                var collectionNative = (Redot_array)array.NativeValue;
+                _ = NativeFuncs.Redotsharp_array_add_range(ref self, collectionNative);
                 return;
             }
             if (collection is Array<T> typedArray)
             {
-                var self = (godot_array)NativeValue;
-                var collectionNative = (godot_array)typedArray.NativeValue;
-                _ = NativeFuncs.godotsharp_array_add_range(ref self, collectionNative);
+                var self = (Redot_array)NativeValue;
+                var collectionNative = (Redot_array)typedArray.NativeValue;
+                _ = NativeFuncs.Redotsharp_array_add_range(ref self, collectionNative);
                 return;
             }
 
@@ -654,9 +654,9 @@ namespace Godot.Collections
                 return -1;
             }
 
-            godot_variant variantValue = (godot_variant)item.NativeVar;
-            var self = (godot_array)NativeValue;
-            return NativeFuncs.godotsharp_array_binary_search(ref self, index, count, variantValue);
+            Redot_variant variantValue = (Redot_variant)item.NativeVar;
+            var self = (Redot_array)NativeValue;
+            return NativeFuncs.Redotsharp_array_binary_search(ref self, index, count, variantValue);
         }
 
         /// <summary>
@@ -683,7 +683,7 @@ namespace Godot.Collections
         /// </summary>
         /// <example>
         /// <code>
-        /// var arr = new Godot.Collections.Array { "inside", 7 };
+        /// var arr = new Redot.Collections.Array { "inside", 7 };
         /// GD.Print(arr.Contains("inside")); // True
         /// GD.Print(arr.Contains("outside")); // False
         /// GD.Print(arr.Contains(7)); // True
@@ -716,9 +716,9 @@ namespace Godot.Collections
                 return -1;
             }
 
-            godot_variant variantValue = (godot_variant)item.NativeVar;
-            var self = (godot_array)NativeValue;
-            return NativeFuncs.godotsharp_array_index_of(ref self, variantValue);
+            Redot_variant variantValue = (Redot_variant)item.NativeVar;
+            var self = (Redot_array)NativeValue;
+            return NativeFuncs.Redotsharp_array_index_of(ref self, variantValue);
         }
 
         /// <summary>
@@ -741,9 +741,9 @@ namespace Godot.Collections
                 return -1;
             }
 
-            godot_variant variantValue = (godot_variant)item.NativeVar;
-            var self = (godot_array)NativeValue;
-            return NativeFuncs.godotsharp_array_index_of(ref self, variantValue, index);
+            Redot_variant variantValue = (Redot_variant)item.NativeVar;
+            var self = (Redot_array)NativeValue;
+            return NativeFuncs.Redotsharp_array_index_of(ref self, variantValue, index);
         }
 
         /// <summary>
@@ -760,9 +760,9 @@ namespace Godot.Collections
                 return -1;
             }
 
-            godot_variant variantValue = (godot_variant)item.NativeVar;
-            var self = (godot_array)NativeValue;
-            return NativeFuncs.godotsharp_array_last_index_of(ref self, variantValue, Count - 1);
+            Redot_variant variantValue = (Redot_variant)item.NativeVar;
+            var self = (Redot_array)NativeValue;
+            return NativeFuncs.Redotsharp_array_last_index_of(ref self, variantValue, Count - 1);
         }
 
         /// <summary>
@@ -786,9 +786,9 @@ namespace Godot.Collections
                 return -1;
             }
 
-            godot_variant variantValue = (godot_variant)item.NativeVar;
-            var self = (godot_array)NativeValue;
-            return NativeFuncs.godotsharp_array_last_index_of(ref self, variantValue, index);
+            Redot_variant variantValue = (Redot_variant)item.NativeVar;
+            var self = (Redot_array)NativeValue;
+            return NativeFuncs.Redotsharp_array_last_index_of(ref self, variantValue, index);
         }
 
         /// <summary>
@@ -811,9 +811,9 @@ namespace Godot.Collections
             if (index < 0 || index > Count)
                 throw new ArgumentOutOfRangeException(nameof(index));
 
-            godot_variant variantValue = (godot_variant)item.NativeVar;
-            var self = (godot_array)NativeValue;
-            NativeFuncs.godotsharp_array_insert(ref self, index, variantValue);
+            Redot_variant variantValue = (Redot_variant)item.NativeVar;
+            var self = (Redot_array)NativeValue;
+            NativeFuncs.Redotsharp_array_insert(ref self, index, variantValue);
         }
 
         /// <summary>
@@ -857,8 +857,8 @@ namespace Godot.Collections
             if (index < 0 || index > Count)
                 throw new ArgumentOutOfRangeException(nameof(index));
 
-            var self = (godot_array)NativeValue;
-            NativeFuncs.godotsharp_array_remove_at(ref self, index);
+            var self = (Redot_array)NativeValue;
+            NativeFuncs.Redotsharp_array_remove_at(ref self, index);
         }
 
         // ICollection
@@ -893,8 +893,8 @@ namespace Godot.Collections
                 return;
             }
 
-            var self = (godot_array)NativeValue;
-            NativeFuncs.godotsharp_array_make_read_only(ref self);
+            var self = (Redot_array)NativeValue;
+            NativeFuncs.Redotsharp_array_make_read_only(ref self);
         }
 
         /// <summary>
@@ -995,8 +995,8 @@ namespace Godot.Collections
         /// <returns>A string representation of this array.</returns>
         public override string ToString()
         {
-            var self = (godot_array)NativeValue;
-            NativeFuncs.godotsharp_array_to_string(ref self, out godot_string str);
+            var self = (Redot_array)NativeValue;
+            NativeFuncs.Redotsharp_array_to_string(ref self, out Redot_string str);
             using (str)
                 return Marshaling.ConvertStringToManaged(str);
         }
@@ -1007,7 +1007,7 @@ namespace Godot.Collections
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="index"/> is less than 0 or greater than the array's size.
         /// </exception>
-        internal void GetVariantBorrowElementAt(int index, out godot_variant elem)
+        internal void GetVariantBorrowElementAt(int index, out Redot_variant elem)
         {
             if (index < 0 || index >= Count)
                 throw new ArgumentOutOfRangeException(nameof(index));
@@ -1017,7 +1017,7 @@ namespace Godot.Collections
         /// <summary>
         /// The variant returned via the <paramref name="elem"/> parameter is owned by the Array and must not be disposed.
         /// </summary>
-        internal unsafe void GetVariantBorrowElementAtUnchecked(int index, out godot_variant elem)
+        internal unsafe void GetVariantBorrowElementAtUnchecked(int index, out Redot_variant elem)
         {
             elem = NativeValue.DangerousSelfRef.Elements[index];
         }
@@ -1031,13 +1031,13 @@ namespace Godot.Collections
         }
     }
 
-    internal interface IGenericGodotArray
+    internal interface IGenericRedotArray
     {
         public Array UnderlyingArray { get; }
     }
 
     /// <summary>
-    /// Typed wrapper around Godot's Array class, an array of Variant
+    /// Typed wrapper around Redot's Array class, an array of Variant
     /// typed elements allocated in the engine in C++. Useful when
     /// interfacing with the engine. Otherwise prefer .NET collections
     /// such as arrays or <see cref="List{T}"/>.
@@ -1052,12 +1052,12 @@ namespace Godot.Collections
         IReadOnlyList<T>,
         ICollection<T>,
         IEnumerable<T>,
-        IGenericGodotArray
+        IGenericRedotArray
     {
-        private static godot_variant ToVariantFunc(in Array<T> godotArray) =>
-            VariantUtils.CreateFromArray(godotArray);
+        private static Redot_variant ToVariantFunc(in Array<T> RedotArray) =>
+            VariantUtils.CreateFromArray(RedotArray);
 
-        private static Array<T> FromVariantFunc(in godot_variant variant) =>
+        private static Array<T> FromVariantFunc(in Redot_variant variant) =>
             VariantUtils.ConvertToArray<T>(variant);
 
         static unsafe Array()
@@ -1068,9 +1068,9 @@ namespace Godot.Collections
 
         private readonly Array _underlyingArray;
 
-        Array IGenericGodotArray.UnderlyingArray => _underlyingArray;
+        Array IGenericRedotArray.UnderlyingArray => _underlyingArray;
 
-        internal ref godot_array.movable NativeValue
+        internal ref Redot_array.movable NativeValue
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => ref _underlyingArray.NativeValue;
@@ -1079,7 +1079,7 @@ namespace Godot.Collections
         /// <summary>
         /// Constructs a new empty <see cref="Array{T}"/>.
         /// </summary>
-        /// <returns>A new Godot Array.</returns>
+        /// <returns>A new Redot Array.</returns>
         public Array()
         {
             _underlyingArray = new Array();
@@ -1092,7 +1092,7 @@ namespace Godot.Collections
         /// The <paramref name="collection"/> is <see langword="null"/>.
         /// </exception>
         /// <param name="collection">The collection of elements to construct from.</param>
-        /// <returns>A new Godot Array.</returns>
+        /// <returns>A new Redot Array.</returns>
         public Array(IEnumerable<T> collection)
         {
             if (collection == null)
@@ -1111,7 +1111,7 @@ namespace Godot.Collections
         /// The <paramref name="array"/> is <see langword="null"/>.
         /// </exception>
         /// <param name="array">The items to put in the new array.</param>
-        /// <returns>A new Godot Array.</returns>
+        /// <returns>A new Redot Array.</returns>
         public Array(T[] array)
         {
             if (array == null)
@@ -1130,7 +1130,7 @@ namespace Godot.Collections
         /// The <paramref name="array"/> is <see langword="null"/>.
         /// </exception>
         /// <param name="array">The untyped array to construct from.</param>
-        /// <returns>A new Godot Array.</returns>
+        /// <returns>A new Redot Array.</returns>
         public Array(Array array)
         {
             if (array == null)
@@ -1140,14 +1140,14 @@ namespace Godot.Collections
         }
 
         // Explicit name to make it very clear
-        internal static Array<T> CreateTakingOwnershipOfDisposableValue(godot_array nativeValueToOwn)
+        internal static Array<T> CreateTakingOwnershipOfDisposableValue(Redot_array nativeValueToOwn)
             => new Array<T>(Array.CreateTakingOwnershipOfDisposableValue(nativeValueToOwn));
 
         /// <summary>
         /// Converts this typed <see cref="Array{T}"/> to an untyped <see cref="Array"/>.
         /// </summary>
         /// <param name="from">The typed array to convert.</param>
-        /// <returns>A new Godot Array, or <see langword="null"/> if <see paramref="from"/> was null.</returns>
+        /// <returns>A new Redot Array, or <see langword="null"/> if <see paramref="from"/> was null.</returns>
         [return: NotNullIfNotNull("from")]
         public static explicit operator Array?(Array<T>? from)
         {
@@ -1158,7 +1158,7 @@ namespace Godot.Collections
         /// Duplicates this <see cref="Array{T}"/>.
         /// </summary>
         /// <param name="deep">If <see langword="true"/>, performs a deep copy.</param>
-        /// <returns>A new Godot Array.</returns>
+        /// <returns>A new Redot Array.</returns>
         public Array<T> Duplicate(bool deep = false)
         {
             return new Array<T>(_underlyingArray.Duplicate(deep));
@@ -1168,14 +1168,14 @@ namespace Godot.Collections
         /// Assigns the given value to all elements in the array. This can typically be
         /// used together with <see cref="Resize(int)"/> to create an array with a given
         /// size and initialized elements.
-        /// Note: If <paramref name="value"/> is of a reference type (<see cref="GodotObject"/>
+        /// Note: If <paramref name="value"/> is of a reference type (<see cref="RedotObject"/>
         /// derived, <see cref="Array"/> or <see cref="Dictionary"/>, etc.) then the array
         /// is filled with the references to the same object, i.e. no duplicates are
         /// created.
         /// </summary>
         /// <example>
         /// <code>
-        /// var array = new Godot.Collections.Array&lt;int&gt;();
+        /// var array = new Redot.Collections.Array&lt;int&gt;();
         /// array.Resize(10);
         /// array.Fill(0); // Initialize the 10 elements to 0.
         /// </code>
@@ -1188,9 +1188,9 @@ namespace Godot.Collections
         {
             ThrowIfReadOnly();
 
-            godot_variant variantValue = VariantUtils.CreateFrom(value);
-            var self = (godot_array)_underlyingArray.NativeValue;
-            NativeFuncs.godotsharp_array_fill(ref self, variantValue);
+            Redot_variant variantValue = VariantUtils.CreateFrom(value);
+            var self = (Redot_array)_underlyingArray.NativeValue;
+            NativeFuncs.Redotsharp_array_fill(ref self, variantValue);
         }
 
         /// <summary>
@@ -1201,9 +1201,9 @@ namespace Godot.Collections
         /// <returns>The maximum value contained in the array.</returns>
         public T Max()
         {
-            godot_variant resVariant;
-            var self = (godot_array)_underlyingArray.NativeValue;
-            NativeFuncs.godotsharp_array_max(ref self, out resVariant);
+            Redot_variant resVariant;
+            var self = (Redot_array)_underlyingArray.NativeValue;
+            NativeFuncs.Redotsharp_array_max(ref self, out resVariant);
             return VariantUtils.ConvertTo<T>(resVariant);
         }
 
@@ -1215,9 +1215,9 @@ namespace Godot.Collections
         /// <returns>The minimum value contained in the array.</returns>
         public T Min()
         {
-            godot_variant resVariant;
-            var self = (godot_array)_underlyingArray.NativeValue;
-            NativeFuncs.godotsharp_array_min(ref self, out resVariant);
+            Redot_variant resVariant;
+            var self = (Redot_array)_underlyingArray.NativeValue;
+            NativeFuncs.Redotsharp_array_min(ref self, out resVariant);
             return VariantUtils.ConvertTo<T>(resVariant);
         }
 
@@ -1226,16 +1226,16 @@ namespace Godot.Collections
         /// </summary>
         /// <example>
         /// <code>
-        /// var array = new Godot.Collections.Array&lt;int&gt; { 1, 2, 3, 4 };
+        /// var array = new Redot.Collections.Array&lt;int&gt; { 1, 2, 3, 4 };
         /// GD.Print(array.PickRandom()); // Prints either of the four numbers.
         /// </code>
         /// </example>
         /// <returns>A random element from the array.</returns>
         public T PickRandom()
         {
-            godot_variant resVariant;
-            var self = (godot_array)_underlyingArray.NativeValue;
-            NativeFuncs.godotsharp_array_pick_random(ref self, out resVariant);
+            Redot_variant resVariant;
+            var self = (Redot_array)_underlyingArray.NativeValue;
+            NativeFuncs.Redotsharp_array_pick_random(ref self, out resVariant);
             return VariantUtils.ConvertTo<T>(resVariant);
         }
 
@@ -1361,7 +1361,7 @@ namespace Godot.Collections
         /// </summary>
         /// <example>
         /// <code>
-        /// var strings = new Godot.Collections.Array&lt;string&gt; { "string1", "string2", "string10", "string11" };
+        /// var strings = new Redot.Collections.Array&lt;string&gt; { "string1", "string2", "string10", "string11" };
         /// strings.Sort();
         /// GD.Print(strings); // Prints [string1, string10, string11, string2]
         /// </code>
@@ -1381,7 +1381,7 @@ namespace Godot.Collections
         /// </summary>
         /// <param name="left">The first array.</param>
         /// <param name="right">The second array.</param>
-        /// <returns>A new Godot Array with the contents of both arrays.</returns>
+        /// <returns>A new Redot Array with the contents of both arrays.</returns>
         public static Array<T> operator +(Array<T> left, Array<T> right)
         {
             if (left == null)
@@ -1414,7 +1414,7 @@ namespace Godot.Collections
         {
             get
             {
-                _underlyingArray.GetVariantBorrowElementAt(index, out godot_variant borrowElem);
+                _underlyingArray.GetVariantBorrowElementAt(index, out Redot_variant borrowElem);
                 return VariantUtils.ConvertTo<T>(borrowElem);
             }
             set
@@ -1424,9 +1424,9 @@ namespace Godot.Collections
                 if (index < 0 || index >= Count)
                     throw new ArgumentOutOfRangeException(nameof(index));
 
-                var self = (godot_array)_underlyingArray.NativeValue;
-                godot_variant* ptrw = NativeFuncs.godotsharp_array_ptrw(ref self);
-                godot_variant* itemPtr = &ptrw[index];
+                var self = (Redot_array)_underlyingArray.NativeValue;
+                Redot_variant* ptrw = NativeFuncs.Redotsharp_array_ptrw(ref self);
+                Redot_variant* itemPtr = &ptrw[index];
                 (*itemPtr).Dispose();
                 *itemPtr = VariantUtils.CreateFrom(value);
             }
@@ -1446,8 +1446,8 @@ namespace Godot.Collections
             }
 
             using var variantValue = VariantUtils.CreateFrom(item);
-            var self = (godot_array)_underlyingArray.NativeValue;
-            return NativeFuncs.godotsharp_array_index_of(ref self, variantValue);
+            var self = (Redot_array)_underlyingArray.NativeValue;
+            return NativeFuncs.Redotsharp_array_index_of(ref self, variantValue);
         }
 
         /// <summary>
@@ -1470,9 +1470,9 @@ namespace Godot.Collections
                 return -1;
             }
 
-            godot_variant variantValue = VariantUtils.CreateFrom(item);
-            var self = (godot_array)_underlyingArray.NativeValue;
-            return NativeFuncs.godotsharp_array_index_of(ref self, variantValue, index);
+            Redot_variant variantValue = VariantUtils.CreateFrom(item);
+            var self = (Redot_array)_underlyingArray.NativeValue;
+            return NativeFuncs.Redotsharp_array_index_of(ref self, variantValue, index);
         }
 
         /// <summary>
@@ -1489,9 +1489,9 @@ namespace Godot.Collections
                 return -1;
             }
 
-            godot_variant variantValue = VariantUtils.CreateFrom(item);
-            var self = (godot_array)_underlyingArray.NativeValue;
-            return NativeFuncs.godotsharp_array_last_index_of(ref self, variantValue, Count - 1);
+            Redot_variant variantValue = VariantUtils.CreateFrom(item);
+            var self = (Redot_array)_underlyingArray.NativeValue;
+            return NativeFuncs.Redotsharp_array_last_index_of(ref self, variantValue, Count - 1);
         }
 
         /// <summary>
@@ -1515,9 +1515,9 @@ namespace Godot.Collections
                 return -1;
             }
 
-            godot_variant variantValue = VariantUtils.CreateFrom(item);
-            var self = (godot_array)_underlyingArray.NativeValue;
-            return NativeFuncs.godotsharp_array_last_index_of(ref self, variantValue, index);
+            Redot_variant variantValue = VariantUtils.CreateFrom(item);
+            var self = (Redot_array)_underlyingArray.NativeValue;
+            return NativeFuncs.Redotsharp_array_last_index_of(ref self, variantValue, index);
         }
 
         /// <summary>
@@ -1541,8 +1541,8 @@ namespace Godot.Collections
                 throw new ArgumentOutOfRangeException(nameof(index));
 
             using var variantValue = VariantUtils.CreateFrom(item);
-            var self = (godot_array)_underlyingArray.NativeValue;
-            NativeFuncs.godotsharp_array_insert(ref self, index, variantValue);
+            var self = (Redot_array)_underlyingArray.NativeValue;
+            NativeFuncs.Redotsharp_array_insert(ref self, index, variantValue);
         }
 
         /// <summary>
@@ -1600,8 +1600,8 @@ namespace Godot.Collections
             ThrowIfReadOnly();
 
             using var variantValue = VariantUtils.CreateFrom(item);
-            var self = (godot_array)_underlyingArray.NativeValue;
-            _ = NativeFuncs.godotsharp_array_add(ref self, variantValue);
+            var self = (Redot_array)_underlyingArray.NativeValue;
+            _ = NativeFuncs.Redotsharp_array_add(ref self, variantValue);
         }
 
         /// <summary>
@@ -1621,20 +1621,20 @@ namespace Godot.Collections
             if (collection == null)
                 throw new ArgumentNullException(nameof(collection), "Value cannot be null.");
 
-            // If the collection is another Godot Array, we can add the items
+            // If the collection is another Redot Array, we can add the items
             // with a single interop call.
             if (collection is Array array)
             {
-                var self = (godot_array)_underlyingArray.NativeValue;
-                var collectionNative = (godot_array)array.NativeValue;
-                _ = NativeFuncs.godotsharp_array_add_range(ref self, collectionNative);
+                var self = (Redot_array)_underlyingArray.NativeValue;
+                var collectionNative = (Redot_array)array.NativeValue;
+                _ = NativeFuncs.Redotsharp_array_add_range(ref self, collectionNative);
                 return;
             }
             if (collection is Array<T> typedArray)
             {
-                var self = (godot_array)_underlyingArray.NativeValue;
-                var collectionNative = (godot_array)typedArray._underlyingArray.NativeValue;
-                _ = NativeFuncs.godotsharp_array_add_range(ref self, collectionNative);
+                var self = (Redot_array)_underlyingArray.NativeValue;
+                var collectionNative = (Redot_array)typedArray._underlyingArray.NativeValue;
+                _ = NativeFuncs.Redotsharp_array_add_range(ref self, collectionNative);
                 return;
             }
 
@@ -1704,8 +1704,8 @@ namespace Godot.Collections
             }
 
             using var variantValue = VariantUtils.CreateFrom(item);
-            var self = (godot_array)_underlyingArray.NativeValue;
-            return NativeFuncs.godotsharp_array_binary_search(ref self, index, count, variantValue);
+            var self = (Redot_array)_underlyingArray.NativeValue;
+            return NativeFuncs.Redotsharp_array_binary_search(ref self, index, count, variantValue);
         }
 
         /// <summary>
@@ -1744,7 +1744,7 @@ namespace Godot.Collections
         /// </summary>
         /// <example>
         /// <code>
-        /// var arr = new Godot.Collections.Array&lt;string&gt; { "inside", "7" };
+        /// var arr = new Redot.Collections.Array&lt;string&gt; { "inside", "7" };
         /// GD.Print(arr.Contains("inside")); // True
         /// GD.Print(arr.Contains("outside")); // False
         /// GD.Print(arr.Contains(7)); // False
@@ -1847,7 +1847,7 @@ namespace Godot.Collections
         public static implicit operator Variant(Array<T> from) => Variant.CreateFrom(from);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator Array<T>(Variant from) => from.AsGodotArray<T>();
+        public static explicit operator Array<T>(Variant from) => from.AsRedotArray<T>();
 
         private void ThrowIfReadOnly()
         {

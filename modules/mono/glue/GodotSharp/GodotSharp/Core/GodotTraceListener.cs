@@ -1,8 +1,8 @@
 using System.Diagnostics;
 
-namespace Godot
+namespace Redot
 {
-    internal class GodotTraceListener : TraceListener
+    internal class RedotTraceListener : TraceListener
     {
         public override void Write(string message)
         {

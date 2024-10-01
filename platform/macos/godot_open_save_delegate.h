@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_open_save_delegate.h                                            */
+/*  Redot_open_save_delegate.h                                            */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_OPEN_SAVE_DELEGATE_H
-#define GODOT_OPEN_SAVE_DELEGATE_H
+#ifndef Redot_OPEN_SAVE_DELEGATE_H
+#define Redot_OPEN_SAVE_DELEGATE_H
 
 #import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
@@ -38,7 +38,7 @@
 #include "core/variant/typed_array.h"
 #include "core/variant/variant.h"
 
-@interface GodotOpenSaveDelegate : NSObject <NSOpenSavePanelDelegate> {
+@interface RedotOpenSaveDelegate : NSObject <NSOpenSavePanelDelegate> {
 	NSSavePanel *dialog;
 	NSMutableArray *allowed_types;
 
@@ -63,4 +63,4 @@
 
 @end
 
-#endif // GODOT_OPEN_SAVE_DELEGATE_H
+#endif // Redot_OPEN_SAVE_DELEGATE_H

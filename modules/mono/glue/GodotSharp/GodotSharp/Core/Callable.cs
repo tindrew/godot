@@ -1,9 +1,9 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
     /// Callable is a first class object which can be held in variables and passed to functions.
@@ -28,15 +28,15 @@ namespace Godot
     /// </example>
     public readonly partial struct Callable
     {
-        private readonly GodotObject _target;
+        private readonly RedotObject _target;
         private readonly StringName _method;
         private readonly Delegate _delegate;
-        private readonly unsafe delegate* managed<object, NativeVariantPtrArgs, out godot_variant, void> _trampoline;
+        private readonly unsafe delegate* managed<object, NativeVariantPtrArgs, out Redot_variant, void> _trampoline;
 
         /// <summary>
         /// Object that contains the method.
         /// </summary>
-        public GodotObject Target => _target;
+        public RedotObject Target => _target;
 
         /// <summary>
         /// Name of the method that will be called.
@@ -51,7 +51,7 @@ namespace Godot
         /// <summary>
         /// Trampoline function pointer for dynamically invoking <see cref="Callable.Delegate"/>.
         /// </summary>
-        public unsafe delegate* managed<object, NativeVariantPtrArgs, out godot_variant, void> Trampoline
+        public unsafe delegate* managed<object, NativeVariantPtrArgs, out Redot_variant, void> Trampoline
             => _trampoline;
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Godot
         /// </summary>
         /// <param name="target">Object that contains the method.</param>
         /// <param name="method">Name of the method that will be called.</param>
-        public unsafe Callable(GodotObject target, StringName method)
+        public unsafe Callable(RedotObject target, StringName method)
         {
             _target = target;
             _method = method;
@@ -69,9 +69,9 @@ namespace Godot
         }
 
         private unsafe Callable(Delegate @delegate,
-            delegate* managed<object, NativeVariantPtrArgs, out godot_variant, void> trampoline)
+            delegate* managed<object, NativeVariantPtrArgs, out Redot_variant, void> trampoline)
         {
-            _target = @delegate?.Target as GodotObject;
+            _target = @delegate?.Target as RedotObject;
             _method = null;
             _delegate = @delegate;
             _trampoline = trampoline;
@@ -87,30 +87,30 @@ namespace Godot
         /// <returns>The value returned by the method.</returns>
         public unsafe Variant Call(params Variant[] args)
         {
-            using godot_callable callable = Marshaling.ConvertCallableToNative(this);
+            using Redot_callable callable = Marshaling.ConvertCallableToNative(this);
 
             int argc = args.Length;
 
-            Span<godot_variant.movable> argsStoreSpan = argc <= VarArgsSpanThreshold ?
-                stackalloc godot_variant.movable[VarArgsSpanThreshold] :
-                new godot_variant.movable[argc];
+            Span<Redot_variant.movable> argsStoreSpan = argc <= VarArgsSpanThreshold ?
+                stackalloc Redot_variant.movable[VarArgsSpanThreshold] :
+                new Redot_variant.movable[argc];
 
             Span<IntPtr> argsSpan = argc <= VarArgsSpanThreshold ?
                 stackalloc IntPtr[VarArgsSpanThreshold] :
                 new IntPtr[argc];
 
-            fixed (godot_variant* varargs = &MemoryMarshal.GetReference(argsStoreSpan).DangerousSelfRef)
+            fixed (Redot_variant* varargs = &MemoryMarshal.GetReference(argsStoreSpan).DangerousSelfRef)
             fixed (IntPtr* argsPtr = &MemoryMarshal.GetReference(argsSpan))
             {
                 for (int i = 0; i < argc; i++)
                 {
-                    varargs[i] = (godot_variant)args[i].NativeVar;
+                    varargs[i] = (Redot_variant)args[i].NativeVar;
                     argsPtr[i] = new IntPtr(&varargs[i]);
                 }
 
-                godot_variant ret = NativeFuncs.godotsharp_callable_call(callable,
-                    (godot_variant**)argsPtr, argc, out godot_variant_call_error vcall_error);
-                ExceptionUtils.DebugCheckCallError(callable, (godot_variant**)argsPtr, argc, vcall_error);
+                Redot_variant ret = NativeFuncs.Redotsharp_callable_call(callable,
+                    (Redot_variant**)argsPtr, argc, out Redot_variant_call_error vcall_error);
+                ExceptionUtils.DebugCheckCallError(callable, (Redot_variant**)argsPtr, argc, vcall_error);
                 return Variant.CreateTakingOwnershipOfDisposableValue(ret);
             }
         }
@@ -122,28 +122,28 @@ namespace Godot
         /// <param name="args">Arguments that will be passed to the method call.</param>
         public unsafe void CallDeferred(params Variant[] args)
         {
-            using godot_callable callable = Marshaling.ConvertCallableToNative(this);
+            using Redot_callable callable = Marshaling.ConvertCallableToNative(this);
 
             int argc = args.Length;
 
-            Span<godot_variant.movable> argsStoreSpan = argc <= VarArgsSpanThreshold ?
-                stackalloc godot_variant.movable[VarArgsSpanThreshold] :
-                new godot_variant.movable[argc];
+            Span<Redot_variant.movable> argsStoreSpan = argc <= VarArgsSpanThreshold ?
+                stackalloc Redot_variant.movable[VarArgsSpanThreshold] :
+                new Redot_variant.movable[argc];
 
             Span<IntPtr> argsSpan = argc <= VarArgsSpanThreshold ?
                 stackalloc IntPtr[VarArgsSpanThreshold] :
                 new IntPtr[argc];
 
-            fixed (godot_variant* varargs = &MemoryMarshal.GetReference(argsStoreSpan).DangerousSelfRef)
+            fixed (Redot_variant* varargs = &MemoryMarshal.GetReference(argsStoreSpan).DangerousSelfRef)
             fixed (IntPtr* argsPtr = &MemoryMarshal.GetReference(argsSpan))
             {
                 for (int i = 0; i < argc; i++)
                 {
-                    varargs[i] = (godot_variant)args[i].NativeVar;
+                    varargs[i] = (Redot_variant)args[i].NativeVar;
                     argsPtr[i] = new IntPtr(&varargs[i]);
                 }
 
-                NativeFuncs.godotsharp_callable_call_deferred(callable, (godot_variant**)argsPtr, argc);
+                NativeFuncs.Redotsharp_callable_call_deferred(callable, (Redot_variant**)argsPtr, argc);
             }
         }
 
@@ -162,11 +162,11 @@ namespace Godot
         ///    </item>
         ///    <item>
         ///        <term>args</term>
-        ///        <description>Array of <see cref="godot_variant"/> arguments.</description>
+        ///        <description>Array of <see cref="Redot_variant"/> arguments.</description>
         ///    </item>
         ///    <item>
         ///        <term>ret</term>
-        ///        <description>Return value of type <see cref="godot_variant"/>.</description>
+        ///        <description>Return value of type <see cref="Redot_variant"/>.</description>
         ///    </item>
         ///</list>
         /// <para>
@@ -177,7 +177,7 @@ namespace Godot
         /// Usage example:
         ///
         /// <code>
-        ///     static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)
+        ///     static void Trampoline(object delegateObj, NativeVariantPtrArgs args, out Redot_variant ret)
         ///     {
         ///         if (args.Count != 1)
         ///             throw new ArgumentException($&quot;Callable expected {1} arguments but received {args.Count}.&quot;);
@@ -198,7 +198,7 @@ namespace Godot
         /// <param name="trampoline">Trampoline function pointer for invoking the delegate.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static unsafe Callable CreateWithUnsafeTrampoline(Delegate @delegate,
-            delegate* managed<object, NativeVariantPtrArgs, out godot_variant, void> trampoline)
+            delegate* managed<object, NativeVariantPtrArgs, out Redot_variant, void> trampoline)
             => new(@delegate, trampoline);
     }
 }

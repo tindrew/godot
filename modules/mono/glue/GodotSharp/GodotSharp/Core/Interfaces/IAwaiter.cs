@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
     /// An interface that requires a boolean for completion status and a method that gets the result of completion.

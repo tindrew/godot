@@ -1,6 +1,6 @@
 using System;
 
-namespace Godot
+namespace Redot
 {
     public static partial class ResourceLoader
     {

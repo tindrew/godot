@@ -2,10 +2,10 @@
 /*  android_keys_utils.h                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -37,12 +37,12 @@
 
 #define AKEYCODE_MAX 0xFFFF
 
-struct AndroidGodotCodePair {
+struct AndroidRedotCodePair {
 	unsigned int android_code = 0;
-	Key godot_code = Key::NONE;
+	Key Redot_code = Key::NONE;
 };
 
-static AndroidGodotCodePair android_godot_code_pairs[] = {
+static AndroidRedotCodePair android_Redot_code_pairs[] = {
 	{ AKEYCODE_UNKNOWN, Key::UNKNOWN }, // (0) Unknown key code.
 	{ AKEYCODE_BACK, Key::BACK }, // (4) Back key.
 	{ AKEYCODE_0, Key::KEY_0 }, // (7) '0' key.
@@ -175,15 +175,15 @@ static AndroidGodotCodePair android_godot_code_pairs[] = {
 	{ AKEYCODE_MAX, Key::UNKNOWN }
 };
 
-Key godot_code_from_android_code(unsigned int p_code);
+Key Redot_code_from_android_code(unsigned int p_code);
 
 // Key location determination.
-struct AndroidGodotLocationPair {
+struct AndroidRedotLocationPair {
 	unsigned int android_code = 0;
-	KeyLocation godot_code = KeyLocation::UNSPECIFIED;
+	KeyLocation Redot_code = KeyLocation::UNSPECIFIED;
 };
 
-static AndroidGodotLocationPair android_godot_location_pairs[] = {
+static AndroidRedotLocationPair android_Redot_location_pairs[] = {
 	{ AKEYCODE_ALT_LEFT, KeyLocation::LEFT },
 	{ AKEYCODE_ALT_RIGHT, KeyLocation::RIGHT },
 	{ AKEYCODE_SHIFT_LEFT, KeyLocation::LEFT },
@@ -195,6 +195,6 @@ static AndroidGodotLocationPair android_godot_location_pairs[] = {
 	{ AKEYCODE_MAX, KeyLocation::UNSPECIFIED }
 };
 
-KeyLocation godot_location_from_android_code(unsigned int p_code);
+KeyLocation Redot_location_from_android_code(unsigned int p_code);
 
 #endif // ANDROID_KEYS_UTILS_H

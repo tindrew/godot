@@ -1,7 +1,7 @@
-using Godot;
-using GodotTools.Internals;
+using Redot;
+using RedotTools.Internals;
 
-namespace GodotTools.Inspector
+namespace RedotTools.Inspector
 {
     public partial class InspectorOutOfSyncWarning : HBoxContainer
     {

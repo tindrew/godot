@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace Godot.SourceGenerators
+namespace Redot.SourceGenerators
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public sealed class MustBeVariantAnalyzer : DiagnosticAnalyzer
@@ -70,7 +70,7 @@ namespace Godot.SourceGenerators
 
                 if (typeSymbol is ITypeParameterSymbol typeParamSymbol)
                 {
-                    if (!typeParamSymbol.GetAttributes().Any(a => a.AttributeClass?.IsGodotMustBeVariantAttribute() ?? false))
+                    if (!typeParamSymbol.GetAttributes().Any(a => a.AttributeClass?.IsRedotMustBeVariantAttribute() ?? false))
                     {
                         context.ReportDiagnostic(Diagnostic.Create(
                             Common.GenericTypeParameterMustBeVariantAnnotatedRule,
@@ -152,7 +152,7 @@ namespace Godot.SourceGenerators
             if (typeParamSymbol != null)
             {
                 return typeParamSymbol.GetAttributes()
-                    .Any(a => a.AttributeClass?.IsGodotMustBeVariantAttribute() ?? false);
+                    .Any(a => a.AttributeClass?.IsRedotMustBeVariantAttribute() ?? false);
             }
 
             context.ReportDiagnostic(Diagnostic.Create(

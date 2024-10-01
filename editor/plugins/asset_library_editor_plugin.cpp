@@ -2,10 +2,10 @@
 /*  asset_library_editor_plugin.cpp                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -705,7 +705,7 @@ void EditorAssetLibrary::_notification(int p_what) {
 void EditorAssetLibrary::_update_repository_options() {
 	// TODO: Move to editor_settings.cpp
 	Dictionary default_urls;
-	default_urls["godotengine.org (Official)"] = "https://godotengine.org/asset-library/api";
+	default_urls["Redotengine.org (Official)"] = "https://Redotengine.org/asset-library/api";
 	Dictionary available_urls = _EDITOR_DEF("asset_library/available_urls", default_urls, true);
 	repository->clear();
 	Array keys = available_urls.keys();
@@ -763,8 +763,8 @@ const char *EditorAssetLibrary::sort_text[SORT_MAX] = {
 	TTRC("Least Recently Updated"),
 	TTRC("Name (A-Z)"),
 	TTRC("Name (Z-A)"),
-	TTRC("License (A-Z)"), // "cost" stores the SPDX license name in the Godot Asset Library.
-	TTRC("License (Z-A)"), // "cost" stores the SPDX license name in the Godot Asset Library.
+	TTRC("License (A-Z)"), // "cost" stores the SPDX license name in the Redot Asset Library.
+	TTRC("License (Z-A)"), // "cost" stores the SPDX license name in the Redot Asset Library.
 };
 
 const char *EditorAssetLibrary::support_key[SUPPORT_MAX] = {
@@ -780,11 +780,11 @@ const char *EditorAssetLibrary::support_text[SUPPORT_MAX] = {
 };
 
 void EditorAssetLibrary::_select_author(const String &p_author) {
-	if (!host.contains("godotengine.org")) {
+	if (!host.contains("Redotengine.org")) {
 		// Don't open the link for alternative repositories.
 		return;
 	}
-	OS::get_singleton()->shell_open("https://godotengine.org/asset-library/asset?user=" + p_author.uri_encode());
+	OS::get_singleton()->shell_open("https://Redotengine.org/asset-library/asset?user=" + p_author.uri_encode());
 }
 
 void EditorAssetLibrary::_select_category(int p_id) {
@@ -1068,7 +1068,7 @@ void EditorAssetLibrary::_search(int p_page) {
 	args += String() + "sort=" + sort_key[sort->get_selected()];
 
 	// We use the "branch" version, i.e. major.minor, as patch releases should be compatible
-	args += "&godot_version=" + String(VERSION_BRANCH);
+	args += "&Redot_version=" + String(VERSION_BRANCH);
 
 	String support_list;
 	for (int i = 0; i < SUPPORT_MAX; i++) {

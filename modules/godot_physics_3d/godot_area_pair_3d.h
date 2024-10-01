@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_area_pair_3d.h                                                  */
+/*  Redot_area_pair_3d.h                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,17 +28,17 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_AREA_PAIR_3D_H
-#define GODOT_AREA_PAIR_3D_H
+#ifndef Redot_AREA_PAIR_3D_H
+#define Redot_AREA_PAIR_3D_H
 
-#include "godot_area_3d.h"
-#include "godot_body_3d.h"
-#include "godot_constraint_3d.h"
-#include "godot_soft_body_3d.h"
+#include "Redot_area_3d.h"
+#include "Redot_body_3d.h"
+#include "Redot_constraint_3d.h"
+#include "Redot_soft_body_3d.h"
 
-class GodotAreaPair3D : public GodotConstraint3D {
-	GodotBody3D *body = nullptr;
-	GodotArea3D *area = nullptr;
+class RedotAreaPair3D : public RedotConstraint3D {
+	RedotBody3D *body = nullptr;
+	RedotArea3D *area = nullptr;
 	int body_shape;
 	int area_shape;
 	bool colliding = false;
@@ -51,13 +51,13 @@ public:
 	virtual bool pre_solve(real_t p_step) override;
 	virtual void solve(real_t p_step) override;
 
-	GodotAreaPair3D(GodotBody3D *p_body, int p_body_shape, GodotArea3D *p_area, int p_area_shape);
-	~GodotAreaPair3D();
+	RedotAreaPair3D(RedotBody3D *p_body, int p_body_shape, RedotArea3D *p_area, int p_area_shape);
+	~RedotAreaPair3D();
 };
 
-class GodotArea2Pair3D : public GodotConstraint3D {
-	GodotArea3D *area_a = nullptr;
-	GodotArea3D *area_b = nullptr;
+class RedotArea2Pair3D : public RedotConstraint3D {
+	RedotArea3D *area_a = nullptr;
+	RedotArea3D *area_b = nullptr;
 	int shape_a;
 	int shape_b;
 	bool colliding_a = false;
@@ -72,13 +72,13 @@ public:
 	virtual bool pre_solve(real_t p_step) override;
 	virtual void solve(real_t p_step) override;
 
-	GodotArea2Pair3D(GodotArea3D *p_area_a, int p_shape_a, GodotArea3D *p_area_b, int p_shape_b);
-	~GodotArea2Pair3D();
+	RedotArea2Pair3D(RedotArea3D *p_area_a, int p_shape_a, RedotArea3D *p_area_b, int p_shape_b);
+	~RedotArea2Pair3D();
 };
 
-class GodotAreaSoftBodyPair3D : public GodotConstraint3D {
-	GodotSoftBody3D *soft_body = nullptr;
-	GodotArea3D *area = nullptr;
+class RedotAreaSoftBodyPair3D : public RedotConstraint3D {
+	RedotSoftBody3D *soft_body = nullptr;
+	RedotArea3D *area = nullptr;
 	int soft_body_shape;
 	int area_shape;
 	bool colliding = false;
@@ -91,8 +91,8 @@ public:
 	virtual bool pre_solve(real_t p_step) override;
 	virtual void solve(real_t p_step) override;
 
-	GodotAreaSoftBodyPair3D(GodotSoftBody3D *p_sof_body, int p_soft_body_shape, GodotArea3D *p_area, int p_area_shape);
-	~GodotAreaSoftBodyPair3D();
+	RedotAreaSoftBodyPair3D(RedotSoftBody3D *p_sof_body, int p_soft_body_shape, RedotArea3D *p_area, int p_area_shape);
+	~RedotAreaSoftBodyPair3D();
 };
 
-#endif // GODOT_AREA_PAIR_3D_H
+#endif // Redot_AREA_PAIR_3D_H

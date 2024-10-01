@@ -2,10 +2,10 @@
 /*  test_tree.h                                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -108,7 +108,7 @@ TEST_CASE("[SceneTree][Tree]") {
 		memdelete(tree);
 	}
 
-	// https://github.com/godotengine/godot/issues/96205
+	// https://github.com/Redotengine/Redot/issues/96205
 	SUBCASE("[Tree] Get last item after removal.") {
 		Tree *tree = memnew(Tree);
 		TreeItem *root = tree->create_item();

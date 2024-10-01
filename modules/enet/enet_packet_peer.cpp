@@ -2,10 +2,10 @@
 /*  enet_packet_peer.cpp                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -111,7 +111,7 @@ Error ENetPacketPeer::put_packet(const uint8_t *p_buffer, int p_buffer_size) {
 IPAddress ENetPacketPeer::get_remote_address() const {
 	ERR_FAIL_NULL_V(peer, IPAddress());
 	IPAddress out;
-#ifdef GODOT_ENET
+#ifdef Redot_ENET
 	out.set_ipv6((uint8_t *)&(peer->address.host));
 #else
 	out.set_ipv4((uint8_t *)&(peer->address.host));

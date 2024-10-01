@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_broad_phase_2d_bvh.h                                            */
+/*  Redot_broad_phase_2d_bvh.h                                            */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,16 +28,16 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_BROAD_PHASE_2D_BVH_H
-#define GODOT_BROAD_PHASE_2D_BVH_H
+#ifndef Redot_BROAD_PHASE_2D_BVH_H
+#define Redot_BROAD_PHASE_2D_BVH_H
 
-#include "godot_broad_phase_2d.h"
+#include "Redot_broad_phase_2d.h"
 
 #include "core/math/bvh.h"
 #include "core/math/rect2.h"
 #include "core/math/vector2.h"
 
-class GodotBroadPhase2DBVH : public GodotBroadPhase2D {
+class RedotBroadPhase2DBVH : public RedotBroadPhase2D {
 	template <typename T>
 	class UserPairTestFunction {
 	public:
@@ -65,10 +65,10 @@ class GodotBroadPhase2DBVH : public GodotBroadPhase2D {
 		TREE_FLAG_DYNAMIC = 1 << TREE_DYNAMIC,
 	};
 
-	BVH_Manager<GodotCollisionObject2D, 2, true, 128, UserPairTestFunction<GodotCollisionObject2D>, UserCullTestFunction<GodotCollisionObject2D>, Rect2, Vector2> bvh;
+	BVH_Manager<RedotCollisionObject2D, 2, true, 128, UserPairTestFunction<RedotCollisionObject2D>, UserCullTestFunction<RedotCollisionObject2D>, Rect2, Vector2> bvh;
 
-	static void *_pair_callback(void *, uint32_t, GodotCollisionObject2D *, int, uint32_t, GodotCollisionObject2D *, int);
-	static void _unpair_callback(void *, uint32_t, GodotCollisionObject2D *, int, uint32_t, GodotCollisionObject2D *, int, void *);
+	static void *_pair_callback(void *, uint32_t, RedotCollisionObject2D *, int, uint32_t, RedotCollisionObject2D *, int);
+	static void _unpair_callback(void *, uint32_t, RedotCollisionObject2D *, int, uint32_t, RedotCollisionObject2D *, int, void *);
 
 	PairCallback pair_callback = nullptr;
 	void *pair_userdata = nullptr;
@@ -77,25 +77,25 @@ class GodotBroadPhase2DBVH : public GodotBroadPhase2D {
 
 public:
 	// 0 is an invalid ID
-	virtual ID create(GodotCollisionObject2D *p_object, int p_subindex = 0, const Rect2 &p_aabb = Rect2(), bool p_static = false) override;
+	virtual ID create(RedotCollisionObject2D *p_object, int p_subindex = 0, const Rect2 &p_aabb = Rect2(), bool p_static = false) override;
 	virtual void move(ID p_id, const Rect2 &p_aabb) override;
 	virtual void set_static(ID p_id, bool p_static) override;
 	virtual void remove(ID p_id) override;
 
-	virtual GodotCollisionObject2D *get_object(ID p_id) const override;
+	virtual RedotCollisionObject2D *get_object(ID p_id) const override;
 	virtual bool is_static(ID p_id) const override;
 	virtual int get_subindex(ID p_id) const override;
 
-	virtual int cull_segment(const Vector2 &p_from, const Vector2 &p_to, GodotCollisionObject2D **p_results, int p_max_results, int *p_result_indices = nullptr) override;
-	virtual int cull_aabb(const Rect2 &p_aabb, GodotCollisionObject2D **p_results, int p_max_results, int *p_result_indices = nullptr) override;
+	virtual int cull_segment(const Vector2 &p_from, const Vector2 &p_to, RedotCollisionObject2D **p_results, int p_max_results, int *p_result_indices = nullptr) override;
+	virtual int cull_aabb(const Rect2 &p_aabb, RedotCollisionObject2D **p_results, int p_max_results, int *p_result_indices = nullptr) override;
 
 	virtual void set_pair_callback(PairCallback p_pair_callback, void *p_userdata) override;
 	virtual void set_unpair_callback(UnpairCallback p_unpair_callback, void *p_userdata) override;
 
 	virtual void update() override;
 
-	static GodotBroadPhase2D *_create();
-	GodotBroadPhase2DBVH();
+	static RedotBroadPhase2D *_create();
+	RedotBroadPhase2DBVH();
 };
 
-#endif // GODOT_BROAD_PHASE_2D_BVH_H
+#endif // Redot_BROAD_PHASE_2D_BVH_H

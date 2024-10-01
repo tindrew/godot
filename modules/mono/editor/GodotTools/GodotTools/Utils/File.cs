@@ -1,7 +1,7 @@
 using System;
-using Godot;
+using Redot;
 
-namespace GodotTools.Utils
+namespace RedotTools.Utils
 {
     public static class File
     {

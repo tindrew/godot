@@ -1,4 +1,4 @@
-package org.godotengine.godot
+package org.Redotengine.Redot
 
 import android.app.Service
 import android.content.Intent
@@ -7,19 +7,19 @@ import android.os.IBinder
 import android.util.Log
 
 /**
- * Godot service responsible for hosting the Godot engine instance.
+ * Redot service responsible for hosting the Redot engine instance.
  *
  * Note: Still in development, so it's made private and inaccessible until completed.
  */
-private class GodotService : Service() {
+private class RedotService : Service() {
 
 	companion object {
-		private val TAG = GodotService::class.java.simpleName
+		private val TAG = RedotService::class.java.simpleName
 	}
 
 	private var boundIntent: Intent? = null
-	private val godot by lazy {
-		Godot(applicationContext)
+	private val Redot by lazy {
+		Redot(applicationContext)
 	}
 
 	override fun onCreate() {
@@ -32,12 +32,12 @@ private class GodotService : Service() {
 
 	override fun onBind(intent: Intent?): IBinder? {
 		if (boundIntent != null) {
-			Log.d(TAG, "GodotService already bound")
+			Log.d(TAG, "RedotService already bound")
 			return null
 		}
 
 		boundIntent = intent
-		return GodotHandle(godot)
+		return RedotHandle(Redot)
 	}
 
 	override fun onRebind(intent: Intent?) {
@@ -52,5 +52,5 @@ private class GodotService : Service() {
 		super.onTaskRemoved(rootIntent)
 	}
 
-	class GodotHandle(val godot: Godot) : Binder()
+	class RedotHandle(val Redot: Redot) : Binder()
 }

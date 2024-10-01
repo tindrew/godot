@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/56702
+# https://github.com/Redotengine/Redot/issues/56702
 
 func test():
 	const_default()

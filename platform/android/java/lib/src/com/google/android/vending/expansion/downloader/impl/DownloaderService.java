@@ -50,9 +50,9 @@ import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-// -- GODOT start --
+// -- Redot start --
 import android.annotation.SuppressLint;
-// -- GODOT end --
+// -- Redot end --
 
 import java.io.File;
 

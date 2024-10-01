@@ -1,8 +1,8 @@
-namespace Godot
+namespace Redot
 {
     /// <summary>
-    /// Allows a GodotObject to react to the serialization/deserialization
-    /// that occurs when Godot reloads assemblies.
+    /// Allows a RedotObject to react to the serialization/deserialization
+    /// that occurs when Redot reloads assemblies.
     /// </summary>
     public interface ISerializationListener
     {

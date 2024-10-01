@@ -7,42 +7,42 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Godot.SourceGenerators
+namespace Redot.SourceGenerators
 {
     [Generator]
     public class ScriptPathAttributeGenerator : ISourceGenerator
     {
         public void Execute(GeneratorExecutionContext context)
         {
-            if (context.IsGodotSourceGeneratorDisabled("ScriptPathAttribute"))
+            if (context.IsRedotSourceGeneratorDisabled("ScriptPathAttribute"))
                 return;
 
-            if (context.IsGodotToolsProject())
+            if (context.IsRedotToolsProject())
                 return;
 
             // NOTE: NotNullWhen diagnostics don't work on projects targeting .NET Standard 2.0
             // ReSharper disable once ReplaceWithStringIsNullOrEmpty
-            if (!context.TryGetGlobalAnalyzerProperty("GodotProjectDirBase64", out string? godotProjectDir) || godotProjectDir!.Length == 0)
+            if (!context.TryGetGlobalAnalyzerProperty("RedotProjectDirBase64", out string? RedotProjectDir) || RedotProjectDir!.Length == 0)
             {
-                if (!context.TryGetGlobalAnalyzerProperty("GodotProjectDir", out godotProjectDir) || godotProjectDir!.Length == 0)
+                if (!context.TryGetGlobalAnalyzerProperty("RedotProjectDir", out RedotProjectDir) || RedotProjectDir!.Length == 0)
                 {
-                    throw new InvalidOperationException("Property 'GodotProjectDir' is null or empty.");
+                    throw new InvalidOperationException("Property 'RedotProjectDir' is null or empty.");
                 }
             }
             else
             {
                 // Workaround for https://github.com/dotnet/roslyn/issues/51692
-                godotProjectDir = Encoding.UTF8.GetString(Convert.FromBase64String(godotProjectDir));
+                RedotProjectDir = Encoding.UTF8.GetString(Convert.FromBase64String(RedotProjectDir));
             }
 
-            Dictionary<INamedTypeSymbol, IEnumerable<ClassDeclarationSyntax>> godotClasses = context
+            Dictionary<INamedTypeSymbol, IEnumerable<ClassDeclarationSyntax>> RedotClasses = context
                 .Compilation.SyntaxTrees
                 .SelectMany(tree =>
                     tree.GetRoot().DescendantNodes()
                         .OfType<ClassDeclarationSyntax>()
                         // Ignore inner classes
                         .Where(cds => !cds.IsNested())
-                        .SelectGodotScriptClasses(context.Compilation)
+                        .SelectRedotScriptClasses(context.Compilation)
                         // Report and skip non-partial classes
                         .Where(x =>
                         {
@@ -58,22 +58,22 @@ namespace Godot.SourceGenerators
                 .ToDictionary<IGrouping<INamedTypeSymbol, (ClassDeclarationSyntax cds, INamedTypeSymbol symbol)>, INamedTypeSymbol, IEnumerable<ClassDeclarationSyntax>>(g => g.Key, g => g.Select(x => x.cds), SymbolEqualityComparer.Default);
 
             var usedPaths = new HashSet<string>();
-            foreach (var godotClass in godotClasses)
+            foreach (var RedotClass in RedotClasses)
             {
-                VisitGodotScriptClass(context, godotProjectDir, usedPaths,
-                    symbol: godotClass.Key,
-                    classDeclarations: godotClass.Value);
+                VisitRedotScriptClass(context, RedotProjectDir, usedPaths,
+                    symbol: RedotClass.Key,
+                    classDeclarations: RedotClass.Value);
             }
 
-            if (godotClasses.Count <= 0)
+            if (RedotClasses.Count <= 0)
                 return;
 
-            AddScriptTypesAssemblyAttr(context, godotClasses);
+            AddScriptTypesAssemblyAttr(context, RedotClasses);
         }
 
-        private static void VisitGodotScriptClass(
+        private static void VisitRedotScriptClass(
             GeneratorExecutionContext context,
-            string godotProjectDir,
+            string RedotProjectDir,
             HashSet<string> usedPaths,
             INamedTypeSymbol symbol,
             IEnumerable<ClassDeclarationSyntax> classDeclarations
@@ -94,11 +94,11 @@ namespace Godot.SourceGenerators
                 if (attributes.Length != 0)
                     attributes.Append("\n");
 
-                string scriptPath = RelativeToDir(cds.SyntaxTree.FilePath, godotProjectDir);
+                string scriptPath = RelativeToDir(cds.SyntaxTree.FilePath, RedotProjectDir);
                 if (!usedPaths.Add(scriptPath))
                 {
                     context.ReportDiagnostic(Diagnostic.Create(
-                        Common.MultipleClassesInGodotScriptRule,
+                        Common.MultipleClassesInRedotScriptRule,
                         cds.Identifier.GetLocation(),
                         symbol.Name
                     ));
@@ -121,13 +121,13 @@ namespace Godot.SourceGenerators
 
             var source = new StringBuilder();
 
-            // using Godot;
+            // using Redot;
             // namespace {classNs} {
             //     {attributesBuilder}
             //     partial class {className} { }
             // }
 
-            source.Append("using Godot;\n");
+            source.Append("using Redot;\n");
 
             if (hasNamespace)
             {
@@ -150,19 +150,19 @@ namespace Godot.SourceGenerators
         }
 
         private static void AddScriptTypesAssemblyAttr(GeneratorExecutionContext context,
-            Dictionary<INamedTypeSymbol, IEnumerable<ClassDeclarationSyntax>> godotClasses)
+            Dictionary<INamedTypeSymbol, IEnumerable<ClassDeclarationSyntax>> RedotClasses)
         {
             var sourceBuilder = new StringBuilder();
 
             sourceBuilder.Append("[assembly:");
-            sourceBuilder.Append(GodotClasses.AssemblyHasScriptsAttr);
+            sourceBuilder.Append(RedotClasses.AssemblyHasScriptsAttr);
             sourceBuilder.Append("(new System.Type[] {");
 
             bool first = true;
 
-            foreach (var godotClass in godotClasses)
+            foreach (var RedotClass in RedotClasses)
             {
-                var qualifiedName = godotClass.Key.ToDisplayString(
+                var qualifiedName = RedotClass.Key.ToDisplayString(
                     NullableFlowState.NotNull, SymbolDisplayFormat.FullyQualifiedFormat
                         .WithGenericsOptions(SymbolDisplayGenericsOptions.None));
                 if (!first)
@@ -170,8 +170,8 @@ namespace Godot.SourceGenerators
                 first = false;
                 sourceBuilder.Append("typeof(");
                 sourceBuilder.Append(qualifiedName);
-                if (godotClass.Key.IsGenericType)
-                    sourceBuilder.Append($"<{new string(',', godotClass.Key.TypeParameters.Count() - 1)}>");
+                if (RedotClass.Key.IsGenericType)
+                    sourceBuilder.Append($"<{new string(',', RedotClass.Key.TypeParameters.Count() - 1)}>");
                 sourceBuilder.Append(")");
             }
 

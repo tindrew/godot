@@ -1,8 +1,8 @@
-using Godot;
+using Redot;
 using System;
 using System.Collections.Generic;
 
-public partial class ExportedFields : GodotObject
+public partial class ExportedFields : RedotObject
 {
     [Export] private Boolean _fieldBoolean = true;
     [Export] private Char _fieldChar = 'f';
@@ -18,7 +18,7 @@ public partial class ExportedFields : GodotObject
     [Export] private Double _fieldDouble = 10;
     [Export] private String _fieldString = "foo";
 
-    // Godot structs
+    // Redot structs
     [Export] private Vector2 _fieldVector2 = new(10f, 10f);
     [Export] private Vector2I _fieldVector2I = Vector2I.Up;
     [Export] private Rect2 _fieldRect2 = new(new Vector2(10f, 10f), new Vector2(10f, 10f));
@@ -69,7 +69,7 @@ public partial class ExportedFields : GodotObject
     [Export] private Vector2[] _fieldVector2Array = { Vector2.Up, Vector2.Down, Vector2.Left, Vector2.Right };
     [Export] private Vector3[] _fieldVector3Array = { Vector3.Up, Vector3.Down, Vector3.Left, Vector3.Right };
     [Export] private Color[] _fieldColorArray = { Colors.Aqua, Colors.Aquamarine, Colors.Azure, Colors.Beige };
-    [Export] private GodotObject[] _fieldGodotObjectOrDerivedArray = { null };
+    [Export] private RedotObject[] _fieldRedotObjectOrDerivedArray = { null };
     [Export] private StringName[] _fieldStringNameArray = { "foo", "bar" };
     [Export] private NodePath[] _fieldNodePathArray = { "foo", "bar" };
     [Export] private Rid[] _fieldRidArray = { default, default, default };
@@ -82,21 +82,21 @@ public partial class ExportedFields : GodotObject
     [Export] private Variant _fieldVariant = "foo";
 
     // Classes
-    [Export] private GodotObject _fieldGodotObjectOrDerived;
-    [Export] private Godot.Texture _fieldGodotResourceTexture;
+    [Export] private RedotObject _fieldRedotObjectOrDerived;
+    [Export] private Redot.Texture _fieldRedotResourceTexture;
     [Export] private StringName _fieldStringName = new StringName("foo");
     [Export] private NodePath _fieldNodePath = new NodePath("foo");
     [Export] private Rid _fieldRid;
 
     [Export]
-    private Godot.Collections.Dictionary _fieldGodotDictionary = new() { { "foo", 10 }, { Vector2.Up, Colors.Chocolate } };
+    private Redot.Collections.Dictionary _fieldRedotDictionary = new() { { "foo", 10 }, { Vector2.Up, Colors.Chocolate } };
 
     [Export]
-    private Godot.Collections.Array _fieldGodotArray = new() { "foo", 10, Vector2.Up, Colors.Chocolate };
+    private Redot.Collections.Array _fieldRedotArray = new() { "foo", 10, Vector2.Up, Colors.Chocolate };
 
     [Export]
-    private Godot.Collections.Dictionary<string, bool> _fieldGodotGenericDictionary = new() { { "foo", true }, { "bar", false } };
+    private Redot.Collections.Dictionary<string, bool> _fieldRedotGenericDictionary = new() { { "foo", true }, { "bar", false } };
 
     [Export]
-    private Godot.Collections.Array<int> _fieldGodotGenericArray = new() { 0, 1, 2, 3, 4, 5, 6 };
+    private Redot.Collections.Array<int> _fieldRedotGenericArray = new() { 0, 1, 2, 3, 4, 5, 6 };
 }

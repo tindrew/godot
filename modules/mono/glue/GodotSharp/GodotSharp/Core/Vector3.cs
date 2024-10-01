@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 #nullable enable
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
     /// 3-element structure that can be used to represent positions in 3D space or any other pair of numeric values.

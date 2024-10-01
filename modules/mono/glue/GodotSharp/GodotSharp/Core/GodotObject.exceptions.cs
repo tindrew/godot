@@ -4,9 +4,9 @@ using System.Text;
 
 #nullable enable
 
-namespace Godot
+namespace Redot
 {
-    public partial class GodotObject
+    public partial class RedotObject
     {
         public class NativeMemberNotFoundException : Exception
         {

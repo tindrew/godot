@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotDownloaderService.java                                           */
+/*  RedotDownloaderService.java                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot;
+package org.Redotengine.Redot;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -40,7 +40,7 @@ import com.google.android.vending.expansion.downloader.impl.DownloaderService;
  * This class demonstrates the minimal client implementation of the
  * DownloaderService from the Downloader library.
  */
-public class GodotDownloaderService extends DownloaderService {
+public class RedotDownloaderService extends DownloaderService {
 	// stuff for LVL -- MODIFY FOR YOUR APPLICATION!
 	private static final String BASE64_PUBLIC_KEY = "REPLACE THIS WITH YOUR PUBLIC KEY";
 	// used by the preference obfuscater
@@ -56,7 +56,7 @@ public class GodotDownloaderService extends DownloaderService {
 	@Override
 	public String getPublicKey() {
 		SharedPreferences prefs = getApplicationContext().getSharedPreferences("app_data_keys", Context.MODE_PRIVATE);
-		Log.d("GODOT", "getting public key:" + prefs.getString("store_public_key", null));
+		Log.d("Redot", "getting public key:" + prefs.getString("store_public_key", null));
 		return prefs.getString("store_public_key", null);
 
 		//return BASE64_PUBLIC_KEY;
@@ -79,7 +79,7 @@ public class GodotDownloaderService extends DownloaderService {
 	 */
 	@Override
 	public String getAlarmReceiverClassName() {
-		Log.d("GODOT", "getAlarmReceiverClassName()");
-		return GodotDownloaderAlarmReceiver.class.getName();
+		Log.d("Redot", "getAlarmReceiverClassName()");
+		return RedotDownloaderAlarmReceiver.class.getName();
 	}
 }

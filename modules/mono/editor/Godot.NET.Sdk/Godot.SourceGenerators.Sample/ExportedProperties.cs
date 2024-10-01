@@ -4,13 +4,13 @@ using System.Diagnostics.CodeAnalysis;
 #pragma warning disable CS0169
 #pragma warning disable CS0414
 
-namespace Godot.SourceGenerators.Sample
+namespace Redot.SourceGenerators.Sample
 {
     [SuppressMessage("ReSharper", "BuiltInTypeReferenceStyle")]
     [SuppressMessage("ReSharper", "RedundantNameQualifier")]
     [SuppressMessage("ReSharper", "ArrangeObjectCreationWhenTypeEvident")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public partial class ExportedProperties : GodotObject
+    public partial class ExportedProperties : RedotObject
     {
         // Do not generate default value
         private String _notGeneratePropertyString = new string("not generate");
@@ -115,7 +115,7 @@ namespace Godot.SourceGenerators.Sample
         [Export] private Double PropertyDouble { get; set; } = 10;
         [Export] private String PropertyString { get; set; } = "foo";
 
-        // Godot structs
+        // Redot structs
         [Export] private Vector2 PropertyVector2 { get; set; } = new(10f, 10f);
         [Export] private Vector2I PropertyVector2I { get; set; } = Vector2I.Up;
         [Export] private Rect2 PropertyRect2 { get; set; } = new(new Vector2(10f, 10f), new Vector2(10f, 10f));
@@ -168,7 +168,7 @@ namespace Godot.SourceGenerators.Sample
         [Export] private Vector2[] PropertyVector2Array { get; set; } = { Vector2.Up, Vector2.Down, Vector2.Left, Vector2.Right };
         [Export] private Vector3[] PropertyVector3Array { get; set; } = { Vector3.Up, Vector3.Down, Vector3.Left, Vector3.Right };
         [Export] private Color[] PropertyColorArray { get; set; } = { Colors.Aqua, Colors.Aquamarine, Colors.Azure, Colors.Beige };
-        [Export] private GodotObject[] PropertyGodotObjectOrDerivedArray { get; set; } = { null };
+        [Export] private RedotObject[] PropertyRedotObjectOrDerivedArray { get; set; } = { null };
         [Export] private StringName[] PropertyStringNameArray { get; set; } = { "foo", "bar" };
         [Export] private NodePath[] PropertyNodePathArray { get; set; } = { "foo", "bar" };
         [Export] private Rid[] PropertyRidArray { get; set; } = { default, default, default };
@@ -177,26 +177,26 @@ namespace Godot.SourceGenerators.Sample
         [Export] private Variant PropertyVariant { get; set; } = "foo";
 
         // Classes
-        [Export] private GodotObject PropertyGodotObjectOrDerived { get; set; }
-        [Export] private Godot.Texture PropertyGodotResourceTexture { get; set; }
+        [Export] private RedotObject PropertyRedotObjectOrDerived { get; set; }
+        [Export] private Redot.Texture PropertyRedotResourceTexture { get; set; }
         [Export] private StringName PropertyStringName { get; set; } = new StringName("foo");
         [Export] private NodePath PropertyNodePath { get; set; } = new NodePath("foo");
         [Export] private Rid PropertyRid { get; set; }
 
         [Export]
-        private Godot.Collections.Dictionary PropertyGodotDictionary { get; set; } =
+        private Redot.Collections.Dictionary PropertyRedotDictionary { get; set; } =
             new() { { "foo", 10 }, { Vector2.Up, Colors.Chocolate } };
 
         [Export]
-        private Godot.Collections.Array PropertyGodotArray { get; set; } =
+        private Redot.Collections.Array PropertyRedotArray { get; set; } =
             new() { "foo", 10, Vector2.Up, Colors.Chocolate };
 
         [Export]
-        private Godot.Collections.Dictionary<string, bool> PropertyGodotGenericDictionary { get; set; } =
+        private Redot.Collections.Dictionary<string, bool> PropertyRedotGenericDictionary { get; set; } =
             new() { { "foo", true }, { "bar", false } };
 
         [Export]
-        private Godot.Collections.Array<int> PropertyGodotGenericArray { get; set; } =
+        private Redot.Collections.Array<int> PropertyRedotGenericArray { get; set; } =
             new() { 0, 1, 2, 3, 4, 5, 6 };
     }
 }

@@ -1,8 +1,8 @@
-using Godot;
+using Redot;
 
 namespace NamespaceA
 {
-    partial class SameName : GodotObject
+    partial class SameName : RedotObject
     {
         private int _field;
     }
@@ -11,7 +11,7 @@ namespace NamespaceA
 // SameName again but different namespace
 namespace NamespaceB
 {
-    partial class {|GD0003:SameName|} : GodotObject
+    partial class {|GD0003:SameName|} : RedotObject
     {
         private int _field;
     }

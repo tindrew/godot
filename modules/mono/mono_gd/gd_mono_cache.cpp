@@ -2,10 +2,10 @@
 /*  gd_mono_cache.cpp                                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -35,9 +35,9 @@
 namespace GDMonoCache {
 
 ManagedCallbacks managed_callbacks;
-bool godot_api_cache_updated = false;
+bool Redot_api_cache_updated = false;
 
-void update_godot_api_cache(const ManagedCallbacks &p_managed_callbacks) {
+void update_Redot_api_cache(const ManagedCallbacks &p_managed_callbacks) {
 	int checked_count = 0;
 
 #define CHECK_CALLBACK_NOT_NULL_IMPL(m_var, m_class, m_method)                             \
@@ -57,11 +57,11 @@ void update_godot_api_cache(const ManagedCallbacks &p_managed_callbacks) {
 	CHECK_CALLBACK_NOT_NULL(DelegateUtils, TrySerializeDelegateWithGCHandle);
 	CHECK_CALLBACK_NOT_NULL(DelegateUtils, TryDeserializeDelegateWithGCHandle);
 	CHECK_CALLBACK_NOT_NULL(ScriptManagerBridge, FrameCallback);
-	CHECK_CALLBACK_NOT_NULL(ScriptManagerBridge, CreateManagedForGodotObjectBinding);
-	CHECK_CALLBACK_NOT_NULL(ScriptManagerBridge, CreateManagedForGodotObjectScriptInstance);
+	CHECK_CALLBACK_NOT_NULL(ScriptManagerBridge, CreateManagedForRedotObjectBinding);
+	CHECK_CALLBACK_NOT_NULL(ScriptManagerBridge, CreateManagedForRedotObjectScriptInstance);
 	CHECK_CALLBACK_NOT_NULL(ScriptManagerBridge, GetScriptNativeName);
 	CHECK_CALLBACK_NOT_NULL(ScriptManagerBridge, GetGlobalClassName);
-	CHECK_CALLBACK_NOT_NULL(ScriptManagerBridge, SetGodotObjectPtr);
+	CHECK_CALLBACK_NOT_NULL(ScriptManagerBridge, SetRedotObjectPtr);
 	CHECK_CALLBACK_NOT_NULL(ScriptManagerBridge, RaiseEventSignal);
 	CHECK_CALLBACK_NOT_NULL(ScriptManagerBridge, ScriptIsOrInherits);
 	CHECK_CALLBACK_NOT_NULL(ScriptManagerBridge, AddScriptBridge);
@@ -84,7 +84,7 @@ void update_godot_api_cache(const ManagedCallbacks &p_managed_callbacks) {
 	CHECK_CALLBACK_NOT_NULL(GCHandleBridge, FreeGCHandle);
 	CHECK_CALLBACK_NOT_NULL(GCHandleBridge, GCHandleIsTargetCollectible);
 	CHECK_CALLBACK_NOT_NULL(DebuggingUtils, GetCurrentStackInfo);
-	CHECK_CALLBACK_NOT_NULL(DisposablesTracker, OnGodotShuttingDown);
+	CHECK_CALLBACK_NOT_NULL(DisposablesTracker, OnRedotShuttingDown);
 	CHECK_CALLBACK_NOT_NULL(GD, OnCoreApiAssemblyLoaded);
 
 	managed_callbacks = p_managed_callbacks;
@@ -95,6 +95,6 @@ void update_godot_api_cache(const ManagedCallbacks &p_managed_callbacks) {
 		WARN_PRINT("The presence of " + itos(missing_count) + " callback(s) was not validated");
 	}
 
-	godot_api_cache_updated = true;
+	Redot_api_cache_updated = true;
 }
 } // namespace GDMonoCache

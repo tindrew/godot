@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_content_view.mm                                                 */
+/*  Redot_content_view.mm                                                 */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,14 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "godot_content_view.h"
+#include "Redot_content_view.h"
 
 #include "display_server_macos.h"
 #include "key_mapping_macos.h"
 
 #include "main/main.h"
 
-@implementation GodotContentLayerDelegate
+@implementation RedotContentLayerDelegate
 
 - (id)init {
 	self = [super init];
@@ -65,7 +65,7 @@
 
 @end
 
-@implementation GodotContentView
+@implementation RedotContentView
 
 - (void)setFrameSize:(NSSize)newSize {
 	DisplayServerMacOS *ds = (DisplayServerMacOS *)DisplayServer::get_singleton();
@@ -111,7 +111,7 @@
 
 - (id)init {
 	self = [super init];
-	layer_delegate = [[GodotContentLayerDelegate alloc] init];
+	layer_delegate = [[RedotContentLayerDelegate alloc] init];
 	window_id = DisplayServer::INVALID_WINDOW_ID;
 	tracking_area = nil;
 	ime_input_event_in_progress = false;

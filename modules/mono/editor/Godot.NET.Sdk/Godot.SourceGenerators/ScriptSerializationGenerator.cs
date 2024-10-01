@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Godot.SourceGenerators
+namespace Redot.SourceGenerators
 {
     [Generator]
     public class ScriptSerializationGenerator : ISourceGenerator
@@ -16,15 +16,15 @@ namespace Godot.SourceGenerators
 
         public void Execute(GeneratorExecutionContext context)
         {
-            if (context.IsGodotSourceGeneratorDisabled("ScriptSerialization"))
+            if (context.IsRedotSourceGeneratorDisabled("ScriptSerialization"))
                 return;
 
-            INamedTypeSymbol[] godotClasses = context
+            INamedTypeSymbol[] RedotClasses = context
                 .Compilation.SyntaxTrees
                 .SelectMany(tree =>
                     tree.GetRoot().DescendantNodes()
                         .OfType<ClassDeclarationSyntax>()
-                        .SelectGodotScriptClasses(context.Compilation)
+                        .SelectRedotScriptClasses(context.Compilation)
                         // Report and skip non-partial classes
                         .Where(x =>
                         {
@@ -45,18 +45,18 @@ namespace Godot.SourceGenerators
                 .Distinct<INamedTypeSymbol>(SymbolEqualityComparer.Default)
                 .ToArray();
 
-            if (godotClasses.Length > 0)
+            if (RedotClasses.Length > 0)
             {
                 var typeCache = new MarshalUtils.TypeCache(context.Compilation);
 
-                foreach (var godotClass in godotClasses)
+                foreach (var RedotClass in RedotClasses)
                 {
-                    VisitGodotScriptClass(context, typeCache, godotClass);
+                    VisitRedotScriptClass(context, typeCache, RedotClass);
                 }
             }
         }
 
-        private static void VisitGodotScriptClass(
+        private static void VisitRedotScriptClass(
             GeneratorExecutionContext context,
             MarshalUtils.TypeCache typeCache,
             INamedTypeSymbol symbol
@@ -75,8 +75,8 @@ namespace Godot.SourceGenerators
 
             var source = new StringBuilder();
 
-            source.Append("using Godot;\n");
-            source.Append("using Godot.NativeInterop;\n");
+            source.Append("using Redot;\n");
+            source.Append("using Redot.NativeInterop;\n");
             source.Append("\n");
 
             if (hasNamespace)
@@ -121,13 +121,13 @@ namespace Godot.SourceGenerators
                 .Where(s => !s.IsStatic && s.Kind == SymbolKind.Field && !s.IsImplicitlyDeclared)
                 .Cast<IFieldSymbol>();
 
-            // TODO: We should still restore read-only properties after reloading assembly. Two possible ways: reflection or turn RestoreGodotObjectData into a constructor overload.
-            // Ignore properties without a getter, without a setter or with an init-only setter. Godot properties must be both readable and writable.
-            var godotClassProperties = propertySymbols.Where(property => !(property.IsReadOnly || property.IsWriteOnly || property.SetMethod!.IsInitOnly))
-                .WhereIsGodotCompatibleType(typeCache)
+            // TODO: We should still restore read-only properties after reloading assembly. Two possible ways: reflection or turn RestoreRedotObjectData into a constructor overload.
+            // Ignore properties without a getter, without a setter or with an init-only setter. Redot properties must be both readable and writable.
+            var RedotClassProperties = propertySymbols.Where(property => !(property.IsReadOnly || property.IsWriteOnly || property.SetMethod!.IsInitOnly))
+                .WhereIsRedotCompatibleType(typeCache)
                 .ToArray();
-            var godotClassFields = fieldSymbols.Where(property => !property.IsReadOnly)
-                .WhereIsGodotCompatibleType(typeCache)
+            var RedotClassFields = fieldSymbols.Where(property => !property.IsReadOnly)
+                .WhereIsRedotCompatibleType(typeCache)
                 .ToArray();
 
             var signalDelegateSymbols = members
@@ -135,9 +135,9 @@ namespace Godot.SourceGenerators
                 .Cast<INamedTypeSymbol>()
                 .Where(namedTypeSymbol => namedTypeSymbol.TypeKind == TypeKind.Delegate)
                 .Where(s => s.GetAttributes()
-                    .Any(a => a.AttributeClass?.IsGodotSignalAttribute() ?? false));
+                    .Any(a => a.AttributeClass?.IsRedotSignalAttribute() ?? false));
 
-            List<GodotSignalDelegateData> godotSignalDelegates = new();
+            List<RedotSignalDelegateData> RedotSignalDelegates = new();
 
             foreach (var signalDelegateSymbol in signalDelegateSymbols)
             {
@@ -149,23 +149,23 @@ namespace Godot.SourceGenerators
                     signalName.Length - ScriptSignalsGenerator.SignalDelegateSuffix.Length);
 
                 var invokeMethodData = signalDelegateSymbol
-                    .DelegateInvokeMethod?.HasGodotCompatibleSignature(typeCache);
+                    .DelegateInvokeMethod?.HasRedotCompatibleSignature(typeCache);
 
                 if (invokeMethodData == null)
                     continue;
 
-                godotSignalDelegates.Add(new(signalName, signalDelegateSymbol, invokeMethodData.Value));
+                RedotSignalDelegates.Add(new(signalName, signalDelegateSymbol, invokeMethodData.Value));
             }
 
             source.Append("    /// <inheritdoc/>\n");
             source.Append("    [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]\n");
             source.Append(
-                "    protected override void SaveGodotObjectData(global::Godot.Bridge.GodotSerializationInfo info)\n    {\n");
-            source.Append("        base.SaveGodotObjectData(info);\n");
+                "    protected override void SaveRedotObjectData(global::Redot.Bridge.RedotSerializationInfo info)\n    {\n");
+            source.Append("        base.SaveRedotObjectData(info);\n");
 
             // Save properties
 
-            foreach (var property in godotClassProperties)
+            foreach (var property in RedotClassProperties)
             {
                 string propertyName = property.PropertySymbol.Name;
 
@@ -179,7 +179,7 @@ namespace Godot.SourceGenerators
 
             // Save fields
 
-            foreach (var field in godotClassFields)
+            foreach (var field in RedotClassFields)
             {
                 string fieldName = field.FieldSymbol.Name;
 
@@ -193,7 +193,7 @@ namespace Godot.SourceGenerators
 
             // Save signal events
 
-            foreach (var signalDelegate in godotSignalDelegates)
+            foreach (var signalDelegate in RedotSignalDelegates)
             {
                 string signalName = signalDelegate.Name;
 
@@ -209,12 +209,12 @@ namespace Godot.SourceGenerators
             source.Append("    /// <inheritdoc/>\n");
             source.Append("    [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]\n");
             source.Append(
-                "    protected override void RestoreGodotObjectData(global::Godot.Bridge.GodotSerializationInfo info)\n    {\n");
-            source.Append("        base.RestoreGodotObjectData(info);\n");
+                "    protected override void RestoreRedotObjectData(global::Redot.Bridge.RedotSerializationInfo info)\n    {\n");
+            source.Append("        base.RestoreRedotObjectData(info);\n");
 
             // Restore properties
 
-            foreach (var property in godotClassProperties)
+            foreach (var property in RedotClassProperties)
             {
                 string propertyName = property.PropertySymbol.Name;
 
@@ -233,7 +233,7 @@ namespace Godot.SourceGenerators
 
             // Restore fields
 
-            foreach (var field in godotClassFields)
+            foreach (var field in RedotClassFields)
             {
                 string fieldName = field.FieldSymbol.Name;
 
@@ -252,7 +252,7 @@ namespace Godot.SourceGenerators
 
             // Restore signal events
 
-            foreach (var signalDelegate in godotSignalDelegates)
+            foreach (var signalDelegate in RedotSignalDelegates)
             {
                 string signalName = signalDelegate.Name;
                 string signalDelegateQualifiedName = signalDelegate.DelegateSymbol.FullQualifiedNameIncludeGlobal();

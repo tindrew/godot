@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_slider_joint_3d.h                                               */
+/*  Redot_slider_joint_3d.h                                               */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,15 +28,15 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_SLIDER_JOINT_3D_H
-#define GODOT_SLIDER_JOINT_3D_H
+#ifndef Redot_SLIDER_JOINT_3D_H
+#define Redot_SLIDER_JOINT_3D_H
 
 /*
-Adapted to Godot from the Bullet library.
+Adapted to Redot from the Bullet library.
 */
 
-#include "../godot_joint_3d.h"
-#include "godot_jacobian_entry_3d.h"
+#include "../Redot_joint_3d.h"
+#include "Redot_jacobian_entry_3d.h"
 
 /*
 Bullet Continuous Collision Detection and Physics Library
@@ -65,15 +65,15 @@ April 04, 2008
 
 //-----------------------------------------------------------------------------
 
-class GodotSliderJoint3D : public GodotJoint3D {
+class RedotSliderJoint3D : public RedotJoint3D {
 protected:
 	union {
 		struct {
-			GodotBody3D *A;
-			GodotBody3D *B;
+			RedotBody3D *A;
+			RedotBody3D *B;
 		};
 
-		GodotBody3D *_arr[2] = { nullptr, nullptr };
+		RedotBody3D *_arr[2] = { nullptr, nullptr };
 	};
 
 	Transform3D m_frameInA;
@@ -114,10 +114,10 @@ protected:
 	bool m_solveLinLim = false;
 	bool m_solveAngLim = false;
 
-	GodotJacobianEntry3D m_jacLin[3] = {};
+	RedotJacobianEntry3D m_jacLin[3] = {};
 	real_t m_jacLinDiagABInv[3] = {};
 
-	GodotJacobianEntry3D m_jacAng[3] = {};
+	RedotJacobianEntry3D m_jacAng[3] = {};
 
 	real_t m_timeStep = 0.0;
 	Transform3D m_calculatedTransformA;
@@ -149,13 +149,13 @@ protected:
 
 public:
 	// constructors
-	GodotSliderJoint3D(GodotBody3D *rbA, GodotBody3D *rbB, const Transform3D &frameInA, const Transform3D &frameInB);
+	RedotSliderJoint3D(RedotBody3D *rbA, RedotBody3D *rbB, const Transform3D &frameInA, const Transform3D &frameInB);
 	//SliderJointSW();
 	// overrides
 
 	// access
-	const GodotBody3D *getRigidBodyA() const { return A; }
-	const GodotBody3D *getRigidBodyB() const { return B; }
+	const RedotBody3D *getRigidBodyA() const { return A; }
+	const RedotBody3D *getRigidBodyB() const { return B; }
 	const Transform3D &getCalculatedTransformA() const { return m_calculatedTransformA; }
 	const Transform3D &getCalculatedTransformB() const { return m_calculatedTransformB; }
 	const Transform3D &getFrameOffsetA() const { return m_frameInA; }
@@ -243,4 +243,4 @@ public:
 	virtual PhysicsServer3D::JointType get_type() const override { return PhysicsServer3D::JOINT_TYPE_SLIDER; }
 };
 
-#endif // GODOT_SLIDER_JOINT_3D_H
+#endif // Redot_SLIDER_JOINT_3D_H

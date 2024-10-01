@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Godot.NativeInterop;
+namespace Redot.NativeInterop;
 
 #nullable enable
 
@@ -12,17 +12,17 @@ public partial class VariantUtils
 
     internal static class GenericConversion<T>
     {
-        public static unsafe godot_variant ToVariant(in T from) =>
+        public static unsafe Redot_variant ToVariant(in T from) =>
             ToVariantCb != null ? ToVariantCb(from) : throw UnsupportedType<T>();
 
-        public static unsafe T FromVariant(in godot_variant variant) =>
+        public static unsafe T FromVariant(in Redot_variant variant) =>
             FromVariantCb != null ? FromVariantCb(variant) : throw UnsupportedType<T>();
 
         // ReSharper disable once StaticMemberInGenericType
-        internal static unsafe delegate*<in T, godot_variant> ToVariantCb;
+        internal static unsafe delegate*<in T, Redot_variant> ToVariantCb;
 
         // ReSharper disable once StaticMemberInGenericType
-        internal static unsafe delegate*<in godot_variant, T> FromVariantCb;
+        internal static unsafe delegate*<in Redot_variant, T> FromVariantCb;
 
         static GenericConversion()
         {
@@ -31,7 +31,7 @@ public partial class VariantUtils
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    public static godot_variant CreateFrom<[MustBeVariant] T>(in T from)
+    public static Redot_variant CreateFrom<[MustBeVariant] T>(in T from)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static TTo UnsafeAs<TTo>(in T f) => Unsafe.As<T, TTo>(ref Unsafe.AsRef(f));
@@ -179,21 +179,21 @@ public partial class VariantUtils
         if (typeof(T) == typeof(Rid))
             return CreateFromRid(UnsafeAs<Rid>(from));
 
-        if (typeof(T) == typeof(Godot.Collections.Dictionary))
-            return CreateFromDictionary(UnsafeAs<Godot.Collections.Dictionary>(from));
+        if (typeof(T) == typeof(Redot.Collections.Dictionary))
+            return CreateFromDictionary(UnsafeAs<Redot.Collections.Dictionary>(from));
 
-        if (typeof(T) == typeof(Godot.Collections.Array))
-            return CreateFromArray(UnsafeAs<Godot.Collections.Array>(from));
+        if (typeof(T) == typeof(Redot.Collections.Array))
+            return CreateFromArray(UnsafeAs<Redot.Collections.Array>(from));
 
         if (typeof(T) == typeof(Variant))
-            return NativeFuncs.godotsharp_variant_new_copy((godot_variant)UnsafeAs<Variant>(from).NativeVar);
+            return NativeFuncs.Redotsharp_variant_new_copy((Redot_variant)UnsafeAs<Variant>(from).NativeVar);
 
         // More complex checks here at the end, to avoid screwing the simple ones in case they're not optimized away.
 
         // `typeof(X).IsAssignableFrom(typeof(T))` is optimized away
 
-        if (typeof(GodotObject).IsAssignableFrom(typeof(T)))
-            return CreateFromGodotObject(UnsafeAs<GodotObject>(from));
+        if (typeof(RedotObject).IsAssignableFrom(typeof(T)))
+            return CreateFromRedotObject(UnsafeAs<RedotObject>(from));
 
         // `typeof(T).IsValueType` is optimized away
         // `typeof(T).IsEnum` is NOT optimized away: https://github.com/dotnet/runtime/issues/67113
@@ -224,7 +224,7 @@ public partial class VariantUtils
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    public static T ConvertTo<[MustBeVariant] T>(in godot_variant variant)
+    public static T ConvertTo<[MustBeVariant] T>(in Redot_variant variant)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static T UnsafeAsT<TFrom>(TFrom f) => Unsafe.As<TFrom, T>(ref Unsafe.AsRef(f));
@@ -370,10 +370,10 @@ public partial class VariantUtils
         if (typeof(T) == typeof(Rid))
             return UnsafeAsT(ConvertToRid(variant));
 
-        if (typeof(T) == typeof(Godot.Collections.Dictionary))
+        if (typeof(T) == typeof(Redot.Collections.Dictionary))
             return UnsafeAsT(ConvertToDictionary(variant));
 
-        if (typeof(T) == typeof(Godot.Collections.Array))
+        if (typeof(T) == typeof(Redot.Collections.Array))
             return UnsafeAsT(ConvertToArray(variant));
 
         if (typeof(T) == typeof(Variant))
@@ -383,8 +383,8 @@ public partial class VariantUtils
 
         // `typeof(X).IsAssignableFrom(typeof(T))` is optimized away
 
-        if (typeof(GodotObject).IsAssignableFrom(typeof(T)))
-            return (T)(object)ConvertToGodotObject(variant);
+        if (typeof(RedotObject).IsAssignableFrom(typeof(T)))
+            return (T)(object)ConvertToRedotObject(variant);
 
         // `typeof(T).IsValueType` is optimized away
         // `typeof(T).IsEnum` is NOT optimized away: https://github.com/dotnet/runtime/issues/67113

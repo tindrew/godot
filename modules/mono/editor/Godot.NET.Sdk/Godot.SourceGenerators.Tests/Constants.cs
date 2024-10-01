@@ -1,11 +1,11 @@
 using System.IO;
 using System.Reflection;
 
-namespace Godot.SourceGenerators.Tests;
+namespace Redot.SourceGenerators.Tests;
 
 public static class Constants
 {
-    public static Assembly GodotSharpAssembly => typeof(GodotObject).Assembly;
+    public static Assembly RedotSharpAssembly => typeof(RedotObject).Assembly;
 
     public static string ExecutingAssemblyPath { get; }
     public static string SourceFolderPath { get; }

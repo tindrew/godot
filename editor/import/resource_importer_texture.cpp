@@ -2,10 +2,10 @@
 /*  resource_importer_texture.cpp                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -348,7 +348,7 @@ void ResourceImporterTexture::_save_ctex(const Ref<Image> &p_image, const String
 	f->store_8('G');
 	f->store_8('S');
 	f->store_8('T');
-	f->store_8('2'); //godot streamable texture 2D
+	f->store_8('2'); //Redot streamable texture 2D
 
 	//format version
 	f->store_32(CompressedTexture2D::FORMAT_VERSION);

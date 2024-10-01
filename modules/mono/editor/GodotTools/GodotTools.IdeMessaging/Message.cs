@@ -1,4 +1,4 @@
-namespace GodotTools.IdeMessaging
+namespace RedotTools.IdeMessaging
 {
     public class Message
     {

@@ -4,11 +4,11 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
 #nullable enable
 
-namespace Godot
+namespace Redot
 {
     internal static class DebuggingUtils
     {
@@ -59,27 +59,27 @@ namespace Godot
         internal static void InstallTraceListener()
         {
             Trace.Listeners.Clear();
-            Trace.Listeners.Add(new GodotTraceListener());
+            Trace.Listeners.Add(new RedotTraceListener());
         }
 
 #pragma warning disable IDE1006 // Naming rule violation
         // ReSharper disable once InconsistentNaming
         [StructLayout(LayoutKind.Sequential)]
-        internal ref struct godot_stack_info
+        internal ref struct Redot_stack_info
         {
-            public godot_string File;
-            public godot_string Func;
+            public Redot_string File;
+            public Redot_string Func;
             public int Line;
         }
 
         // ReSharper disable once InconsistentNaming
         [StructLayout(LayoutKind.Sequential)]
-        internal ref struct godot_stack_info_vector
+        internal ref struct Redot_stack_info_vector
         {
             private IntPtr _writeProxy;
-            private unsafe godot_stack_info* _ptr;
+            private unsafe Redot_stack_info* _ptr;
 
-            public readonly unsafe godot_stack_info* Elements
+            public readonly unsafe Redot_stack_info* Elements
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get => _ptr;
@@ -89,7 +89,7 @@ namespace Godot
             {
                 if (size < 0)
                     throw new ArgumentOutOfRangeException(nameof(size));
-                var err = NativeFuncs.godotsharp_stack_info_vector_resize(ref this, size);
+                var err = NativeFuncs.Redotsharp_stack_info_vector_resize(ref this, size);
                 if (err != Error.Ok)
                     throw new InvalidOperationException("Failed to resize vector. Error code is: " + err.ToString());
             }
@@ -98,7 +98,7 @@ namespace Godot
             {
                 if (_ptr == null)
                     return;
-                NativeFuncs.godotsharp_stack_info_vector_destroy(ref this);
+                NativeFuncs.Redotsharp_stack_info_vector_destroy(ref this);
                 _ptr = null;
             }
         }
@@ -118,7 +118,7 @@ namespace Godot
         {
             try
             {
-                var vector = (godot_stack_info_vector*)destVector;
+                var vector = (Redot_stack_info_vector*)destVector;
 
                 // We skip 2 frames:
                 // The first skipped frame is the current method.
@@ -147,7 +147,7 @@ namespace Godot
 
                     GetStackFrameMethodDecl(frame, out string methodDecl);
 
-                    godot_stack_info* stackInfo = &vector->Elements[i];
+                    Redot_stack_info* stackInfo = &vector->Elements[i];
 
                     // Assign directly to element in Vector. This way we don't need to worry
                     // about disposal if an exception is thrown. The Vector takes care of it.

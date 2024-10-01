@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/48121
+# https://github.com/Redotengine/Redot/issues/48121
 
 func test():
 	var x := []

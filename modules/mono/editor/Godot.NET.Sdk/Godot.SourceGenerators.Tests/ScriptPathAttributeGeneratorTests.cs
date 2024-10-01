@@ -6,16 +6,16 @@ using System.Text;
 using Microsoft.CodeAnalysis.Text;
 using Xunit;
 
-namespace Godot.SourceGenerators.Tests;
+namespace Redot.SourceGenerators.Tests;
 
 public class ScriptPathAttributeGeneratorTests
 {
     private static (string, SourceText) MakeAssemblyScriptTypesGeneratedSource(ICollection<string> types)
     {
         return (
-            Path.Combine("Godot.SourceGenerators", "Godot.SourceGenerators.ScriptPathAttributeGenerator", "AssemblyScriptTypes.generated.cs"),
+            Path.Combine("Redot.SourceGenerators", "Redot.SourceGenerators.ScriptPathAttributeGenerator", "AssemblyScriptTypes.generated.cs"),
             SourceText.From($$"""
-            [assembly:Godot.AssemblyHasScriptsAttribute(new System.Type[] {{{string.Join(", ", types.Select(type => $"typeof({type})"))}}})]
+            [assembly:Redot.AssemblyHasScriptsAttribute(new System.Type[] {{{string.Join(", ", types.Select(type => $"typeof({type})"))}}})]
 
             """, Encoding.UTF8)
         );

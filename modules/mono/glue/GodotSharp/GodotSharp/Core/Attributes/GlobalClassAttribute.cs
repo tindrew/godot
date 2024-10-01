@@ -2,10 +2,10 @@ using System;
 
 #nullable enable
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
-    /// Exposes the target class as a global script class to Godot Engine.
+    /// Exposes the target class as a global script class to Redot Engine.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class GlobalClassAttribute : Attribute { }

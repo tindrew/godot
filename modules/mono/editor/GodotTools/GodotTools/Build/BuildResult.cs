@@ -1,4 +1,4 @@
-namespace GodotTools.Build
+namespace RedotTools.Build
 {
     public enum BuildResult
     {

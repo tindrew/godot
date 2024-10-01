@@ -1,4 +1,4 @@
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,9 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Versioning;
 using System.Text;
-using GodotTools.Internals;
+using RedotTools.Internals;
 
-namespace GodotTools.Utils
+namespace RedotTools.Utils
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class OS
@@ -32,7 +32,7 @@ namespace GodotTools.Utils
         }
 
         /// <summary>
-        /// Godot platform identifiers.
+        /// Redot platform identifiers.
         /// </summary>
         public static class Platforms
         {
@@ -93,7 +93,7 @@ namespace GodotTools.Utils
             // TODO:
             // Does .NET 6 support BSD variants? If it does, it may need the name `unix`
             // instead of `linux` in the runtime identifier. This would be a problem as
-            // Godot has a single export profile for both, named LinuxBSD.
+            // Redot has a single export profile for both, named LinuxBSD.
             [Platforms.LinuxBSD] = DotNetOS.Linux,
             [Platforms.Android] = DotNetOS.Android,
             [Platforms.iOS] = DotNetOS.iOS,
@@ -102,7 +102,7 @@ namespace GodotTools.Utils
 
         private static bool IsOS(string name)
         {
-            Internal.godot_icall_Utils_OS_GetPlatformName(out godot_string dest);
+            Internal.Redot_icall_Utils_OS_GetPlatformName(out Redot_string dest);
             using (dest)
             {
                 string platformName = Marshaling.ConvertStringToManaged(dest);
@@ -112,7 +112,7 @@ namespace GodotTools.Utils
 
         private static bool IsAnyOS(IEnumerable<string> names)
         {
-            Internal.godot_icall_Utils_OS_GetPlatformName(out godot_string dest);
+            Internal.Redot_icall_Utils_OS_GetPlatformName(out Redot_string dest);
             using (dest)
             {
                 string platformName = Marshaling.ConvertStringToManaged(dest);
@@ -217,8 +217,8 @@ namespace GodotTools.Utils
             return searchDirs.Select(dir => Path.Combine(dir, name))
                 .FirstOrDefault(path =>
                 {
-                    using godot_string pathIn = Marshaling.ConvertStringToNative(path);
-                    return File.Exists(path) && Internal.godot_icall_Utils_OS_UnixFileHasExecutableAccess(pathIn);
+                    using Redot_string pathIn = Marshaling.ConvertStringToNative(path);
+                    return File.Exists(path) && Internal.Redot_icall_Utils_OS_UnixFileHasExecutableAccess(pathIn);
                 });
         }
 

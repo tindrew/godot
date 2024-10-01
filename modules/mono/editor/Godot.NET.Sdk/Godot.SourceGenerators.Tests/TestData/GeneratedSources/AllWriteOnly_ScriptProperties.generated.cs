@@ -1,5 +1,5 @@
-using Godot;
-using Godot.NativeInterop;
+using Redot;
+using Redot.NativeInterop;
 
 partial class AllWriteOnly
 {
@@ -7,51 +7,51 @@ partial class AllWriteOnly
     /// <summary>
     /// Cached StringNames for the properties and fields contained in this class, for fast lookup.
     /// </summary>
-    public new class PropertyName : global::Godot.GodotObject.PropertyName {
+    public new class PropertyName : global::Redot.RedotObject.PropertyName {
         /// <summary>
         /// Cached name for the 'WriteOnlyProperty' property.
         /// </summary>
-        public new static readonly global::Godot.StringName @WriteOnlyProperty = "WriteOnlyProperty";
+        public new static readonly global::Redot.StringName @WriteOnlyProperty = "WriteOnlyProperty";
         /// <summary>
         /// Cached name for the '_writeOnlyBackingField' field.
         /// </summary>
-        public new static readonly global::Godot.StringName @_writeOnlyBackingField = "_writeOnlyBackingField";
+        public new static readonly global::Redot.StringName @_writeOnlyBackingField = "_writeOnlyBackingField";
     }
     /// <inheritdoc/>
     [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-    protected override bool SetGodotClassPropertyValue(in godot_string_name name, in godot_variant value)
+    protected override bool SetRedotClassPropertyValue(in Redot_string_name name, in Redot_variant value)
     {
         if (name == PropertyName.@WriteOnlyProperty) {
-            this.@WriteOnlyProperty = global::Godot.NativeInterop.VariantUtils.ConvertTo<bool>(value);
+            this.@WriteOnlyProperty = global::Redot.NativeInterop.VariantUtils.ConvertTo<bool>(value);
             return true;
         }
         if (name == PropertyName.@_writeOnlyBackingField) {
-            this.@_writeOnlyBackingField = global::Godot.NativeInterop.VariantUtils.ConvertTo<bool>(value);
+            this.@_writeOnlyBackingField = global::Redot.NativeInterop.VariantUtils.ConvertTo<bool>(value);
             return true;
         }
-        return base.SetGodotClassPropertyValue(name, value);
+        return base.SetRedotClassPropertyValue(name, value);
     }
     /// <inheritdoc/>
     [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-    protected override bool GetGodotClassPropertyValue(in godot_string_name name, out godot_variant value)
+    protected override bool GetRedotClassPropertyValue(in Redot_string_name name, out Redot_variant value)
     {
         if (name == PropertyName.@_writeOnlyBackingField) {
-            value = global::Godot.NativeInterop.VariantUtils.CreateFrom<bool>(this.@_writeOnlyBackingField);
+            value = global::Redot.NativeInterop.VariantUtils.CreateFrom<bool>(this.@_writeOnlyBackingField);
             return true;
         }
-        return base.GetGodotClassPropertyValue(name, out value);
+        return base.GetRedotClassPropertyValue(name, out value);
     }
     /// <summary>
     /// Get the property information for all the properties declared in this class.
-    /// This method is used by Godot to register the available properties in the editor.
+    /// This method is used by Redot to register the available properties in the editor.
     /// Do not call this method.
     /// </summary>
     [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-    internal new static global::System.Collections.Generic.List<global::Godot.Bridge.PropertyInfo> GetGodotPropertyList()
+    internal new static global::System.Collections.Generic.List<global::Redot.Bridge.PropertyInfo> GetRedotPropertyList()
     {
-        var properties = new global::System.Collections.Generic.List<global::Godot.Bridge.PropertyInfo>();
-        properties.Add(new(type: (global::Godot.Variant.Type)1, name: PropertyName.@_writeOnlyBackingField, hint: (global::Godot.PropertyHint)0, hintString: "", usage: (global::Godot.PropertyUsageFlags)4096, exported: false));
-        properties.Add(new(type: (global::Godot.Variant.Type)1, name: PropertyName.@WriteOnlyProperty, hint: (global::Godot.PropertyHint)0, hintString: "", usage: (global::Godot.PropertyUsageFlags)4096, exported: false));
+        var properties = new global::System.Collections.Generic.List<global::Redot.Bridge.PropertyInfo>();
+        properties.Add(new(type: (global::Redot.Variant.Type)1, name: PropertyName.@_writeOnlyBackingField, hint: (global::Redot.PropertyHint)0, hintString: "", usage: (global::Redot.PropertyUsageFlags)4096, exported: false));
+        properties.Add(new(type: (global::Redot.Variant.Type)1, name: PropertyName.@WriteOnlyProperty, hint: (global::Redot.PropertyHint)0, hintString: "", usage: (global::Redot.PropertyUsageFlags)4096, exported: false));
         return properties;
     }
 #pragma warning restore CS0109

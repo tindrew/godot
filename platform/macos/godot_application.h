@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_application.h                                                   */
+/*  Redot_application.h                                                   */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_APPLICATION_H
-#define GODOT_APPLICATION_H
+#ifndef Redot_APPLICATION_H
+#define Redot_APPLICATION_H
 
 #include "core/os/os.h"
 
@@ -37,7 +37,7 @@
 #import <Foundation/Foundation.h>
 #import <IOKit/hidsystem/ev_keymap.h>
 
-@interface GodotApplication : NSApplication
+@interface RedotApplication : NSApplication
 @end
 
-#endif // GODOT_APPLICATION_H
+#endif // Redot_APPLICATION_H

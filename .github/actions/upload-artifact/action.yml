@@ -1,5 +1,5 @@
-name: Upload Godot artifact
-description: Upload the Godot artifact.
+name: Upload Redot artifact
+description: Upload the Redot artifact.
 
 inputs:
   name:
@@ -13,7 +13,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Upload Godot Artifact
+    - name: Upload Redot Artifact
       uses: actions/upload-artifact@v4
       with:
         name: ${{ inputs.name }}

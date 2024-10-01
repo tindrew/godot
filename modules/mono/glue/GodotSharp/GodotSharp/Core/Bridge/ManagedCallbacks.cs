@@ -1,50 +1,50 @@
 using System;
 using System.Runtime.InteropServices;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
-namespace Godot.Bridge
+namespace Redot.Bridge
 {
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct ManagedCallbacks
     {
         // @formatter:off
-        public delegate* unmanaged<IntPtr, godot_variant**, int, godot_bool*, void> SignalAwaiter_SignalCallback;
-        public delegate* unmanaged<IntPtr, void*, godot_variant**, int, godot_variant*, void> DelegateUtils_InvokeWithVariantArgs;
-        public delegate* unmanaged<IntPtr, IntPtr, godot_bool> DelegateUtils_DelegateEquals;
+        public delegate* unmanaged<IntPtr, Redot_variant**, int, Redot_bool*, void> SignalAwaiter_SignalCallback;
+        public delegate* unmanaged<IntPtr, void*, Redot_variant**, int, Redot_variant*, void> DelegateUtils_InvokeWithVariantArgs;
+        public delegate* unmanaged<IntPtr, IntPtr, Redot_bool> DelegateUtils_DelegateEquals;
         public delegate* unmanaged<IntPtr, int> DelegateUtils_DelegateHash;
-        public delegate* unmanaged<IntPtr, godot_bool*, int> DelegateUtils_GetArgumentCount;
-        public delegate* unmanaged<IntPtr, godot_array*, godot_bool> DelegateUtils_TrySerializeDelegateWithGCHandle;
-        public delegate* unmanaged<godot_array*, IntPtr*, godot_bool> DelegateUtils_TryDeserializeDelegateWithGCHandle;
+        public delegate* unmanaged<IntPtr, Redot_bool*, int> DelegateUtils_GetArgumentCount;
+        public delegate* unmanaged<IntPtr, Redot_array*, Redot_bool> DelegateUtils_TrySerializeDelegateWithGCHandle;
+        public delegate* unmanaged<Redot_array*, IntPtr*, Redot_bool> DelegateUtils_TryDeserializeDelegateWithGCHandle;
         public delegate* unmanaged<void> ScriptManagerBridge_FrameCallback;
-        public delegate* unmanaged<godot_string_name*, IntPtr, IntPtr> ScriptManagerBridge_CreateManagedForGodotObjectBinding;
-        public delegate* unmanaged<IntPtr, IntPtr, godot_variant**, int, godot_bool> ScriptManagerBridge_CreateManagedForGodotObjectScriptInstance;
-        public delegate* unmanaged<IntPtr, godot_string_name*, void> ScriptManagerBridge_GetScriptNativeName;
-        public delegate* unmanaged<godot_string*, godot_string*, godot_string*, godot_string*, void> ScriptManagerBridge_GetGlobalClassName;
-        public delegate* unmanaged<IntPtr, IntPtr, void> ScriptManagerBridge_SetGodotObjectPtr;
-        public delegate* unmanaged<IntPtr, godot_string_name*, godot_variant**, int, godot_bool*, void> ScriptManagerBridge_RaiseEventSignal;
-        public delegate* unmanaged<IntPtr, IntPtr, godot_bool> ScriptManagerBridge_ScriptIsOrInherits;
-        public delegate* unmanaged<IntPtr, godot_string*, godot_bool> ScriptManagerBridge_AddScriptBridge;
-        public delegate* unmanaged<godot_string*, godot_ref*, void> ScriptManagerBridge_GetOrCreateScriptBridgeForPath;
+        public delegate* unmanaged<Redot_string_name*, IntPtr, IntPtr> ScriptManagerBridge_CreateManagedForRedotObjectBinding;
+        public delegate* unmanaged<IntPtr, IntPtr, Redot_variant**, int, Redot_bool> ScriptManagerBridge_CreateManagedForRedotObjectScriptInstance;
+        public delegate* unmanaged<IntPtr, Redot_string_name*, void> ScriptManagerBridge_GetScriptNativeName;
+        public delegate* unmanaged<Redot_string*, Redot_string*, Redot_string*, Redot_string*, void> ScriptManagerBridge_GetGlobalClassName;
+        public delegate* unmanaged<IntPtr, IntPtr, void> ScriptManagerBridge_SetRedotObjectPtr;
+        public delegate* unmanaged<IntPtr, Redot_string_name*, Redot_variant**, int, Redot_bool*, void> ScriptManagerBridge_RaiseEventSignal;
+        public delegate* unmanaged<IntPtr, IntPtr, Redot_bool> ScriptManagerBridge_ScriptIsOrInherits;
+        public delegate* unmanaged<IntPtr, Redot_string*, Redot_bool> ScriptManagerBridge_AddScriptBridge;
+        public delegate* unmanaged<Redot_string*, Redot_ref*, void> ScriptManagerBridge_GetOrCreateScriptBridgeForPath;
         public delegate* unmanaged<IntPtr, void> ScriptManagerBridge_RemoveScriptBridge;
-        public delegate* unmanaged<IntPtr, godot_bool> ScriptManagerBridge_TryReloadRegisteredScriptWithClass;
-        public delegate* unmanaged<IntPtr, godot_csharp_type_info*, godot_array*, godot_dictionary*, godot_dictionary*, godot_ref*, void> ScriptManagerBridge_UpdateScriptClassInfo;
-        public delegate* unmanaged<IntPtr, IntPtr*, godot_bool, godot_bool> ScriptManagerBridge_SwapGCHandleForType;
-        public delegate* unmanaged<IntPtr, delegate* unmanaged<IntPtr, godot_string*, void*, int, void>, void> ScriptManagerBridge_GetPropertyInfoList;
+        public delegate* unmanaged<IntPtr, Redot_bool> ScriptManagerBridge_TryReloadRegisteredScriptWithClass;
+        public delegate* unmanaged<IntPtr, Redot_csharp_type_info*, Redot_array*, Redot_dictionary*, Redot_dictionary*, Redot_ref*, void> ScriptManagerBridge_UpdateScriptClassInfo;
+        public delegate* unmanaged<IntPtr, IntPtr*, Redot_bool, Redot_bool> ScriptManagerBridge_SwapGCHandleForType;
+        public delegate* unmanaged<IntPtr, delegate* unmanaged<IntPtr, Redot_string*, void*, int, void>, void> ScriptManagerBridge_GetPropertyInfoList;
         public delegate* unmanaged<IntPtr, delegate* unmanaged<IntPtr, void*, int, void>, void> ScriptManagerBridge_GetPropertyDefaultValues;
-        public delegate* unmanaged<IntPtr, godot_string_name*, godot_variant**, int, godot_variant_call_error*, godot_variant*, godot_bool> ScriptManagerBridge_CallStatic;
-        public delegate* unmanaged<IntPtr, godot_string_name*, godot_variant**, int, godot_variant_call_error*, godot_variant*, godot_bool> CSharpInstanceBridge_Call;
-        public delegate* unmanaged<IntPtr, godot_string_name*, godot_variant*, godot_bool> CSharpInstanceBridge_Set;
-        public delegate* unmanaged<IntPtr, godot_string_name*, godot_variant*, godot_bool> CSharpInstanceBridge_Get;
-        public delegate* unmanaged<IntPtr, godot_bool, void> CSharpInstanceBridge_CallDispose;
-        public delegate* unmanaged<IntPtr, godot_string*, godot_bool*, void> CSharpInstanceBridge_CallToString;
-        public delegate* unmanaged<IntPtr, godot_string_name*, godot_bool> CSharpInstanceBridge_HasMethodUnknownParams;
-        public delegate* unmanaged<IntPtr, godot_dictionary*, godot_dictionary*, void> CSharpInstanceBridge_SerializeState;
-        public delegate* unmanaged<IntPtr, godot_dictionary*, godot_dictionary*, void> CSharpInstanceBridge_DeserializeState;
+        public delegate* unmanaged<IntPtr, Redot_string_name*, Redot_variant**, int, Redot_variant_call_error*, Redot_variant*, Redot_bool> ScriptManagerBridge_CallStatic;
+        public delegate* unmanaged<IntPtr, Redot_string_name*, Redot_variant**, int, Redot_variant_call_error*, Redot_variant*, Redot_bool> CSharpInstanceBridge_Call;
+        public delegate* unmanaged<IntPtr, Redot_string_name*, Redot_variant*, Redot_bool> CSharpInstanceBridge_Set;
+        public delegate* unmanaged<IntPtr, Redot_string_name*, Redot_variant*, Redot_bool> CSharpInstanceBridge_Get;
+        public delegate* unmanaged<IntPtr, Redot_bool, void> CSharpInstanceBridge_CallDispose;
+        public delegate* unmanaged<IntPtr, Redot_string*, Redot_bool*, void> CSharpInstanceBridge_CallToString;
+        public delegate* unmanaged<IntPtr, Redot_string_name*, Redot_bool> CSharpInstanceBridge_HasMethodUnknownParams;
+        public delegate* unmanaged<IntPtr, Redot_dictionary*, Redot_dictionary*, void> CSharpInstanceBridge_SerializeState;
+        public delegate* unmanaged<IntPtr, Redot_dictionary*, Redot_dictionary*, void> CSharpInstanceBridge_DeserializeState;
         public delegate* unmanaged<IntPtr, void> GCHandleBridge_FreeGCHandle;
-        public delegate* unmanaged<IntPtr, godot_bool> GCHandleBridge_GCHandleIsTargetCollectible;
+        public delegate* unmanaged<IntPtr, Redot_bool> GCHandleBridge_GCHandleIsTargetCollectible;
         public delegate* unmanaged<void*, void> DebuggingUtils_GetCurrentStackInfo;
-        public delegate* unmanaged<void> DisposablesTracker_OnGodotShuttingDown;
-        public delegate* unmanaged<godot_bool, void> GD_OnCoreApiAssemblyLoaded;
+        public delegate* unmanaged<void> DisposablesTracker_OnRedotShuttingDown;
+        public delegate* unmanaged<Redot_bool, void> GD_OnCoreApiAssemblyLoaded;
         // @formatter:on
 
         public static ManagedCallbacks Create()
@@ -60,11 +60,11 @@ namespace Godot.Bridge
                 DelegateUtils_TrySerializeDelegateWithGCHandle = &DelegateUtils.TrySerializeDelegateWithGCHandle,
                 DelegateUtils_TryDeserializeDelegateWithGCHandle = &DelegateUtils.TryDeserializeDelegateWithGCHandle,
                 ScriptManagerBridge_FrameCallback = &ScriptManagerBridge.FrameCallback,
-                ScriptManagerBridge_CreateManagedForGodotObjectBinding = &ScriptManagerBridge.CreateManagedForGodotObjectBinding,
-                ScriptManagerBridge_CreateManagedForGodotObjectScriptInstance = &ScriptManagerBridge.CreateManagedForGodotObjectScriptInstance,
+                ScriptManagerBridge_CreateManagedForRedotObjectBinding = &ScriptManagerBridge.CreateManagedForRedotObjectBinding,
+                ScriptManagerBridge_CreateManagedForRedotObjectScriptInstance = &ScriptManagerBridge.CreateManagedForRedotObjectScriptInstance,
                 ScriptManagerBridge_GetScriptNativeName = &ScriptManagerBridge.GetScriptNativeName,
                 ScriptManagerBridge_GetGlobalClassName = &ScriptManagerBridge.GetGlobalClassName,
-                ScriptManagerBridge_SetGodotObjectPtr = &ScriptManagerBridge.SetGodotObjectPtr,
+                ScriptManagerBridge_SetRedotObjectPtr = &ScriptManagerBridge.SetRedotObjectPtr,
                 ScriptManagerBridge_RaiseEventSignal = &ScriptManagerBridge.RaiseEventSignal,
                 ScriptManagerBridge_ScriptIsOrInherits = &ScriptManagerBridge.ScriptIsOrInherits,
                 ScriptManagerBridge_AddScriptBridge = &ScriptManagerBridge.AddScriptBridge,
@@ -87,7 +87,7 @@ namespace Godot.Bridge
                 GCHandleBridge_FreeGCHandle = &GCHandleBridge.FreeGCHandle,
                 GCHandleBridge_GCHandleIsTargetCollectible = &GCHandleBridge.GCHandleIsTargetCollectible,
                 DebuggingUtils_GetCurrentStackInfo = &DebuggingUtils.GetCurrentStackInfo,
-                DisposablesTracker_OnGodotShuttingDown = &DisposablesTracker.OnGodotShuttingDown,
+                DisposablesTracker_OnRedotShuttingDown = &DisposablesTracker.OnRedotShuttingDown,
                 GD_OnCoreApiAssemblyLoaded = &GD.OnCoreApiAssemblyLoaded,
                 // @formatter:on
             };

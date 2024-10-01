@@ -1,11 +1,11 @@
 using Xunit;
 
-namespace Godot.SourceGenerators.Tests;
+namespace Redot.SourceGenerators.Tests;
 
 public class GlobalClassAnalyzerTests
 {
     [Fact]
-    public async void GlobalClassMustDeriveFromGodotObjectTest()
+    public async void GlobalClassMustDeriveFromRedotObjectTest()
     {
         const string GlobalClassGD0401 = "GlobalClass.GD0401.cs";
         await CSharpAnalyzerVerifier<GlobalClassAnalyzer>.Verify(GlobalClassGD0401);

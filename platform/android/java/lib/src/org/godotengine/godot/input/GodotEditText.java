@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotEditText.java                                                    */
+/*  RedotEditText.java                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,9 +28,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot.input;
+package org.Redotengine.Redot.input;
 
-import org.godotengine.godot.*;
+import org.Redotengine.Redot.*;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -50,7 +50,7 @@ import android.widget.EditText;
 import java.lang.ref.WeakReference;
 import java.util.Locale;
 
-public class GodotEditText extends EditText {
+public class RedotEditText extends EditText {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -72,22 +72,22 @@ public class GodotEditText extends EditText {
 	// ===========================================================
 	// Fields
 	// ===========================================================
-	private GodotRenderView mRenderView;
-	private GodotTextInputWrapper mInputWrapper;
+	private RedotRenderView mRenderView;
+	private RedotTextInputWrapper mInputWrapper;
 	private EditHandler sHandler = new EditHandler(this);
 	private String mOriginText;
 	private int mMaxInputLength = Integer.MAX_VALUE;
 	private VirtualKeyboardType mKeyboardType = VirtualKeyboardType.KEYBOARD_TYPE_DEFAULT;
 
 	private static class EditHandler extends Handler {
-		private final WeakReference<GodotEditText> mEdit;
-		public EditHandler(GodotEditText edit) {
+		private final WeakReference<RedotEditText> mEdit;
+		public EditHandler(RedotEditText edit) {
 			mEdit = new WeakReference<>(edit);
 		}
 
 		@Override
 		public void handleMessage(Message msg) {
-			GodotEditText edit = mEdit.get();
+			RedotEditText edit = mEdit.get();
 			if (edit != null) {
 				edit.handleMessage(msg);
 			}
@@ -97,17 +97,17 @@ public class GodotEditText extends EditText {
 	// ===========================================================
 	// Constructors
 	// ===========================================================
-	public GodotEditText(final Context context) {
+	public RedotEditText(final Context context) {
 		super(context);
 		initView();
 	}
 
-	public GodotEditText(final Context context, final AttributeSet attrs) {
+	public RedotEditText(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
 		initView();
 	}
 
-	public GodotEditText(final Context context, final AttributeSet attrs, final int defStyle) {
+	public RedotEditText(final Context context, final AttributeSet attrs, final int defStyle) {
 		super(context, attrs, defStyle);
 		initView();
 	}
@@ -124,7 +124,7 @@ public class GodotEditText extends EditText {
 	private void handleMessage(final Message msg) {
 		switch (msg.what) {
 			case HANDLER_OPEN_IME_KEYBOARD: {
-				GodotEditText edit = (GodotEditText)msg.obj;
+				RedotEditText edit = (RedotEditText)msg.obj;
 				String text = edit.mOriginText;
 				if (edit.requestFocus()) {
 					edit.removeTextChangedListener(edit.mInputWrapper);
@@ -187,7 +187,7 @@ public class GodotEditText extends EditText {
 			} break;
 
 			case HANDLER_CLOSE_IME_KEYBOARD: {
-				GodotEditText edit = (GodotEditText)msg.obj;
+				RedotEditText edit = (RedotEditText)msg.obj;
 
 				edit.removeTextChangedListener(mInputWrapper);
 				final InputMethodManager imm = (InputMethodManager)mRenderView.getView().getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -206,10 +206,10 @@ public class GodotEditText extends EditText {
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
-	public void setView(final GodotRenderView view) {
+	public void setView(final RedotRenderView view) {
 		mRenderView = view;
 		if (mInputWrapper == null)
-			mInputWrapper = new GodotTextInputWrapper(mRenderView, this);
+			mInputWrapper = new RedotTextInputWrapper(mRenderView, this);
 		setOnEditorActionListener(mInputWrapper);
 		view.getView().requestFocus();
 	}
@@ -231,8 +231,8 @@ public class GodotEditText extends EditText {
 			return mRenderView.getInputHandler().onKeyDown(keyCode, keyEvent);
 		}
 
-		// pass event to godot in special cases
-		if (needHandlingInGodot(keyCode, keyEvent) && mRenderView.getInputHandler().onKeyDown(keyCode, keyEvent)) {
+		// pass event to Redot in special cases
+		if (needHandlingInRedot(keyCode, keyEvent) && mRenderView.getInputHandler().onKeyDown(keyCode, keyEvent)) {
 			return true;
 		} else {
 			return super.onKeyDown(keyCode, keyEvent);
@@ -248,14 +248,14 @@ public class GodotEditText extends EditText {
 			return mRenderView.getInputHandler().onKeyUp(keyCode, keyEvent);
 		}
 
-		if (needHandlingInGodot(keyCode, keyEvent) && mRenderView.getInputHandler().onKeyUp(keyCode, keyEvent)) {
+		if (needHandlingInRedot(keyCode, keyEvent) && mRenderView.getInputHandler().onKeyUp(keyCode, keyEvent)) {
 			return true;
 		} else {
 			return super.onKeyUp(keyCode, keyEvent);
 		}
 	}
 
-	private boolean needHandlingInGodot(int keyCode, KeyEvent keyEvent) {
+	private boolean needHandlingInRedot(int keyCode, KeyEvent keyEvent) {
 		boolean isArrowKey = keyCode == KeyEvent.KEYCODE_DPAD_UP || keyCode == KeyEvent.KEYCODE_DPAD_DOWN ||
 				keyCode == KeyEvent.KEYCODE_DPAD_LEFT || keyCode == KeyEvent.KEYCODE_DPAD_RIGHT;
 		boolean isModifiedKey = keyEvent.isAltPressed() || keyEvent.isCtrlPressed() || keyEvent.isSymPressed() ||

@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotLib.java                                                         */
+/*  RedotLib.java                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,13 +28,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot;
+package org.Redotengine.Redot;
 
-import org.godotengine.godot.gl.GodotRenderer;
-import org.godotengine.godot.io.directory.DirectoryAccessHandler;
-import org.godotengine.godot.io.file.FileAccessHandler;
-import org.godotengine.godot.tts.GodotTTS;
-import org.godotengine.godot.utils.GodotNetUtils;
+import org.Redotengine.Redot.gl.RedotRenderer;
+import org.Redotengine.Redot.io.directory.DirectoryAccessHandler;
+import org.Redotengine.Redot.io.file.FileAccessHandler;
+import org.Redotengine.Redot.tts.RedotTTS;
+import org.Redotengine.Redot.utils.RedotNetUtils;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
@@ -46,41 +46,41 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Wrapper for native library
  */
-public class GodotLib {
+public class RedotLib {
 	static {
-		System.loadLibrary("godot_android");
+		System.loadLibrary("Redot_android");
 	}
 
 	/**
-	 * Invoked on the main thread to initialize Godot native layer.
+	 * Invoked on the main thread to initialize Redot native layer.
 	 */
 	public static native boolean initialize(Activity activity,
-			Godot p_instance,
+			Redot p_instance,
 			AssetManager p_asset_manager,
-			GodotIO godotIO,
-			GodotNetUtils netUtils,
+			RedotIO RedotIO,
+			RedotNetUtils netUtils,
 			DirectoryAccessHandler directoryAccessHandler,
 			FileAccessHandler fileAccessHandler,
 			boolean use_apk_expansion);
 
 	/**
-	 * Invoked on the main thread to clean up Godot native layer.
+	 * Invoked on the main thread to clean up Redot native layer.
 	 * @see androidx.fragment.app.Fragment#onDestroy()
 	 */
 	public static native void ondestroy();
 
 	/**
-	 * Invoked on the GL thread to complete setup for the Godot native layer logic.
-	 * @param p_cmdline Command line arguments used to configure Godot native layer components.
+	 * Invoked on the GL thread to complete setup for the Redot native layer logic.
+	 * @param p_cmdline Command line arguments used to configure Redot native layer components.
 	 */
-	public static native boolean setup(String[] p_cmdline, GodotTTS tts);
+	public static native boolean setup(String[] p_cmdline, RedotTTS tts);
 
 	/**
 	 * Invoked on the GL thread when the underlying Android surface has changed size.
 	 * @param p_surface
 	 * @param p_width
 	 * @param p_height
-	 * @see org.godotengine.godot.gl.GLSurfaceView.Renderer#onSurfaceChanged(GL10, int, int)
+	 * @see org.Redotengine.Redot.gl.GLSurfaceView.Renderer#onSurfaceChanged(GL10, int, int)
 	 */
 	public static native void resize(Surface p_surface, int p_width, int p_height);
 
@@ -97,7 +97,7 @@ public class GodotLib {
 
 	/**
 	 * Invoked on the GL thread to draw the current frame.
-	 * @see org.godotengine.godot.gl.GLSurfaceView.Renderer#onDrawFrame(GL10)
+	 * @see org.Redotengine.Redot.gl.GLSurfaceView.Renderer#onDrawFrame(GL10)
 	 */
 	public static native boolean step();
 
@@ -182,30 +182,30 @@ public class GodotLib {
 	public static native void focusout();
 
 	/**
-	 * Used to access Godot global properties.
+	 * Used to access Redot global properties.
 	 * @param p_key Property key
 	 * @return String value of the property
 	 */
 	public static native String getGlobal(String p_key);
 
 	/**
-	 * Used to access Godot's editor settings.
+	 * Used to access Redot's editor settings.
 	 * @param settingKey Setting key
 	 * @return String value of the setting
 	 */
 	public static native String getEditorSetting(String settingKey);
 
 	/**
-	 * Invoke method |p_method| on the Godot object specified by |p_id|
-	 * @param p_id Id of the Godot object to invoke
+	 * Invoke method |p_method| on the Redot object specified by |p_id|
+	 * @param p_id Id of the Redot object to invoke
 	 * @param p_method Name of the method to invoke
 	 * @param p_params Parameters to use for method invocation
 	 */
 	public static native void callobject(long p_id, String p_method, Object[] p_params);
 
 	/**
-	 * Invoke method |p_method| on the Godot object specified by |p_id| during idle time.
-	 * @param p_id Id of the Godot object to invoke
+	 * Invoke method |p_method| on the Redot object specified by |p_id| during idle time.
+	 * @param p_id Id of the Redot object to invoke
 	 * @param p_method Name of the method to invoke
 	 * @param p_params Parameters to use for method invocation
 	 */
@@ -230,14 +230,14 @@ public class GodotLib {
 	public static native void setVirtualKeyboardHeight(int p_height);
 
 	/**
-	 * Invoked on the GL thread when the {@link GodotRenderer} has been resumed.
-	 * @see GodotRenderer#onActivityResumed()
+	 * Invoked on the GL thread when the {@link RedotRenderer} has been resumed.
+	 * @see RedotRenderer#onActivityResumed()
 	 */
 	public static native void onRendererResumed();
 
 	/**
-	 * Invoked on the GL thread when the {@link GodotRenderer} has been paused.
-	 * @see GodotRenderer#onActivityPaused()
+	 * Invoked on the GL thread when the {@link RedotRenderer} has been paused.
+	 * @see RedotRenderer#onActivityPaused()
 	 */
 	public static native void onRendererPaused();
 

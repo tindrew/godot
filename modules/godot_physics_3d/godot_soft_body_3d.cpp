@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_soft_body_3d.cpp                                                */
+/*  Redot_soft_body_3d.cpp                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,9 +28,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "godot_soft_body_3d.h"
+#include "Redot_soft_body_3d.h"
 
-#include "godot_space_3d.h"
+#include "Redot_space_3d.h"
 
 #include "core/math/geometry_3d.h"
 #include "core/templates/rb_map.h"
@@ -54,16 +54,16 @@ subject to the following restrictions:
 */
 ///btSoftBody implementation by Nathanael Presson
 
-GodotSoftBody3D::GodotSoftBody3D() :
-		GodotCollisionObject3D(TYPE_SOFT_BODY),
+RedotSoftBody3D::RedotSoftBody3D() :
+		RedotCollisionObject3D(TYPE_SOFT_BODY),
 		active_list(this) {
 	_set_static(false);
 }
 
-void GodotSoftBody3D::_shapes_changed() {
+void RedotSoftBody3D::_shapes_changed() {
 }
 
-void GodotSoftBody3D::set_state(PhysicsServer3D::BodyState p_state, const Variant &p_variant) {
+void RedotSoftBody3D::set_state(PhysicsServer3D::BodyState p_state, const Variant &p_variant) {
 	switch (p_state) {
 		case PhysicsServer3D::BODY_STATE_TRANSFORM: {
 			_set_transform(p_variant);
@@ -88,7 +88,7 @@ void GodotSoftBody3D::set_state(PhysicsServer3D::BodyState p_state, const Varian
 	}
 }
 
-Variant GodotSoftBody3D::get_state(PhysicsServer3D::BodyState p_state) const {
+Variant RedotSoftBody3D::get_state(PhysicsServer3D::BodyState p_state) const {
 	switch (p_state) {
 		case PhysicsServer3D::BODY_STATE_TRANSFORM: {
 			return get_transform();
@@ -110,7 +110,7 @@ Variant GodotSoftBody3D::get_state(PhysicsServer3D::BodyState p_state) const {
 	return Variant();
 }
 
-void GodotSoftBody3D::set_space(GodotSpace3D *p_space) {
+void RedotSoftBody3D::set_space(RedotSpace3D *p_space) {
 	if (get_space()) {
 		get_space()->soft_body_remove_from_active_list(&active_list);
 
@@ -128,7 +128,7 @@ void GodotSoftBody3D::set_space(GodotSpace3D *p_space) {
 	}
 }
 
-void GodotSoftBody3D::set_mesh(RID p_mesh) {
+void RedotSoftBody3D::set_mesh(RID p_mesh) {
 	destroy();
 
 	soft_mesh = p_mesh;
@@ -151,7 +151,7 @@ void GodotSoftBody3D::set_mesh(RID p_mesh) {
 	}
 }
 
-void GodotSoftBody3D::update_rendering_server(PhysicsServer3DRenderingServerHandler *p_rendering_server_handler) {
+void RedotSoftBody3D::update_rendering_server(PhysicsServer3DRenderingServerHandler *p_rendering_server_handler) {
 	if (soft_mesh.is_null()) {
 		return;
 	}
@@ -168,7 +168,7 @@ void GodotSoftBody3D::update_rendering_server(PhysicsServer3DRenderingServerHand
 	p_rendering_server_handler->set_aabb(bounds);
 }
 
-void GodotSoftBody3D::update_normals_and_centroids() {
+void RedotSoftBody3D::update_normals_and_centroids() {
 	for (Node &node : nodes) {
 		node.n = Vector3();
 	}
@@ -191,7 +191,7 @@ void GodotSoftBody3D::update_normals_and_centroids() {
 	}
 }
 
-void GodotSoftBody3D::update_bounds() {
+void RedotSoftBody3D::update_bounds() {
 	AABB prev_bounds = bounds;
 	prev_bounds.grow_by(collision_margin);
 
@@ -223,13 +223,13 @@ void GodotSoftBody3D::update_bounds() {
 	}
 }
 
-void GodotSoftBody3D::update_constants() {
+void RedotSoftBody3D::update_constants() {
 	reset_link_rest_lengths();
 	update_link_constants();
 	update_area();
 }
 
-void GodotSoftBody3D::update_area() {
+void RedotSoftBody3D::update_area() {
 	int i, ni;
 
 	// Face area.
@@ -272,21 +272,21 @@ void GodotSoftBody3D::update_area() {
 	}
 }
 
-void GodotSoftBody3D::reset_link_rest_lengths() {
+void RedotSoftBody3D::reset_link_rest_lengths() {
 	for (Link &link : links) {
 		link.rl = (link.n[0]->x - link.n[1]->x).length();
 		link.c1 = link.rl * link.rl;
 	}
 }
 
-void GodotSoftBody3D::update_link_constants() {
+void RedotSoftBody3D::update_link_constants() {
 	real_t inv_linear_stiffness = 1.0 / linear_stiffness;
 	for (Link &link : links) {
 		link.c0 = (link.n[0]->im + link.n[1]->im) * inv_linear_stiffness;
 	}
 }
 
-void GodotSoftBody3D::apply_nodes_transform(const Transform3D &p_transform) {
+void RedotSoftBody3D::apply_nodes_transform(const Transform3D &p_transform) {
 	if (soft_mesh.is_null()) {
 		return;
 	}
@@ -312,7 +312,7 @@ void GodotSoftBody3D::apply_nodes_transform(const Transform3D &p_transform) {
 	update_constants();
 }
 
-Vector3 GodotSoftBody3D::get_vertex_position(int p_index) const {
+Vector3 RedotSoftBody3D::get_vertex_position(int p_index) const {
 	ERR_FAIL_COND_V(p_index < 0, Vector3());
 
 	if (soft_mesh.is_null()) {
@@ -326,7 +326,7 @@ Vector3 GodotSoftBody3D::get_vertex_position(int p_index) const {
 	return nodes[node_index].x;
 }
 
-void GodotSoftBody3D::set_vertex_position(int p_index, const Vector3 &p_position) {
+void RedotSoftBody3D::set_vertex_position(int p_index, const Vector3 &p_position) {
 	ERR_FAIL_COND(p_index < 0);
 
 	if (soft_mesh.is_null()) {
@@ -342,7 +342,7 @@ void GodotSoftBody3D::set_vertex_position(int p_index, const Vector3 &p_position
 	node.x = p_position;
 }
 
-void GodotSoftBody3D::pin_vertex(int p_index) {
+void RedotSoftBody3D::pin_vertex(int p_index) {
 	ERR_FAIL_COND(p_index < 0);
 
 	if (is_vertex_pinned(p_index)) {
@@ -361,7 +361,7 @@ void GodotSoftBody3D::pin_vertex(int p_index) {
 	}
 }
 
-void GodotSoftBody3D::unpin_vertex(int p_index) {
+void RedotSoftBody3D::unpin_vertex(int p_index) {
 	ERR_FAIL_COND(p_index < 0);
 
 	uint32_t pinned_count = pinned_vertices.size();
@@ -385,7 +385,7 @@ void GodotSoftBody3D::unpin_vertex(int p_index) {
 	}
 }
 
-void GodotSoftBody3D::unpin_all_vertices() {
+void RedotSoftBody3D::unpin_all_vertices() {
 	if (!soft_mesh.is_null()) {
 		real_t inv_node_mass = nodes.size() * inv_total_mass;
 		uint32_t pinned_count = pinned_vertices.size();
@@ -404,7 +404,7 @@ void GodotSoftBody3D::unpin_all_vertices() {
 	pinned_vertices.clear();
 }
 
-bool GodotSoftBody3D::is_vertex_pinned(int p_index) const {
+bool RedotSoftBody3D::is_vertex_pinned(int p_index) const {
 	ERR_FAIL_COND_V(p_index < 0, false);
 
 	uint32_t pinned_count = pinned_vertices.size();
@@ -417,47 +417,47 @@ bool GodotSoftBody3D::is_vertex_pinned(int p_index) const {
 	return false;
 }
 
-uint32_t GodotSoftBody3D::get_node_count() const {
+uint32_t RedotSoftBody3D::get_node_count() const {
 	return nodes.size();
 }
 
-real_t GodotSoftBody3D::get_node_inv_mass(uint32_t p_node_index) const {
+real_t RedotSoftBody3D::get_node_inv_mass(uint32_t p_node_index) const {
 	ERR_FAIL_UNSIGNED_INDEX_V(p_node_index, nodes.size(), 0.0);
 	return nodes[p_node_index].im;
 }
 
-Vector3 GodotSoftBody3D::get_node_position(uint32_t p_node_index) const {
+Vector3 RedotSoftBody3D::get_node_position(uint32_t p_node_index) const {
 	ERR_FAIL_UNSIGNED_INDEX_V(p_node_index, nodes.size(), Vector3());
 	return nodes[p_node_index].x;
 }
 
-Vector3 GodotSoftBody3D::get_node_velocity(uint32_t p_node_index) const {
+Vector3 RedotSoftBody3D::get_node_velocity(uint32_t p_node_index) const {
 	ERR_FAIL_UNSIGNED_INDEX_V(p_node_index, nodes.size(), Vector3());
 	return nodes[p_node_index].v;
 }
 
-Vector3 GodotSoftBody3D::get_node_biased_velocity(uint32_t p_node_index) const {
+Vector3 RedotSoftBody3D::get_node_biased_velocity(uint32_t p_node_index) const {
 	ERR_FAIL_UNSIGNED_INDEX_V(p_node_index, nodes.size(), Vector3());
 	return nodes[p_node_index].bv;
 }
 
-void GodotSoftBody3D::apply_node_impulse(uint32_t p_node_index, const Vector3 &p_impulse) {
+void RedotSoftBody3D::apply_node_impulse(uint32_t p_node_index, const Vector3 &p_impulse) {
 	ERR_FAIL_UNSIGNED_INDEX(p_node_index, nodes.size());
 	Node &node = nodes[p_node_index];
 	node.v += p_impulse * node.im;
 }
 
-void GodotSoftBody3D::apply_node_bias_impulse(uint32_t p_node_index, const Vector3 &p_impulse) {
+void RedotSoftBody3D::apply_node_bias_impulse(uint32_t p_node_index, const Vector3 &p_impulse) {
 	ERR_FAIL_UNSIGNED_INDEX(p_node_index, nodes.size());
 	Node &node = nodes[p_node_index];
 	node.bv += p_impulse * node.im;
 }
 
-uint32_t GodotSoftBody3D::get_face_count() const {
+uint32_t RedotSoftBody3D::get_face_count() const {
 	return faces.size();
 }
 
-void GodotSoftBody3D::get_face_points(uint32_t p_face_index, Vector3 &r_point_1, Vector3 &r_point_2, Vector3 &r_point_3) const {
+void RedotSoftBody3D::get_face_points(uint32_t p_face_index, Vector3 &r_point_1, Vector3 &r_point_2, Vector3 &r_point_3) const {
 	ERR_FAIL_UNSIGNED_INDEX(p_face_index, faces.size());
 	const Face &face = faces[p_face_index];
 	r_point_1 = face.n[0]->x;
@@ -465,12 +465,12 @@ void GodotSoftBody3D::get_face_points(uint32_t p_face_index, Vector3 &r_point_1,
 	r_point_3 = face.n[2]->x;
 }
 
-Vector3 GodotSoftBody3D::get_face_normal(uint32_t p_face_index) const {
+Vector3 RedotSoftBody3D::get_face_normal(uint32_t p_face_index) const {
 	ERR_FAIL_UNSIGNED_INDEX_V(p_face_index, faces.size(), Vector3());
 	return faces[p_face_index].normal;
 }
 
-bool GodotSoftBody3D::create_from_trimesh(const Vector<int> &p_indices, const Vector<Vector3> &p_vertices) {
+bool RedotSoftBody3D::create_from_trimesh(const Vector<int> &p_indices, const Vector<Vector3> &p_vertices) {
 	ERR_FAIL_COND_V(p_indices.is_empty(), false);
 	ERR_FAIL_COND_V(p_vertices.is_empty(), false);
 
@@ -590,7 +590,7 @@ bool GodotSoftBody3D::create_from_trimesh(const Vector<int> &p_indices, const Ve
 	return true;
 }
 
-void GodotSoftBody3D::generate_bending_constraints(int p_distance) {
+void RedotSoftBody3D::generate_bending_constraints(int p_distance) {
 	uint32_t i, j;
 
 	if (p_distance > 1) {
@@ -710,7 +710,7 @@ public:
 };
 typedef LinkDeps *LinkDepsPtr;
 
-void GodotSoftBody3D::reoptimize_link_order() {
+void RedotSoftBody3D::reoptimize_link_order() {
 	const int reop_not_dependent = -1;
 	const int reop_node_complete = -2;
 
@@ -826,7 +826,7 @@ void GodotSoftBody3D::reoptimize_link_order() {
 	memdelete_arr(link_buffer);
 }
 
-void GodotSoftBody3D::append_link(uint32_t p_node1, uint32_t p_node2) {
+void RedotSoftBody3D::append_link(uint32_t p_node1, uint32_t p_node2) {
 	if (p_node1 == p_node2) {
 		return;
 	}
@@ -842,7 +842,7 @@ void GodotSoftBody3D::append_link(uint32_t p_node1, uint32_t p_node2) {
 	links.push_back(link);
 }
 
-void GodotSoftBody3D::append_face(uint32_t p_node1, uint32_t p_node2, uint32_t p_node3) {
+void RedotSoftBody3D::append_face(uint32_t p_node1, uint32_t p_node2, uint32_t p_node3) {
 	if (p_node1 == p_node2) {
 		return;
 	}
@@ -867,11 +867,11 @@ void GodotSoftBody3D::append_face(uint32_t p_node1, uint32_t p_node2, uint32_t p
 	faces.push_back(face);
 }
 
-void GodotSoftBody3D::set_iteration_count(int p_val) {
+void RedotSoftBody3D::set_iteration_count(int p_val) {
 	iteration_count = p_val;
 }
 
-void GodotSoftBody3D::set_total_mass(real_t p_val) {
+void RedotSoftBody3D::set_total_mass(real_t p_val) {
 	ERR_FAIL_COND(p_val < 0.0);
 
 	inv_total_mass = 1.0 / p_val;
@@ -887,27 +887,27 @@ void GodotSoftBody3D::set_total_mass(real_t p_val) {
 	update_constants();
 }
 
-void GodotSoftBody3D::set_collision_margin(real_t p_val) {
+void RedotSoftBody3D::set_collision_margin(real_t p_val) {
 	collision_margin = p_val;
 }
 
-void GodotSoftBody3D::set_linear_stiffness(real_t p_val) {
+void RedotSoftBody3D::set_linear_stiffness(real_t p_val) {
 	linear_stiffness = p_val;
 }
 
-void GodotSoftBody3D::set_pressure_coefficient(real_t p_val) {
+void RedotSoftBody3D::set_pressure_coefficient(real_t p_val) {
 	pressure_coefficient = p_val;
 }
 
-void GodotSoftBody3D::set_damping_coefficient(real_t p_val) {
+void RedotSoftBody3D::set_damping_coefficient(real_t p_val) {
 	damping_coefficient = p_val;
 }
 
-void GodotSoftBody3D::set_drag_coefficient(real_t p_val) {
+void RedotSoftBody3D::set_drag_coefficient(real_t p_val) {
 	drag_coefficient = p_val;
 }
 
-void GodotSoftBody3D::add_velocity(const Vector3 &p_velocity) {
+void RedotSoftBody3D::add_velocity(const Vector3 &p_velocity) {
 	for (Node &node : nodes) {
 		if (node.im > 0) {
 			node.v += p_velocity;
@@ -915,7 +915,7 @@ void GodotSoftBody3D::add_velocity(const Vector3 &p_velocity) {
 	}
 }
 
-void GodotSoftBody3D::apply_forces(const LocalVector<GodotArea3D *> &p_wind_areas) {
+void RedotSoftBody3D::apply_forces(const LocalVector<RedotArea3D *> &p_wind_areas) {
 	if (nodes.is_empty()) {
 		return;
 	}
@@ -934,7 +934,7 @@ void GodotSoftBody3D::apply_forces(const LocalVector<GodotArea3D *> &p_wind_area
 
 		// Compute nodal forces from area winds.
 		if (!p_wind_areas.is_empty()) {
-			for (const GodotArea3D *area : p_wind_areas) {
+			for (const RedotArea3D *area : p_wind_areas) {
 				wind_force += _compute_area_windforce(area, &face);
 			}
 
@@ -957,7 +957,7 @@ void GodotSoftBody3D::apply_forces(const LocalVector<GodotArea3D *> &p_wind_area
 	}
 }
 
-Vector3 GodotSoftBody3D::_compute_area_windforce(const GodotArea3D *p_area, const Face *p_face) {
+Vector3 RedotSoftBody3D::_compute_area_windforce(const RedotArea3D *p_area, const Face *p_face) {
 	real_t wfm = p_area->get_wind_force_magnitude();
 	real_t waf = p_area->get_wind_attenuation_factor();
 	const Vector3 &wd = p_area->get_wind_direction();
@@ -969,7 +969,7 @@ Vector3 GodotSoftBody3D::_compute_area_windforce(const GodotArea3D *p_area, cons
 	return nodal_force_magnitude * p_face->normal;
 }
 
-void GodotSoftBody3D::predict_motion(real_t p_delta) {
+void RedotSoftBody3D::predict_motion(real_t p_delta) {
 	const real_t inv_delta = 1.0 / p_delta;
 
 	ERR_FAIL_NULL(get_space());
@@ -977,7 +977,7 @@ void GodotSoftBody3D::predict_motion(real_t p_delta) {
 	bool gravity_done = false;
 	Vector3 gravity;
 
-	LocalVector<GodotArea3D *> wind_areas;
+	LocalVector<RedotArea3D *> wind_areas;
 
 	int ac = areas.size();
 	if (ac) {
@@ -1014,7 +1014,7 @@ void GodotSoftBody3D::predict_motion(real_t p_delta) {
 
 	// Add default gravity and damping from space area.
 	if (!gravity_done) {
-		GodotArea3D *default_area = get_space()->get_default_area();
+		RedotArea3D *default_area = get_space()->get_default_area();
 		ERR_FAIL_NULL(default_area);
 
 		Vector3 default_gravity;
@@ -1067,7 +1067,7 @@ void GodotSoftBody3D::predict_motion(real_t p_delta) {
 	face_tree.optimize_incremental(1);
 }
 
-void GodotSoftBody3D::solve_constraints(real_t p_delta) {
+void RedotSoftBody3D::solve_constraints(real_t p_delta) {
 	const real_t inv_delta = 1.0 / p_delta;
 
 	for (Link &link : links) {
@@ -1098,7 +1098,7 @@ void GodotSoftBody3D::solve_constraints(real_t p_delta) {
 	update_normals_and_centroids();
 }
 
-void GodotSoftBody3D::solve_links(real_t kst, real_t ti) {
+void RedotSoftBody3D::solve_links(real_t kst, real_t ti) {
 	for (Link &link : links) {
 		if (link.c0 > 0) {
 			Node &node_a = *link.n[0];
@@ -1115,16 +1115,16 @@ void GodotSoftBody3D::solve_links(real_t kst, real_t ti) {
 }
 
 struct AABBQueryResult {
-	const GodotSoftBody3D *soft_body = nullptr;
+	const RedotSoftBody3D *soft_body = nullptr;
 	void *userdata = nullptr;
-	GodotSoftBody3D::QueryResultCallback result_callback = nullptr;
+	RedotSoftBody3D::QueryResultCallback result_callback = nullptr;
 
 	_FORCE_INLINE_ bool operator()(void *p_data) {
 		return result_callback(soft_body->get_node_index(p_data), userdata);
 	};
 };
 
-void GodotSoftBody3D::query_aabb(const AABB &p_aabb, GodotSoftBody3D::QueryResultCallback p_result_callback, void *p_userdata) {
+void RedotSoftBody3D::query_aabb(const AABB &p_aabb, RedotSoftBody3D::QueryResultCallback p_result_callback, void *p_userdata) {
 	AABBQueryResult query_result;
 	query_result.soft_body = this;
 	query_result.result_callback = p_result_callback;
@@ -1134,16 +1134,16 @@ void GodotSoftBody3D::query_aabb(const AABB &p_aabb, GodotSoftBody3D::QueryResul
 }
 
 struct RayQueryResult {
-	const GodotSoftBody3D *soft_body = nullptr;
+	const RedotSoftBody3D *soft_body = nullptr;
 	void *userdata = nullptr;
-	GodotSoftBody3D::QueryResultCallback result_callback = nullptr;
+	RedotSoftBody3D::QueryResultCallback result_callback = nullptr;
 
 	_FORCE_INLINE_ bool operator()(void *p_data) {
 		return result_callback(soft_body->get_face_index(p_data), userdata);
 	};
 };
 
-void GodotSoftBody3D::query_ray(const Vector3 &p_from, const Vector3 &p_to, GodotSoftBody3D::QueryResultCallback p_result_callback, void *p_userdata) {
+void RedotSoftBody3D::query_ray(const Vector3 &p_from, const Vector3 &p_to, RedotSoftBody3D::QueryResultCallback p_result_callback, void *p_userdata) {
 	if (face_tree.is_empty()) {
 		initialize_face_tree();
 	}
@@ -1156,7 +1156,7 @@ void GodotSoftBody3D::query_ray(const Vector3 &p_from, const Vector3 &p_to, Godo
 	face_tree.ray_query(p_from, p_to, query_result);
 }
 
-void GodotSoftBody3D::initialize_face_tree() {
+void RedotSoftBody3D::initialize_face_tree() {
 	face_tree.clear();
 	for (Face &face : faces) {
 		AABB face_aabb;
@@ -1171,7 +1171,7 @@ void GodotSoftBody3D::initialize_face_tree() {
 	}
 }
 
-void GodotSoftBody3D::update_face_tree(real_t p_delta) {
+void RedotSoftBody3D::update_face_tree(real_t p_delta) {
 	for (const Face &face : faces) {
 		AABB face_aabb;
 
@@ -1193,25 +1193,25 @@ void GodotSoftBody3D::update_face_tree(real_t p_delta) {
 	}
 }
 
-void GodotSoftBody3D::initialize_shape(bool p_force_move) {
+void RedotSoftBody3D::initialize_shape(bool p_force_move) {
 	if (get_shape_count() == 0) {
-		GodotSoftBodyShape3D *soft_body_shape = memnew(GodotSoftBodyShape3D(this));
+		RedotSoftBodyShape3D *soft_body_shape = memnew(RedotSoftBodyShape3D(this));
 		add_shape(soft_body_shape);
 	} else if (p_force_move) {
-		GodotSoftBodyShape3D *soft_body_shape = static_cast<GodotSoftBodyShape3D *>(get_shape(0));
+		RedotSoftBodyShape3D *soft_body_shape = static_cast<RedotSoftBodyShape3D *>(get_shape(0));
 		soft_body_shape->update_bounds();
 	}
 }
 
-void GodotSoftBody3D::deinitialize_shape() {
+void RedotSoftBody3D::deinitialize_shape() {
 	if (get_shape_count() > 0) {
-		GodotShape3D *shape = get_shape(0);
+		RedotShape3D *shape = get_shape(0);
 		remove_shape(shape);
 		memdelete(shape);
 	}
 }
 
-void GodotSoftBody3D::destroy() {
+void RedotSoftBody3D::destroy() {
 	soft_mesh = RID();
 
 	map_visual_to_physics.clear();
@@ -1227,7 +1227,7 @@ void GodotSoftBody3D::destroy() {
 	deinitialize_shape();
 }
 
-void GodotSoftBodyShape3D::update_bounds() {
+void RedotSoftBodyShape3D::update_bounds() {
 	ERR_FAIL_NULL(soft_body);
 
 	AABB collision_aabb = soft_body->get_bounds();
@@ -1235,13 +1235,13 @@ void GodotSoftBodyShape3D::update_bounds() {
 	configure(collision_aabb);
 }
 
-GodotSoftBodyShape3D::GodotSoftBodyShape3D(GodotSoftBody3D *p_soft_body) {
+RedotSoftBodyShape3D::RedotSoftBodyShape3D(RedotSoftBody3D *p_soft_body) {
 	soft_body = p_soft_body;
 	update_bounds();
 }
 
 struct _SoftBodyIntersectSegmentInfo {
-	const GodotSoftBody3D *soft_body = nullptr;
+	const RedotSoftBody3D *soft_body = nullptr;
 	Vector3 from;
 	Vector3 dir;
 	Vector3 hit_position;
@@ -1269,7 +1269,7 @@ struct _SoftBodyIntersectSegmentInfo {
 	}
 };
 
-bool GodotSoftBodyShape3D::intersect_segment(const Vector3 &p_begin, const Vector3 &p_end, Vector3 &r_result, Vector3 &r_normal, int &r_face_index, bool p_hit_back_faces) const {
+bool RedotSoftBodyShape3D::intersect_segment(const Vector3 &p_begin, const Vector3 &p_end, Vector3 &r_result, Vector3 &r_normal, int &r_face_index, bool p_hit_back_faces) const {
 	_SoftBodyIntersectSegmentInfo query_info;
 	query_info.soft_body = soft_body;
 	query_info.from = p_begin;
@@ -1286,10 +1286,10 @@ bool GodotSoftBodyShape3D::intersect_segment(const Vector3 &p_begin, const Vecto
 	return false;
 }
 
-bool GodotSoftBodyShape3D::intersect_point(const Vector3 &p_point) const {
+bool RedotSoftBodyShape3D::intersect_point(const Vector3 &p_point) const {
 	return false;
 }
 
-Vector3 GodotSoftBodyShape3D::get_closest_point_to(const Vector3 &p_point) const {
+Vector3 RedotSoftBodyShape3D::get_closest_point_to(const Vector3 &p_point) const {
 	ERR_FAIL_V_MSG(Vector3(), "Get closest point is not supported for soft bodies.");
 }

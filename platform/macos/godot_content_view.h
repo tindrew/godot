@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_content_view.h                                                  */
+/*  Redot_content_view.h                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_CONTENT_VIEW_H
-#define GODOT_CONTENT_VIEW_H
+#ifndef Redot_CONTENT_VIEW_H
+#define Redot_CONTENT_VIEW_H
 
 #include "servers/display_server.h"
 
@@ -45,7 +45,7 @@
 
 #import <QuartzCore/CAMetalLayer.h>
 
-@interface GodotContentLayerDelegate : NSObject <CALayerDelegate> {
+@interface RedotContentLayerDelegate : NSObject <CALayerDelegate> {
 	DisplayServer::WindowID window_id;
 	bool need_redraw;
 }
@@ -58,7 +58,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations" // OpenGL is deprecated in macOS 10.14
 
-@interface GodotContentView : RootView <NSTextInputClient> {
+@interface RedotContentView : RootView <NSTextInputClient> {
 	DisplayServer::WindowID window_id;
 	NSTrackingArea *tracking_area;
 	NSMutableAttributedString *marked_text;
@@ -81,4 +81,4 @@
 
 #pragma clang diagnostic pop
 
-#endif // GODOT_CONTENT_VIEW_H
+#endif // Redot_CONTENT_VIEW_H

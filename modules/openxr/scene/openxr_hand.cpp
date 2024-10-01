@@ -2,10 +2,10 @@
 /*  openxr_hand.cpp                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -309,8 +309,8 @@ void OpenXRHand::_update_skeleton() {
 		Quaternion(),
 
 		// SKELETON_RIG_HUMANOID bone adjustment. This rotation performs:
-		// OpenXR Z+ -> Godot Humanoid Y-  (Back along the bone)
-		// OpenXR Y+ -> Godot Humanoid Z- (Out the back of the hand)
+		// OpenXR Z+ -> Redot Humanoid Y-  (Back along the bone)
+		// OpenXR Y+ -> Redot Humanoid Z- (Out the back of the hand)
 		Quaternion(0.0, -Math_SQRT12, Math_SQRT12, 0.0),
 	};
 

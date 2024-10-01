@@ -2,10 +2,10 @@
 /*  gjk_epa.cpp                                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -75,10 +75,10 @@ GJK-EPA collision solver by Nathanael Presson, 2008
 #define EPA_MAX_VERTICES	128
 #define EPA_MAX_FACES		(EPA_MAX_VERTICES*2)
 #define EPA_MAX_ITERATIONS	255
-// -- GODOT start --
+// -- Redot start --
 //#define EPA_ACCURACY		((real_t)0.0001)
 #define EPA_ACCURACY		((real_t)0.00001)
-// -- GODOT end --
+// -- Redot end --
 #define EPA_FALLBACK		(10*EPA_ACCURACY)
 #define EPA_PLANE_EPS		((real_t)0.00001)
 #define EPA_INSIDE_EPS		((real_t)0.01)
@@ -105,7 +105,7 @@ typedef unsigned char	U1;
 
 // MinkowskiDiff
 struct	MinkowskiDiff {
-	const GodotShape3D* m_shapes[2];
+	const RedotShape3D* m_shapes[2];
 
 	Transform3D transform_A;
 	Transform3D transform_B;
@@ -113,10 +113,10 @@ struct	MinkowskiDiff {
 	real_t margin_A = 0.0;
 	real_t margin_B = 0.0;
 
-	Vector3 (*get_support)(const GodotShape3D*, const Vector3&, real_t) = nullptr;
+	Vector3 (*get_support)(const RedotShape3D*, const Vector3&, real_t) = nullptr;
 
-	void Initialize(const GodotShape3D* shape0, const Transform3D& wtrs0, const real_t margin0,
-		const GodotShape3D* shape1, const Transform3D& wtrs1, const real_t margin1) {
+	void Initialize(const RedotShape3D* shape0, const Transform3D& wtrs0, const real_t margin0,
+		const RedotShape3D* shape1, const Transform3D& wtrs1, const real_t margin1) {
 		m_shapes[0]		=	shape0;
 		m_shapes[1]		=	shape1;
 		transform_A		=	wtrs0;
@@ -131,11 +131,11 @@ struct	MinkowskiDiff {
 		}
 	}
 
-	static Vector3 get_support_without_margin(const GodotShape3D* p_shape, const Vector3& p_dir, real_t p_margin) {
+	static Vector3 get_support_without_margin(const RedotShape3D* p_shape, const Vector3& p_dir, real_t p_margin) {
 		return p_shape->get_support(p_dir.normalized());
 	}
 
-	static Vector3 get_support_with_margin(const GodotShape3D* p_shape, const Vector3& p_dir, real_t p_margin) {
+	static Vector3 get_support_with_margin(const RedotShape3D* p_shape, const Vector3& p_dir, real_t p_margin) {
 		Vector3 local_dir_norm = p_dir;
 		if (local_dir_norm.length_squared() < CMP_EPSILON2) {
 			local_dir_norm = Vector3(-1.0, -1.0, -1.0);
@@ -802,10 +802,10 @@ struct	GJK
 					append(m_stock,face);
 					return(nullptr);
 				}
-				// -- GODOT start --
+				// -- Redot start --
 				//m_status=m_stock.root?eStatus::OutOfVertices:eStatus::OutOfFaces;
 				m_status=eStatus::OutOfFaces;
-				// -- GODOT end --
+				// -- Redot end --
 				return(nullptr);
 			}
 			sFace*				findbest()
@@ -862,8 +862,8 @@ struct	GJK
 	};
 
 	//
-	static void	Initialize(	const GodotShape3D* shape0, const Transform3D& wtrs0, real_t margin0,
-		const GodotShape3D* shape1, const Transform3D& wtrs1, real_t margin1,
+	static void	Initialize(	const RedotShape3D* shape0, const Transform3D& wtrs0, real_t margin0,
+		const RedotShape3D* shape1, const Transform3D& wtrs1, real_t margin1,
 		sResults& results,
 		tShape& shape)
 	{
@@ -884,10 +884,10 @@ struct	GJK
 //
 
 //
-bool Distance(	const GodotShape3D*	shape0,
+bool Distance(	const RedotShape3D*	shape0,
 									  const Transform3D&		wtrs0,
 									  real_t				margin0,
-									  const GodotShape3D*		shape1,
+									  const RedotShape3D*		shape1,
 									  const Transform3D&		wtrs1,
 									  real_t				margin1,
 									  const Vector3&		guess,
@@ -925,10 +925,10 @@ bool Distance(	const GodotShape3D*	shape0,
 
 
 //
-bool Penetration(	const GodotShape3D*	shape0,
+bool Penetration(	const RedotShape3D*	shape0,
 									 const Transform3D&		wtrs0,
 									 real_t					margin0,
-									 const GodotShape3D*		shape1,
+									 const RedotShape3D*		shape1,
 									 const Transform3D&		wtrs1,
 									 real_t					margin1,
 									 const Vector3&			guess,
@@ -993,7 +993,7 @@ bool Penetration(	const GodotShape3D*	shape0,
 
 /* clang-format on */
 
-bool gjk_epa_calculate_distance(const GodotShape3D *p_shape_A, const Transform3D &p_transform_A, const GodotShape3D *p_shape_B, const Transform3D &p_transform_B, Vector3 &r_result_A, Vector3 &r_result_B) {
+bool gjk_epa_calculate_distance(const RedotShape3D *p_shape_A, const Transform3D &p_transform_A, const RedotShape3D *p_shape_B, const Transform3D &p_transform_B, Vector3 &r_result_A, Vector3 &r_result_B) {
 	GjkEpa2::sResults res;
 
 	if (GjkEpa2::Distance(p_shape_A, p_transform_A, 0.0, p_shape_B, p_transform_B, 0.0, p_transform_B.origin - p_transform_A.origin, res)) {
@@ -1005,7 +1005,7 @@ bool gjk_epa_calculate_distance(const GodotShape3D *p_shape_A, const Transform3D
 	return false;
 }
 
-bool gjk_epa_calculate_penetration(const GodotShape3D *p_shape_A, const Transform3D &p_transform_A, const GodotShape3D *p_shape_B, const Transform3D &p_transform_B, GodotCollisionSolver3D::CallbackResult p_result_callback, void *p_userdata, bool p_swap, real_t p_margin_A, real_t p_margin_B) {
+bool gjk_epa_calculate_penetration(const RedotShape3D *p_shape_A, const Transform3D &p_transform_A, const RedotShape3D *p_shape_B, const Transform3D &p_transform_B, RedotCollisionSolver3D::CallbackResult p_result_callback, void *p_userdata, bool p_swap, real_t p_margin_A, real_t p_margin_B) {
 	GjkEpa2::sResults res;
 
 	if (GjkEpa2::Penetration(p_shape_A, p_transform_A, p_margin_A, p_shape_B, p_transform_B, p_margin_B, p_transform_B.origin - p_transform_A.origin, res)) {

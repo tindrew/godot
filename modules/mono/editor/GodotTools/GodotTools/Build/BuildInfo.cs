@@ -1,11 +1,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Godot;
-using Godot.Collections;
-using GodotTools.Internals;
+using Redot;
+using Redot.Collections;
+using RedotTools.Internals;
 using Path = System.IO.Path;
 
-namespace GodotTools.Build
+namespace RedotTools.Build
 {
     [Serializable]
     public sealed partial class BuildInfo : RefCounted // TODO Remove RefCounted once we have proper serialization
@@ -20,9 +20,9 @@ namespace GodotTools.Build
         public bool OnlyClean { get; private set; }
 
         // TODO Use List once we have proper serialization
-        public Godot.Collections.Array CustomProperties { get; private set; } = new();
+        public Redot.Collections.Array CustomProperties { get; private set; } = new();
 
-        public string LogsDirPath => GodotSharpDirs.LogsDirPathFor(Solution, Configuration);
+        public string LogsDirPath => RedotSharpDirs.LogsDirPathFor(Solution, Configuration);
 
         public override bool Equals([NotNullWhen(true)] object? obj)
         {
@@ -52,7 +52,7 @@ namespace GodotTools.Build
             return hash.ToHashCode();
         }
 
-        // Needed for instantiation from Godot, after reloading assemblies
+        // Needed for instantiation from Redot, after reloading assemblies
         private BuildInfo()
         {
             Solution = string.Empty;

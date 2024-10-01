@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace GodotTools.Utils
+namespace RedotTools.Utils
 {
     public static class User32Dll
     {

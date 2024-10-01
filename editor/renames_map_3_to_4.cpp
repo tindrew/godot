@@ -2,10 +2,10 @@
 /*  renames_map_3_to_4.cpp                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -1306,9 +1306,9 @@ const char *RenamesMap3To4::csharp_signals_renames[][2] = {
 };
 
 const char *RenamesMap3To4::project_settings_renames[][2] = {
-	// Project setting paths in scripts include the category, but in project.godot,
+	// Project setting paths in scripts include the category, but in project.Redot,
 	// the category is the section delimiter, so we need to support the paths without it.
-	// The project.godot remaps are defined in the project_godot_renames, keep them in sync!
+	// The project.Redot remaps are defined in the project_Redot_renames, keep them in sync!
 	{ "audio/channel_disable_threshold_db", "audio/buses/channel_disable_threshold_db" },
 	{ "audio/channel_disable_time", "audio/buses/channel_disable_time" },
 	{ "audio/default_bus_layout", "audio/buses/default_bus_layout" },
@@ -1353,7 +1353,7 @@ const char *RenamesMap3To4::project_settings_renames[][2] = {
 	{ nullptr, nullptr },
 };
 
-const char *RenamesMap3To4::project_godot_renames[][2] = {
+const char *RenamesMap3To4::project_Redot_renames[][2] = {
 	// Should be kept in sync with project_settings_renames.
 	{ "channel_disable_threshold_db", "buses/channel_disable_threshold_db" },
 	{ "channel_disable_time", "buses/channel_disable_time" },
@@ -1553,7 +1553,7 @@ const char *RenamesMap3To4::class_renames[][2] = {
 	{ "Physics2DDirectBodyState", "PhysicsDirectBodyState2D" },
 	{ "Physics2DDirectSpaceState", "PhysicsDirectSpaceState2D" },
 	{ "Physics2DServer", "PhysicsServer2D" },
-	{ "Physics2DServerSW", "GodotPhysicsServer2D" },
+	{ "Physics2DServerSW", "RedotPhysicsServer2D" },
 	{ "Physics2DShapeQueryParameters", "PhysicsShapeQueryParameters2D" },
 	{ "Physics2DTestMotionResult", "PhysicsTestMotionResult2D" },
 	{ "PhysicsBody", "PhysicsBody3D" },

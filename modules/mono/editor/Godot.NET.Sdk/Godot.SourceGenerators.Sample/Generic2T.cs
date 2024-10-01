@@ -1,9 +1,9 @@
 #pragma warning disable CS0169
 
-namespace Godot.SourceGenerators.Sample
+namespace Redot.SourceGenerators.Sample
 {
     // Generic again but different generic parameters
-    public partial class Generic2T<T, R> : GodotObject
+    public partial class Generic2T<T, R> : RedotObject
     {
         private int _field;
     }

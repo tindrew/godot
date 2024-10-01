@@ -2,10 +2,10 @@
 /*  string_builder.h                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -40,7 +40,7 @@ class StringBuilder {
 	Vector<String> strings;
 	Vector<const char *> c_strings;
 
-	// -1 means it's a Godot String
+	// -1 means it's a Redot String
 	// a natural number means C string.
 	Vector<int32_t> appended_strings;
 

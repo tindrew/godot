@@ -4,13 +4,13 @@ using System.IO;
 using System.Text;
 using Microsoft.Build.Construction;
 using Microsoft.Build.Evaluation;
-using GodotTools.Shared;
+using RedotTools.Shared;
 
-namespace GodotTools.ProjectEditor
+namespace RedotTools.ProjectEditor
 {
     public static class ProjectGenerator
     {
-        public static string GodotSdkAttrValue => $"Godot.NET.Sdk/{GeneratedGodotNupkgsVersions.GodotNETSdk}";
+        public static string RedotSdkAttrValue => $"Redot.NET.Sdk/{GeneratedRedotNupkgsVersions.RedotNETSdk}";
 
         public static ProjectRootElement GenGameProject(string name)
         {
@@ -19,16 +19,16 @@ namespace GodotTools.ProjectEditor
 
             var root = ProjectRootElement.Create(NewProjectFileOptions.None);
 
-            root.Sdk = GodotSdkAttrValue;
+            root.Sdk = RedotSdkAttrValue;
 
             var mainGroup = root.AddPropertyGroup();
             mainGroup.AddProperty("TargetFramework", "net6.0");
 
             var net7 = mainGroup.AddProperty("TargetFramework", "net7.0");
-            net7.Condition = " '$(GodotTargetPlatform)' == 'android' ";
+            net7.Condition = " '$(RedotTargetPlatform)' == 'android' ";
 
             var net8 = mainGroup.AddProperty("TargetFramework", "net8.0");
-            net8.Condition = " '$(GodotTargetPlatform)' == 'ios' ";
+            net8.Condition = " '$(RedotTargetPlatform)' == 'ios' ";
 
             mainGroup.AddProperty("EnableDynamicLoading", "true");
 

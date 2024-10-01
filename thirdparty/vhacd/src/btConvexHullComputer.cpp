@@ -49,9 +49,9 @@ typedef unsigned long long int32_t uint64_t;
 #include <stdio.h>
 #endif
 
-// -- GODOT start --
+// -- Redot start --
 namespace VHACD {
-// -- GODOT end --
+// -- Redot end --
 
 // Convex hull implementation based on Preparata and Hong
 // Ole Kniemeyer, MAXON Computer GmbH
@@ -2482,6 +2482,6 @@ btScalar btConvexHullComputer::compute(const void* coords, bool doubleCoords, in
     return shift;
 }
 
-// -- GODOT start --
+// -- Redot start --
 }; // namespace VHACD
-// -- GODOT end --
+// -- Redot end --

@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotRenderView.java                                                  */
+/*  RedotRenderView.java                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,18 +28,18 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot;
+package org.Redotengine.Redot;
 
-import org.godotengine.godot.input.GodotInputHandler;
-import org.godotengine.godot.utils.DeviceUtils;
+import org.Redotengine.Redot.input.RedotInputHandler;
+import org.Redotengine.Redot.utils.DeviceUtils;
 
 import android.view.SurfaceView;
 
-public interface GodotRenderView {
+public interface RedotRenderView {
 	SurfaceView getView();
 
 	/**
-	 * Starts the thread that will drive Godot's rendering.
+	 * Starts the thread that will drive Redot's rendering.
 	 */
 	void startRenderer();
 
@@ -58,7 +58,7 @@ public interface GodotRenderView {
 
 	void onActivityDestroyed();
 
-	GodotInputHandler getInputHandler();
+	RedotInputHandler getInputHandler();
 
 	void configurePointerIcon(int pointerType, String imagePath, float hotSpotX, float hotSpotY);
 

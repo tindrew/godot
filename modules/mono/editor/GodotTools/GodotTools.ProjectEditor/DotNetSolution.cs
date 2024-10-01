@@ -1,4 +1,4 @@
-using GodotTools.Core;
+using RedotTools.Core;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace GodotTools.ProjectEditor
+namespace RedotTools.ProjectEditor
 {
     public class DotNetSolution
     {

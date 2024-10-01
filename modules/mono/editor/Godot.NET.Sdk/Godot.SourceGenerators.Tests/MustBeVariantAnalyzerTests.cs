@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Godot.SourceGenerators.Tests;
+namespace Redot.SourceGenerators.Tests;
 
 public class MustBeVariantAnalyzerTests
 {

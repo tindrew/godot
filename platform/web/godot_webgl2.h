@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_webgl2.h                                                        */
+/*  Redot_webgl2.h                                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_WEBGL2_H
-#define GODOT_WEBGL2_H
+#ifndef Redot_WEBGL2_H
+#define Redot_WEBGL2_H
 
 #include <GLES3/gl3.h>
 #include <webgl/webgl2.h>
@@ -43,15 +43,15 @@
 extern "C" {
 #endif
 
-void godot_webgl2_glFramebufferTextureMultiviewOVR(GLenum target, GLenum attachment, GLuint texture, GLint level, GLint baseViewIndex, GLsizei numViews);
-void godot_webgl2_glFramebufferTextureMultisampleMultiviewOVR(GLenum target, GLenum attachment, GLuint texture, GLint level, GLsizei samples, GLint baseViewIndex, GLsizei numViews);
-void godot_webgl2_glGetBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, GLvoid *data);
+void Redot_webgl2_glFramebufferTextureMultiviewOVR(GLenum target, GLenum attachment, GLuint texture, GLint level, GLint baseViewIndex, GLsizei numViews);
+void Redot_webgl2_glFramebufferTextureMultisampleMultiviewOVR(GLenum target, GLenum attachment, GLuint texture, GLint level, GLsizei samples, GLint baseViewIndex, GLsizei numViews);
+void Redot_webgl2_glGetBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, GLvoid *data);
 
-#define glFramebufferTextureMultiviewOVR godot_webgl2_glFramebufferTextureMultiviewOVR
-#define glFramebufferTextureMultisampleMultiviewOVR godot_webgl2_glFramebufferTextureMultisampleMultiviewOVR
+#define glFramebufferTextureMultiviewOVR Redot_webgl2_glFramebufferTextureMultiviewOVR
+#define glFramebufferTextureMultisampleMultiviewOVR Redot_webgl2_glFramebufferTextureMultisampleMultiviewOVR
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // GODOT_WEBGL2_H
+#endif // Redot_WEBGL2_H

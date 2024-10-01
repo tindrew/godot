@@ -7,10 +7,10 @@ using System.Net.Sockets;
 using Newtonsoft.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using GodotTools.IdeMessaging.Requests;
-using GodotTools.IdeMessaging.Utils;
+using RedotTools.IdeMessaging.Requests;
+using RedotTools.IdeMessaging.Utils;
 
-namespace GodotTools.IdeMessaging
+namespace RedotTools.IdeMessaging
 {
     // ReSharper disable once UnusedType.Global
     public sealed class Client : IDisposable
@@ -21,10 +21,10 @@ namespace GodotTools.IdeMessaging
 
         private string MetaFilePath { get; }
         private DateTime? metaFileModifiedTime;
-        private GodotIdeMetadata godotIdeMetadata;
+        private RedotIdeMetadata RedotIdeMetadata;
         private readonly FileSystemWatcher fsWatcher;
 
-        public string GodotEditorExecutablePath => godotIdeMetadata.EditorExecutablePath;
+        public string RedotEditorExecutablePath => RedotIdeMetadata.EditorExecutablePath;
 
         private readonly IMessageHandler messageHandler;
 
@@ -117,18 +117,18 @@ namespace GodotTools.IdeMessaging
             }
         }
 
-        public Client(string identity, string godotProjectDir, IMessageHandler messageHandler, ILogger logger)
+        public Client(string identity, string RedotProjectDir, IMessageHandler messageHandler, ILogger logger)
         {
             this.identity = identity;
             this.messageHandler = messageHandler;
             this.logger = logger;
 
-            string projectMetadataDir = Path.Combine(godotProjectDir, ".godot", "mono", "metadata");
+            string projectMetadataDir = Path.Combine(RedotProjectDir, ".Redot", "mono", "metadata");
             // FileSystemWatcher requires an existing directory
             if (!Directory.Exists(projectMetadataDir))
             {
                 // Check if the non hidden version exists
-                string nonHiddenProjectMetadataDir = Path.Combine(godotProjectDir, "godot", "mono", "metadata");
+                string nonHiddenProjectMetadataDir = Path.Combine(RedotProjectDir, "Redot", "mono", "metadata");
                 if (Directory.Exists(nonHiddenProjectMetadataDir))
                 {
                     projectMetadataDir = nonHiddenProjectMetadataDir;
@@ -139,9 +139,9 @@ namespace GodotTools.IdeMessaging
                 }
             }
 
-            MetaFilePath = Path.Combine(projectMetadataDir, GodotIdeMetadata.DefaultFileName);
+            MetaFilePath = Path.Combine(projectMetadataDir, RedotIdeMetadata.DefaultFileName);
 
-            fsWatcher = new FileSystemWatcher(projectMetadataDir, GodotIdeMetadata.DefaultFileName);
+            fsWatcher = new FileSystemWatcher(projectMetadataDir, RedotIdeMetadata.DefaultFileName);
         }
 
         private async void OnMetaFileChanged(object sender, FileSystemEventArgs e)
@@ -166,9 +166,9 @@ namespace GodotTools.IdeMessaging
 
                 var metadata = ReadMetadataFile();
 
-                if (metadata != null && metadata != godotIdeMetadata)
+                if (metadata != null && metadata != RedotIdeMetadata)
                 {
-                    godotIdeMetadata = metadata.Value;
+                    RedotIdeMetadata = metadata.Value;
                     _ = Task.Run(ConnectToServer);
                 }
             }
@@ -206,13 +206,13 @@ namespace GodotTools.IdeMessaging
 
                 if (metadata != null)
                 {
-                    godotIdeMetadata = metadata.Value;
+                    RedotIdeMetadata = metadata.Value;
                     _ = Task.Run(ConnectToServer);
                 }
             }
         }
 
-        private GodotIdeMetadata? ReadMetadataFile()
+        private RedotIdeMetadata? ReadMetadataFile()
         {
             using (var fileStream = new FileStream(MetaFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (var reader = new StreamReader(fileStream))
@@ -230,7 +230,7 @@ namespace GodotTools.IdeMessaging
                 if (!int.TryParse(portStr, out int port))
                     return null;
 
-                return new GodotIdeMetadata(port, editorExecutablePath);
+                return new RedotIdeMetadata(port, editorExecutablePath);
             }
         }
 
@@ -282,18 +282,18 @@ namespace GodotTools.IdeMessaging
 
             try
             {
-                logger.LogInfo("Connecting to Godot Ide Server");
+                logger.LogInfo("Connecting to Redot Ide Server");
 
-                await tcpClient.ConnectAsync(IPAddress.Loopback, godotIdeMetadata.Port);
+                await tcpClient.ConnectAsync(IPAddress.Loopback, RedotIdeMetadata.Port);
 
-                logger.LogInfo("Connection open with Godot Ide Server");
+                logger.LogInfo("Connection open with Redot Ide Server");
 
                 await AcceptClient(tcpClient);
             }
             catch (SocketException e)
             {
                 if (e.SocketErrorCode == SocketError.ConnectionRefused)
-                    logger.LogError("The connection to the Godot Ide Server was refused");
+                    logger.LogError("The connection to the Redot Ide Server was refused");
                 else
                     throw;
             }
@@ -317,7 +317,7 @@ namespace GodotTools.IdeMessaging
 
                 if (!File.Exists(MetaFilePath))
                 {
-                    logger.LogInfo("There is no Godot Ide Server running");
+                    logger.LogInfo("There is no Redot Ide Server running");
                     return;
                 }
 
@@ -325,12 +325,12 @@ namespace GodotTools.IdeMessaging
 
                 if (metadata != null)
                 {
-                    godotIdeMetadata = metadata.Value;
+                    RedotIdeMetadata = metadata.Value;
                     _ = Task.Run(ConnectToServer);
                 }
                 else
                 {
-                    logger.LogError("Failed to read Godot Ide metadata file");
+                    logger.LogError("Failed to read Redot Ide metadata file");
                 }
             }
         }
@@ -340,7 +340,7 @@ namespace GodotTools.IdeMessaging
         {
             if (!IsConnected)
             {
-                logger.LogError("Cannot write request. Not connected to the Godot Ide Server.");
+                logger.LogError("Cannot write request. Not connected to the Redot Ide Server.");
                 return null;
             }
 
@@ -353,7 +353,7 @@ namespace GodotTools.IdeMessaging
         {
             if (!IsConnected)
             {
-                logger.LogError("Cannot write request. Not connected to the Godot Ide Server.");
+                logger.LogError("Cannot write request. Not connected to the Redot Ide Server.");
                 return null;
             }
 

@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_button_view.h                                                   */
+/*  Redot_button_view.h                                                   */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,15 +28,15 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_BUTTON_VIEW_H
-#define GODOT_BUTTON_VIEW_H
+#ifndef Redot_BUTTON_VIEW_H
+#define Redot_BUTTON_VIEW_H
 
 #include "servers/display_server.h"
 
 #import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
 
-@interface GodotButtonView : NSView {
+@interface RedotButtonView : NSView {
 	NSTrackingArea *tracking_area;
 	NSPoint offset;
 	CGFloat spacing;
@@ -54,4 +54,4 @@
 
 @end
 
-#endif // GODOT_BUTTON_VIEW_H
+#endif // Redot_BUTTON_VIEW_H

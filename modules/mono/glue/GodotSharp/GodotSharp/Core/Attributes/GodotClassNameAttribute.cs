@@ -1,6 +1,6 @@
 using System;
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
     /// Attribute that specifies the engine class name when it's not the same
@@ -9,14 +9,14 @@ namespace Godot
     /// the C# class name can be used instead.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class GodotClassNameAttribute : Attribute
+    public class RedotClassNameAttribute : Attribute
     {
         /// <summary>
         /// Original engine class name.
         /// </summary>
         public string Name { get; }
 
-        public GodotClassNameAttribute(string name)
+        public RedotClassNameAttribute(string name)
         {
             Name = name;
         }

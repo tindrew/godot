@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_generic_6dof_joint_3d.h                                         */
+/*  Redot_generic_6dof_joint_3d.h                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,15 +28,15 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_GENERIC_6DOF_JOINT_3D_H
-#define GODOT_GENERIC_6DOF_JOINT_3D_H
+#ifndef Redot_GENERIC_6DOF_JOINT_3D_H
+#define Redot_GENERIC_6DOF_JOINT_3D_H
 
 /*
-Adapted to Godot from the Bullet library.
+Adapted to Redot from the Bullet library.
 */
 
-#include "../godot_joint_3d.h"
-#include "godot_jacobian_entry_3d.h"
+#include "../Redot_joint_3d.h"
+#include "Redot_jacobian_entry_3d.h"
 
 /*
 Bullet Continuous Collision Detection and Physics Library
@@ -55,13 +55,13 @@ subject to the following restrictions:
 
 /*
 2007-09-09
-GodotGeneric6DOFJoint3D Refactored by Francisco Le?n
+RedotGeneric6DOFJoint3D Refactored by Francisco Le?n
 email: projectileman@yahoo.com
 http://gimpact.sf.net
 */
 
 //! Rotation Limit structure for generic joints
-class GodotG6DOFRotationalLimitMotor3D {
+class RedotG6DOFRotationalLimitMotor3D {
 public:
 	//! limit_parameters
 	//!@{
@@ -86,7 +86,7 @@ public:
 	real_t m_accumulatedImpulse = 0.0;
 	//!@}
 
-	GodotG6DOFRotationalLimitMotor3D() {}
+	RedotG6DOFRotationalLimitMotor3D() {}
 
 	bool isLimited() {
 		return (m_loLimit < m_hiLimit);
@@ -101,10 +101,10 @@ public:
 	int testLimitValue(real_t test_value);
 
 	// Apply the correction impulses for two bodies.
-	real_t solveAngularLimits(real_t timeStep, Vector3 &axis, real_t jacDiagABInv, GodotBody3D *body0, GodotBody3D *body1, bool p_body0_dynamic, bool p_body1_dynamic);
+	real_t solveAngularLimits(real_t timeStep, Vector3 &axis, real_t jacDiagABInv, RedotBody3D *body0, RedotBody3D *body1, bool p_body0_dynamic, bool p_body1_dynamic);
 };
 
-class GodotG6DOFTranslationalLimitMotor3D {
+class RedotG6DOFTranslationalLimitMotor3D {
 public:
 	Vector3 m_lowerLimit = Vector3(0.0, 0.0, 0.0); //!< the constraint lower limits
 	Vector3 m_upperLimit = Vector3(0.0, 0.0, 0.0); //!< the constraint upper limits
@@ -131,23 +131,23 @@ public:
 	real_t solveLinearAxis(
 			real_t timeStep,
 			real_t jacDiagABInv,
-			GodotBody3D *body1, const Vector3 &pointInA,
-			GodotBody3D *body2, const Vector3 &pointInB,
+			RedotBody3D *body1, const Vector3 &pointInA,
+			RedotBody3D *body2, const Vector3 &pointInB,
 			bool p_body1_dynamic, bool p_body2_dynamic,
 			int limit_index,
 			const Vector3 &axis_normal_on_a,
 			const Vector3 &anchorPos);
 };
 
-class GodotGeneric6DOFJoint3D : public GodotJoint3D {
+class RedotGeneric6DOFJoint3D : public RedotJoint3D {
 protected:
 	union {
 		struct {
-			GodotBody3D *A;
-			GodotBody3D *B;
+			RedotBody3D *A;
+			RedotBody3D *B;
 		};
 
-		GodotBody3D *_arr[2] = { nullptr, nullptr };
+		RedotBody3D *_arr[2] = { nullptr, nullptr };
 	};
 
 	//! relative_frames
@@ -158,18 +158,18 @@ protected:
 
 	//! Jacobians
 	//!@{
-	GodotJacobianEntry3D m_jacLinear[3]; //!< 3 orthogonal linear constraints
-	GodotJacobianEntry3D m_jacAng[3]; //!< 3 orthogonal angular constraints
+	RedotJacobianEntry3D m_jacLinear[3]; //!< 3 orthogonal linear constraints
+	RedotJacobianEntry3D m_jacAng[3]; //!< 3 orthogonal angular constraints
 	//!@}
 
 	//! Linear_Limit_parameters
 	//!@{
-	GodotG6DOFTranslationalLimitMotor3D m_linearLimits;
+	RedotG6DOFTranslationalLimitMotor3D m_linearLimits;
 	//!@}
 
 	//! hinge_parameters
 	//!@{
-	GodotG6DOFRotationalLimitMotor3D m_angularLimits[3];
+	RedotG6DOFRotationalLimitMotor3D m_angularLimits[3];
 	//!@}
 
 protected:
@@ -187,20 +187,20 @@ protected:
 
 	//!@}
 
-	GodotGeneric6DOFJoint3D(GodotGeneric6DOFJoint3D const &) = delete;
-	void operator=(GodotGeneric6DOFJoint3D const &) = delete;
+	RedotGeneric6DOFJoint3D(RedotGeneric6DOFJoint3D const &) = delete;
+	void operator=(RedotGeneric6DOFJoint3D const &) = delete;
 
 	void buildLinearJacobian(
-			GodotJacobianEntry3D &jacLinear, const Vector3 &normalWorld,
+			RedotJacobianEntry3D &jacLinear, const Vector3 &normalWorld,
 			const Vector3 &pivotAInW, const Vector3 &pivotBInW);
 
-	void buildAngularJacobian(GodotJacobianEntry3D &jacAngular, const Vector3 &jointAxisW);
+	void buildAngularJacobian(RedotJacobianEntry3D &jacAngular, const Vector3 &jointAxisW);
 
 	//! calcs the euler angles between the two bodies.
 	void calculateAngleInfo();
 
 public:
-	GodotGeneric6DOFJoint3D(GodotBody3D *rbA, GodotBody3D *rbB, const Transform3D &frameInA, const Transform3D &frameInB, bool useLinearReferenceFrameA);
+	RedotGeneric6DOFJoint3D(RedotBody3D *rbA, RedotBody3D *rbB, const Transform3D &frameInA, const Transform3D &frameInB, bool useLinearReferenceFrameA);
 
 	virtual PhysicsServer3D::JointType get_type() const override { return PhysicsServer3D::JOINT_TYPE_6DOF; }
 
@@ -269,12 +269,12 @@ public:
 	}
 
 	// Retrieves the angular limit information.
-	GodotG6DOFRotationalLimitMotor3D *getRotationalLimitMotor(int index) {
+	RedotG6DOFRotationalLimitMotor3D *getRotationalLimitMotor(int index) {
 		return &m_angularLimits[index];
 	}
 
 	// Retrieves the limit information.
-	GodotG6DOFTranslationalLimitMotor3D *getTranslationalLimitMotor() {
+	RedotG6DOFTranslationalLimitMotor3D *getTranslationalLimitMotor() {
 		return &m_linearLimits;
 	}
 
@@ -303,10 +303,10 @@ public:
 		return m_angularLimits[limitIndex - 3].isLimited();
 	}
 
-	const GodotBody3D *getRigidBodyA() const {
+	const RedotBody3D *getRigidBodyA() const {
 		return A;
 	}
-	const GodotBody3D *getRigidBodyB() const {
+	const RedotBody3D *getRigidBodyB() const {
 		return B;
 	}
 
@@ -319,4 +319,4 @@ public:
 	bool get_flag(Vector3::Axis p_axis, PhysicsServer3D::G6DOFJointAxisFlag p_flag) const;
 };
 
-#endif // GODOT_GENERIC_6DOF_JOINT_3D_H
+#endif // Redot_GENERIC_6DOF_JOINT_3D_H

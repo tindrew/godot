@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace Godot.SourceGenerators
+namespace Redot.SourceGenerators
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public sealed class ClassPartialModifierAnalyzer : DiagnosticAnalyzer
@@ -32,7 +32,7 @@ namespace Godot.SourceGenerators
             if (context.ContainingSymbol is not INamedTypeSymbol typeSymbol)
                 return;
 
-            if (!typeSymbol.InheritsFrom("GodotSharp", GodotClasses.GodotObject))
+            if (!typeSymbol.InheritsFrom("RedotSharp", RedotClasses.RedotObject))
                 return;
 
             if (!classDeclaration.IsPartial())

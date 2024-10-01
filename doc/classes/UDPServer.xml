@@ -36,7 +36,7 @@
 		[/gdscript]
 		[csharp]
 		// ServerNode.cs
-		using Godot;
+		using Redot;
 		using System.Collections.Generic;
 
 		public partial class ServerNode : Node
@@ -93,7 +93,7 @@
 		[/gdscript]
 		[csharp]
 		// ClientNode.cs
-		using Godot;
+		using Redot;
 
 		public partial class ClientNode : Node
 		{

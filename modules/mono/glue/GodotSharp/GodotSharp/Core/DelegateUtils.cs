@@ -8,25 +8,25 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
-namespace Godot
+namespace Redot
 {
     internal static class DelegateUtils
     {
         [UnmanagedCallersOnly]
-        internal static godot_bool DelegateEquals(IntPtr delegateGCHandleA, IntPtr delegateGCHandleB)
+        internal static Redot_bool DelegateEquals(IntPtr delegateGCHandleA, IntPtr delegateGCHandleB)
         {
             try
             {
                 var @delegateA = (Delegate?)GCHandle.FromIntPtr(delegateGCHandleA).Target;
                 var @delegateB = (Delegate?)GCHandle.FromIntPtr(delegateGCHandleB).Target;
-                return (@delegateA! == @delegateB!).ToGodotBool();
+                return (@delegateA! == @delegateB!).ToRedotBool();
             }
             catch (Exception e)
             {
                 ExceptionUtils.LogException(e);
-                return godot_bool.False;
+                return Redot_bool.False;
             }
         }
 
@@ -46,7 +46,7 @@ namespace Godot
         }
 
         [UnmanagedCallersOnly]
-        internal static unsafe int GetArgumentCount(IntPtr delegateGCHandle, godot_bool* outIsValid)
+        internal static unsafe int GetArgumentCount(IntPtr delegateGCHandle, Redot_bool* outIsValid)
         {
             try
             {
@@ -54,23 +54,23 @@ namespace Godot
                 int? argCount = @delegate?.Method?.GetParameters().Length;
                 if (argCount is null)
                 {
-                    *outIsValid = godot_bool.False;
+                    *outIsValid = Redot_bool.False;
                     return 0;
                 }
-                *outIsValid = godot_bool.True;
+                *outIsValid = Redot_bool.True;
                 return argCount.Value;
             }
             catch (Exception e)
             {
                 ExceptionUtils.LogException(e);
-                *outIsValid = godot_bool.False;
+                *outIsValid = Redot_bool.False;
                 return 0;
             }
         }
 
         [UnmanagedCallersOnly]
         internal static unsafe void InvokeWithVariantArgs(IntPtr delegateGCHandle, void* trampoline,
-            godot_variant** args, int argc, godot_variant* outRet)
+            Redot_variant** args, int argc, Redot_variant* outRet)
         {
             try
             {
@@ -81,9 +81,9 @@ namespace Godot
                 }
 
                 var @delegate = (Delegate)GCHandle.FromIntPtr(delegateGCHandle).Target!;
-                var trampolineFn = (delegate* managed<object, NativeVariantPtrArgs, out godot_variant, void>)trampoline;
+                var trampolineFn = (delegate* managed<object, NativeVariantPtrArgs, out Redot_variant, void>)trampoline;
 
-                trampolineFn(@delegate, new NativeVariantPtrArgs(args, argc), out godot_variant ret);
+                trampolineFn(@delegate, new NativeVariantPtrArgs(args, argc), out Redot_variant ret);
 
                 *outRet = ret;
             }
@@ -99,7 +99,7 @@ namespace Godot
         private enum TargetKind : uint
         {
             Static,
-            GodotObject,
+            RedotObject,
             CompilerGenerated
         }
 
@@ -164,14 +164,14 @@ namespace Godot
                         return true;
                     }
                 }
-                case GodotObject godotObject:
+                case RedotObject RedotObject:
                 {
                     using (var stream = new MemoryStream())
                     using (var writer = new BinaryWriter(stream))
                     {
-                        writer.Write((ulong)TargetKind.GodotObject);
+                        writer.Write((ulong)TargetKind.RedotObject);
                         // ReSharper disable once RedundantCast
-                        writer.Write((ulong)godotObject.GetInstanceId());
+                        writer.Write((ulong)RedotObject.GetInstanceId());
 
                         SerializeType(writer, @delegate.GetType());
 
@@ -214,9 +214,9 @@ namespace Godot
                                 if (variantType == Variant.Type.Nil)
                                     return false;
 
-                                static byte[] VarToBytes(in godot_variant var)
+                                static byte[] VarToBytes(in Redot_variant var)
                                 {
-                                    NativeFuncs.godotsharp_var_to_bytes(var, godot_bool.True, out var varBytes);
+                                    NativeFuncs.Redotsharp_var_to_bytes(var, Redot_bool.True, out var varBytes);
                                     using (varBytes)
                                         return Marshaling.ConvertNativePackedByteArrayToSystemArray(varBytes);
                                 }
@@ -312,51 +312,51 @@ namespace Godot
         }
 
         [UnmanagedCallersOnly]
-        internal static unsafe godot_bool TrySerializeDelegateWithGCHandle(IntPtr delegateGCHandle,
-            godot_array* nSerializedData)
+        internal static unsafe Redot_bool TrySerializeDelegateWithGCHandle(IntPtr delegateGCHandle,
+            Redot_array* nSerializedData)
         {
             try
             {
                 var serializedData = Collections.Array.CreateTakingOwnershipOfDisposableValue(
-                    NativeFuncs.godotsharp_array_new_copy(*nSerializedData));
+                    NativeFuncs.Redotsharp_array_new_copy(*nSerializedData));
 
                 var @delegate = (Delegate)GCHandle.FromIntPtr(delegateGCHandle).Target!;
 
                 return TrySerializeDelegate(@delegate, serializedData)
-                    .ToGodotBool();
+                    .ToRedotBool();
             }
             catch (Exception e)
             {
                 ExceptionUtils.LogException(e);
-                return godot_bool.False;
+                return Redot_bool.False;
             }
         }
 
         [UnmanagedCallersOnly]
-        internal static unsafe godot_bool TryDeserializeDelegateWithGCHandle(godot_array* nSerializedData,
+        internal static unsafe Redot_bool TryDeserializeDelegateWithGCHandle(Redot_array* nSerializedData,
             IntPtr* delegateGCHandle)
         {
             try
             {
                 var serializedData = Collections.Array.CreateTakingOwnershipOfDisposableValue(
-                    NativeFuncs.godotsharp_array_new_copy(*nSerializedData));
+                    NativeFuncs.Redotsharp_array_new_copy(*nSerializedData));
 
                 if (TryDeserializeDelegate(serializedData, out Delegate? @delegate))
                 {
                     *delegateGCHandle = GCHandle.ToIntPtr(CustomGCHandle.AllocStrong(@delegate));
-                    return godot_bool.True;
+                    return Redot_bool.True;
                 }
                 else
                 {
                     *delegateGCHandle = IntPtr.Zero;
-                    return godot_bool.False;
+                    return Redot_bool.False;
                 }
             }
             catch (Exception e)
             {
                 ExceptionUtils.LogException(e);
                 *delegateGCHandle = default;
-                return godot_bool.False;
+                return Redot_bool.False;
             }
         }
 
@@ -433,11 +433,11 @@ namespace Godot
 
                         return true;
                     }
-                    case TargetKind.GodotObject:
+                    case TargetKind.RedotObject:
                     {
                         ulong objectId = reader.ReadUInt64();
-                        GodotObject? godotObject = GodotObject.InstanceFromId(objectId);
-                        if (godotObject == null)
+                        RedotObject? RedotObject = RedotObject.InstanceFromId(objectId);
+                        if (RedotObject == null)
                             return false;
 
                         Type? delegateType = DeserializeType(reader);
@@ -447,7 +447,7 @@ namespace Godot
                         if (!TryDeserializeMethodInfo(reader, out MethodInfo? methodInfo))
                             return false;
 
-                        @delegate = Delegate.CreateDelegate(delegateType, godotObject, methodInfo,
+                        @delegate = Delegate.CreateDelegate(delegateType, RedotObject, methodInfo,
                             throwOnBindFailure: false);
 
                         if (@delegate == null)
@@ -485,7 +485,7 @@ namespace Godot
                             {
                                 var variantValue = GD.BytesToVarWithObjects(valueBuffer);
                                 object? managedValue = RuntimeTypeConversionHelper.ConvertToObjectOfType(
-                                    (godot_variant)variantValue.NativeVar, fieldInfo.FieldType);
+                                    (Redot_variant)variantValue.NativeVar, fieldInfo.FieldType);
                                 fieldInfo.SetValue(recreatedTarget, managedValue);
                             }
                         }
@@ -580,7 +580,7 @@ namespace Godot
         }
 
         // Returns true, if unloading the delegate is necessary for assembly unloading to succeed.
-        // This check is not perfect and only intended to prevent things in GodotTools from being reloaded.
+        // This check is not perfect and only intended to prevent things in RedotTools from being reloaded.
         internal static bool IsDelegateCollectible(Delegate @delegate)
         {
             if (@delegate.GetType().IsCollectible)
@@ -613,7 +613,7 @@ namespace Godot
 
         internal static class RuntimeTypeConversionHelper
         {
-            public static godot_variant ConvertToVariant(object? obj)
+            public static Redot_variant ConvertToVariant(object? obj)
             {
                 if (obj == null)
                     return default;
@@ -706,119 +706,119 @@ namespace Godot
                         return VariantUtils.CreateFrom(nodePathArray);
                     case Rid[] ridArray:
                         return VariantUtils.CreateFrom(ridArray);
-                    case GodotObject[] godotObjectArray:
-                        return VariantUtils.CreateFrom(godotObjectArray);
+                    case RedotObject[] RedotObjectArray:
+                        return VariantUtils.CreateFrom(RedotObjectArray);
                     case StringName stringName:
                         return VariantUtils.CreateFrom(stringName);
                     case NodePath nodePath:
                         return VariantUtils.CreateFrom(nodePath);
                     case Rid rid:
                         return VariantUtils.CreateFrom(rid);
-                    case Collections.Dictionary godotDictionary:
-                        return VariantUtils.CreateFrom(godotDictionary);
-                    case Collections.Array godotArray:
-                        return VariantUtils.CreateFrom(godotArray);
+                    case Collections.Dictionary RedotDictionary:
+                        return VariantUtils.CreateFrom(RedotDictionary);
+                    case Collections.Array RedotArray:
+                        return VariantUtils.CreateFrom(RedotArray);
                     case Variant variant:
                         return VariantUtils.CreateFrom(variant);
-                    case GodotObject godotObject:
-                        return VariantUtils.CreateFrom(godotObject);
+                    case RedotObject RedotObject:
+                        return VariantUtils.CreateFrom(RedotObject);
                     case Enum @enum:
                         return VariantUtils.CreateFrom(Convert.ToInt64(@enum, CultureInfo.InvariantCulture));
-                    case Collections.IGenericGodotDictionary godotDictionary:
-                        return VariantUtils.CreateFrom(godotDictionary.UnderlyingDictionary);
-                    case Collections.IGenericGodotArray godotArray:
-                        return VariantUtils.CreateFrom(godotArray.UnderlyingArray);
+                    case Collections.IGenericRedotDictionary RedotDictionary:
+                        return VariantUtils.CreateFrom(RedotDictionary.UnderlyingDictionary);
+                    case Collections.IGenericRedotArray RedotArray:
+                        return VariantUtils.CreateFrom(RedotArray.UnderlyingArray);
                 }
 
                 GD.PushError("Attempted to convert an unmarshallable managed type to Variant. Name: '" +
                              obj.GetType().FullName + ".");
-                return new godot_variant();
+                return new Redot_variant();
             }
 
-            private delegate object? ConvertToSystemObjectFunc(in godot_variant managed);
+            private delegate object? ConvertToSystemObjectFunc(in Redot_variant managed);
 
             private static readonly System.Collections.Generic.Dictionary<Type, ConvertToSystemObjectFunc>
                 _toSystemObjectFuncByType = new()
                 {
-                    [typeof(bool)] = (in godot_variant variant) => VariantUtils.ConvertTo<bool>(variant),
-                    [typeof(char)] = (in godot_variant variant) => VariantUtils.ConvertTo<char>(variant),
-                    [typeof(sbyte)] = (in godot_variant variant) => VariantUtils.ConvertTo<sbyte>(variant),
-                    [typeof(short)] = (in godot_variant variant) => VariantUtils.ConvertTo<short>(variant),
-                    [typeof(int)] = (in godot_variant variant) => VariantUtils.ConvertTo<int>(variant),
-                    [typeof(long)] = (in godot_variant variant) => VariantUtils.ConvertTo<long>(variant),
-                    [typeof(byte)] = (in godot_variant variant) => VariantUtils.ConvertTo<byte>(variant),
-                    [typeof(ushort)] = (in godot_variant variant) => VariantUtils.ConvertTo<ushort>(variant),
-                    [typeof(uint)] = (in godot_variant variant) => VariantUtils.ConvertTo<uint>(variant),
-                    [typeof(ulong)] = (in godot_variant variant) => VariantUtils.ConvertTo<ulong>(variant),
-                    [typeof(float)] = (in godot_variant variant) => VariantUtils.ConvertTo<float>(variant),
-                    [typeof(double)] = (in godot_variant variant) => VariantUtils.ConvertTo<double>(variant),
-                    [typeof(Vector2)] = (in godot_variant variant) => VariantUtils.ConvertTo<Vector2>(variant),
-                    [typeof(Vector2I)] = (in godot_variant variant) => VariantUtils.ConvertTo<Vector2I>(variant),
-                    [typeof(Rect2)] = (in godot_variant variant) => VariantUtils.ConvertTo<Rect2>(variant),
-                    [typeof(Rect2I)] = (in godot_variant variant) => VariantUtils.ConvertTo<Rect2I>(variant),
-                    [typeof(Transform2D)] = (in godot_variant variant) => VariantUtils.ConvertTo<Transform2D>(variant),
-                    [typeof(Vector3)] = (in godot_variant variant) => VariantUtils.ConvertTo<Vector3>(variant),
-                    [typeof(Vector3I)] = (in godot_variant variant) => VariantUtils.ConvertTo<Vector3I>(variant),
-                    [typeof(Basis)] = (in godot_variant variant) => VariantUtils.ConvertTo<Basis>(variant),
-                    [typeof(Quaternion)] = (in godot_variant variant) => VariantUtils.ConvertTo<Quaternion>(variant),
-                    [typeof(Transform3D)] = (in godot_variant variant) => VariantUtils.ConvertTo<Transform3D>(variant),
-                    [typeof(Vector4)] = (in godot_variant variant) => VariantUtils.ConvertTo<Vector4>(variant),
-                    [typeof(Vector4I)] = (in godot_variant variant) => VariantUtils.ConvertTo<Vector4I>(variant),
-                    [typeof(Aabb)] = (in godot_variant variant) => VariantUtils.ConvertTo<Aabb>(variant),
-                    [typeof(Color)] = (in godot_variant variant) => VariantUtils.ConvertTo<Color>(variant),
-                    [typeof(Plane)] = (in godot_variant variant) => VariantUtils.ConvertTo<Plane>(variant),
-                    [typeof(Callable)] = (in godot_variant variant) => VariantUtils.ConvertTo<Callable>(variant),
-                    [typeof(Signal)] = (in godot_variant variant) => VariantUtils.ConvertTo<Signal>(variant),
-                    [typeof(string)] = (in godot_variant variant) => VariantUtils.ConvertTo<string>(variant),
-                    [typeof(byte[])] = (in godot_variant variant) => VariantUtils.ConvertTo<byte[]>(variant),
-                    [typeof(int[])] = (in godot_variant variant) => VariantUtils.ConvertTo<int[]>(variant),
-                    [typeof(long[])] = (in godot_variant variant) => VariantUtils.ConvertTo<long[]>(variant),
-                    [typeof(float[])] = (in godot_variant variant) => VariantUtils.ConvertTo<float[]>(variant),
-                    [typeof(double[])] = (in godot_variant variant) => VariantUtils.ConvertTo<double[]>(variant),
-                    [typeof(string[])] = (in godot_variant variant) => VariantUtils.ConvertTo<string[]>(variant),
-                    [typeof(Vector2[])] = (in godot_variant variant) => VariantUtils.ConvertTo<Vector2[]>(variant),
-                    [typeof(Vector3[])] = (in godot_variant variant) => VariantUtils.ConvertTo<Vector3[]>(variant),
-                    [typeof(Color[])] = (in godot_variant variant) => VariantUtils.ConvertTo<Color[]>(variant),
+                    [typeof(bool)] = (in Redot_variant variant) => VariantUtils.ConvertTo<bool>(variant),
+                    [typeof(char)] = (in Redot_variant variant) => VariantUtils.ConvertTo<char>(variant),
+                    [typeof(sbyte)] = (in Redot_variant variant) => VariantUtils.ConvertTo<sbyte>(variant),
+                    [typeof(short)] = (in Redot_variant variant) => VariantUtils.ConvertTo<short>(variant),
+                    [typeof(int)] = (in Redot_variant variant) => VariantUtils.ConvertTo<int>(variant),
+                    [typeof(long)] = (in Redot_variant variant) => VariantUtils.ConvertTo<long>(variant),
+                    [typeof(byte)] = (in Redot_variant variant) => VariantUtils.ConvertTo<byte>(variant),
+                    [typeof(ushort)] = (in Redot_variant variant) => VariantUtils.ConvertTo<ushort>(variant),
+                    [typeof(uint)] = (in Redot_variant variant) => VariantUtils.ConvertTo<uint>(variant),
+                    [typeof(ulong)] = (in Redot_variant variant) => VariantUtils.ConvertTo<ulong>(variant),
+                    [typeof(float)] = (in Redot_variant variant) => VariantUtils.ConvertTo<float>(variant),
+                    [typeof(double)] = (in Redot_variant variant) => VariantUtils.ConvertTo<double>(variant),
+                    [typeof(Vector2)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Vector2>(variant),
+                    [typeof(Vector2I)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Vector2I>(variant),
+                    [typeof(Rect2)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Rect2>(variant),
+                    [typeof(Rect2I)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Rect2I>(variant),
+                    [typeof(Transform2D)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Transform2D>(variant),
+                    [typeof(Vector3)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Vector3>(variant),
+                    [typeof(Vector3I)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Vector3I>(variant),
+                    [typeof(Basis)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Basis>(variant),
+                    [typeof(Quaternion)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Quaternion>(variant),
+                    [typeof(Transform3D)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Transform3D>(variant),
+                    [typeof(Vector4)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Vector4>(variant),
+                    [typeof(Vector4I)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Vector4I>(variant),
+                    [typeof(Aabb)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Aabb>(variant),
+                    [typeof(Color)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Color>(variant),
+                    [typeof(Plane)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Plane>(variant),
+                    [typeof(Callable)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Callable>(variant),
+                    [typeof(Signal)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Signal>(variant),
+                    [typeof(string)] = (in Redot_variant variant) => VariantUtils.ConvertTo<string>(variant),
+                    [typeof(byte[])] = (in Redot_variant variant) => VariantUtils.ConvertTo<byte[]>(variant),
+                    [typeof(int[])] = (in Redot_variant variant) => VariantUtils.ConvertTo<int[]>(variant),
+                    [typeof(long[])] = (in Redot_variant variant) => VariantUtils.ConvertTo<long[]>(variant),
+                    [typeof(float[])] = (in Redot_variant variant) => VariantUtils.ConvertTo<float[]>(variant),
+                    [typeof(double[])] = (in Redot_variant variant) => VariantUtils.ConvertTo<double[]>(variant),
+                    [typeof(string[])] = (in Redot_variant variant) => VariantUtils.ConvertTo<string[]>(variant),
+                    [typeof(Vector2[])] = (in Redot_variant variant) => VariantUtils.ConvertTo<Vector2[]>(variant),
+                    [typeof(Vector3[])] = (in Redot_variant variant) => VariantUtils.ConvertTo<Vector3[]>(variant),
+                    [typeof(Color[])] = (in Redot_variant variant) => VariantUtils.ConvertTo<Color[]>(variant),
                     [typeof(StringName[])] =
-                        (in godot_variant variant) => VariantUtils.ConvertTo<StringName[]>(variant),
-                    [typeof(NodePath[])] = (in godot_variant variant) => VariantUtils.ConvertTo<NodePath[]>(variant),
-                    [typeof(Rid[])] = (in godot_variant variant) => VariantUtils.ConvertTo<Rid[]>(variant),
-                    [typeof(StringName)] = (in godot_variant variant) => VariantUtils.ConvertTo<StringName>(variant),
-                    [typeof(NodePath)] = (in godot_variant variant) => VariantUtils.ConvertTo<NodePath>(variant),
-                    [typeof(Rid)] = (in godot_variant variant) => VariantUtils.ConvertTo<Rid>(variant),
-                    [typeof(Godot.Collections.Dictionary)] = (in godot_variant variant) =>
-                        VariantUtils.ConvertTo<Godot.Collections.Dictionary>(variant),
-                    [typeof(Godot.Collections.Array)] =
-                        (in godot_variant variant) => VariantUtils.ConvertTo<Godot.Collections.Array>(variant),
-                    [typeof(Variant)] = (in godot_variant variant) => VariantUtils.ConvertTo<Variant>(variant),
+                        (in Redot_variant variant) => VariantUtils.ConvertTo<StringName[]>(variant),
+                    [typeof(NodePath[])] = (in Redot_variant variant) => VariantUtils.ConvertTo<NodePath[]>(variant),
+                    [typeof(Rid[])] = (in Redot_variant variant) => VariantUtils.ConvertTo<Rid[]>(variant),
+                    [typeof(StringName)] = (in Redot_variant variant) => VariantUtils.ConvertTo<StringName>(variant),
+                    [typeof(NodePath)] = (in Redot_variant variant) => VariantUtils.ConvertTo<NodePath>(variant),
+                    [typeof(Rid)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Rid>(variant),
+                    [typeof(Redot.Collections.Dictionary)] = (in Redot_variant variant) =>
+                        VariantUtils.ConvertTo<Redot.Collections.Dictionary>(variant),
+                    [typeof(Redot.Collections.Array)] =
+                        (in Redot_variant variant) => VariantUtils.ConvertTo<Redot.Collections.Array>(variant),
+                    [typeof(Variant)] = (in Redot_variant variant) => VariantUtils.ConvertTo<Variant>(variant),
                 };
 
-            public static object? ConvertToObjectOfType(in godot_variant variant, Type type)
+            public static object? ConvertToObjectOfType(in Redot_variant variant, Type type)
             {
                 if (_toSystemObjectFuncByType.TryGetValue(type, out var func))
                     return func(variant);
 
-                if (typeof(GodotObject).IsAssignableFrom(type))
-                    return VariantUtils.ConvertTo<GodotObject>(variant);
+                if (typeof(RedotObject).IsAssignableFrom(type))
+                    return VariantUtils.ConvertTo<RedotObject>(variant);
 
-                if (typeof(GodotObject[]).IsAssignableFrom(type))
+                if (typeof(RedotObject[]).IsAssignableFrom(type))
                 {
-                    static GodotObject[] ConvertToSystemArrayOfGodotObject(in godot_array nativeArray, Type type)
+                    static RedotObject[] ConvertToSystemArrayOfRedotObject(in Redot_array nativeArray, Type type)
                     {
                         var array = Collections.Array.CreateTakingOwnershipOfDisposableValue(
-                            NativeFuncs.godotsharp_array_new_copy(nativeArray));
+                            NativeFuncs.Redotsharp_array_new_copy(nativeArray));
 
                         int length = array.Count;
-                        var ret = (GodotObject[])Activator.CreateInstance(type, length)!;
+                        var ret = (RedotObject[])Activator.CreateInstance(type, length)!;
 
                         for (int i = 0; i < length; i++)
-                            ret[i] = array[i].AsGodotObject();
+                            ret[i] = array[i].AsRedotObject();
 
                         return ret;
                     }
 
-                    using var godotArray = NativeFuncs.godotsharp_variant_as_array(variant);
-                    return ConvertToSystemArrayOfGodotObject(godotArray, type);
+                    using var RedotArray = NativeFuncs.Redotsharp_variant_as_array(variant);
+                    return ConvertToSystemArrayOfRedotObject(RedotArray, type);
                 }
 
                 if (type.IsEnum)
@@ -857,29 +857,29 @@ namespace Godot
                 {
                     var genericTypeDef = type.GetGenericTypeDefinition();
 
-                    if (genericTypeDef == typeof(Godot.Collections.Dictionary<,>))
+                    if (genericTypeDef == typeof(Redot.Collections.Dictionary<,>))
                     {
-                        var ctor = type.GetConstructor(new[] { typeof(Godot.Collections.Dictionary) });
+                        var ctor = type.GetConstructor(new[] { typeof(Redot.Collections.Dictionary) });
 
                         if (ctor == null)
                             throw new InvalidOperationException("Dictionary constructor not found");
 
                         return ctor.Invoke(new object?[]
                         {
-                            VariantUtils.ConvertTo<Godot.Collections.Dictionary>(variant)
+                            VariantUtils.ConvertTo<Redot.Collections.Dictionary>(variant)
                         });
                     }
 
-                    if (genericTypeDef == typeof(Godot.Collections.Array<>))
+                    if (genericTypeDef == typeof(Redot.Collections.Array<>))
                     {
-                        var ctor = type.GetConstructor(new[] { typeof(Godot.Collections.Array) });
+                        var ctor = type.GetConstructor(new[] { typeof(Redot.Collections.Array) });
 
                         if (ctor == null)
                             throw new InvalidOperationException("Array constructor not found");
 
                         return ctor.Invoke(new object?[]
                         {
-                            VariantUtils.ConvertTo<Godot.Collections.Array>(variant)
+                            VariantUtils.ConvertTo<Redot.Collections.Array>(variant)
                         });
                     }
                 }

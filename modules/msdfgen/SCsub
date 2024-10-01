@@ -55,7 +55,7 @@ if env["builtin_msdfgen"]:
         env.Append(LIBS=[lib])
 
 
-# Godot source files
+# Redot source files
 
 module_obj = []
 

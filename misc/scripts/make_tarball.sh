@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ ! -e "version.py" ]; then
-  echo "This script should be ran from the root folder of the Godot repository."
+  echo "This script should be ran from the root folder of the Redot repository."
   exit 1
 fi
 
@@ -10,8 +10,8 @@ while getopts "h?sv:g:" opt; do
   h|\?)
     echo "Usage: $0 [OPTIONS...]"
     echo
-    echo "  -s script friendly file name (godot.tar.gz)"
-    echo "  -v godot version for file name (e.g. 4.0-stable)"
+    echo "  -s script friendly file name (Redot.tar.gz)"
+    echo "  -v Redot version for file name (e.g. 4.0-stable)"
     echo "  -g git treeish to archive (e.g. master)"
     echo
     exit 1
@@ -20,7 +20,7 @@ while getopts "h?sv:g:" opt; do
     script_friendly_name=1
     ;;
   v)
-    godot_version=$OPTARG
+    Redot_version=$OPTARG
     ;;
   g)
     git_treeish=$OPTARG
@@ -35,17 +35,17 @@ else
 fi
 
 if [ ! -z "$script_friendly_name" ]; then
-  NAME=godot
+  NAME=Redot
 else
-  if [ ! -z "$godot_version" ]; then
-    NAME=godot-$godot_version
+  if [ ! -z "$Redot_version" ]; then
+    NAME=Redot-$Redot_version
   else
-    NAME=godot-$HEAD
+    NAME=Redot-$HEAD
   fi
 fi
 
 CURDIR=$(pwd)
-TMPDIR=$(mktemp -d -t godot-XXXXXX)
+TMPDIR=$(mktemp -d -t Redot-XXXXXX)
 
 echo "Generating tarball for revision $HEAD with folder name '$NAME'."
 echo

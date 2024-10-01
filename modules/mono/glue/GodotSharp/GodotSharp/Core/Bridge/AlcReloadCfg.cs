@@ -1,4 +1,4 @@
-namespace Godot.Bridge;
+namespace Redot.Bridge;
 
 public static class AlcReloadCfg
 {

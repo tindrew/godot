@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace GodotTools.ProjectEditor
+namespace RedotTools.ProjectEditor
 {
     public static class IdentifierUtils
     {

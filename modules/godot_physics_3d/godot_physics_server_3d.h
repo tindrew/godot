@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_physics_server_3d.h                                             */
+/*  Redot_physics_server_3d.h                                             */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,21 +28,21 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_PHYSICS_SERVER_3D_H
-#define GODOT_PHYSICS_SERVER_3D_H
+#ifndef Redot_PHYSICS_SERVER_3D_H
+#define Redot_PHYSICS_SERVER_3D_H
 
-#include "godot_joint_3d.h"
-#include "godot_shape_3d.h"
-#include "godot_space_3d.h"
-#include "godot_step_3d.h"
+#include "Redot_joint_3d.h"
+#include "Redot_shape_3d.h"
+#include "Redot_space_3d.h"
+#include "Redot_step_3d.h"
 
 #include "core/templates/rid_owner.h"
 #include "servers/physics_server_3d.h"
 
-class GodotPhysicsServer3D : public PhysicsServer3D {
-	GDCLASS(GodotPhysicsServer3D, PhysicsServer3D);
+class RedotPhysicsServer3D : public PhysicsServer3D {
+	GDCLASS(RedotPhysicsServer3D, PhysicsServer3D);
 
-	friend class GodotPhysicsDirectSpaceState3D;
+	friend class RedotPhysicsDirectSpaceState3D;
 	bool active = true;
 
 	int island_count = 0;
@@ -53,22 +53,22 @@ class GodotPhysicsServer3D : public PhysicsServer3D {
 	bool doing_sync = false;
 	bool flushing_queries = false;
 
-	GodotStep3D *stepper = nullptr;
-	HashSet<const GodotSpace3D *> active_spaces;
+	RedotStep3D *stepper = nullptr;
+	HashSet<const RedotSpace3D *> active_spaces;
 
-	mutable RID_PtrOwner<GodotShape3D, true> shape_owner;
-	mutable RID_PtrOwner<GodotSpace3D, true> space_owner;
-	mutable RID_PtrOwner<GodotArea3D, true> area_owner;
-	mutable RID_PtrOwner<GodotBody3D, true> body_owner;
-	mutable RID_PtrOwner<GodotSoftBody3D, true> soft_body_owner;
-	mutable RID_PtrOwner<GodotJoint3D, true> joint_owner;
+	mutable RID_PtrOwner<RedotShape3D, true> shape_owner;
+	mutable RID_PtrOwner<RedotSpace3D, true> space_owner;
+	mutable RID_PtrOwner<RedotArea3D, true> area_owner;
+	mutable RID_PtrOwner<RedotBody3D, true> body_owner;
+	mutable RID_PtrOwner<RedotSoftBody3D, true> soft_body_owner;
+	mutable RID_PtrOwner<RedotJoint3D, true> joint_owner;
 
 	//void _clear_query(QuerySW *p_query);
-	friend class GodotCollisionObject3D;
-	SelfList<GodotCollisionObject3D>::List pending_shape_update_list;
+	friend class RedotCollisionObject3D;
+	SelfList<RedotCollisionObject3D>::List pending_shape_update_list;
 	void _update_shapes();
 
-	static GodotPhysicsServer3D *godot_singleton;
+	static RedotPhysicsServer3D *Redot_singleton;
 
 public:
 	struct CollCbkData {
@@ -378,8 +378,8 @@ public:
 
 	int get_process_info(ProcessInfo p_info) override;
 
-	GodotPhysicsServer3D(bool p_using_threads = false);
-	~GodotPhysicsServer3D() {}
+	RedotPhysicsServer3D(bool p_using_threads = false);
+	~RedotPhysicsServer3D() {}
 };
 
-#endif // GODOT_PHYSICS_SERVER_3D_H
+#endif // Redot_PHYSICS_SERVER_3D_H

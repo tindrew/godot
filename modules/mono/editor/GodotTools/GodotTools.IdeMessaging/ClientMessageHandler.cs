@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GodotTools.IdeMessaging.Requests;
+using RedotTools.IdeMessaging.Requests;
 using Newtonsoft.Json;
 
-namespace GodotTools.IdeMessaging
+namespace RedotTools.IdeMessaging
 {
     // ReSharper disable once UnusedType.Global
     public abstract class ClientMessageHandler : IMessageHandler

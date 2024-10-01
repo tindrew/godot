@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godotsharp_dirs.h                                                     */
+/*  Redotsharp_dirs.h                                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,12 +28,12 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOTSHARP_DIRS_H
-#define GODOTSHARP_DIRS_H
+#ifndef RedotSHARP_DIRS_H
+#define RedotSHARP_DIRS_H
 
 #include "core/string/ustring.h"
 
-namespace GodotSharpDirs {
+namespace RedotSharpDirs {
 
 String get_res_metadata_dir();
 String get_res_temp_assemblies_dir();
@@ -47,6 +47,6 @@ String get_build_logs_dir();
 String get_data_editor_tools_dir();
 #endif
 
-} // namespace GodotSharpDirs
+} // namespace RedotSharpDirs
 
-#endif // GODOTSHARP_DIRS_H
+#endif // RedotSHARP_DIRS_H

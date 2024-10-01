@@ -2,10 +2,10 @@
 /*  editor_export_platform.cpp                                            */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -1514,7 +1514,7 @@ void EditorExportPlatform::zip_folder_recursive(zipFile &p_zip, const String &p_
 
 			zip_fileinfo zipfi;
 			zipfi.tmz_date.tm_year = dt.year;
-			zipfi.tmz_date.tm_mon = dt.month - 1; // Note: "tm" month range - 0..11, Godot month range - 1..12, https://www.cplusplus.com/reference/ctime/tm/
+			zipfi.tmz_date.tm_mon = dt.month - 1; // Note: "tm" month range - 0..11, Redot month range - 1..12, https://www.cplusplus.com/reference/ctime/tm/
 			zipfi.tmz_date.tm_mday = dt.day;
 			zipfi.tmz_date.tm_hour = dt.hour;
 			zipfi.tmz_date.tm_min = dt.minute;
@@ -1558,7 +1558,7 @@ void EditorExportPlatform::zip_folder_recursive(zipFile &p_zip, const String &p_
 
 			zip_fileinfo zipfi;
 			zipfi.tmz_date.tm_year = dt.year;
-			zipfi.tmz_date.tm_mon = dt.month - 1; // Note: "tm" month range - 0..11, Godot month range - 1..12, https://www.cplusplus.com/reference/ctime/tm/
+			zipfi.tmz_date.tm_mon = dt.month - 1; // Note: "tm" month range - 0..11, Redot month range - 1..12, https://www.cplusplus.com/reference/ctime/tm/
 			zipfi.tmz_date.tm_mday = dt.day;
 			zipfi.tmz_date.tm_hour = dt.hour;
 			zipfi.tmz_date.tm_min = dt.minute;

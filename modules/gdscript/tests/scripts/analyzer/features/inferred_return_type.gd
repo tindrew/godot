@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/61159
+# https://github.com/Redotengine/Redot/issues/61159
 
 func get_param():
 	return null

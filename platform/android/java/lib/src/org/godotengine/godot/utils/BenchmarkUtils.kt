@@ -2,10 +2,10 @@
 /*  BenchmarkUtils.kt                                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -30,16 +30,16 @@
 
 @file:JvmName("BenchmarkUtils")
 
-package org.godotengine.godot.utils
+package org.Redotengine.Redot.utils
 
 import android.os.Build
 import android.os.SystemClock
 import android.os.Trace
 import android.util.Log
-import org.godotengine.godot.BuildConfig
-import org.godotengine.godot.error.Error
-import org.godotengine.godot.io.file.FileAccessFlags
-import org.godotengine.godot.io.file.FileAccessHandler
+import org.Redotengine.Redot.BuildConfig
+import org.Redotengine.Redot.error.Error
+import org.Redotengine.Redot.io.file.FileAccessFlags
+import org.Redotengine.Redot.io.file.FileAccessHandler
 import org.json.JSONObject
 import java.nio.ByteBuffer
 import java.util.Collections
@@ -47,7 +47,7 @@ import java.util.Collections
 /**
  * Contains benchmark related utilities methods
  */
-private const val TAG = "GodotBenchmark"
+private const val TAG = "RedotBenchmark"
 
 var useBenchmark = false
 var benchmarkFile = ""

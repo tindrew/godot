@@ -6,10 +6,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- $(GodotProjectDir) would normally be defined by the Godot.NET.Sdk -->
-    <GodotProjectDir>$(MSBuildProjectDirectory)</GodotProjectDir>
-    <GodotProjectDirBase64 Condition=" $([MSBuild]::VersionGreaterThanOrEquals($(MSBuildAssemblyVersion), '17.3')) ">$([MSBuild]::ConvertToBase64('$(GodotProjectDir)'))</GodotProjectDirBase64>
-    <!-- For compiling GetGodotPropertyDefaultValues. -->
+    <!-- $(RedotProjectDir) would normally be defined by the Redot.NET.Sdk -->
+    <RedotProjectDir>$(MSBuildProjectDirectory)</RedotProjectDir>
+    <RedotProjectDirBase64 Condition=" $([MSBuild]::VersionGreaterThanOrEquals($(MSBuildAssemblyVersion), '17.3')) ">$([MSBuild]::ConvertToBase64('$(RedotProjectDir)'))</RedotProjectDirBase64>
+    <!-- For compiling GetRedotPropertyDefaultValues. -->
     <DefineConstants>$(DefineConstants);TOOLS</DefineConstants>
   </PropertyGroup>
 
@@ -22,14 +22,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\glue\GodotSharp\GodotSharp\GodotSharp.csproj">
+    <ProjectReference Include="..\..\..\glue\RedotSharp\RedotSharp\RedotSharp.csproj">
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Godot.SourceGenerators\Godot.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\Redot.SourceGenerators\Redot.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
   <!-- This file is imported automatically when using PackageReference to
-  reference Godot.SourceGenerators, but not when using ProjectReference -->
-  <Import Project="..\Godot.SourceGenerators\Godot.SourceGenerators.props" />
+  reference Redot.SourceGenerators, but not when using ProjectReference -->
+  <Import Project="..\Redot.SourceGenerators\Redot.SourceGenerators.props" />
 
 </Project>

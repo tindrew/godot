@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_area_2d.h                                                       */
+/*  Redot_area_2d.h                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,19 +28,19 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_AREA_2D_H
-#define GODOT_AREA_2D_H
+#ifndef Redot_AREA_2D_H
+#define Redot_AREA_2D_H
 
-#include "godot_collision_object_2d.h"
+#include "Redot_collision_object_2d.h"
 
 #include "core/templates/self_list.h"
 #include "servers/physics_server_2d.h"
 
-class GodotSpace2D;
-class GodotBody2D;
-class GodotConstraint2D;
+class RedotSpace2D;
+class RedotBody2D;
+class RedotConstraint2D;
 
-class GodotArea2D : public GodotCollisionObject2D {
+class RedotArea2D : public RedotCollisionObject2D {
 	PhysicsServer2D::AreaSpaceOverrideMode gravity_override_mode = PhysicsServer2D::AREA_SPACE_OVERRIDE_DISABLED;
 	PhysicsServer2D::AreaSpaceOverrideMode linear_damping_override_mode = PhysicsServer2D::AREA_SPACE_OVERRIDE_DISABLED;
 	PhysicsServer2D::AreaSpaceOverrideMode angular_damping_override_mode = PhysicsServer2D::AREA_SPACE_OVERRIDE_DISABLED;
@@ -58,8 +58,8 @@ class GodotArea2D : public GodotCollisionObject2D {
 
 	Callable area_monitor_callback;
 
-	SelfList<GodotArea2D> monitor_query_list;
-	SelfList<GodotArea2D> moved_list;
+	SelfList<RedotArea2D> monitor_query_list;
+	SelfList<RedotArea2D> moved_list;
 
 	struct BodyKey {
 		RID rid;
@@ -79,8 +79,8 @@ class GodotArea2D : public GodotCollisionObject2D {
 		}
 
 		_FORCE_INLINE_ BodyKey() {}
-		BodyKey(GodotBody2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
-		BodyKey(GodotArea2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
+		BodyKey(RedotBody2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
+		BodyKey(RedotArea2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
 	};
 
 	struct BodyState {
@@ -92,7 +92,7 @@ class GodotArea2D : public GodotCollisionObject2D {
 	HashMap<BodyKey, BodyState, BodyKey> monitored_bodies;
 	HashMap<BodyKey, BodyState, BodyKey> monitored_areas;
 
-	HashSet<GodotConstraint2D *> constraints;
+	HashSet<RedotConstraint2D *> constraints;
 
 	virtual void _shapes_changed() override;
 	void _queue_monitor_update();
@@ -106,11 +106,11 @@ public:
 	void set_area_monitor_callback(const Callable &p_callback);
 	_FORCE_INLINE_ bool has_area_monitor_callback() const { return area_monitor_callback.is_valid(); }
 
-	_FORCE_INLINE_ void add_body_to_query(GodotBody2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
-	_FORCE_INLINE_ void remove_body_from_query(GodotBody2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
+	_FORCE_INLINE_ void add_body_to_query(RedotBody2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
+	_FORCE_INLINE_ void remove_body_from_query(RedotBody2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape);
 
-	_FORCE_INLINE_ void add_area_to_query(GodotArea2D *p_area, uint32_t p_area_shape, uint32_t p_self_shape);
-	_FORCE_INLINE_ void remove_area_from_query(GodotArea2D *p_area, uint32_t p_area_shape, uint32_t p_self_shape);
+	_FORCE_INLINE_ void add_area_to_query(RedotArea2D *p_area, uint32_t p_area_shape, uint32_t p_self_shape);
+	_FORCE_INLINE_ void remove_area_from_query(RedotArea2D *p_area, uint32_t p_area_shape, uint32_t p_self_shape);
 
 	void set_param(PhysicsServer2D::AreaParameter p_param, const Variant &p_value);
 	Variant get_param(PhysicsServer2D::AreaParameter p_param) const;
@@ -136,9 +136,9 @@ public:
 	_FORCE_INLINE_ void set_priority(int p_priority) { priority = p_priority; }
 	_FORCE_INLINE_ int get_priority() const { return priority; }
 
-	_FORCE_INLINE_ void add_constraint(GodotConstraint2D *p_constraint) { constraints.insert(p_constraint); }
-	_FORCE_INLINE_ void remove_constraint(GodotConstraint2D *p_constraint) { constraints.erase(p_constraint); }
-	_FORCE_INLINE_ const HashSet<GodotConstraint2D *> &get_constraints() const { return constraints; }
+	_FORCE_INLINE_ void add_constraint(RedotConstraint2D *p_constraint) { constraints.insert(p_constraint); }
+	_FORCE_INLINE_ void remove_constraint(RedotConstraint2D *p_constraint) { constraints.erase(p_constraint); }
+	_FORCE_INLINE_ const HashSet<RedotConstraint2D *> &get_constraints() const { return constraints; }
 	_FORCE_INLINE_ void clear_constraints() { constraints.clear(); }
 
 	void set_monitorable(bool p_monitorable);
@@ -146,17 +146,17 @@ public:
 
 	void set_transform(const Transform2D &p_transform);
 
-	void set_space(GodotSpace2D *p_space) override;
+	void set_space(RedotSpace2D *p_space) override;
 
 	void call_queries();
 
 	void compute_gravity(const Vector2 &p_position, Vector2 &r_gravity) const;
 
-	GodotArea2D();
-	~GodotArea2D();
+	RedotArea2D();
+	~RedotArea2D();
 };
 
-void GodotArea2D::add_body_to_query(GodotBody2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape) {
+void RedotArea2D::add_body_to_query(RedotBody2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape) {
 	BodyKey bk(p_body, p_body_shape, p_area_shape);
 	monitored_bodies[bk].inc();
 	if (!monitor_query_list.in_list()) {
@@ -164,7 +164,7 @@ void GodotArea2D::add_body_to_query(GodotBody2D *p_body, uint32_t p_body_shape, 
 	}
 }
 
-void GodotArea2D::remove_body_from_query(GodotBody2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape) {
+void RedotArea2D::remove_body_from_query(RedotBody2D *p_body, uint32_t p_body_shape, uint32_t p_area_shape) {
 	BodyKey bk(p_body, p_body_shape, p_area_shape);
 	monitored_bodies[bk].dec();
 	if (get_space() && !monitor_query_list.in_list()) {
@@ -172,7 +172,7 @@ void GodotArea2D::remove_body_from_query(GodotBody2D *p_body, uint32_t p_body_sh
 	}
 }
 
-void GodotArea2D::add_area_to_query(GodotArea2D *p_area, uint32_t p_area_shape, uint32_t p_self_shape) {
+void RedotArea2D::add_area_to_query(RedotArea2D *p_area, uint32_t p_area_shape, uint32_t p_self_shape) {
 	BodyKey bk(p_area, p_area_shape, p_self_shape);
 	monitored_areas[bk].inc();
 	if (!monitor_query_list.in_list()) {
@@ -180,7 +180,7 @@ void GodotArea2D::add_area_to_query(GodotArea2D *p_area, uint32_t p_area_shape, 
 	}
 }
 
-void GodotArea2D::remove_area_from_query(GodotArea2D *p_area, uint32_t p_area_shape, uint32_t p_self_shape) {
+void RedotArea2D::remove_area_from_query(RedotArea2D *p_area, uint32_t p_area_shape, uint32_t p_self_shape) {
 	BodyKey bk(p_area, p_area_shape, p_self_shape);
 	monitored_areas[bk].dec();
 	if (get_space() && !monitor_query_list.in_list()) {
@@ -188,4 +188,4 @@ void GodotArea2D::remove_area_from_query(GodotArea2D *p_area, uint32_t p_area_sh
 	}
 }
 
-#endif // GODOT_AREA_2D_H
+#endif // Redot_AREA_2D_H

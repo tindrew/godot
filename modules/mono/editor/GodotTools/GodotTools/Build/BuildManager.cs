@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
-using Godot;
-using GodotTools.Internals;
-using File = GodotTools.Utils.File;
+using Redot;
+using RedotTools.Internals;
+using File = RedotTools.Utils.File;
 
-namespace GodotTools.Build
+namespace RedotTools.Build
 {
     public static class BuildManager
     {
@@ -33,8 +33,8 @@ namespace GodotTools.Build
 
         public static void UpdateLastValidBuildDateTime()
         {
-            var dllName = $"{GodotSharpDirs.ProjectAssemblyName}.dll";
-            var path = Path.Combine(GodotSharpDirs.ProjectBaseOutputPath, "Debug", dllName);
+            var dllName = $"{RedotSharpDirs.ProjectAssemblyName}.dll";
+            var path = Path.Combine(RedotSharpDirs.ProjectBaseOutputPath, "Debug", dllName);
             LastValidBuildDateTime = File.GetLastWriteTime(path);
         }
 
@@ -50,7 +50,7 @@ namespace GodotTools.Build
 
         private static void ShowBuildErrorDialog(string message)
         {
-            var plugin = GodotSharpEditor.Instance;
+            var plugin = RedotSharpEditor.Instance;
             plugin.ShowErrorDialog(message, "Build error");
             plugin.MakeBottomPanelItemVisible(plugin.MSBuildPanel);
         }
@@ -83,7 +83,7 @@ namespace GodotTools.Build
                 BuildStarted?.Invoke(buildInfo);
 
                 // Required in order to update the build tasks list.
-                Internal.GodotMainIteration();
+                Internal.RedotMainIteration();
 
                 try
                 {
@@ -178,7 +178,7 @@ namespace GodotTools.Build
                 BuildStarted?.Invoke(buildInfo);
 
                 // Required in order to update the build tasks list.
-                Internal.GodotMainIteration();
+                Internal.RedotMainIteration();
 
                 try
                 {
@@ -275,15 +275,15 @@ namespace GodotTools.Build
             bool onlyClean = false
         )
         {
-            var buildInfo = new BuildInfo(GodotSharpDirs.ProjectSlnPath, GodotSharpDirs.ProjectCsProjPath, configuration,
+            var buildInfo = new BuildInfo(RedotSharpDirs.ProjectSlnPath, RedotSharpDirs.ProjectCsProjPath, configuration,
                 restore: true, rebuild, onlyClean);
 
             // If a platform was not specified, try determining the current one. If that fails, let MSBuild auto-detect it.
             if (platform != null || Utils.OS.PlatformNameMap.TryGetValue(OS.GetName(), out platform))
-                buildInfo.CustomProperties.Add($"GodotTargetPlatform={platform}");
+                buildInfo.CustomProperties.Add($"RedotTargetPlatform={platform}");
 
-            if (Internal.GodotIsRealTDouble())
-                buildInfo.CustomProperties.Add("GodotFloat64=true");
+            if (Internal.RedotIsRealTDouble())
+                buildInfo.CustomProperties.Add("RedotFloat64=true");
 
             return buildInfo;
         }
@@ -296,7 +296,7 @@ namespace GodotTools.Build
             bool includeDebugSymbols = true
         )
         {
-            var buildInfo = new BuildInfo(GodotSharpDirs.ProjectSlnPath, GodotSharpDirs.ProjectCsProjPath, configuration,
+            var buildInfo = new BuildInfo(RedotSharpDirs.ProjectSlnPath, RedotSharpDirs.ProjectCsProjPath, configuration,
                 runtimeIdentifier, publishOutputDir, restore: true, rebuild: false, onlyClean: false);
 
             if (!includeDebugSymbols)
@@ -305,10 +305,10 @@ namespace GodotTools.Build
                 buildInfo.CustomProperties.Add("DebugSymbols=false");
             }
 
-            buildInfo.CustomProperties.Add($"GodotTargetPlatform={platform}");
+            buildInfo.CustomProperties.Add($"RedotTargetPlatform={platform}");
 
-            if (Internal.GodotIsRealTDouble())
-                buildInfo.CustomProperties.Add("GodotFloat64=true");
+            if (Internal.RedotIsRealTDouble())
+                buildInfo.CustomProperties.Add("RedotFloat64=true");
 
             return buildInfo;
         }
@@ -353,7 +353,7 @@ namespace GodotTools.Build
         private static bool GenerateXCFramework(List<string> outputPaths, string xcFrameworkPath)
         {
             // Required in order to update the build tasks list.
-            Internal.GodotMainIteration();
+            Internal.RedotMainIteration();
 
             try
             {
@@ -374,10 +374,10 @@ namespace GodotTools.Build
 
         public static bool EditorBuildCallback()
         {
-            if (!File.Exists(GodotSharpDirs.ProjectCsProjPath))
+            if (!File.Exists(RedotSharpDirs.ProjectCsProjPath))
                 return true; // No project to build.
 
-            if (GodotSharpEditor.Instance.SkipBuildBeforePlaying)
+            if (RedotSharpEditor.Instance.SkipBuildBeforePlaying)
                 return true; // Requested play from an external editor/IDE which already built the project.
 
             return BuildProjectBlocking("Debug");

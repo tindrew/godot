@@ -2,10 +2,10 @@
 /*  hostfxr_resolver.cpp                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -29,7 +29,7 @@
 /**************************************************************************/
 
 /*
-Adapted to Godot from the nethost library: https://github.com/dotnet/runtime/tree/main/src/native/corehost
+Adapted to Redot from the nethost library: https://github.com/dotnet/runtime/tree/main/src/native/corehost
 */
 
 /*
@@ -90,10 +90,10 @@ String get_hostfxr_file_name() {
 }
 
 bool get_latest_fxr(const String &fxr_root, String &r_fxr_path) {
-	godotsharp::SemVerParser sem_ver_parser;
+	Redotsharp::SemVerParser sem_ver_parser;
 
 	bool found_ver = false;
-	godotsharp::SemVer latest_ver;
+	Redotsharp::SemVer latest_ver;
 	String latest_ver_str;
 
 	Ref<DirAccess> da = DirAccess::open(fxr_root);
@@ -105,7 +105,7 @@ bool get_latest_fxr(const String &fxr_root, String &r_fxr_path) {
 
 		String ver = dir.get_file();
 
-		godotsharp::SemVer fx_ver;
+		Redotsharp::SemVer fx_ver;
 		if (sem_ver_parser.parse(ver, fx_ver)) {
 			if (!found_ver || fx_ver > latest_ver) {
 				latest_ver = fx_ver;
@@ -320,7 +320,7 @@ bool get_dotnet_root_from_env(String &r_dotnet_root) {
 
 } //namespace
 
-bool godotsharp::hostfxr_resolver::try_get_path_from_dotnet_root(const String &p_dotnet_root, String &r_fxr_path) {
+bool Redotsharp::hostfxr_resolver::try_get_path_from_dotnet_root(const String &p_dotnet_root, String &r_fxr_path) {
 	String fxr_dir = path::join(p_dotnet_root, "host", "fxr");
 	if (!DirAccess::exists(fxr_dir)) {
 		if (OS::get_singleton()->is_stdout_verbose()) {
@@ -331,7 +331,7 @@ bool godotsharp::hostfxr_resolver::try_get_path_from_dotnet_root(const String &p
 	return get_latest_fxr(fxr_dir, r_fxr_path);
 }
 
-bool godotsharp::hostfxr_resolver::try_get_path(String &r_dotnet_root, String &r_fxr_path) {
+bool Redotsharp::hostfxr_resolver::try_get_path(String &r_dotnet_root, String &r_fxr_path) {
 	if (!get_dotnet_root_from_env(r_dotnet_root) &&
 			!get_dotnet_self_registered_dir(r_dotnet_root) &&
 			!get_default_installation_dir(r_dotnet_root)) {

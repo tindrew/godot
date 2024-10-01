@@ -1,6 +1,6 @@
-using Godot;
+using Redot;
 
-public partial class Generic<T> : GodotObject
+public partial class Generic<T> : RedotObject
 {
     private int _field;
 }

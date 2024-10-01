@@ -2,10 +2,10 @@
 /*  openxr_api.h                                                          */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -274,7 +274,7 @@ private:
 	RID get_tracker_rid(XrPath p_path);
 
 	struct ActionSet { // Action sets define a set of actions that can be enabled together
-		String name; // Name for this action set (i.e. "godot_action_set")
+		String name; // Name for this action set (i.e. "Redot_action_set")
 		bool is_attached; // If true our action set has been attached to the session and can no longer be modified
 		XrActionSet handle; // OpenXR handle for this action set
 	};

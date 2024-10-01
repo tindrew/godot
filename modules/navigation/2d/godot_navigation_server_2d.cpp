@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_navigation_server_2d.cpp                                        */
+/*  Redot_navigation_server_2d.cpp                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "godot_navigation_server_2d.h"
+#include "Redot_navigation_server_2d.h"
 
 #ifdef CLIPPER2_ENABLED
 #include "nav_mesh_generator_2d.h"
@@ -37,52 +37,52 @@
 #include "servers/navigation_server_3d.h"
 
 #define FORWARD_0(FUNC_NAME)                                     \
-	GodotNavigationServer2D::FUNC_NAME() {                       \
+	RedotNavigationServer2D::FUNC_NAME() {                       \
 		return NavigationServer3D::get_singleton()->FUNC_NAME(); \
 	}
 
 #define FORWARD_0_C(FUNC_NAME)                                   \
-	GodotNavigationServer2D::FUNC_NAME()                         \
+	RedotNavigationServer2D::FUNC_NAME()                         \
 			const {                                              \
 		return NavigationServer3D::get_singleton()->FUNC_NAME(); \
 	}
 
 #define FORWARD_1(FUNC_NAME, T_0, D_0, CONV_0)                              \
-	GodotNavigationServer2D::FUNC_NAME(T_0 D_0) {                           \
+	RedotNavigationServer2D::FUNC_NAME(T_0 D_0) {                           \
 		return NavigationServer3D::get_singleton()->FUNC_NAME(CONV_0(D_0)); \
 	}
 
 #define FORWARD_1_C(FUNC_NAME, T_0, D_0, CONV_0)                            \
-	GodotNavigationServer2D::FUNC_NAME(T_0 D_0)                             \
+	RedotNavigationServer2D::FUNC_NAME(T_0 D_0)                             \
 			const {                                                         \
 		return NavigationServer3D::get_singleton()->FUNC_NAME(CONV_0(D_0)); \
 	}
 
 #define FORWARD_1_R_C(CONV_R, FUNC_NAME, T_0, D_0, CONV_0)                          \
-	GodotNavigationServer2D::FUNC_NAME(T_0 D_0)                                     \
+	RedotNavigationServer2D::FUNC_NAME(T_0 D_0)                                     \
 			const {                                                                 \
 		return CONV_R(NavigationServer3D::get_singleton()->FUNC_NAME(CONV_0(D_0))); \
 	}
 
 #define FORWARD_2(FUNC_NAME, T_0, D_0, T_1, D_1, CONV_0, CONV_1)                         \
-	GodotNavigationServer2D::FUNC_NAME(T_0 D_0, T_1 D_1) {                               \
+	RedotNavigationServer2D::FUNC_NAME(T_0 D_0, T_1 D_1) {                               \
 		return NavigationServer3D::get_singleton()->FUNC_NAME(CONV_0(D_0), CONV_1(D_1)); \
 	}
 
 #define FORWARD_2_C(FUNC_NAME, T_0, D_0, T_1, D_1, CONV_0, CONV_1)                       \
-	GodotNavigationServer2D::FUNC_NAME(T_0 D_0, T_1 D_1)                                 \
+	RedotNavigationServer2D::FUNC_NAME(T_0 D_0, T_1 D_1)                                 \
 			const {                                                                      \
 		return NavigationServer3D::get_singleton()->FUNC_NAME(CONV_0(D_0), CONV_1(D_1)); \
 	}
 
 #define FORWARD_2_R_C(CONV_R, FUNC_NAME, T_0, D_0, T_1, D_1, CONV_0, CONV_1)                     \
-	GodotNavigationServer2D::FUNC_NAME(T_0 D_0, T_1 D_1)                                         \
+	RedotNavigationServer2D::FUNC_NAME(T_0 D_0, T_1 D_1)                                         \
 			const {                                                                              \
 		return CONV_R(NavigationServer3D::get_singleton()->FUNC_NAME(CONV_0(D_0), CONV_1(D_1))); \
 	}
 
 #define FORWARD_5_R_C(CONV_R, FUNC_NAME, T_0, D_0, T_1, D_1, T_2, D_2, T_3, D_3, T_4, D_4, CONV_0, CONV_1, CONV_2, CONV_3, CONV_4)      \
-	GodotNavigationServer2D::FUNC_NAME(T_0 D_0, T_1 D_1, T_2 D_2, T_3 D_3, T_4 D_4)                                                     \
+	RedotNavigationServer2D::FUNC_NAME(T_0 D_0, T_1 D_1, T_2 D_2, T_3 D_3, T_4 D_4)                                                     \
 			const {                                                                                                                     \
 		return CONV_R(NavigationServer3D::get_singleton()->FUNC_NAME(CONV_0(D_0), CONV_1(D_1), CONV_2(D_2), CONV_3(D_3), CONV_4(D_4))); \
 	}
@@ -164,14 +164,14 @@ static Ref<NavigationMesh> poly_to_mesh(Ref<NavigationPolygon> d) {
 	}
 }
 
-void GodotNavigationServer2D::init() {
+void RedotNavigationServer2D::init() {
 #ifdef CLIPPER2_ENABLED
 	navmesh_generator_2d = memnew(NavMeshGenerator2D);
 	ERR_FAIL_NULL_MSG(navmesh_generator_2d, "Failed to init NavMeshGenerator2D.");
 #endif // CLIPPER2_ENABLED
 }
 
-void GodotNavigationServer2D::sync() {
+void RedotNavigationServer2D::sync() {
 #ifdef CLIPPER2_ENABLED
 	if (navmesh_generator_2d) {
 		navmesh_generator_2d->sync();
@@ -179,7 +179,7 @@ void GodotNavigationServer2D::sync() {
 #endif // CLIPPER2_ENABLED
 }
 
-void GodotNavigationServer2D::finish() {
+void RedotNavigationServer2D::finish() {
 #ifdef CLIPPER2_ENABLED
 	if (navmesh_generator_2d) {
 		navmesh_generator_2d->finish();
@@ -189,7 +189,7 @@ void GodotNavigationServer2D::finish() {
 #endif // CLIPPER2_ENABLED
 }
 
-void GodotNavigationServer2D::parse_source_geometry_data(const Ref<NavigationPolygon> &p_navigation_mesh, const Ref<NavigationMeshSourceGeometryData2D> &p_source_geometry_data, Node *p_root_node, const Callable &p_callback) {
+void RedotNavigationServer2D::parse_source_geometry_data(const Ref<NavigationPolygon> &p_navigation_mesh, const Ref<NavigationMeshSourceGeometryData2D> &p_source_geometry_data, Node *p_root_node, const Callable &p_callback) {
 	ERR_FAIL_COND_MSG(!Thread::is_main_thread(), "The SceneTree can only be parsed on the main thread. Call this function from the main thread or use call_deferred().");
 	ERR_FAIL_COND_MSG(!p_navigation_mesh.is_valid(), "Invalid navigation polygon.");
 	ERR_FAIL_NULL_MSG(p_root_node, "No parsing root node specified.");
@@ -201,7 +201,7 @@ void GodotNavigationServer2D::parse_source_geometry_data(const Ref<NavigationPol
 #endif // CLIPPER2_ENABLED
 }
 
-void GodotNavigationServer2D::bake_from_source_geometry_data(const Ref<NavigationPolygon> &p_navigation_mesh, const Ref<NavigationMeshSourceGeometryData2D> &p_source_geometry_data, const Callable &p_callback) {
+void RedotNavigationServer2D::bake_from_source_geometry_data(const Ref<NavigationPolygon> &p_navigation_mesh, const Ref<NavigationMeshSourceGeometryData2D> &p_source_geometry_data, const Callable &p_callback) {
 	ERR_FAIL_COND_MSG(!p_navigation_mesh.is_valid(), "Invalid navigation polygon.");
 	ERR_FAIL_COND_MSG(!p_source_geometry_data.is_valid(), "Invalid NavigationMeshSourceGeometryData2D.");
 
@@ -211,7 +211,7 @@ void GodotNavigationServer2D::bake_from_source_geometry_data(const Ref<Navigatio
 #endif // CLIPPER2_ENABLED
 }
 
-void GodotNavigationServer2D::bake_from_source_geometry_data_async(const Ref<NavigationPolygon> &p_navigation_mesh, const Ref<NavigationMeshSourceGeometryData2D> &p_source_geometry_data, const Callable &p_callback) {
+void RedotNavigationServer2D::bake_from_source_geometry_data_async(const Ref<NavigationPolygon> &p_navigation_mesh, const Ref<NavigationMeshSourceGeometryData2D> &p_source_geometry_data, const Callable &p_callback) {
 	ERR_FAIL_COND_MSG(!p_navigation_mesh.is_valid(), "Invalid navigation mesh.");
 	ERR_FAIL_COND_MSG(!p_source_geometry_data.is_valid(), "Invalid NavigationMeshSourceGeometryData2D.");
 
@@ -221,7 +221,7 @@ void GodotNavigationServer2D::bake_from_source_geometry_data_async(const Ref<Nav
 #endif // CLIPPER2_ENABLED
 }
 
-bool GodotNavigationServer2D::is_baking_navigation_polygon(Ref<NavigationPolygon> p_navigation_polygon) const {
+bool RedotNavigationServer2D::is_baking_navigation_polygon(Ref<NavigationPolygon> p_navigation_polygon) const {
 #ifdef CLIPPER2_ENABLED
 	return NavMeshGenerator2D::get_singleton()->is_baking(p_navigation_polygon);
 #else
@@ -229,13 +229,13 @@ bool GodotNavigationServer2D::is_baking_navigation_polygon(Ref<NavigationPolygon
 #endif
 }
 
-Vector<Vector2> GodotNavigationServer2D::simplify_path(const Vector<Vector2> &p_path, real_t p_epsilon) {
+Vector<Vector2> RedotNavigationServer2D::simplify_path(const Vector<Vector2> &p_path, real_t p_epsilon) {
 	return vector_v3_to_v2(NavigationServer3D::get_singleton()->simplify_path(vector_v2_to_v3(p_path), p_epsilon));
 }
 
-GodotNavigationServer2D::GodotNavigationServer2D() {}
+RedotNavigationServer2D::RedotNavigationServer2D() {}
 
-GodotNavigationServer2D::~GodotNavigationServer2D() {}
+RedotNavigationServer2D::~RedotNavigationServer2D() {}
 
 TypedArray<RID> FORWARD_0_C(get_maps);
 
@@ -257,11 +257,11 @@ void FORWARD_2(map_set_active, RID, p_map, bool, p_active, rid_to_rid, bool_to_b
 
 bool FORWARD_1_C(map_is_active, RID, p_map, rid_to_rid);
 
-void GodotNavigationServer2D::map_force_update(RID p_map) {
+void RedotNavigationServer2D::map_force_update(RID p_map) {
 	NavigationServer3D::get_singleton()->map_force_update(p_map);
 }
 
-uint32_t GodotNavigationServer2D::map_get_iteration_id(RID p_map) const {
+uint32_t RedotNavigationServer2D::map_get_iteration_id(RID p_map) const {
 	return NavigationServer3D::get_singleton()->map_get_iteration_id(p_map);
 }
 
@@ -282,7 +282,7 @@ Vector<Vector2> FORWARD_5_R_C(vector_v3_to_v2, map_get_path, RID, p_map, Vector2
 Vector2 FORWARD_2_R_C(v3_to_v2, map_get_closest_point, RID, p_map, const Vector2 &, p_point, rid_to_rid, v2_to_v3);
 RID FORWARD_2_C(map_get_closest_point_owner, RID, p_map, const Vector2 &, p_point, rid_to_rid, v2_to_v3);
 
-Vector2 GodotNavigationServer2D::map_get_random_point(RID p_map, uint32_t p_naviation_layers, bool p_uniformly) const {
+Vector2 RedotNavigationServer2D::map_get_random_point(RID p_map, uint32_t p_naviation_layers, bool p_uniformly) const {
 	Vector3 result = NavigationServer3D::get_singleton()->map_get_random_point(p_map, p_naviation_layers, p_uniformly);
 	return v3_to_v2(result);
 }
@@ -306,11 +306,11 @@ void FORWARD_2(region_set_navigation_layers, RID, p_region, uint32_t, p_navigati
 uint32_t FORWARD_1_C(region_get_navigation_layers, RID, p_region, rid_to_rid);
 void FORWARD_2(region_set_transform, RID, p_region, Transform2D, p_transform, rid_to_rid, trf2_to_trf3);
 
-Transform2D GodotNavigationServer2D::region_get_transform(RID p_region) const {
+Transform2D RedotNavigationServer2D::region_get_transform(RID p_region) const {
 	return trf3_to_trf2(NavigationServer3D::get_singleton()->region_get_transform(p_region));
 }
 
-void GodotNavigationServer2D::region_set_navigation_polygon(RID p_region, Ref<NavigationPolygon> p_navigation_polygon) {
+void RedotNavigationServer2D::region_set_navigation_polygon(RID p_region, Ref<NavigationPolygon> p_navigation_polygon) {
 	NavigationServer3D::get_singleton()->region_set_navigation_mesh(p_region, poly_to_mesh(p_navigation_polygon));
 }
 
@@ -318,12 +318,12 @@ int FORWARD_1_C(region_get_connections_count, RID, p_region, rid_to_rid);
 Vector2 FORWARD_2_R_C(v3_to_v2, region_get_connection_pathway_start, RID, p_region, int, p_connection_id, rid_to_rid, int_to_int);
 Vector2 FORWARD_2_R_C(v3_to_v2, region_get_connection_pathway_end, RID, p_region, int, p_connection_id, rid_to_rid, int_to_int);
 
-Vector2 GodotNavigationServer2D::region_get_closest_point(RID p_region, const Vector2 &p_point) const {
+Vector2 RedotNavigationServer2D::region_get_closest_point(RID p_region, const Vector2 &p_point) const {
 	Vector3 result = NavigationServer3D::get_singleton()->region_get_closest_point(p_region, v2_to_v3(p_point));
 	return v3_to_v2(result);
 }
 
-Vector2 GodotNavigationServer2D::region_get_random_point(RID p_region, uint32_t p_navigation_layers, bool p_uniformly) const {
+Vector2 RedotNavigationServer2D::region_get_random_point(RID p_region, uint32_t p_navigation_layers, bool p_uniformly) const {
 	Vector3 result = NavigationServer3D::get_singleton()->region_get_random_point(p_region, p_navigation_layers, p_uniformly);
 	return v3_to_v2(result);
 }
@@ -349,7 +349,7 @@ real_t FORWARD_1_C(link_get_travel_cost, RID, p_link, rid_to_rid);
 void FORWARD_2(link_set_owner_id, RID, p_link, ObjectID, p_owner_id, rid_to_rid, id_to_id);
 ObjectID FORWARD_1_C(link_get_owner_id, RID, p_link, rid_to_rid);
 
-RID GodotNavigationServer2D::agent_create() {
+RID RedotNavigationServer2D::agent_create() {
 	RID agent = NavigationServer3D::get_singleton()->agent_create();
 	return agent;
 }
@@ -358,43 +358,43 @@ void FORWARD_2(agent_set_avoidance_enabled, RID, p_agent, bool, p_enabled, rid_t
 bool FORWARD_1_C(agent_get_avoidance_enabled, RID, p_agent, rid_to_rid);
 void FORWARD_2(agent_set_map, RID, p_agent, RID, p_map, rid_to_rid, rid_to_rid);
 void FORWARD_2(agent_set_neighbor_distance, RID, p_agent, real_t, p_dist, rid_to_rid, real_to_real);
-real_t GodotNavigationServer2D::agent_get_neighbor_distance(RID p_agent) const {
+real_t RedotNavigationServer2D::agent_get_neighbor_distance(RID p_agent) const {
 	return NavigationServer3D::get_singleton()->agent_get_neighbor_distance(p_agent);
 }
 void FORWARD_2(agent_set_max_neighbors, RID, p_agent, int, p_count, rid_to_rid, int_to_int);
-int GodotNavigationServer2D::agent_get_max_neighbors(RID p_agent) const {
+int RedotNavigationServer2D::agent_get_max_neighbors(RID p_agent) const {
 	return NavigationServer3D::get_singleton()->agent_get_max_neighbors(p_agent);
 }
 void FORWARD_2(agent_set_time_horizon_agents, RID, p_agent, real_t, p_time_horizon, rid_to_rid, real_to_real);
-real_t GodotNavigationServer2D::agent_get_time_horizon_agents(RID p_agent) const {
+real_t RedotNavigationServer2D::agent_get_time_horizon_agents(RID p_agent) const {
 	return NavigationServer3D::get_singleton()->agent_get_time_horizon_agents(p_agent);
 }
 void FORWARD_2(agent_set_time_horizon_obstacles, RID, p_agent, real_t, p_time_horizon, rid_to_rid, real_to_real);
-real_t GodotNavigationServer2D::agent_get_time_horizon_obstacles(RID p_agent) const {
+real_t RedotNavigationServer2D::agent_get_time_horizon_obstacles(RID p_agent) const {
 	return NavigationServer3D::get_singleton()->agent_get_time_horizon_obstacles(p_agent);
 }
 void FORWARD_2(agent_set_radius, RID, p_agent, real_t, p_radius, rid_to_rid, real_to_real);
-real_t GodotNavigationServer2D::agent_get_radius(RID p_agent) const {
+real_t RedotNavigationServer2D::agent_get_radius(RID p_agent) const {
 	return NavigationServer3D::get_singleton()->agent_get_radius(p_agent);
 }
 void FORWARD_2(agent_set_max_speed, RID, p_agent, real_t, p_max_speed, rid_to_rid, real_to_real);
-real_t GodotNavigationServer2D::agent_get_max_speed(RID p_agent) const {
+real_t RedotNavigationServer2D::agent_get_max_speed(RID p_agent) const {
 	return NavigationServer3D::get_singleton()->agent_get_max_speed(p_agent);
 }
 void FORWARD_2(agent_set_velocity_forced, RID, p_agent, Vector2, p_velocity, rid_to_rid, v2_to_v3);
 void FORWARD_2(agent_set_velocity, RID, p_agent, Vector2, p_velocity, rid_to_rid, v2_to_v3);
-Vector2 GodotNavigationServer2D::agent_get_velocity(RID p_agent) const {
+Vector2 RedotNavigationServer2D::agent_get_velocity(RID p_agent) const {
 	return v3_to_v2(NavigationServer3D::get_singleton()->agent_get_velocity(p_agent));
 }
 void FORWARD_2(agent_set_position, RID, p_agent, Vector2, p_position, rid_to_rid, v2_to_v3);
-Vector2 GodotNavigationServer2D::agent_get_position(RID p_agent) const {
+Vector2 RedotNavigationServer2D::agent_get_position(RID p_agent) const {
 	return v3_to_v2(NavigationServer3D::get_singleton()->agent_get_position(p_agent));
 }
 bool FORWARD_1_C(agent_is_map_changed, RID, p_agent, rid_to_rid);
 void FORWARD_2(agent_set_paused, RID, p_agent, bool, p_paused, rid_to_rid, bool_to_bool);
 bool FORWARD_1_C(agent_get_paused, RID, p_agent, rid_to_rid);
 
-void GodotNavigationServer2D::free(RID p_object) {
+void RedotNavigationServer2D::free(RID p_object) {
 #ifdef CLIPPER2_ENABLED
 	if (navmesh_generator_2d && navmesh_generator_2d->owns(p_object)) {
 		navmesh_generator_2d->free(p_object);
@@ -405,24 +405,24 @@ void GodotNavigationServer2D::free(RID p_object) {
 }
 
 void FORWARD_2(agent_set_avoidance_callback, RID, p_agent, Callable, p_callback, rid_to_rid, callable_to_callable);
-bool GodotNavigationServer2D::agent_has_avoidance_callback(RID p_agent) const {
+bool RedotNavigationServer2D::agent_has_avoidance_callback(RID p_agent) const {
 	return NavigationServer3D::get_singleton()->agent_has_avoidance_callback(p_agent);
 }
 
 void FORWARD_2(agent_set_avoidance_layers, RID, p_agent, uint32_t, p_layers, rid_to_rid, uint32_to_uint32);
-uint32_t GodotNavigationServer2D::agent_get_avoidance_layers(RID p_agent) const {
+uint32_t RedotNavigationServer2D::agent_get_avoidance_layers(RID p_agent) const {
 	return NavigationServer3D::get_singleton()->agent_get_avoidance_layers(p_agent);
 }
 void FORWARD_2(agent_set_avoidance_mask, RID, p_agent, uint32_t, p_mask, rid_to_rid, uint32_to_uint32);
-uint32_t GodotNavigationServer2D::agent_get_avoidance_mask(RID p_agent) const {
+uint32_t RedotNavigationServer2D::agent_get_avoidance_mask(RID p_agent) const {
 	return NavigationServer3D::get_singleton()->agent_get_avoidance_mask(p_agent);
 }
 void FORWARD_2(agent_set_avoidance_priority, RID, p_agent, real_t, p_priority, rid_to_rid, real_to_real);
-real_t GodotNavigationServer2D::agent_get_avoidance_priority(RID p_agent) const {
+real_t RedotNavigationServer2D::agent_get_avoidance_priority(RID p_agent) const {
 	return NavigationServer3D::get_singleton()->agent_get_avoidance_priority(p_agent);
 }
 
-RID GodotNavigationServer2D::obstacle_create() {
+RID RedotNavigationServer2D::obstacle_create() {
 	RID obstacle = NavigationServer3D::get_singleton()->obstacle_create();
 	return obstacle;
 }
@@ -433,30 +433,30 @@ RID FORWARD_1_C(obstacle_get_map, RID, p_obstacle, rid_to_rid);
 void FORWARD_2(obstacle_set_paused, RID, p_obstacle, bool, p_paused, rid_to_rid, bool_to_bool);
 bool FORWARD_1_C(obstacle_get_paused, RID, p_obstacle, rid_to_rid);
 void FORWARD_2(obstacle_set_radius, RID, p_obstacle, real_t, p_radius, rid_to_rid, real_to_real);
-real_t GodotNavigationServer2D::obstacle_get_radius(RID p_obstacle) const {
+real_t RedotNavigationServer2D::obstacle_get_radius(RID p_obstacle) const {
 	return NavigationServer3D::get_singleton()->obstacle_get_radius(p_obstacle);
 }
 void FORWARD_2(obstacle_set_velocity, RID, p_obstacle, Vector2, p_velocity, rid_to_rid, v2_to_v3);
-Vector2 GodotNavigationServer2D::obstacle_get_velocity(RID p_obstacle) const {
+Vector2 RedotNavigationServer2D::obstacle_get_velocity(RID p_obstacle) const {
 	return v3_to_v2(NavigationServer3D::get_singleton()->obstacle_get_velocity(p_obstacle));
 }
 void FORWARD_2(obstacle_set_position, RID, p_obstacle, Vector2, p_position, rid_to_rid, v2_to_v3);
-Vector2 GodotNavigationServer2D::obstacle_get_position(RID p_obstacle) const {
+Vector2 RedotNavigationServer2D::obstacle_get_position(RID p_obstacle) const {
 	return v3_to_v2(NavigationServer3D::get_singleton()->obstacle_get_position(p_obstacle));
 }
 void FORWARD_2(obstacle_set_avoidance_layers, RID, p_obstacle, uint32_t, p_layers, rid_to_rid, uint32_to_uint32);
-uint32_t GodotNavigationServer2D::obstacle_get_avoidance_layers(RID p_obstacle) const {
+uint32_t RedotNavigationServer2D::obstacle_get_avoidance_layers(RID p_obstacle) const {
 	return NavigationServer3D::get_singleton()->obstacle_get_avoidance_layers(p_obstacle);
 }
 
-void GodotNavigationServer2D::obstacle_set_vertices(RID p_obstacle, const Vector<Vector2> &p_vertices) {
+void RedotNavigationServer2D::obstacle_set_vertices(RID p_obstacle, const Vector<Vector2> &p_vertices) {
 	NavigationServer3D::get_singleton()->obstacle_set_vertices(p_obstacle, vector_v2_to_v3(p_vertices));
 }
-Vector<Vector2> GodotNavigationServer2D::obstacle_get_vertices(RID p_obstacle) const {
+Vector<Vector2> RedotNavigationServer2D::obstacle_get_vertices(RID p_obstacle) const {
 	return vector_v3_to_v2(NavigationServer3D::get_singleton()->obstacle_get_vertices(p_obstacle));
 }
 
-void GodotNavigationServer2D::query_path(const Ref<NavigationPathQueryParameters2D> &p_query_parameters, Ref<NavigationPathQueryResult2D> p_query_result) const {
+void RedotNavigationServer2D::query_path(const Ref<NavigationPathQueryParameters2D> &p_query_parameters, Ref<NavigationPathQueryResult2D> p_query_result) const {
 	ERR_FAIL_COND(!p_query_parameters.is_valid());
 	ERR_FAIL_COND(!p_query_result.is_valid());
 
@@ -468,7 +468,7 @@ void GodotNavigationServer2D::query_path(const Ref<NavigationPathQueryParameters
 	p_query_result->set_path_owner_ids(_query_result.path_owner_ids);
 }
 
-RID GodotNavigationServer2D::source_geometry_parser_create() {
+RID RedotNavigationServer2D::source_geometry_parser_create() {
 #ifdef CLIPPER2_ENABLED
 	if (navmesh_generator_2d) {
 		return navmesh_generator_2d->source_geometry_parser_create();
@@ -477,7 +477,7 @@ RID GodotNavigationServer2D::source_geometry_parser_create() {
 	return RID();
 }
 
-void GodotNavigationServer2D::source_geometry_parser_set_callback(RID p_parser, const Callable &p_callback) {
+void RedotNavigationServer2D::source_geometry_parser_set_callback(RID p_parser, const Callable &p_callback) {
 #ifdef CLIPPER2_ENABLED
 	if (navmesh_generator_2d) {
 		navmesh_generator_2d->source_geometry_parser_set_callback(p_parser, p_callback);

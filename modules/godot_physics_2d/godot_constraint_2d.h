@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_constraint_2d.h                                                 */
+/*  Redot_constraint_2d.h                                                 */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,13 +28,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_CONSTRAINT_2D_H
-#define GODOT_CONSTRAINT_2D_H
+#ifndef Redot_CONSTRAINT_2D_H
+#define Redot_CONSTRAINT_2D_H
 
-#include "godot_body_2d.h"
+#include "Redot_body_2d.h"
 
-class GodotConstraint2D {
-	GodotBody2D **_body_ptr;
+class RedotConstraint2D {
+	RedotBody2D **_body_ptr;
 	int _body_count;
 	uint64_t island_step = 0;
 	bool disabled_collisions_between_bodies = true;
@@ -42,7 +42,7 @@ class GodotConstraint2D {
 	RID self;
 
 protected:
-	GodotConstraint2D(GodotBody2D **p_body_ptr = nullptr, int p_body_count = 0) {
+	RedotConstraint2D(RedotBody2D **p_body_ptr = nullptr, int p_body_count = 0) {
 		_body_ptr = p_body_ptr;
 		_body_count = p_body_count;
 	}
@@ -54,7 +54,7 @@ public:
 	_FORCE_INLINE_ uint64_t get_island_step() const { return island_step; }
 	_FORCE_INLINE_ void set_island_step(uint64_t p_step) { island_step = p_step; }
 
-	_FORCE_INLINE_ GodotBody2D **get_body_ptr() const { return _body_ptr; }
+	_FORCE_INLINE_ RedotBody2D **get_body_ptr() const { return _body_ptr; }
 	_FORCE_INLINE_ int get_body_count() const { return _body_count; }
 
 	_FORCE_INLINE_ void disable_collisions_between_bodies(const bool p_disabled) { disabled_collisions_between_bodies = p_disabled; }
@@ -64,7 +64,7 @@ public:
 	virtual bool pre_solve(real_t p_step) = 0;
 	virtual void solve(real_t p_step) = 0;
 
-	virtual ~GodotConstraint2D() {}
+	virtual ~RedotConstraint2D() {}
 };
 
-#endif // GODOT_CONSTRAINT_2D_H
+#endif // Redot_CONSTRAINT_2D_H

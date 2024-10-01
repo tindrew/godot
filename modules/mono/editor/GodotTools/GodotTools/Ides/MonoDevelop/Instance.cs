@@ -2,10 +2,10 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
-using GodotTools.Internals;
-using GodotTools.Utils;
+using RedotTools.Internals;
+using RedotTools.Utils;
 
-namespace GodotTools.Ides.MonoDevelop
+namespace RedotTools.Ides.MonoDevelop
 {
     public class Instance : IDisposable
     {

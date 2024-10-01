@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.Text;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Godot.SourceGenerators.Internal;
+namespace Redot.SourceGenerators.Internal;
 
 [Generator]
 public class UnmanagedCallbacksGenerator : ISourceGenerator
@@ -73,7 +73,7 @@ public class UnmanagedCallbacksGenerator : ISourceGenerator
     {
         string source = @"using System;
 
-namespace Godot.SourceGenerators.Internal
+namespace Redot.SourceGenerators.Internal
 {
 internal class GenerateUnmanagedCallbacksAttribute : Attribute
 {
@@ -111,8 +111,8 @@ internal class GenerateUnmanagedCallbacksAttribute : Attribute
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Godot.Bridge;
-using Godot.NativeInterop;
+using Redot.Bridge;
+using Redot.NativeInterop;
 
 #pragma warning disable CA1707 // Disable warning: Identifiers should not contain underscores
 
@@ -181,13 +181,13 @@ using Godot.NativeInterop;
                 if (parameter.RefKind == RefKind.Out)
                 {
                     // Only assign default if the parameter won't be passed by-ref or copied later.
-                    if (IsGodotInteropStruct(parameter.Type))
+                    if (IsRedotInteropStruct(parameter.Type))
                         methodSource.Append($"        {parameter.Name} = default;\n");
                 }
 
                 if (IsByRefParameter(parameter))
                 {
-                    if (IsGodotInteropStruct(parameter.Type))
+                    if (IsRedotInteropStruct(parameter.Type))
                     {
                         methodSource.Append("        ");
                         AppendCustomUnsafeAsPointer(methodSource, parameter, out string varName);
@@ -292,7 +292,7 @@ using Godot.NativeInterop;
 
         source.Append(
             @"using System.Runtime.InteropServices;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
 #pragma warning disable CA1707 // Disable warning: Identifiers should not contain underscores
 
@@ -338,7 +338,7 @@ using Godot.NativeInterop;
             {
                 if (IsByRefParameter(parameter))
                 {
-                    if (IsGodotInteropStruct(parameter.Type) || parameter.Type.IsValueType)
+                    if (IsRedotInteropStruct(parameter.Type) || parameter.Type.IsValueType)
                     {
                         AppendPointerType(source, parameter.Type);
                     }
@@ -386,8 +386,8 @@ using Godot.NativeInterop;
             SourceText.From(source.ToString(), Encoding.UTF8));
     }
 
-    private static bool IsGodotInteropStruct(ITypeSymbol type) =>
-        _godotInteropStructs.Contains(type.FullQualifiedNameOmitGlobal());
+    private static bool IsRedotInteropStruct(ITypeSymbol type) =>
+        _RedotInteropStructs.Contains(type.FullQualifiedNameOmitGlobal());
 
     private static bool IsByRefParameter(IParameterSymbol parameter) =>
         parameter.RefKind is RefKind.In or RefKind.Out or RefKind.Ref;
@@ -448,27 +448,27 @@ using Godot.NativeInterop;
         source.Append(";\n");
     }
 
-    private static readonly string[] _godotInteropStructs =
+    private static readonly string[] _RedotInteropStructs =
     {
-        "Godot.NativeInterop.godot_ref",
-        "Godot.NativeInterop.godot_variant_call_error",
-        "Godot.NativeInterop.godot_variant",
-        "Godot.NativeInterop.godot_string",
-        "Godot.NativeInterop.godot_string_name",
-        "Godot.NativeInterop.godot_node_path",
-        "Godot.NativeInterop.godot_signal",
-        "Godot.NativeInterop.godot_callable",
-        "Godot.NativeInterop.godot_array",
-        "Godot.NativeInterop.godot_dictionary",
-        "Godot.NativeInterop.godot_packed_byte_array",
-        "Godot.NativeInterop.godot_packed_int32_array",
-        "Godot.NativeInterop.godot_packed_int64_array",
-        "Godot.NativeInterop.godot_packed_float32_array",
-        "Godot.NativeInterop.godot_packed_float64_array",
-        "Godot.NativeInterop.godot_packed_string_array",
-        "Godot.NativeInterop.godot_packed_vector2_array",
-        "Godot.NativeInterop.godot_packed_vector3_array",
-        "Godot.NativeInterop.godot_packed_vector4_array",
-        "Godot.NativeInterop.godot_packed_color_array",
+        "Redot.NativeInterop.Redot_ref",
+        "Redot.NativeInterop.Redot_variant_call_error",
+        "Redot.NativeInterop.Redot_variant",
+        "Redot.NativeInterop.Redot_string",
+        "Redot.NativeInterop.Redot_string_name",
+        "Redot.NativeInterop.Redot_node_path",
+        "Redot.NativeInterop.Redot_signal",
+        "Redot.NativeInterop.Redot_callable",
+        "Redot.NativeInterop.Redot_array",
+        "Redot.NativeInterop.Redot_dictionary",
+        "Redot.NativeInterop.Redot_packed_byte_array",
+        "Redot.NativeInterop.Redot_packed_int32_array",
+        "Redot.NativeInterop.Redot_packed_int64_array",
+        "Redot.NativeInterop.Redot_packed_float32_array",
+        "Redot.NativeInterop.Redot_packed_float64_array",
+        "Redot.NativeInterop.Redot_packed_string_array",
+        "Redot.NativeInterop.Redot_packed_vector2_array",
+        "Redot.NativeInterop.Redot_packed_vector3_array",
+        "Redot.NativeInterop.Redot_packed_vector4_array",
+        "Redot.NativeInterop.Redot_packed_color_array",
     };
 }

@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_body_pair_3d.cpp                                                */
+/*  Redot_body_pair_3d.cpp                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,22 +28,22 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "godot_body_pair_3d.h"
+#include "Redot_body_pair_3d.h"
 
-#include "godot_collision_solver_3d.h"
-#include "godot_space_3d.h"
+#include "Redot_collision_solver_3d.h"
+#include "Redot_space_3d.h"
 
 #include "core/os/os.h"
 
 #define MIN_VELOCITY 0.0001
 #define MAX_BIAS_ROTATION (Math_PI / 8)
 
-void GodotBodyPair3D::_contact_added_callback(const Vector3 &p_point_A, int p_index_A, const Vector3 &p_point_B, int p_index_B, const Vector3 &normal, void *p_userdata) {
-	GodotBodyPair3D *pair = static_cast<GodotBodyPair3D *>(p_userdata);
+void RedotBodyPair3D::_contact_added_callback(const Vector3 &p_point_A, int p_index_A, const Vector3 &p_point_B, int p_index_B, const Vector3 &normal, void *p_userdata) {
+	RedotBodyPair3D *pair = static_cast<RedotBodyPair3D *>(p_userdata);
 	pair->contact_added_callback(p_point_A, p_index_A, p_point_B, p_index_B, normal);
 }
 
-void GodotBodyPair3D::contact_added_callback(const Vector3 &p_point_A, int p_index_A, const Vector3 &p_point_B, int p_index_B, const Vector3 &normal) {
+void RedotBodyPair3D::contact_added_callback(const Vector3 &p_point_A, int p_index_A, const Vector3 &p_point_B, int p_index_B, const Vector3 &normal) {
 	Vector3 local_A = A->get_inv_transform().basis.xform(p_point_A);
 	Vector3 local_B = B->get_inv_transform().basis.xform(p_point_B - offset_B);
 
@@ -120,7 +120,7 @@ void GodotBodyPair3D::contact_added_callback(const Vector3 &p_point_A, int p_ind
 	contact_count++;
 }
 
-void GodotBodyPair3D::validate_contacts() {
+void RedotBodyPair3D::validate_contacts() {
 	// Make sure to erase contacts that are no longer valid.
 	real_t max_separation = space->get_contact_max_separation();
 	real_t max_separation2 = max_separation * max_separation;
@@ -168,8 +168,8 @@ void GodotBodyPair3D::validate_contacts() {
 // Process: Only proceed if body A's motion is high relative to its size.
 // Cast forward along motion vector to see if A is going to enter/pass B's collider next frame, only proceed if it does.
 // Adjust the velocity of A down so that it will just slightly intersect the collider instead of blowing right past it.
-bool GodotBodyPair3D::_test_ccd(real_t p_step, GodotBody3D *p_A, int p_shape_A, const Transform3D &p_xform_A, GodotBody3D *p_B, int p_shape_B, const Transform3D &p_xform_B) {
-	GodotShape3D *shape_A_ptr = p_A->get_shape(p_shape_A);
+bool RedotBodyPair3D::_test_ccd(real_t p_step, RedotBody3D *p_A, int p_shape_A, const Transform3D &p_xform_A, RedotBody3D *p_B, int p_shape_B, const Transform3D &p_xform_B) {
+	RedotShape3D *shape_A_ptr = p_A->get_shape(p_shape_A);
 
 	Vector3 motion = p_A->get_linear_velocity() * p_step;
 	real_t mlen = motion.length();
@@ -199,7 +199,7 @@ bool GodotBodyPair3D::_test_ccd(real_t p_step, GodotBody3D *p_A, int p_shape_A, 
 	static const int max_supports = 16;
 	Vector3 supports_A[max_supports];
 	int support_count_A;
-	GodotShape3D::FeatureType support_type_A;
+	RedotShape3D::FeatureType support_type_A;
 	// Convert mnormal into body A's local xform because get_supports requires (and returns) local coordinates.
 	shape_A_ptr->get_supports(p_xform_A.basis.xform_inv(mnormal).normalized(), max_supports, supports_A, support_count_A, support_type_A);
 
@@ -252,15 +252,15 @@ bool GodotBodyPair3D::_test_ccd(real_t p_step, GodotBody3D *p_A, int p_shape_A, 
 	return true;
 }
 
-real_t combine_bounce(GodotBody3D *A, GodotBody3D *B) {
+real_t combine_bounce(RedotBody3D *A, RedotBody3D *B) {
 	return CLAMP(A->get_bounce() + B->get_bounce(), 0, 1);
 }
 
-real_t combine_friction(GodotBody3D *A, GodotBody3D *B) {
+real_t combine_friction(RedotBody3D *A, RedotBody3D *B) {
 	return ABS(MIN(A->get_friction(), B->get_friction()));
 }
 
-bool GodotBodyPair3D::setup(real_t p_step) {
+bool RedotBodyPair3D::setup(real_t p_step) {
 	check_ccd = false;
 
 	if (!A->interacts_with(B) || A->has_exception(B->get_self()) || B->has_exception(A->get_self())) {
@@ -293,10 +293,10 @@ bool GodotBodyPair3D::setup(real_t p_step) {
 	xform_Bu.origin -= offset_A;
 	Transform3D xform_B = xform_Bu * B->get_shape_transform(shape_B);
 
-	GodotShape3D *shape_A_ptr = A->get_shape(shape_A);
-	GodotShape3D *shape_B_ptr = B->get_shape(shape_B);
+	RedotShape3D *shape_A_ptr = A->get_shape(shape_A);
+	RedotShape3D *shape_B_ptr = B->get_shape(shape_B);
 
-	collided = GodotCollisionSolver3D::solve_static(shape_A_ptr, xform_A, shape_B_ptr, xform_B, _contact_added_callback, this, &sep_axis);
+	collided = RedotCollisionSolver3D::solve_static(shape_A_ptr, xform_A, shape_B_ptr, xform_B, _contact_added_callback, this, &sep_axis);
 
 	if (!collided) {
 		if (A->is_continuous_collision_detection_enabled() && collide_A) {
@@ -315,7 +315,7 @@ bool GodotBodyPair3D::setup(real_t p_step) {
 	return true;
 }
 
-bool GodotBodyPair3D::pre_solve(real_t p_step) {
+bool RedotBodyPair3D::pre_solve(real_t p_step) {
 	if (!collided) {
 		if (check_ccd) {
 			const Vector3 &offset_A = A->get_transform().get_origin();
@@ -342,8 +342,8 @@ bool GodotBodyPair3D::pre_solve(real_t p_step) {
 
 	real_t bias = 0.8;
 
-	GodotShape3D *shape_A_ptr = A->get_shape(shape_A);
-	GodotShape3D *shape_B_ptr = B->get_shape(shape_B);
+	RedotShape3D *shape_A_ptr = A->get_shape(shape_A);
+	RedotShape3D *shape_B_ptr = B->get_shape(shape_B);
 
 	if (shape_A_ptr->get_custom_bias() || shape_B_ptr->get_custom_bias()) {
 		if (shape_A_ptr->get_custom_bias() == 0) {
@@ -453,7 +453,7 @@ bool GodotBodyPair3D::pre_solve(real_t p_step) {
 	return do_process;
 }
 
-void GodotBodyPair3D::solve(real_t p_step) {
+void RedotBodyPair3D::solve(real_t p_step) {
 	if (!collided) {
 		return;
 	}
@@ -597,8 +597,8 @@ void GodotBodyPair3D::solve(real_t p_step) {
 	}
 }
 
-GodotBodyPair3D::GodotBodyPair3D(GodotBody3D *p_A, int p_shape_A, GodotBody3D *p_B, int p_shape_B) :
-		GodotBodyContact3D(_arr, 2) {
+RedotBodyPair3D::RedotBodyPair3D(RedotBody3D *p_A, int p_shape_A, RedotBody3D *p_B, int p_shape_B) :
+		RedotBodyContact3D(_arr, 2) {
 	A = p_A;
 	B = p_B;
 	shape_A = p_shape_A;
@@ -608,17 +608,17 @@ GodotBodyPair3D::GodotBodyPair3D(GodotBody3D *p_A, int p_shape_A, GodotBody3D *p
 	B->add_constraint(this, 1);
 }
 
-GodotBodyPair3D::~GodotBodyPair3D() {
+RedotBodyPair3D::~RedotBodyPair3D() {
 	A->remove_constraint(this);
 	B->remove_constraint(this);
 }
 
-void GodotBodySoftBodyPair3D::_contact_added_callback(const Vector3 &p_point_A, int p_index_A, const Vector3 &p_point_B, int p_index_B, const Vector3 &normal, void *p_userdata) {
-	GodotBodySoftBodyPair3D *pair = static_cast<GodotBodySoftBodyPair3D *>(p_userdata);
+void RedotBodySoftBodyPair3D::_contact_added_callback(const Vector3 &p_point_A, int p_index_A, const Vector3 &p_point_B, int p_index_B, const Vector3 &normal, void *p_userdata) {
+	RedotBodySoftBodyPair3D *pair = static_cast<RedotBodySoftBodyPair3D *>(p_userdata);
 	pair->contact_added_callback(p_point_A, p_index_A, p_point_B, p_index_B, normal);
 }
 
-void GodotBodySoftBodyPair3D::contact_added_callback(const Vector3 &p_point_A, int p_index_A, const Vector3 &p_point_B, int p_index_B, const Vector3 &normal) {
+void RedotBodySoftBodyPair3D::contact_added_callback(const Vector3 &p_point_A, int p_index_A, const Vector3 &p_point_B, int p_index_B, const Vector3 &normal) {
 	Vector3 local_A = body->get_inv_transform().xform(p_point_A);
 	Vector3 local_B = p_point_B - soft_body->get_node_position(p_index_B);
 
@@ -652,7 +652,7 @@ void GodotBodySoftBodyPair3D::contact_added_callback(const Vector3 &p_point_A, i
 	contacts.push_back(contact);
 }
 
-void GodotBodySoftBodyPair3D::validate_contacts() {
+void RedotBodySoftBodyPair3D::validate_contacts() {
 	// Make sure to erase contacts that are no longer valid.
 	real_t max_separation = space->get_contact_max_separation();
 	real_t max_separation2 = max_separation * max_separation;
@@ -695,7 +695,7 @@ void GodotBodySoftBodyPair3D::validate_contacts() {
 	contacts.resize(contact_count);
 }
 
-bool GodotBodySoftBodyPair3D::setup(real_t p_step) {
+bool RedotBodySoftBodyPair3D::setup(real_t p_step) {
 	if (!body->interacts_with(soft_body) || body->has_exception(soft_body->get_self()) || soft_body->has_exception(body->get_self())) {
 		collided = false;
 		return false;
@@ -721,15 +721,15 @@ bool GodotBodySoftBodyPair3D::setup(real_t p_step) {
 
 	validate_contacts();
 
-	GodotShape3D *shape_A_ptr = body->get_shape(body_shape);
-	GodotShape3D *shape_B_ptr = soft_body->get_shape(0);
+	RedotShape3D *shape_A_ptr = body->get_shape(body_shape);
+	RedotShape3D *shape_B_ptr = soft_body->get_shape(0);
 
-	collided = GodotCollisionSolver3D::solve_static(shape_A_ptr, xform_A, shape_B_ptr, xform_B, _contact_added_callback, this, &sep_axis);
+	collided = RedotCollisionSolver3D::solve_static(shape_A_ptr, xform_A, shape_B_ptr, xform_B, _contact_added_callback, this, &sep_axis);
 
 	return collided;
 }
 
-bool GodotBodySoftBodyPair3D::pre_solve(real_t p_step) {
+bool RedotBodySoftBodyPair3D::pre_solve(real_t p_step) {
 	if (!collided) {
 		return false;
 	}
@@ -738,7 +738,7 @@ bool GodotBodySoftBodyPair3D::pre_solve(real_t p_step) {
 
 	real_t bias = space->get_contact_bias();
 
-	GodotShape3D *shape_A_ptr = body->get_shape(body_shape);
+	RedotShape3D *shape_A_ptr = body->get_shape(body_shape);
 
 	if (shape_A_ptr->get_custom_bias()) {
 		bias = shape_A_ptr->get_custom_bias();
@@ -835,7 +835,7 @@ bool GodotBodySoftBodyPair3D::pre_solve(real_t p_step) {
 	return do_process;
 }
 
-void GodotBodySoftBodyPair3D::solve(real_t p_step) {
+void RedotBodySoftBodyPair3D::solve(real_t p_step) {
 	if (!collided) {
 		return;
 	}
@@ -974,8 +974,8 @@ void GodotBodySoftBodyPair3D::solve(real_t p_step) {
 	}
 }
 
-GodotBodySoftBodyPair3D::GodotBodySoftBodyPair3D(GodotBody3D *p_A, int p_shape_A, GodotSoftBody3D *p_B) :
-		GodotBodyContact3D(&body, 1) {
+RedotBodySoftBodyPair3D::RedotBodySoftBodyPair3D(RedotBody3D *p_A, int p_shape_A, RedotSoftBody3D *p_B) :
+		RedotBodyContact3D(&body, 1) {
 	body = p_A;
 	soft_body = p_B;
 	body_shape = p_shape_A;
@@ -984,7 +984,7 @@ GodotBodySoftBodyPair3D::GodotBodySoftBodyPair3D(GodotBody3D *p_A, int p_shape_A
 	soft_body->add_constraint(this);
 }
 
-GodotBodySoftBodyPair3D::~GodotBodySoftBodyPair3D() {
+RedotBodySoftBodyPair3D::~RedotBodySoftBodyPair3D() {
 	body->remove_constraint(this);
 	soft_body->remove_constraint(this);
 }

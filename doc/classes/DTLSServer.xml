@@ -39,13 +39,13 @@
 		[/gdscript]
 		[csharp]
 		// ServerNode.cs
-		using Godot;
+		using Redot;
 
 		public partial class ServerNode : Node
 		{
 		    private DtlsServer _dtls = new DtlsServer();
 		    private UdpServer _server = new UdpServer();
-		    private Godot.Collections.Array&lt;PacketPeerDtls&gt; _peers = new Godot.Collections.Array&lt;PacketPeerDtls&gt;();
+		    private Redot.Collections.Array&lt;PacketPeerDtls&gt; _peers = new Redot.Collections.Array&lt;PacketPeerDtls&gt;();
 
 		    public override void _Ready()
 		    {
@@ -110,7 +110,7 @@
 		[/gdscript]
 		[csharp]
 		// ClientNode.cs
-		using Godot;
+		using Redot;
 		using System.Text;
 
 		public partial class ClientNode : Node

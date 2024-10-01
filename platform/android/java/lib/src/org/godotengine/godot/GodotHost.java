@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotHost.java                                                        */
+/*  RedotHost.java                                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,10 +28,10 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot;
+package org.Redotengine.Redot;
 
-import org.godotengine.godot.error.Error;
-import org.godotengine.godot.plugin.GodotPlugin;
+import org.Redotengine.Redot.error.Error;
+import org.Redotengine.Redot.plugin.RedotPlugin;
 
 import android.app.Activity;
 
@@ -42,73 +42,73 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Denotate a component (e.g: Activity, Fragment) that hosts the {@link Godot} engine.
+ * Denotate a component (e.g: Activity, Fragment) that hosts the {@link Redot} engine.
  */
-public interface GodotHost {
+public interface RedotHost {
 	/**
-	 * Provides a set of command line parameters to setup the {@link Godot} engine.
+	 * Provides a set of command line parameters to setup the {@link Redot} engine.
 	 */
 	default List<String> getCommandLine() {
 		return Collections.emptyList();
 	}
 
 	/**
-	 * Invoked on the render thread when setup of the {@link Godot} engine is complete.
+	 * Invoked on the render thread when setup of the {@link Redot} engine is complete.
 	 */
-	default void onGodotSetupCompleted() {}
+	default void onRedotSetupCompleted() {}
 
 	/**
-	 * Invoked on the render thread when the {@link Godot} engine main loop has started.
+	 * Invoked on the render thread when the {@link Redot} engine main loop has started.
 	 */
-	default void onGodotMainLoopStarted() {}
+	default void onRedotMainLoopStarted() {}
 
 	/**
-	 * Invoked on the render thread to terminate the given {@link Godot} engine instance.
+	 * Invoked on the render thread to terminate the given {@link Redot} engine instance.
 	 */
-	default void onGodotForceQuit(Godot instance) {}
+	default void onRedotForceQuit(Redot instance) {}
 
 	/**
-	 * Invoked on the render thread to terminate the {@link Godot} engine instance with the given id.
-	 * @param godotInstanceId id of the Godot instance to terminate. See {@code onNewGodotInstanceRequested}
+	 * Invoked on the render thread to terminate the {@link Redot} engine instance with the given id.
+	 * @param RedotInstanceId id of the Redot instance to terminate. See {@code onNewRedotInstanceRequested}
 	 *
 	 * @return true if successful, false otherwise.
 	 */
-	default boolean onGodotForceQuit(int godotInstanceId) {
+	default boolean onRedotForceQuit(int RedotInstanceId) {
 		return false;
 	}
 
 	/**
-	 * Invoked on the render thread when the Godot instance wants to be restarted. It's up to the host
+	 * Invoked on the render thread when the Redot instance wants to be restarted. It's up to the host
 	 * to perform the appropriate action(s).
 	 */
-	default void onGodotRestartRequested(Godot instance) {}
+	default void onRedotRestartRequested(Redot instance) {}
 
 	/**
-	 * Invoked on the render thread when a new Godot instance is requested. It's up to the host to
+	 * Invoked on the render thread when a new Redot instance is requested. It's up to the host to
 	 * perform the appropriate action(s).
 	 *
 	 * @param args Arguments used to initialize the new instance.
 	 *
-	 * @return the id of the new instance. See {@code onGodotForceQuit}
+	 * @return the id of the new instance. See {@code onRedotForceQuit}
 	 */
-	default int onNewGodotInstanceRequested(String[] args) {
+	default int onNewRedotInstanceRequested(String[] args) {
 		return 0;
 	}
 
 	/**
-	 * Provide access to the Activity hosting the {@link Godot} engine.
+	 * Provide access to the Activity hosting the {@link Redot} engine.
 	 */
 	Activity getActivity();
 
 	/**
-	 * Provide access to the hosted {@link Godot} engine.
+	 * Provide access to the hosted {@link Redot} engine.
 	 */
-	Godot getGodot();
+	Redot getRedot();
 
 	/**
-	 * Returns a set of {@link GodotPlugin} to be registered with the hosted {@link Godot} engine.
+	 * Returns a set of {@link RedotPlugin} to be registered with the hosted {@link Redot} engine.
 	 */
-	default Set<GodotPlugin> getHostPlugins(Godot engine) {
+	default Set<RedotPlugin> getHostPlugins(Redot engine) {
 		return Collections.emptySet();
 	}
 
@@ -140,7 +140,7 @@ public interface GodotHost {
 	/**
 	 * Returns whether the given feature tag is supported.
 	 *
-	 * @see <a href="https://docs.godotengine.org/en/stable/tutorials/export/feature_tags.html">Feature tags</a>
+	 * @see <a href="https://docs.Redotengine.org/en/stable/tutorials/export/feature_tags.html">Feature tags</a>
 	 */
 	default boolean supportsFeature(String featureTag) {
 		return false;

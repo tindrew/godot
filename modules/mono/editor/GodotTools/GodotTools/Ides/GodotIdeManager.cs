@@ -1,14 +1,14 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Godot;
-using GodotTools.IdeMessaging;
-using GodotTools.IdeMessaging.Requests;
-using GodotTools.Internals;
+using Redot;
+using RedotTools.IdeMessaging;
+using RedotTools.IdeMessaging.Requests;
+using RedotTools.Internals;
 
-namespace GodotTools.Ides
+namespace RedotTools.Ides
 {
-    public sealed partial class GodotIdeManager : Node, ISerializationListener
+    public sealed partial class RedotIdeManager : Node, ISerializationListener
     {
         private MessagingServer? _messagingServer;
 
@@ -22,7 +22,7 @@ namespace GodotTools.Ides
 
             _messagingServer?.Dispose();
             _messagingServer = new MessagingServer(OS.GetExecutablePath(),
-                ProjectSettings.GlobalizePath(GodotSharpDirs.ResMetadataDir), new GodotLogger());
+                ProjectSettings.GlobalizePath(RedotSharpDirs.ResMetadataDir), new RedotLogger());
 
             _ = _messagingServer.Listen();
 
@@ -80,7 +80,7 @@ namespace GodotTools.Ides
         public async Task<EditorPick?> LaunchIdeAsync(int millisecondsTimeout = 10000)
         {
             var editorSettings = EditorInterface.Singleton.GetEditorSettings();
-            var editorId = editorSettings.GetSetting(GodotSharpEditor.Settings.ExternalEditor).As<ExternalEditorId>();
+            var editorId = editorSettings.GetSetting(RedotSharpEditor.Settings.ExternalEditor).As<ExternalEditorId>();
             string editorIdentity = GetExternalEditorIdentity(editorId);
 
             var runningServer = GetRunningOrNewServer();
@@ -129,7 +129,7 @@ namespace GodotTools.Ides
 
                     try
                     {
-                        var instance = GetMonoDevelopInstance(GodotSharpDirs.ProjectSlnPath);
+                        var instance = GetMonoDevelopInstance(RedotSharpDirs.ProjectSlnPath);
 
                         if (instance.IsRunning && !GetRunningOrNewServer().IsAnyConnected(editorIdentity))
                         {
@@ -171,13 +171,13 @@ namespace GodotTools.Ides
             }
 
             public bool IsAnyConnected() =>
-                GodotSharpEditor.Instance.GodotIdeManager.GetRunningOrNewServer().IsAnyConnected(_identity);
+                RedotSharpEditor.Instance.RedotIdeManager.GetRunningOrNewServer().IsAnyConnected(_identity);
 
             private void SendRequest<TResponse>(Request request)
                 where TResponse : Response, new()
             {
                 // Logs an error if no client is connected with the specified identity
-                GodotSharpEditor.Instance.GodotIdeManager
+                RedotSharpEditor.Instance.RedotIdeManager
                     .GetRunningOrNewServer()
                     .BroadcastRequest<TResponse>(_identity, request);
             }
@@ -200,7 +200,7 @@ namespace GodotTools.Ides
 
         public EditorPick PickEditor(ExternalEditorId editorId) => new EditorPick(GetExternalEditorIdentity(editorId));
 
-        private class GodotLogger : ILogger
+        private class RedotLogger : ILogger
         {
             public void LogDebug(string message)
             {

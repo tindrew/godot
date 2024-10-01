@@ -1,4 +1,4 @@
-namespace Godot.SourceGenerators
+namespace Redot.SourceGenerators
 {
     internal readonly struct PropertyInfo
     {

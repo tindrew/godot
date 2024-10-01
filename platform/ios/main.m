@@ -2,10 +2,10 @@
 /*  main.m                                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#import "godot_app_delegate.h"
+#import "Redot_app_delegate.h"
 
 #import <UIKit/UIKit.h>
 #include <stdio.h>
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 	gargv = argv;
 
 	@autoreleasepool {
-		NSString *className = NSStringFromClass([GodotApplicationDelegate class]);
+		NSString *className = NSStringFromClass([RedotApplicationDelegate class]);
 		UIApplicationMain(argc, argv, nil, className);
 	}
 	return 0;

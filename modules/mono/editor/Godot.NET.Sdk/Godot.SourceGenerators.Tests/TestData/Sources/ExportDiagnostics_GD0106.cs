@@ -1,4 +1,4 @@
-using Godot;
+using Redot;
 
 public interface MyInterface
 {

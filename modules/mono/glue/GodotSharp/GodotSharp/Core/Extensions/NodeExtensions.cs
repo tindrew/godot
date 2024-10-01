@@ -1,6 +1,6 @@
 using System;
 
-namespace Godot
+namespace Redot
 {
     public partial class Node
     {

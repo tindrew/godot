@@ -232,7 +232,7 @@
 		<StringView Condition="_cowdata._ptr != 0">_cowdata._ptr,s32</StringView>
 	</Type>
 
-	<Type Name="godot::String">
+	<Type Name="Redot::String">
 		<DisplayString>{*reinterpret_cast&lt;void**&gt;(opaque),s32}</DisplayString>
 		<Expand>
 			<Item Name="opaque_ptr">*reinterpret_cast&lt;void**&gt;(opaque)</Item>
@@ -249,7 +249,7 @@
 	</Type>
 
 	<!-- can't cast the opaque to ::StringName because Natvis does not support global namespace specifier? -->
-	<Type Name="godot::StringName">
+	<Type Name="Redot::StringName">
 		<DisplayString Condition="(*reinterpret_cast&lt;const char***&gt;(opaque))[1]">{(*reinterpret_cast&lt;const char***&gt;(opaque))[1],s8}</DisplayString>
 		<DisplayString Condition="!(*reinterpret_cast&lt;const char***&gt;(opaque))[1]">{(*reinterpret_cast&lt;const char***&gt;(opaque))[2],s32}</DisplayString>
 		<Expand>

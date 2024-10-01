@@ -1,6 +1,6 @@
-using Godot;
+using Redot;
 
-public partial class AllWriteOnly : GodotObject
+public partial class AllWriteOnly : RedotObject
 {
     private bool _writeOnlyBackingField = false;
     public bool WriteOnlyProperty { set => _writeOnlyBackingField = value; }

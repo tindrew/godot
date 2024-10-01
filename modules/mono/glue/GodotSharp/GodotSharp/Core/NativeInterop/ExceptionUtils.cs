@@ -6,7 +6,7 @@ using System.Text;
 
 #nullable enable
 
-namespace Godot.NativeInterop
+namespace Redot.NativeInterop
 {
     internal static class ExceptionUtils
     {
@@ -71,12 +71,12 @@ namespace Godot.NativeInterop
             int line = globalFrames.Count > 0 ? globalFrames[0].Line : 0;
             string errorMsg = e.GetType().FullName ?? "";
 
-            using godot_string nFile = Marshaling.ConvertStringToNative(file);
-            using godot_string nFunc = Marshaling.ConvertStringToNative(func);
-            using godot_string nErrorMsg = Marshaling.ConvertStringToNative(errorMsg);
-            using godot_string nExcMsg = Marshaling.ConvertStringToNative(excMsg.ToString());
+            using Redot_string nFile = Marshaling.ConvertStringToNative(file);
+            using Redot_string nFunc = Marshaling.ConvertStringToNative(func);
+            using Redot_string nErrorMsg = Marshaling.ConvertStringToNative(errorMsg);
+            using Redot_string nExcMsg = Marshaling.ConvertStringToNative(excMsg.ToString());
 
-            using DebuggingUtils.godot_stack_info_vector stackInfoVector = default;
+            using DebuggingUtils.Redot_stack_info_vector stackInfoVector = default;
 
             stackInfoVector.Resize(globalFrames.Count);
 
@@ -84,7 +84,7 @@ namespace Godot.NativeInterop
             {
                 for (int i = 0; i < globalFrames.Count; i++)
                 {
-                    DebuggingUtils.godot_stack_info* stackInfo = &stackInfoVector.Elements[i];
+                    DebuggingUtils.Redot_stack_info* stackInfo = &stackInfoVector.Elements[i];
 
                     var globalFrame = globalFrames[i];
 
@@ -95,8 +95,8 @@ namespace Godot.NativeInterop
                     stackInfo->Line = globalFrame.Line;
                 }
 
-                NativeFuncs.godotsharp_internal_script_debugger_send_error(nFunc, nFile, line,
-                    nErrorMsg, nExcMsg, godot_error_handler_type.ERR_HANDLER_ERROR, stackInfoVector);
+                NativeFuncs.Redotsharp_internal_script_debugger_send_error(nFunc, nFile, line,
+                    nErrorMsg, nExcMsg, Redot_error_handler_type.ERR_HANDLER_ERROR, stackInfoVector);
             }
         }
 
@@ -104,7 +104,7 @@ namespace Godot.NativeInterop
         {
             try
             {
-                if (NativeFuncs.godotsharp_internal_script_debugger_is_active().ToBool())
+                if (NativeFuncs.Redotsharp_internal_script_debugger_is_active().ToBool())
                 {
                     SendToScriptDebugger(e);
                 }
@@ -123,7 +123,7 @@ namespace Godot.NativeInterop
         {
             try
             {
-                if (NativeFuncs.godotsharp_internal_script_debugger_is_active().ToBool())
+                if (NativeFuncs.Redotsharp_internal_script_debugger_is_active().ToBool())
                 {
                     SendToScriptDebugger(e);
                 }
@@ -138,11 +138,11 @@ namespace Godot.NativeInterop
         }
 
         [Conditional("DEBUG")]
-        public unsafe static void DebugCheckCallError(godot_string_name method, IntPtr instance, godot_variant** args, int argCount, godot_variant_call_error error)
+        public unsafe static void DebugCheckCallError(Redot_string_name method, IntPtr instance, Redot_variant** args, int argCount, Redot_variant_call_error error)
         {
-            if (error.Error != godot_variant_call_error_error.GODOT_CALL_ERROR_CALL_OK)
+            if (error.Error != Redot_variant_call_error_error.Redot_CALL_ERROR_CALL_OK)
             {
-                using godot_variant instanceVariant = VariantUtils.CreateFromGodotObjectPtr(instance);
+                using Redot_variant instanceVariant = VariantUtils.CreateFromRedotObjectPtr(instance);
                 string where = GetCallErrorWhere(ref error, method, &instanceVariant, args, argCount);
                 string errorText = GetCallErrorMessage(error, where, args);
                 GD.PushError(errorText);
@@ -150,28 +150,28 @@ namespace Godot.NativeInterop
         }
 
         [Conditional("DEBUG")]
-        public unsafe static void DebugCheckCallError(in godot_callable callable, godot_variant** args, int argCount, godot_variant_call_error error)
+        public unsafe static void DebugCheckCallError(in Redot_callable callable, Redot_variant** args, int argCount, Redot_variant_call_error error)
         {
-            if (error.Error != godot_variant_call_error_error.GODOT_CALL_ERROR_CALL_OK)
+            if (error.Error != Redot_variant_call_error_error.Redot_CALL_ERROR_CALL_OK)
             {
-                using godot_variant callableVariant = VariantUtils.CreateFromCallableTakingOwnershipOfDisposableValue(callable);
+                using Redot_variant callableVariant = VariantUtils.CreateFromCallableTakingOwnershipOfDisposableValue(callable);
                 string where = $"callable '{VariantUtils.ConvertToString(callableVariant)}'";
                 string errorText = GetCallErrorMessage(error, where, args);
                 GD.PushError(errorText);
             }
         }
 
-        private unsafe static string GetCallErrorWhere(ref godot_variant_call_error error, godot_string_name method, godot_variant* instance, godot_variant** args, int argCount)
+        private unsafe static string GetCallErrorWhere(ref Redot_variant_call_error error, Redot_string_name method, Redot_variant* instance, Redot_variant** args, int argCount)
         {
             string? methodstr = null;
             string basestr = GetVariantTypeName(instance);
 
-            if (method == GodotObject.MethodName.Call || (basestr == "Godot.TreeItem" && method == TreeItem.MethodName.CallRecursive))
+            if (method == RedotObject.MethodName.Call || (basestr == "Redot.TreeItem" && method == TreeItem.MethodName.CallRecursive))
             {
                 if (argCount >= 1)
                 {
                     methodstr = VariantUtils.ConvertToString(*args[0]);
-                    if (error.Error == godot_variant_call_error_error.GODOT_CALL_ERROR_CALL_ERROR_INVALID_ARGUMENT)
+                    if (error.Error == Redot_variant_call_error_error.Redot_CALL_ERROR_CALL_ERROR_INVALID_ARGUMENT)
                     {
                         error.Argument += 1;
                     }
@@ -186,11 +186,11 @@ namespace Godot.NativeInterop
             return $"function '{methodstr}' in base '{basestr}'";
         }
 
-        private unsafe static string GetCallErrorMessage(godot_variant_call_error error, string where, godot_variant** args)
+        private unsafe static string GetCallErrorMessage(Redot_variant_call_error error, string where, Redot_variant** args)
         {
             switch (error.Error)
             {
-                case godot_variant_call_error_error.GODOT_CALL_ERROR_CALL_ERROR_INVALID_ARGUMENT:
+                case Redot_variant_call_error_error.Redot_CALL_ERROR_CALL_ERROR_INVALID_ARGUMENT:
                 {
                     int errorarg = error.Argument;
                     // Handle the Object to Object case separately as we don't have further class details.
@@ -209,30 +209,30 @@ namespace Godot.NativeInterop
                         return $"Invalid type in {where}. Cannot convert argument {errorarg + 1} from {args[errorarg]->Type} to {error.Expected}.";
                     }
                 }
-                case godot_variant_call_error_error.GODOT_CALL_ERROR_CALL_ERROR_TOO_MANY_ARGUMENTS:
-                case godot_variant_call_error_error.GODOT_CALL_ERROR_CALL_ERROR_TOO_FEW_ARGUMENTS:
+                case Redot_variant_call_error_error.Redot_CALL_ERROR_CALL_ERROR_TOO_MANY_ARGUMENTS:
+                case Redot_variant_call_error_error.Redot_CALL_ERROR_CALL_ERROR_TOO_FEW_ARGUMENTS:
                     return $"Invalid call to {where}. Expected {error.Expected} arguments.";
-                case godot_variant_call_error_error.GODOT_CALL_ERROR_CALL_ERROR_INVALID_METHOD:
+                case Redot_variant_call_error_error.Redot_CALL_ERROR_CALL_ERROR_INVALID_METHOD:
                     return $"Invalid call. Nonexistent {where}.";
-                case godot_variant_call_error_error.GODOT_CALL_ERROR_CALL_ERROR_INSTANCE_IS_NULL:
+                case Redot_variant_call_error_error.Redot_CALL_ERROR_CALL_ERROR_INSTANCE_IS_NULL:
                     return $"Attempt to call {where} on a null instance.";
-                case godot_variant_call_error_error.GODOT_CALL_ERROR_CALL_ERROR_METHOD_NOT_CONST:
+                case Redot_variant_call_error_error.Redot_CALL_ERROR_CALL_ERROR_METHOD_NOT_CONST:
                     return $"Attempt to call {where} on a const instance.";
                 default:
                     return $"Bug, call error: #{error.Error}";
             }
         }
 
-        private unsafe static string GetVariantTypeName(godot_variant* variant)
+        private unsafe static string GetVariantTypeName(Redot_variant* variant)
         {
             if (variant->Type == Variant.Type.Object)
             {
-                GodotObject obj = VariantUtils.ConvertToGodotObject(*variant);
+                RedotObject obj = VariantUtils.ConvertToRedotObject(*variant);
                 if (obj == null)
                 {
                     return "null instance";
                 }
-                else if (!GodotObject.IsInstanceValid(obj))
+                else if (!RedotObject.IsInstanceValid(obj))
                 {
                     return "previously freed";
                 }

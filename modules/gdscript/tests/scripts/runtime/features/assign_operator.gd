@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/75832
+# https://github.com/Redotengine/Redot/issues/75832
 
 @warning_ignore("narrowing_conversion")
 func test():

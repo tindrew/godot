@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
-namespace Godot
+namespace Redot
 {
     public class SignalAwaiter : IAwaiter<Variant[]>, IAwaitable<Variant[]>
     {
@@ -10,13 +10,13 @@ namespace Godot
         private Variant[] _result;
         private Action _continuation;
 
-        public SignalAwaiter(GodotObject source, StringName signal, GodotObject target)
+        public SignalAwaiter(RedotObject source, StringName signal, RedotObject target)
         {
             var awaiterGcHandle = CustomGCHandle.AllocStrong(this);
-            using godot_string_name signalSrc = NativeFuncs.godotsharp_string_name_new_copy(
-                (godot_string_name)(signal?.NativeValue ?? default));
-            NativeFuncs.godotsharp_internal_signal_awaiter_connect(GodotObject.GetPtr(source), in signalSrc,
-                GodotObject.GetPtr(target), GCHandle.ToIntPtr(awaiterGcHandle));
+            using Redot_string_name signalSrc = NativeFuncs.Redotsharp_string_name_new_copy(
+                (Redot_string_name)(signal?.NativeValue ?? default));
+            NativeFuncs.Redotsharp_internal_signal_awaiter_connect(RedotObject.GetPtr(source), in signalSrc,
+                RedotObject.GetPtr(target), GCHandle.ToIntPtr(awaiterGcHandle));
         }
 
         public bool IsCompleted => _completed;
@@ -31,8 +31,8 @@ namespace Godot
         public IAwaiter<Variant[]> GetAwaiter() => this;
 
         [UnmanagedCallersOnly]
-        internal static unsafe void SignalCallback(IntPtr awaiterGCHandlePtr, godot_variant** args, int argCount,
-            godot_bool* outAwaiterIsNull)
+        internal static unsafe void SignalCallback(IntPtr awaiterGCHandlePtr, Redot_variant** args, int argCount,
+            Redot_bool* outAwaiterIsNull)
         {
             try
             {
@@ -40,11 +40,11 @@ namespace Godot
 
                 if (awaiter == null)
                 {
-                    *outAwaiterIsNull = godot_bool.True;
+                    *outAwaiterIsNull = Redot_bool.True;
                     return;
                 }
 
-                *outAwaiterIsNull = godot_bool.False;
+                *outAwaiterIsNull = Redot_bool.False;
 
                 awaiter._completed = true;
 
@@ -60,7 +60,7 @@ namespace Godot
             catch (Exception e)
             {
                 ExceptionUtils.LogException(e);
-                *outAwaiterIsNull = godot_bool.False;
+                *outAwaiterIsNull = Redot_bool.False;
             }
         }
     }

@@ -1,27 +1,27 @@
 <Project>
-  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" Condition=" '$(GodotSdkImportsMicrosoftNetSdk)' == 'true' " />
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" Condition=" '$(RedotSdkImportsMicrosoftNetSdk)' == 'true' " />
 
   <PropertyGroup>
     <!--
-    Define constant to determine whether the real_t type in Godot is double precision or not.
-    By default this is false, like the official Godot builds. If someone is using a custom
-    Godot build where real_t is double, they can override the GodotFloat64 property.
+    Define constant to determine whether the real_t type in Redot is double precision or not.
+    By default this is false, like the official Redot builds. If someone is using a custom
+    Redot build where real_t is double, they can override the RedotFloat64 property.
     -->
-    <DefineConstants Condition=" '$(GodotFloat64)' == 'true' ">GODOT_REAL_T_IS_DOUBLE;$(DefineConstants)</DefineConstants>
+    <DefineConstants Condition=" '$(RedotFloat64)' == 'true' ">Redot_REAL_T_IS_DOUBLE;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <!-- C# source generators -->
-  <ItemGroup Condition=" '$(DisableImplicitGodotGeneratorReferences)' != 'true' ">
-    <PackageReference Include="Godot.SourceGenerators" Version="$(PackageVersion_Godot_SourceGenerators)" />
+  <ItemGroup Condition=" '$(DisableImplicitRedotGeneratorReferences)' != 'true' ">
+    <PackageReference Include="Redot.SourceGenerators" Version="$(PackageVersion_Redot_SourceGenerators)" />
   </ItemGroup>
 
-  <!-- Godot API references -->
-  <ItemGroup Condition=" '$(DisableImplicitGodotSharpReferences)' != 'true' ">
-    <PackageReference Include="GodotSharp" Version="$(PackageVersion_GodotSharp)" />
-    <PackageReference Include="GodotSharpEditor" Version="$(PackageVersion_GodotSharp)" Condition=" '$(Configuration)' == 'Debug' " />
+  <!-- Redot API references -->
+  <ItemGroup Condition=" '$(DisableImplicitRedotSharpReferences)' != 'true' ">
+    <PackageReference Include="RedotSharp" Version="$(PackageVersion_RedotSharp)" />
+    <PackageReference Include="RedotSharpEditor" Version="$(PackageVersion_RedotSharp)" Condition=" '$(Configuration)' == 'Debug' " />
   </ItemGroup>
 
   <!-- iOS-specific build targets -->
-  <Import Project="$(MSBuildThisFileDirectory)\iOSNativeAOT.targets" Condition=" '$(GodotTargetPlatform)' == 'ios' " />
+  <Import Project="$(MSBuildThisFileDirectory)\iOSNativeAOT.targets" Condition=" '$(RedotTargetPlatform)' == 'ios' " />
 
 </Project>

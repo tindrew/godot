@@ -2,10 +2,10 @@
 /*  os_android.cpp                                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -34,8 +34,8 @@
 #include "display_server_android.h"
 #include "file_access_android.h"
 #include "file_access_filesystem_jandroid.h"
-#include "java_godot_io_wrapper.h"
-#include "java_godot_wrapper.h"
+#include "java_Redot_io_wrapper.h"
+#include "java_Redot_wrapper.h"
 #include "net_socket_android.h"
 
 #include "core/config/project_settings.h"
@@ -72,15 +72,15 @@ String _remove_symlink(const String &dir) {
 class AndroidLogger : public Logger {
 public:
 	virtual void logv(const char *p_format, va_list p_list, bool p_err) {
-		__android_log_vprint(p_err ? ANDROID_LOG_ERROR : ANDROID_LOG_INFO, "godot", p_format, p_list);
+		__android_log_vprint(p_err ? ANDROID_LOG_ERROR : ANDROID_LOG_INFO, "Redot", p_format, p_list);
 	}
 
 	virtual ~AndroidLogger() {}
 };
 
 void OS_Android::alert(const String &p_alert, const String &p_title) {
-	ERR_FAIL_NULL(godot_java);
-	godot_java->alert(p_alert, p_title);
+	ERR_FAIL_NULL(Redot_java);
+	Redot_java->alert(p_alert, p_title);
 }
 
 void OS_Android::initialize_core() {
@@ -118,10 +118,10 @@ void OS_Android::initialize() {
 }
 
 void OS_Android::initialize_joypads() {
-	Input::get_singleton()->set_fallback_mapping(godot_java->get_input_fallback_mapping());
+	Input::get_singleton()->set_fallback_mapping(Redot_java->get_input_fallback_mapping());
 
 	// This queries/updates the currently connected devices/joypads.
-	godot_java->init_input_devices();
+	Redot_java->init_input_devices();
 }
 
 void OS_Android::set_main_loop(MainLoop *p_main_loop) {
@@ -142,24 +142,24 @@ OS_Android *OS_Android::get_singleton() {
 	return static_cast<OS_Android *>(OS::get_singleton());
 }
 
-GodotJavaWrapper *OS_Android::get_godot_java() {
-	return godot_java;
+RedotJavaWrapper *OS_Android::get_Redot_java() {
+	return Redot_java;
 }
 
-GodotIOJavaWrapper *OS_Android::get_godot_io_java() {
-	return godot_io_java;
+RedotIOJavaWrapper *OS_Android::get_Redot_io_java() {
+	return Redot_io_java;
 }
 
 bool OS_Android::request_permission(const String &p_name) {
-	return godot_java->request_permission(p_name);
+	return Redot_java->request_permission(p_name);
 }
 
 bool OS_Android::request_permissions() {
-	return godot_java->request_permissions();
+	return Redot_java->request_permissions();
 }
 
 Vector<String> OS_Android::get_granted_permissions() const {
-	return godot_java->get_granted_permissions();
+	return Redot_java->get_granted_permissions();
 }
 
 bool OS_Android::copy_dynamic_library(const String &p_library_path, const String &p_target_dir, String *r_copy_path) {
@@ -379,7 +379,7 @@ void OS_Android::main_loop_focusin() {
 }
 
 Error OS_Android::shell_open(const String &p_uri) {
-	return godot_io_java->open_uri(p_uri);
+	return Redot_io_java->open_uri(p_uri);
 }
 
 String OS_Android::get_resource_dir() const {
@@ -395,7 +395,7 @@ String OS_Android::get_resource_dir() const {
 }
 
 String OS_Android::get_locale() const {
-	String locale = godot_io_java->get_locale();
+	String locale = Redot_io_java->get_locale();
 	if (!locale.is_empty()) {
 		return locale;
 	}
@@ -404,7 +404,7 @@ String OS_Android::get_locale() const {
 }
 
 String OS_Android::get_model_name() const {
-	String model = godot_io_java->get_model();
+	String model = Redot_io_java->get_model();
 	if (!model.is_empty()) {
 		return model;
 	}
@@ -652,7 +652,7 @@ String OS_Android::get_user_data_dir() const {
 		return data_dir_cache;
 	}
 
-	String data_dir = godot_io_java->get_user_data_dir();
+	String data_dir = Redot_io_java->get_user_data_dir();
 	if (!data_dir.is_empty()) {
 		data_dir_cache = _remove_symlink(data_dir);
 		return data_dir_cache;
@@ -669,7 +669,7 @@ String OS_Android::get_cache_path() const {
 		return cache_dir_cache;
 	}
 
-	String cache_dir = godot_io_java->get_cache_dir();
+	String cache_dir = Redot_io_java->get_cache_dir();
 	if (!cache_dir.is_empty()) {
 		cache_dir_cache = _remove_symlink(cache_dir);
 		return cache_dir_cache;
@@ -678,7 +678,7 @@ String OS_Android::get_cache_path() const {
 }
 
 String OS_Android::get_unique_id() const {
-	String unique_id = godot_io_java->get_unique_id();
+	String unique_id = Redot_io_java->get_unique_id();
 	if (!unique_id.is_empty()) {
 		return unique_id;
 	}
@@ -687,7 +687,7 @@ String OS_Android::get_unique_id() const {
 }
 
 String OS_Android::get_system_dir(SystemDir p_dir, bool p_shared_storage) const {
-	return godot_io_java->get_system_dir(p_dir, p_shared_storage);
+	return Redot_io_java->get_system_dir(p_dir, p_shared_storage);
 }
 
 Error OS_Android::move_to_trash(const String &p_path) {
@@ -747,7 +747,7 @@ ANativeWindow *OS_Android::get_native_window() const {
 }
 
 void OS_Android::vibrate_handheld(int p_duration_ms, float p_amplitude) {
-	godot_java->vibrate(p_duration_ms, p_amplitude);
+	Redot_java->vibrate(p_duration_ms, p_amplitude);
 }
 
 String OS_Android::get_config_path() const {
@@ -756,13 +756,13 @@ String OS_Android::get_config_path() const {
 
 void OS_Android::benchmark_begin_measure(const String &p_context, const String &p_what) {
 #ifdef TOOLS_ENABLED
-	godot_java->begin_benchmark_measure(p_context, p_what);
+	Redot_java->begin_benchmark_measure(p_context, p_what);
 #endif
 }
 
 void OS_Android::benchmark_end_measure(const String &p_context, const String &p_what) {
 #ifdef TOOLS_ENABLED
-	godot_java->end_benchmark_measure(p_context, p_what);
+	Redot_java->end_benchmark_measure(p_context, p_what);
 #endif
 }
 
@@ -771,17 +771,17 @@ void OS_Android::benchmark_dump() {
 	if (!is_use_benchmark_set()) {
 		return;
 	}
-	godot_java->dump_benchmark(get_benchmark_file());
+	Redot_java->dump_benchmark(get_benchmark_file());
 #endif
 }
 
 #ifdef TOOLS_ENABLED
 Error OS_Android::sign_apk(const String &p_input_path, const String &p_output_path, const String &p_keystore_path, const String &p_keystore_user, const String &p_keystore_password) {
-	return godot_java->sign_apk(p_input_path, p_output_path, p_keystore_path, p_keystore_user, p_keystore_password);
+	return Redot_java->sign_apk(p_input_path, p_output_path, p_keystore_path, p_keystore_user, p_keystore_password);
 }
 
 Error OS_Android::verify_apk(const String &p_apk_path) {
-	return godot_java->verify_apk(p_apk_path);
+	return Redot_java->verify_apk(p_apk_path);
 }
 #endif
 
@@ -810,14 +810,14 @@ bool OS_Android::_check_internal_feature_support(const String &p_feature) {
 	}
 #endif
 
-	if (godot_java->has_feature(p_feature)) {
+	if (Redot_java->has_feature(p_feature)) {
 		return true;
 	}
 
 	return false;
 }
 
-OS_Android::OS_Android(GodotJavaWrapper *p_godot_java, GodotIOJavaWrapper *p_godot_io_java, bool p_use_apk_expansion) {
+OS_Android::OS_Android(RedotJavaWrapper *p_Redot_java, RedotIOJavaWrapper *p_Redot_io_java, bool p_use_apk_expansion) {
 	display_size.width = DEFAULT_WINDOW_WIDTH;
 	display_size.height = DEFAULT_WINDOW_HEIGHT;
 
@@ -833,8 +833,8 @@ OS_Android::OS_Android(GodotJavaWrapper *p_godot_java, GodotIOJavaWrapper *p_god
 	native_window = nullptr;
 #endif
 
-	godot_java = p_godot_java;
-	godot_io_java = p_godot_io_java;
+	Redot_java = p_Redot_java;
+	Redot_io_java = p_Redot_io_java;
 
 	Vector<Logger *> loggers;
 	loggers.push_back(memnew(AndroidLogger));
@@ -862,7 +862,7 @@ Error OS_Android::create_process(const String &p_path, const List<String> &p_arg
 }
 
 Error OS_Android::create_instance(const List<String> &p_arguments, ProcessID *r_child_id) {
-	int instance_id = godot_java->create_new_godot_instance(p_arguments);
+	int instance_id = Redot_java->create_new_Redot_instance(p_arguments);
 	if (r_child_id) {
 		*r_child_id = instance_id;
 	}
@@ -870,14 +870,14 @@ Error OS_Android::create_instance(const List<String> &p_arguments, ProcessID *r_
 }
 
 Error OS_Android::kill(const ProcessID &p_pid) {
-	if (godot_java->force_quit(nullptr, p_pid)) {
+	if (Redot_java->force_quit(nullptr, p_pid)) {
 		return OK;
 	}
 	return OS_Unix::kill(p_pid);
 }
 
 String OS_Android::get_system_ca_certificates() {
-	return godot_java->get_ca_certificates();
+	return Redot_java->get_ca_certificates();
 }
 
 Error OS_Android::setup_remote_filesystem(const String &p_server_host, int p_port, const String &p_password, String &r_project_path) {
@@ -891,7 +891,7 @@ Error OS_Android::setup_remote_filesystem(const String &p_server_host, int p_por
 }
 
 void OS_Android::load_platform_gdextensions() const {
-	Vector<String> extension_list_config_file = godot_java->get_gdextension_list_config_file();
+	Vector<String> extension_list_config_file = Redot_java->get_gdextension_list_config_file();
 	for (String config_file_path : extension_list_config_file) {
 		GDExtensionManager::LoadStatus err = GDExtensionManager::get_singleton()->load_extension(config_file_path);
 		ERR_CONTINUE_MSG(err == GDExtensionManager::LOAD_STATUS_FAILED, "Error loading platform extension: " + config_file_path);

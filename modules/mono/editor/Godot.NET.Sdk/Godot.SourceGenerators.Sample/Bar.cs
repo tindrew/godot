@@ -1,6 +1,6 @@
-namespace Godot.SourceGenerators.Sample
+namespace Redot.SourceGenerators.Sample
 {
-    public partial class Bar : GodotObject
+    public partial class Bar : RedotObject
     {
     }
 
@@ -9,7 +9,7 @@ namespace Godot.SourceGenerators.Sample
     {
     }
 
-    public partial class NotSameNameAsFile : GodotObject
+    public partial class NotSameNameAsFile : RedotObject
     {
     }
 }

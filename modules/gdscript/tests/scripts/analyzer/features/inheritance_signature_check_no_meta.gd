@@ -1,7 +1,7 @@
 func test():
 	print("ok")
 
-# https://github.com/godotengine/godot/issues/71994
+# https://github.com/Redotengine/Redot/issues/71994
 class A:
 	extends RefCounted
 class B:

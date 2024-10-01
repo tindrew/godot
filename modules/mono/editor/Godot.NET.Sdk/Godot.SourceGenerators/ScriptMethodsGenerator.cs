@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Godot.SourceGenerators
+namespace Redot.SourceGenerators
 {
     [Generator]
     public class ScriptMethodsGenerator : ISourceGenerator
@@ -16,15 +16,15 @@ namespace Godot.SourceGenerators
 
         public void Execute(GeneratorExecutionContext context)
         {
-            if (context.IsGodotSourceGeneratorDisabled("ScriptMethods"))
+            if (context.IsRedotSourceGeneratorDisabled("ScriptMethods"))
                 return;
 
-            INamedTypeSymbol[] godotClasses = context
+            INamedTypeSymbol[] RedotClasses = context
                 .Compilation.SyntaxTrees
                 .SelectMany(tree =>
                     tree.GetRoot().DescendantNodes()
                         .OfType<ClassDeclarationSyntax>()
-                        .SelectGodotScriptClasses(context.Compilation)
+                        .SelectRedotScriptClasses(context.Compilation)
                         // Report and skip non-partial classes
                         .Where(x =>
                         {
@@ -44,23 +44,23 @@ namespace Godot.SourceGenerators
                 .Distinct<INamedTypeSymbol>(SymbolEqualityComparer.Default)
                 .ToArray();
 
-            if (godotClasses.Length > 0)
+            if (RedotClasses.Length > 0)
             {
                 var typeCache = new MarshalUtils.TypeCache(context.Compilation);
 
-                foreach (var godotClass in godotClasses)
+                foreach (var RedotClass in RedotClasses)
                 {
-                    VisitGodotScriptClass(context, typeCache, godotClass);
+                    VisitRedotScriptClass(context, typeCache, RedotClass);
                 }
             }
         }
 
-        private class MethodOverloadEqualityComparer : IEqualityComparer<GodotMethodData>
+        private class MethodOverloadEqualityComparer : IEqualityComparer<RedotMethodData>
         {
-            public bool Equals(GodotMethodData x, GodotMethodData y)
+            public bool Equals(RedotMethodData x, RedotMethodData y)
                 => x.ParamTypes.Length == y.ParamTypes.Length && x.Method.Name == y.Method.Name;
 
-            public int GetHashCode(GodotMethodData obj)
+            public int GetHashCode(RedotMethodData obj)
             {
                 unchecked
                 {
@@ -69,7 +69,7 @@ namespace Godot.SourceGenerators
             }
         }
 
-        private static void VisitGodotScriptClass(
+        private static void VisitRedotScriptClass(
             GeneratorExecutionContext context,
             MarshalUtils.TypeCache typeCache,
             INamedTypeSymbol symbol
@@ -88,8 +88,8 @@ namespace Godot.SourceGenerators
 
             var source = new StringBuilder();
 
-            source.Append("using Godot;\n");
-            source.Append("using Godot.NativeInterop;\n");
+            source.Append("using Redot;\n");
+            source.Append("using Redot.NativeInterop;\n");
             source.Append("\n");
 
             if (hasNamespace)
@@ -130,7 +130,7 @@ namespace Godot.SourceGenerators
                 .Cast<IMethodSymbol>()
                 .Where(m => m.MethodKind == MethodKind.Ordinary);
 
-            var godotClassMethods = methodSymbols.WhereHasGodotCompatibleSignature(typeCache)
+            var RedotClassMethods = methodSymbols.WhereHasRedotCompatibleSignature(typeCache)
                 .Distinct(new MethodOverloadEqualityComparer())
                 .ToArray();
 
@@ -145,7 +145,7 @@ namespace Godot.SourceGenerators
 
             // Generate cached StringNames for methods and properties, for fast lookup
 
-            var distinctMethodNames = godotClassMethods
+            var distinctMethodNames = RedotClassMethods
                 .Select(m => m.Method.Name)
                 .Distinct()
                 .ToArray();
@@ -158,24 +158,24 @@ namespace Godot.SourceGenerators
                     .Append("' method.\n")
                     .Append("        /// </summary>\n");
 
-                source.Append("        public new static readonly global::Godot.StringName @");
+                source.Append("        public new static readonly global::Redot.StringName @");
                 source.Append(methodName);
                 source.Append(" = \"");
                 source.Append(methodName);
                 source.Append("\";\n");
             }
 
-            source.Append("    }\n"); // class GodotInternal
+            source.Append("    }\n"); // class RedotInternal
 
-            // Generate GetGodotMethodList
+            // Generate GetRedotMethodList
 
-            if (godotClassMethods.Length > 0)
+            if (RedotClassMethods.Length > 0)
             {
-                const string ListType = "global::System.Collections.Generic.List<global::Godot.Bridge.MethodInfo>";
+                const string ListType = "global::System.Collections.Generic.List<global::Redot.Bridge.MethodInfo>";
 
                 source.Append("    /// <summary>\n")
                     .Append("    /// Get the method information for all the methods declared in this class.\n")
-                    .Append("    /// This method is used by Godot to register the available methods in the editor.\n")
+                    .Append("    /// This method is used by Redot to register the available methods in the editor.\n")
                     .Append("    /// Do not call this method.\n")
                     .Append("    /// </summary>\n");
 
@@ -183,15 +183,15 @@ namespace Godot.SourceGenerators
 
                 source.Append("    internal new static ")
                     .Append(ListType)
-                    .Append(" GetGodotMethodList()\n    {\n");
+                    .Append(" GetRedotMethodList()\n    {\n");
 
                 source.Append("        var methods = new ")
                     .Append(ListType)
                     .Append("(")
-                    .Append(godotClassMethods.Length)
+                    .Append(RedotClassMethods.Length)
                     .Append(");\n");
 
-                foreach (var method in godotClassMethods)
+                foreach (var method in RedotClassMethods)
                 {
                     var methodInfo = DetermineMethodInfo(method);
                     AppendMethodInfo(source, methodInfo);
@@ -203,37 +203,37 @@ namespace Godot.SourceGenerators
 
             source.Append("#pragma warning restore CS0109\n");
 
-            // Generate InvokeGodotClassMethod
+            // Generate InvokeRedotClassMethod
 
-            if (godotClassMethods.Length > 0)
+            if (RedotClassMethods.Length > 0)
             {
                 source.Append("    /// <inheritdoc/>\n");
                 source.Append("    [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]\n");
-                source.Append("    protected override bool InvokeGodotClassMethod(in godot_string_name method, ");
-                source.Append("NativeVariantPtrArgs args, out godot_variant ret)\n    {\n");
+                source.Append("    protected override bool InvokeRedotClassMethod(in Redot_string_name method, ");
+                source.Append("NativeVariantPtrArgs args, out Redot_variant ret)\n    {\n");
 
-                foreach (var method in godotClassMethods)
+                foreach (var method in RedotClassMethods)
                 {
                     GenerateMethodInvoker(method, source);
                 }
 
-                source.Append("        return base.InvokeGodotClassMethod(method, args, out ret);\n");
+                source.Append("        return base.InvokeRedotClassMethod(method, args, out ret);\n");
 
                 source.Append("    }\n");
             }
 
-            // Generate InvokeGodotClassStaticMethod
+            // Generate InvokeRedotClassStaticMethod
 
-            var godotClassStaticMethods = godotClassMethods.Where(m => m.Method.IsStatic).ToArray();
+            var RedotClassStaticMethods = RedotClassMethods.Where(m => m.Method.IsStatic).ToArray();
 
-            if (godotClassStaticMethods.Length > 0)
+            if (RedotClassStaticMethods.Length > 0)
             {
                 source.Append("#pragma warning disable CS0109 // Disable warning about redundant 'new' keyword\n");
                 source.Append("    [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]\n");
-                source.Append("    internal new static bool InvokeGodotClassStaticMethod(in godot_string_name method, ");
-                source.Append("NativeVariantPtrArgs args, out godot_variant ret)\n    {\n");
+                source.Append("    internal new static bool InvokeRedotClassStaticMethod(in Redot_string_name method, ");
+                source.Append("NativeVariantPtrArgs args, out Redot_variant ret)\n    {\n");
 
-                foreach (var method in godotClassStaticMethods)
+                foreach (var method in RedotClassStaticMethods)
                 {
                     GenerateMethodInvoker(method, source);
                 }
@@ -245,20 +245,20 @@ namespace Godot.SourceGenerators
                 source.Append("#pragma warning restore CS0109\n");
             }
 
-            // Generate HasGodotClassMethod
+            // Generate HasRedotClassMethod
 
             if (distinctMethodNames.Length > 0)
             {
                 source.Append("    /// <inheritdoc/>\n");
                 source.Append("    [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]\n");
-                source.Append("    protected override bool HasGodotClassMethod(in godot_string_name method)\n    {\n");
+                source.Append("    protected override bool HasRedotClassMethod(in Redot_string_name method)\n    {\n");
 
                 foreach (string methodName in distinctMethodNames)
                 {
                     GenerateHasMethodEntry(methodName, source);
                 }
 
-                source.Append("        return base.HasGodotClassMethod(method);\n");
+                source.Append("        return base.HasRedotClassMethod(method);\n");
 
                 source.Append("    }\n");
             }
@@ -293,7 +293,7 @@ namespace Godot.SourceGenerators
 
             AppendPropertyInfo(source, methodInfo.ReturnVal);
 
-            source.Append(", flags: (global::Godot.MethodFlags)")
+            source.Append(", flags: (global::Redot.MethodFlags)")
                 .Append((int)methodInfo.Flags)
                 .Append(", arguments: ");
 
@@ -321,28 +321,28 @@ namespace Godot.SourceGenerators
 
         private static void AppendPropertyInfo(StringBuilder source, PropertyInfo propertyInfo)
         {
-            source.Append("new(type: (global::Godot.Variant.Type)")
+            source.Append("new(type: (global::Redot.Variant.Type)")
                 .Append((int)propertyInfo.Type)
                 .Append(", name: \"")
                 .Append(propertyInfo.Name)
-                .Append("\", hint: (global::Godot.PropertyHint)")
+                .Append("\", hint: (global::Redot.PropertyHint)")
                 .Append((int)propertyInfo.Hint)
                 .Append(", hintString: \"")
                 .Append(propertyInfo.HintString)
-                .Append("\", usage: (global::Godot.PropertyUsageFlags)")
+                .Append("\", usage: (global::Redot.PropertyUsageFlags)")
                 .Append((int)propertyInfo.Usage)
                 .Append(", exported: ")
                 .Append(propertyInfo.Exported ? "true" : "false");
             if (propertyInfo.ClassName != null)
             {
-                source.Append(", className: new global::Godot.StringName(\"")
+                source.Append(", className: new global::Redot.StringName(\"")
                     .Append(propertyInfo.ClassName)
                     .Append("\")");
             }
             source.Append(")");
         }
 
-        private static MethodInfo DetermineMethodInfo(GodotMethodData method)
+        private static MethodInfo DetermineMethodInfo(RedotMethodData method)
         {
             PropertyInfo returnVal;
 
@@ -401,7 +401,7 @@ namespace Godot.SourceGenerators
             string? className = null;
             if (memberVariantType == VariantType.Object && typeSymbol is INamedTypeSymbol namedTypeSymbol)
             {
-                className = namedTypeSymbol.GetGodotScriptNativeClassName();
+                className = namedTypeSymbol.GetRedotScriptNativeClassName();
             }
 
             return new PropertyInfo(memberVariantType, name,
@@ -420,7 +420,7 @@ namespace Godot.SourceGenerators
         }
 
         private static void GenerateMethodInvoker(
-            GodotMethodData method,
+            RedotMethodData method,
             StringBuilder source
         )
         {

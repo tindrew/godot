@@ -57,7 +57,7 @@ public partial class VisualShaderNode_CLASS_ : _BASE_
         return 0;
     }
 
-    public override string _GetCode(Godot.Collections.Array<string> inputVars, Godot.Collections.Array<string> outputVars, Shader.Mode mode, VisualShader.Type type)
+    public override string _GetCode(Redot.Collections.Array<string> inputVars, Redot.Collections.Array<string> outputVars, Shader.Mode mode, VisualShader.Type type)
     {
         return "";
     }

@@ -2,10 +2,10 @@
 /*  os_ios.mm                                                             */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -34,7 +34,7 @@
 
 #import "app_delegate.h"
 #import "display_server_ios.h"
-#import "godot_view.h"
+#import "Redot_view.h"
 #import "ios_terminal_logger.h"
 #import "view_controller.h"
 
@@ -607,7 +607,7 @@ void OS_IOS::on_focus_out() {
 			OS::get_singleton()->get_main_loop()->notification(MainLoop::NOTIFICATION_APPLICATION_FOCUS_OUT);
 		}
 
-		[AppDelegate.viewController.godotView stopRendering];
+		[AppDelegate.viewController.RedotView stopRendering];
 
 		audio_driver.stop();
 	}
@@ -625,7 +625,7 @@ void OS_IOS::on_focus_in() {
 			OS::get_singleton()->get_main_loop()->notification(MainLoop::NOTIFICATION_APPLICATION_FOCUS_IN);
 		}
 
-		[AppDelegate.viewController.godotView startRendering];
+		[AppDelegate.viewController.RedotView startRendering];
 
 		audio_driver.start();
 	}

@@ -2,10 +2,10 @@
 /*  register_types.cpp                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -43,7 +43,7 @@
 #include "tests/test_crypto_mbedtls.h"
 #endif
 
-static bool godot_mbedtls_initialized = false;
+static bool Redot_mbedtls_initialized = false;
 
 void initialize_mbedtls_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
@@ -61,7 +61,7 @@ void initialize_mbedtls_module(ModuleInitializationLevel p_level) {
 	}
 #endif
 
-	godot_mbedtls_initialized = true;
+	Redot_mbedtls_initialized = true;
 
 	CryptoMbedTLS::initialize_crypto();
 	StreamPeerMbedTLS::initialize_tls();
@@ -74,7 +74,7 @@ void uninitialize_mbedtls_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 
-	if (!godot_mbedtls_initialized) {
+	if (!Redot_mbedtls_initialized) {
 		return;
 	}
 

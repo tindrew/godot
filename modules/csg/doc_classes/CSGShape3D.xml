@@ -4,7 +4,7 @@
 		The CSG base class.
 	</brief_description>
 	<description>
-		This is the CSG base class that provides CSG operation support to the various CSG nodes in Godot.
+		This is the CSG base class that provides CSG operation support to the various CSG nodes in Redot.
 		[b]Performance:[/b] CSG nodes are only intended for prototyping as they have a significant CPU performance cost.
 		Consider baking final CSG operation results into static geometry that replaces the CSG nodes.
 		Individual CSG root node results can be baked to nodes with static resources with the editor menu that appears when a CSG root node is selected.

@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_body_pair_2d.h                                                  */
+/*  Redot_body_pair_2d.h                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,23 +28,23 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_BODY_PAIR_2D_H
-#define GODOT_BODY_PAIR_2D_H
+#ifndef Redot_BODY_PAIR_2D_H
+#define Redot_BODY_PAIR_2D_H
 
-#include "godot_body_2d.h"
-#include "godot_constraint_2d.h"
+#include "Redot_body_2d.h"
+#include "Redot_constraint_2d.h"
 
-class GodotBodyPair2D : public GodotConstraint2D {
+class RedotBodyPair2D : public RedotConstraint2D {
 	enum {
 		MAX_CONTACTS = 2
 	};
 	union {
 		struct {
-			GodotBody2D *A;
-			GodotBody2D *B;
+			RedotBody2D *A;
+			RedotBody2D *B;
 		};
 
-		GodotBody2D *_arr[2] = { nullptr, nullptr };
+		RedotBody2D *_arr[2] = { nullptr, nullptr };
 	};
 
 	int shape_A = 0;
@@ -53,7 +53,7 @@ class GodotBodyPair2D : public GodotConstraint2D {
 	bool collide_A = false;
 	bool collide_B = false;
 
-	GodotSpace2D *space = nullptr;
+	RedotSpace2D *space = nullptr;
 
 	struct Contact {
 		Vector2 position;
@@ -84,7 +84,7 @@ class GodotBodyPair2D : public GodotConstraint2D {
 	bool oneway_disabled = false;
 	bool report_contacts_only = false;
 
-	bool _test_ccd(real_t p_step, GodotBody2D *p_A, int p_shape_A, const Transform2D &p_xform_A, GodotBody2D *p_B, int p_shape_B, const Transform2D &p_xform_B);
+	bool _test_ccd(real_t p_step, RedotBody2D *p_A, int p_shape_A, const Transform2D &p_xform_A, RedotBody2D *p_B, int p_shape_B, const Transform2D &p_xform_B);
 	void _validate_contacts();
 	static void _add_contact(const Vector2 &p_point_A, const Vector2 &p_point_B, void *p_self);
 	_FORCE_INLINE_ void _contact_added_callback(const Vector2 &p_point_A, const Vector2 &p_point_B);
@@ -94,8 +94,8 @@ public:
 	virtual bool pre_solve(real_t p_step) override;
 	virtual void solve(real_t p_step) override;
 
-	GodotBodyPair2D(GodotBody2D *p_A, int p_shape_A, GodotBody2D *p_B, int p_shape_B);
-	~GodotBodyPair2D();
+	RedotBodyPair2D(RedotBody2D *p_A, int p_shape_A, RedotBody2D *p_B, int p_shape_B);
+	~RedotBodyPair2D();
 };
 
-#endif // GODOT_BODY_PAIR_2D_H
+#endif // Redot_BODY_PAIR_2D_H

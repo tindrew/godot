@@ -104,7 +104,7 @@ if env["builtin_freetype"]:
         env.Append(LIBS=[lib])
 
 
-# Godot source files
+# Redot source files
 
 module_obj = []
 

@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_plugin_config.h                                                 */
+/*  Redot_plugin_config.h                                                 */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef ANDROID_GODOT_PLUGIN_CONFIG_H
-#define ANDROID_GODOT_PLUGIN_CONFIG_H
+#ifndef ANDROID_Redot_PLUGIN_CONFIG_H
+#define ANDROID_Redot_PLUGIN_CONFIG_H
 
 #ifndef DISABLE_DEPRECATED
 
@@ -44,14 +44,14 @@
 - **binary_type**: can be either `local` or `remote`. The type affects the **binary** field.
 - **binary**:
   - if **binary_type** is `local`, then this should be the filename of the plugin `aar` file in the `res://android/plugins` directory (e.g: `MyPlugin.aar`).
-  - if **binary_type** is `remote`, then this should be a declaration for a remote gradle binary (e.g: "org.godot.example:my-plugin:0.0.0").
+  - if **binary_type** is `remote`, then this should be a declaration for a remote gradle binary (e.g: "org.Redot.example:my-plugin:0.0.0").
 
 The `dependencies` section and fields are optional and defined as follow:
 - **local**: contains a list of local `.aar` binary files the plugin depends on. The local binary dependencies must also be located in the `res://android/plugins` directory.
 - **remote**: contains a list of remote binary gradle dependencies for the plugin.
 - **custom_maven_repos**: contains a list of urls specifying custom maven repos required for the plugin's dependencies.
 
- See https://github.com/godotengine/godot/issues/38157#issuecomment-618773871
+ See https://github.com/Redotengine/Redot/issues/38157#issuecomment-618773871
  */
 struct PluginConfigAndroid {
 	inline static const char *PLUGIN_CONFIG_EXT = ".gdap";
@@ -105,4 +105,4 @@ struct PluginConfigAndroid {
 
 #endif // DISABLE_DEPRECATED
 
-#endif // ANDROID_GODOT_PLUGIN_CONFIG_H
+#endif // ANDROID_Redot_PLUGIN_CONFIG_H

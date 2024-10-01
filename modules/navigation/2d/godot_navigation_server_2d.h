@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_navigation_server_2d.h                                          */
+/*  Redot_navigation_server_2d.h                                          */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_NAVIGATION_SERVER_2D_H
-#define GODOT_NAVIGATION_SERVER_2D_H
+#ifndef Redot_NAVIGATION_SERVER_2D_H
+#define Redot_NAVIGATION_SERVER_2D_H
 
 #include "../nav_agent.h"
 #include "../nav_link.h"
@@ -44,16 +44,16 @@ class NavMeshGenerator2D;
 #endif // CLIPPER2_ENABLED
 
 // This server exposes the `NavigationServer3D` features in the 2D world.
-class GodotNavigationServer2D : public NavigationServer2D {
-	GDCLASS(GodotNavigationServer2D, NavigationServer2D);
+class RedotNavigationServer2D : public NavigationServer2D {
+	GDCLASS(RedotNavigationServer2D, NavigationServer2D);
 
 #ifdef CLIPPER2_ENABLED
 	NavMeshGenerator2D *navmesh_generator_2d = nullptr;
 #endif // CLIPPER2_ENABLED
 
 public:
-	GodotNavigationServer2D();
-	virtual ~GodotNavigationServer2D();
+	RedotNavigationServer2D();
+	virtual ~RedotNavigationServer2D();
 
 	virtual TypedArray<RID> get_maps() const override;
 
@@ -260,4 +260,4 @@ public:
 	virtual Vector<Vector2> simplify_path(const Vector<Vector2> &p_path, real_t p_epsilon) override;
 };
 
-#endif // GODOT_NAVIGATION_SERVER_2D_H
+#endif // Redot_NAVIGATION_SERVER_2D_H

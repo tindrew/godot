@@ -93,7 +93,7 @@ if env["module_webp_enabled"]:
 env_thirdparty.add_source_files(thirdparty_obj, thirdparty_sources)
 env.modules_sources += thirdparty_obj
 
-# Godot source files
+# Redot source files
 
 module_obj = []
 

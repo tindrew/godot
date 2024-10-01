@@ -2,10 +2,10 @@
 /*  transform_interpolator.cpp                                            */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -183,7 +183,7 @@ void TransformInterpolator::interpolate_basis_linear(const Basis &p_prev, const 
 	r_result = p_prev.lerp(p_curr, p_fraction);
 
 	// It turns out we need to guard against zero scale basis.
-	// This is kind of silly, as we should probably fix the bugs elsewhere in Godot that can't deal with
+	// This is kind of silly, as we should probably fix the bugs elsewhere in Redot that can't deal with
 	// zero scale, but until that time...
 	for (int n = 0; n < 3; n++) {
 		Vector3 &axis = r_result[n];
@@ -286,7 +286,7 @@ TransformInterpolator::Method TransformInterpolator::_test_basis(Basis p_basis, 
 		r_needed_normalize = true;
 	}
 
-	// Apply less stringent tests than the built in slerp, the standard Godot slerp
+	// Apply less stringent tests than the built in slerp, the standard Redot slerp
 	// is too susceptible to float error to be useful.
 	real_t det = p_basis.determinant();
 	if (!Math::is_equal_approx(det, 1, (real_t)0.01f)) {
@@ -341,7 +341,7 @@ bool TransformInterpolator::_basis_is_orthogonal(const Basis &p_basis, real_t p_
 	Basis identity;
 	Basis m = p_basis * p_basis.transposed();
 
-	// Less stringent tests than the standard Godot slerp.
+	// Less stringent tests than the standard Redot slerp.
 	if (!_vec3_is_equal_approx(m[0], identity[0], p_epsilon) || !_vec3_is_equal_approx(m[1], identity[1], p_epsilon) || !_vec3_is_equal_approx(m[2], identity[2], p_epsilon)) {
 		return false;
 	}

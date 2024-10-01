@@ -1,17 +1,17 @@
-namespace Godot
+namespace Redot
 {
     /// <summary>
     /// Represents a signal defined in an object.
     /// </summary>
     public readonly struct Signal : IAwaitable<Variant[]>
     {
-        private readonly GodotObject _owner;
+        private readonly RedotObject _owner;
         private readonly StringName _signalName;
 
         /// <summary>
         /// Object that contains the signal.
         /// </summary>
-        public GodotObject Owner => _owner;
+        public RedotObject Owner => _owner;
 
         /// <summary>
         /// Name of the signal.
@@ -24,7 +24,7 @@ namespace Godot
         /// </summary>
         /// <param name="owner">Object that contains the signal.</param>
         /// <param name="name">Name of the signal.</param>
-        public Signal(GodotObject owner, StringName name)
+        public Signal(RedotObject owner, StringName name)
         {
             _owner = owner;
             _signalName = name;

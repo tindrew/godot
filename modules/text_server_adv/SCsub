@@ -147,7 +147,7 @@ if env["builtin_harfbuzz"]:
             CCFLAGS=[
                 "-DU_STATIC_IMPLEMENTATION",
                 "-DU_HAVE_LIB_SUFFIX=1",
-                "-DU_LIB_SUFFIX_C_NAME=_godot",
+                "-DU_LIB_SUFFIX_C_NAME=_Redot",
                 "-DHAVE_ICU_BUILTIN",
             ]
         )
@@ -501,7 +501,7 @@ if env["builtin_icu4c"]:
             "-DPKGDATA_MODE=static",
             "-DU_ENABLE_DYLOAD=0",
             "-DU_HAVE_LIB_SUFFIX=1",
-            "-DU_LIB_SUFFIX_C_NAME=_godot",
+            "-DU_LIB_SUFFIX_C_NAME=_Redot",
             "-DICU_DATA_NAME=" + icu_data_name,
         ]
     )
@@ -509,7 +509,7 @@ if env["builtin_icu4c"]:
         CXXFLAGS=[
             "-DU_STATIC_IMPLEMENTATION",
             "-DU_HAVE_LIB_SUFFIX=1",
-            "-DU_LIB_SUFFIX_C_NAME=_godot",
+            "-DU_LIB_SUFFIX_C_NAME=_Redot",
             "-DICU_DATA_NAME=" + icu_data_name,
         ]
     )
@@ -535,7 +535,7 @@ if env["builtin_icu4c"]:
         env.Append(LIBS=[lib])
 
 
-# Godot source files
+# Redot source files
 
 module_obj = []
 

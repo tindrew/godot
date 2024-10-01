@@ -1,6 +1,6 @@
 using System;
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
     /// An attribute that contains the path to the object's script.

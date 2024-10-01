@@ -2,10 +2,10 @@
 /*  http_client_web.cpp                                                   */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -100,9 +100,9 @@ Error HTTPClientWeb::request(Method p_method, const String &p_url, const Vector<
 		c_strings.push_back(keeper[i].get_data());
 	}
 	if (js_id) {
-		godot_js_fetch_free(js_id);
+		Redot_js_fetch_free(js_id);
 	}
-	js_id = godot_js_fetch_create(_methods[p_method], url.utf8().get_data(), c_strings.ptrw(), c_strings.size(), p_body, p_body_len);
+	js_id = Redot_js_fetch_create(_methods[p_method], url.utf8().get_data(), c_strings.ptrw(), c_strings.size(), p_body, p_body_len);
 	status = STATUS_REQUESTING;
 	return OK;
 }
@@ -116,7 +116,7 @@ void HTTPClientWeb::close() {
 	response_headers.resize(0);
 	response_buffer.resize(0);
 	if (js_id) {
-		godot_js_fetch_free(js_id);
+		Redot_js_fetch_free(js_id);
 		js_id = 0;
 	}
 }
@@ -130,7 +130,7 @@ bool HTTPClientWeb::has_response() const {
 }
 
 bool HTTPClientWeb::is_response_chunked() const {
-	return godot_js_fetch_is_chunked(js_id);
+	return Redot_js_fetch_is_chunked(js_id);
 }
 
 int HTTPClientWeb::get_response_code() const {
@@ -166,13 +166,13 @@ PackedByteArray HTTPClientWeb::read_response_body_chunk() {
 	if (response_buffer.size() != read_limit) {
 		response_buffer.resize(read_limit);
 	}
-	int read = godot_js_fetch_read_chunk(js_id, response_buffer.ptrw(), read_limit);
+	int read = Redot_js_fetch_read_chunk(js_id, response_buffer.ptrw(), read_limit);
 
 	// Check if the stream is over.
-	godot_js_fetch_state_t state = godot_js_fetch_state_get(js_id);
-	if (state == GODOT_JS_FETCH_STATE_DONE) {
+	Redot_js_fetch_state_t state = Redot_js_fetch_state_get(js_id);
+	if (state == Redot_JS_FETCH_STATE_DONE) {
 		status = STATUS_DISCONNECTED;
-	} else if (state != GODOT_JS_FETCH_STATE_BODY) {
+	} else if (state != Redot_JS_FETCH_STATE_BODY) {
 		status = STATUS_CONNECTION_ERROR;
 	}
 
@@ -218,10 +218,10 @@ Error HTTPClientWeb::poll() {
 			return OK;
 
 		case STATUS_BODY: {
-			godot_js_fetch_state_t state = godot_js_fetch_state_get(js_id);
-			if (state == GODOT_JS_FETCH_STATE_DONE) {
+			Redot_js_fetch_state_t state = Redot_js_fetch_state_get(js_id);
+			if (state == Redot_JS_FETCH_STATE_DONE) {
 				status = STATUS_DISCONNECTED;
-			} else if (state != GODOT_JS_FETCH_STATE_BODY) {
+			} else if (state != Redot_JS_FETCH_STATE_BODY) {
 				status = STATUS_CONNECTION_ERROR;
 				return ERR_CONNECTION_ERROR;
 			}
@@ -242,16 +242,16 @@ Error HTTPClientWeb::poll() {
 			last_polling_frame = Engine::get_singleton()->get_process_frames();
 #endif
 
-			polled_response_code = godot_js_fetch_http_status_get(js_id);
-			godot_js_fetch_state_t js_state = godot_js_fetch_state_get(js_id);
-			if (js_state == GODOT_JS_FETCH_STATE_REQUESTING) {
+			polled_response_code = Redot_js_fetch_http_status_get(js_id);
+			Redot_js_fetch_state_t js_state = Redot_js_fetch_state_get(js_id);
+			if (js_state == Redot_JS_FETCH_STATE_REQUESTING) {
 				return OK;
-			} else if (js_state == GODOT_JS_FETCH_STATE_ERROR) {
+			} else if (js_state == Redot_JS_FETCH_STATE_ERROR) {
 				// Fetch is in error state.
 				status = STATUS_CONNECTION_ERROR;
 				return ERR_CONNECTION_ERROR;
 			}
-			if (godot_js_fetch_read_headers(js_id, &_parse_headers, this)) {
+			if (Redot_js_fetch_read_headers(js_id, &_parse_headers, this)) {
 				// Failed to parse headers.
 				status = STATUS_CONNECTION_ERROR;
 				return ERR_CONNECTION_ERROR;

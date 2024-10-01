@@ -2,10 +2,10 @@
 /*  file_access_filesystem_jandroid.h                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -31,7 +31,7 @@
 #ifndef FILE_ACCESS_FILESYSTEM_JANDROID_H
 #define FILE_ACCESS_FILESYSTEM_JANDROID_H
 
-#include "java_godot_lib_jni.h"
+#include "java_Redot_lib_jni.h"
 
 #include "core/io/file_access.h"
 

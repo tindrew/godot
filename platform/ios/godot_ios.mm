@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_ios.mm                                                          */
+/*  Redot_ios.mm                                                          */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -40,7 +40,7 @@
 static OS_IOS *os = nullptr;
 
 int add_path(int p_argc, char **p_args) {
-	NSString *str = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"godot_path"];
+	NSString *str = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"Redot_path"];
 	if (!str) {
 		return p_argc;
 	}
@@ -53,7 +53,7 @@ int add_path(int p_argc, char **p_args) {
 }
 
 int add_cmdline(int p_argc, char **p_args) {
-	NSArray *arr = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"godot_cmdline"];
+	NSArray *arr = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"Redot_cmdline"];
 	if (!arr) {
 		return p_argc;
 	}

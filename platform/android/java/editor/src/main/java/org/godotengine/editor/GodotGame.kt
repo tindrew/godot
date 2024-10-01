@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotGame.kt                                                          */
+/*  RedotGame.kt                                                          */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.editor
+package org.Redotengine.editor
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -40,22 +40,22 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.annotation.CallSuper
-import org.godotengine.godot.GodotLib
-import org.godotengine.godot.utils.PermissionsUtil
-import org.godotengine.godot.utils.ProcessPhoenix
+import org.Redotengine.Redot.RedotLib
+import org.Redotengine.Redot.utils.PermissionsUtil
+import org.Redotengine.Redot.utils.ProcessPhoenix
 
 /**
- * Drives the 'run project' window of the Godot Editor.
+ * Drives the 'run project' window of the Redot Editor.
  */
-open class GodotGame : GodotEditor() {
+open class RedotGame : RedotEditor() {
 
 	companion object {
-		private val TAG = GodotGame::class.java.simpleName
+		private val TAG = RedotGame::class.java.simpleName
 	}
 
 	private val gameViewSourceRectHint = Rect()
 	private val pipButton: View? by lazy {
-		findViewById(R.id.godot_pip_button)
+		findViewById(R.id.Redot_pip_button)
 	}
 
 	private var pipAvailable = false
@@ -65,7 +65,7 @@ open class GodotGame : GodotEditor() {
 		super.onCreate(savedInstanceState)
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			val gameView = findViewById<View>(R.id.godot_fragment_container)
+			val gameView = findViewById<View>(R.id.Redot_fragment_container)
 			gameView?.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
 				gameView.getGlobalVisibleRect(gameViewSourceRectHint)
 			}
@@ -130,19 +130,19 @@ open class GodotGame : GodotEditor() {
 		}
 	}
 
-	override fun getGodotAppLayout() = R.layout.godot_game_layout
+	override fun getRedotAppLayout() = R.layout.Redot_game_layout
 
 	override fun getEditorWindowInfo() = RUN_GAME_INFO
 
 	override fun overrideOrientationRequest() = false
 
-	override fun enableLongPressGestures() = java.lang.Boolean.parseBoolean(GodotLib.getGlobal("input_devices/pointing/android/enable_long_press_as_right_click"))
+	override fun enableLongPressGestures() = java.lang.Boolean.parseBoolean(RedotLib.getGlobal("input_devices/pointing/android/enable_long_press_as_right_click"))
 
-	override fun enablePanAndScaleGestures() = java.lang.Boolean.parseBoolean(GodotLib.getGlobal("input_devices/pointing/android/enable_pan_and_scale_gestures"))
+	override fun enablePanAndScaleGestures() = java.lang.Boolean.parseBoolean(RedotLib.getGlobal("input_devices/pointing/android/enable_pan_and_scale_gestures"))
 
-	override fun onGodotSetupCompleted() {
-		super.onGodotSetupCompleted()
-		Log.v(TAG, "OnGodotSetupCompleted")
+	override fun onRedotSetupCompleted() {
+		super.onRedotSetupCompleted()
+		Log.v(TAG, "OnRedotSetupCompleted")
 
 		// Check if we should be running in XR instead (if available) as it's possible we were
 		// launched from the project manager which doesn't have that information.
@@ -150,14 +150,14 @@ open class GodotGame : GodotEditor() {
 		if (launchingArgs != null) {
 			val editorWindowInfo = retrieveEditorWindowInfo(launchingArgs)
 			if (editorWindowInfo != getEditorWindowInfo()) {
-				val relaunchIntent = getNewGodotInstanceIntent(editorWindowInfo, launchingArgs)
+				val relaunchIntent = getNewRedotInstanceIntent(editorWindowInfo, launchingArgs)
 				relaunchIntent.putExtra(EXTRA_NEW_LAUNCH, true)
 					.putExtra(EditorMessageDispatcher.EXTRA_MSG_DISPATCHER_PAYLOAD, intent.getBundleExtra(EditorMessageDispatcher.EXTRA_MSG_DISPATCHER_PAYLOAD))
 
 				Log.d(TAG, "Relaunching XR project using ${editorWindowInfo.windowClassName} with parameters ${launchingArgs.contentToString()}")
-				val godot = godot
-				if (godot != null) {
-					godot.destroyAndKillProcess {
+				val Redot = Redot
+				if (Redot != null) {
+					Redot.destroyAndKillProcess {
 						ProcessPhoenix.triggerRebirth(this, relaunchIntent)
 					}
 				} else {
@@ -182,7 +182,7 @@ open class GodotGame : GodotEditor() {
 		val permissionsToEnable = mutableListOf<String>()
 
 		// Check for RECORD_AUDIO permission
-		val audioInputEnabled = java.lang.Boolean.parseBoolean(GodotLib.getGlobal("audio/driver/enable_input"))
+		val audioInputEnabled = java.lang.Boolean.parseBoolean(RedotLib.getGlobal("audio/driver/enable_input"))
 		if (audioInputEnabled) {
 			permissionsToEnable.add(Manifest.permission.RECORD_AUDIO)
 		}

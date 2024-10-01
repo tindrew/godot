@@ -9,7 +9,7 @@ jobs:
   # First stage: Only static checks, fast and prevent expensive builds from running.
 
   static-checks:
-    if: '!vars.DISABLE_GODOT_CI'
+    if: '!vars.DISABLE_Redot_CI'
     name: 📊 Static checks
     uses: ./.github/workflows/static_checks.yml
 
@@ -47,12 +47,12 @@ jobs:
 
   # Third stage: Run auxiliary tests using build artifacts from previous jobs.
 
-  # Can be turned off for PRs that intentionally break compat with godot-cpp,
-  # until both the upstream PR and the matching godot-cpp changes are merged.
-  godot-cpp-test:
-    name: 🪲 Godot CPP
+  # Can be turned off for PRs that intentionally break compat with Redot-cpp,
+  # until both the upstream PR and the matching Redot-cpp changes are merged.
+  Redot-cpp-test:
+    name: 🪲 Redot CPP
     # This can be changed to depend on another platform, if we decide to use it for
-    # godot-cpp instead. Make sure to move the .github/actions/godot-api-dump step
+    # Redot-cpp instead. Make sure to move the .github/actions/Redot-api-dump step
     # appropriately.
     needs: linux-build
-    uses: ./.github/workflows/godot_cpp_test.yml
+    uses: ./.github/workflows/Redot_cpp_test.yml

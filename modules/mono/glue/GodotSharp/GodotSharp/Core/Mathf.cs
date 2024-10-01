@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
     /// Provides constants and static methods for common mathematical functions.

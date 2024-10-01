@@ -2,10 +2,10 @@
 /*  VkRenderer.kt                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -29,12 +29,12 @@
 /**************************************************************************/
 
 @file:JvmName("VkRenderer")
-package org.godotengine.godot.vulkan
+package org.Redotengine.Redot.vulkan
 
 import android.util.Log
 import android.view.Surface
-import org.godotengine.godot.GodotLib
-import org.godotengine.godot.plugin.GodotPluginRegistry
+import org.Redotengine.Redot.RedotLib
+import org.Redotengine.Redot.plugin.RedotPluginRegistry
 
 /**
  * Responsible to setting up and driving the Vulkan rendering logic.
@@ -55,13 +55,13 @@ internal class VkRenderer {
 		private val TAG = VkRenderer::class.java.simpleName
 	}
 
-	private val pluginRegistry: GodotPluginRegistry = GodotPluginRegistry.getPluginRegistry()
+	private val pluginRegistry: RedotPluginRegistry = RedotPluginRegistry.getPluginRegistry()
 
 	/**
 	 * Called when the surface is created and signals the beginning of rendering.
 	 */
 	fun onVkSurfaceCreated(surface: Surface) {
-		GodotLib.newcontext(surface)
+		RedotLib.newcontext(surface)
 
 		for (plugin in pluginRegistry.getAllPlugins()) {
 			plugin.onVkSurfaceCreated(surface)
@@ -72,7 +72,7 @@ internal class VkRenderer {
 	 * Called after the surface is created and whenever its size changes.
 	 */
 	fun onVkSurfaceChanged(surface: Surface, width: Int, height: Int) {
-		GodotLib.resize(surface, width, height)
+		RedotLib.resize(surface, width, height)
 
 		for (plugin in pluginRegistry.getAllPlugins()) {
 			plugin.onVkSurfaceChanged(surface, width, height)
@@ -83,7 +83,7 @@ internal class VkRenderer {
 	 * Called to draw the current frame.
 	 */
 	fun onVkDrawFrame() {
-		GodotLib.step()
+		RedotLib.step()
 		for (plugin in pluginRegistry.getAllPlugins()) {
 			plugin.onVkDrawFrame()
 		}
@@ -93,21 +93,21 @@ internal class VkRenderer {
 	 * Called when the rendering thread is resumed.
 	 */
 	fun onVkResume() {
-		GodotLib.onRendererResumed()
+		RedotLib.onRendererResumed()
 	}
 
 	/**
 	 * Called when the rendering thread is paused.
 	 */
 	fun onVkPause() {
-		GodotLib.onRendererPaused()
+		RedotLib.onRendererPaused()
 	}
 
 	/**
 	 * Invoked when the render thread is in the process of shutting down.
 	 */
 	fun onRenderThreadExiting() {
-		Log.d(TAG, "Destroying Godot Engine")
-		GodotLib.ondestroy()
+		Log.d(TAG, "Destroying Redot Engine")
+		RedotLib.ondestroy()
 	}
 }

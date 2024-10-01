@@ -2,10 +2,10 @@
 /*  wayland_thread.h                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -83,7 +83,7 @@
 
 class WaylandThread {
 public:
-	// Messages used for exchanging information between Godot's and Wayland's thread.
+	// Messages used for exchanging information between Redot's and Wayland's thread.
 	class Message : public RefCounted {
 	public:
 		Message() {}
@@ -259,7 +259,7 @@ public:
 		WaylandThread *wayland_thread;
 	};
 
-	// "High level" Godot-side screen data.
+	// "High level" Redot-side screen data.
 	struct ScreenData {
 		// Geometry data.
 		Point2i position;
@@ -388,7 +388,7 @@ public:
 
 		// Used for delta calculations.
 		// NOTE: The wp_pointer_gestures protocol keeps track of the total scale of
-		// the pinch gesture, while godot instead wants its delta.
+		// the pinch gesture, while Redot instead wants its delta.
 		wl_fixed_t old_pinch_scale = 0;
 
 		struct wl_surface *cursor_surface = nullptr;
@@ -481,7 +481,7 @@ private:
 	};
 
 	// FIXME: Is this the right thing to do?
-	inline static const char *proxy_tag = "godot";
+	inline static const char *proxy_tag = "Redot";
 
 	Thread events_thread;
 	ThreadData thread_data;
@@ -896,8 +896,8 @@ public:
 	struct wl_display *get_wl_display() const;
 
 	// Core Wayland utilities for integrating with our own data structures.
-	static bool wl_proxy_is_godot(struct wl_proxy *p_proxy);
-	static void wl_proxy_tag_godot(struct wl_proxy *p_proxy);
+	static bool wl_proxy_is_Redot(struct wl_proxy *p_proxy);
+	static void wl_proxy_tag_Redot(struct wl_proxy *p_proxy);
 
 	static WindowState *wl_surface_get_window_state(struct wl_surface *p_surface);
 	static ScreenState *wl_output_get_screen_state(struct wl_output *p_output);

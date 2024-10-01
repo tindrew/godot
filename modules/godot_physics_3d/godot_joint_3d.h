@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_joint_3d.h                                                      */
+/*  Redot_joint_3d.h                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,13 +28,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_JOINT_3D_H
-#define GODOT_JOINT_3D_H
+#ifndef Redot_JOINT_3D_H
+#define Redot_JOINT_3D_H
 
-#include "godot_body_3d.h"
-#include "godot_constraint_3d.h"
+#include "Redot_body_3d.h"
+#include "Redot_constraint_3d.h"
 
-class GodotJoint3D : public GodotConstraint3D {
+class RedotJoint3D : public RedotConstraint3D {
 protected:
 	bool dynamic_A = false;
 	bool dynamic_B = false;
@@ -77,20 +77,20 @@ public:
 	virtual bool pre_solve(real_t p_step) override { return true; }
 	virtual void solve(real_t p_step) override {}
 
-	void copy_settings_from(GodotJoint3D *p_joint) {
+	void copy_settings_from(RedotJoint3D *p_joint) {
 		set_self(p_joint->get_self());
 		set_priority(p_joint->get_priority());
 		disable_collisions_between_bodies(p_joint->is_disabled_collisions_between_bodies());
 	}
 
 	virtual PhysicsServer3D::JointType get_type() const { return PhysicsServer3D::JOINT_TYPE_MAX; }
-	_FORCE_INLINE_ GodotJoint3D(GodotBody3D **p_body_ptr = nullptr, int p_body_count = 0) :
-			GodotConstraint3D(p_body_ptr, p_body_count) {
+	_FORCE_INLINE_ RedotJoint3D(RedotBody3D **p_body_ptr = nullptr, int p_body_count = 0) :
+			RedotConstraint3D(p_body_ptr, p_body_count) {
 	}
 
-	virtual ~GodotJoint3D() {
+	virtual ~RedotJoint3D() {
 		for (int i = 0; i < get_body_count(); i++) {
-			GodotBody3D *body = get_body_ptr()[i];
+			RedotBody3D *body = get_body_ptr()[i];
 			if (body) {
 				body->remove_constraint(this);
 			}
@@ -98,4 +98,4 @@ public:
 	}
 };
 
-#endif // GODOT_JOINT_3D_H
+#endif // Redot_JOINT_3D_H

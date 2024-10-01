@@ -5,23 +5,23 @@ using System.ComponentModel;
 
 #nullable enable
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
     /// 3×4 matrix (3 rows, 4 columns) used for 3D linear transformations.
     /// It can represent transformations such as translation, rotation, or scaling.
-    /// It consists of a <see cref="Godot.Basis"/> (first 3 columns) and a
+    /// It consists of a <see cref="Redot.Basis"/> (first 3 columns) and a
     /// <see cref="Vector3"/> for the origin (last column).
     ///
     /// For more information, read this documentation article:
-    /// https://docs.godotengine.org/en/latest/tutorials/math/matrices_and_transforms.html
+    /// https://docs.Redotengine.org/en/latest/tutorials/math/matrices_and_transforms.html
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Transform3D : IEquatable<Transform3D>
     {
         /// <summary>
-        /// The <see cref="Godot.Basis"/> of this transform. Contains the X, Y, and Z basis
+        /// The <see cref="Redot.Basis"/> of this transform. Contains the X, Y, and Z basis
         /// vectors (columns 0 to 2) and is responsible for rotation and scale.
         /// </summary>
         public Basis Basis;
@@ -367,7 +367,7 @@ namespace Godot
         /// Constructs a transformation matrix from the given <paramref name="basis"/> and
         /// <paramref name="origin"/> vector.
         /// </summary>
-        /// <param name="basis">The <see cref="Godot.Basis"/> to create the basis from.</param>
+        /// <param name="basis">The <see cref="Redot.Basis"/> to create the basis from.</param>
         /// <param name="origin">The origin vector, or column index 3.</param>
         public Transform3D(Basis basis, Vector3 origin)
         {

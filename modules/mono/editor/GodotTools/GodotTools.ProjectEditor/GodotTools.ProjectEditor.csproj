@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GodotTools.Core\GodotTools.Core.csproj" />
-    <ProjectReference Include="..\GodotTools.Shared\GodotTools.Shared.csproj" />
+    <ProjectReference Include="..\RedotTools.Core\RedotTools.Core.csproj" />
+    <ProjectReference Include="..\RedotTools.Shared\RedotTools.Shared.csproj" />
   </ItemGroup>
 </Project>

@@ -4,10 +4,10 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using GodotTools.IdeMessaging.Requests;
+using RedotTools.IdeMessaging.Requests;
 using Newtonsoft.Json;
 
-namespace GodotTools.IdeMessaging.CLI
+namespace RedotTools.IdeMessaging.CLI
 {
     internal static class Program
     {
@@ -41,17 +41,17 @@ namespace GodotTools.IdeMessaging.CLI
                     return 1;
                 }
 
-                string godotProjectDir = args[0];
+                string RedotProjectDir = args[0];
 
-                if (!Directory.Exists(godotProjectDir))
+                if (!Directory.Exists(RedotProjectDir))
                 {
-                    Logger.LogError($"The specified Godot project directory does not exist: {godotProjectDir}");
+                    Logger.LogError($"The specified Redot project directory does not exist: {RedotProjectDir}");
                     return 1;
                 }
 
                 var forwarder = new ForwarderMessageHandler(outputWriter);
 
-                using (var fwdClient = new Client("VisualStudioCode", godotProjectDir, forwarder, Logger))
+                using (var fwdClient = new Client("VisualStudioCode", RedotProjectDir, forwarder, Logger))
                 {
                     fwdClient.Start();
 

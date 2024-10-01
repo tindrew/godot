@@ -4,5 +4,5 @@
     <!-- Specify compile items manually to avoid including dangling generated items. -->
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
-  <Import Project="GenerateGodotNupkgsVersions.targets" />
+  <Import Project="GenerateRedotNupkgsVersions.targets" />
 </Project>

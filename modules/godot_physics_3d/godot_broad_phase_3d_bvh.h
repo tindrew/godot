@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_broad_phase_3d_bvh.h                                            */
+/*  Redot_broad_phase_3d_bvh.h                                            */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,14 +28,14 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_BROAD_PHASE_3D_BVH_H
-#define GODOT_BROAD_PHASE_3D_BVH_H
+#ifndef Redot_BROAD_PHASE_3D_BVH_H
+#define Redot_BROAD_PHASE_3D_BVH_H
 
-#include "godot_broad_phase_3d.h"
+#include "Redot_broad_phase_3d.h"
 
 #include "core/math/bvh.h"
 
-class GodotBroadPhase3DBVH : public GodotBroadPhase3D {
+class RedotBroadPhase3DBVH : public RedotBroadPhase3D {
 	template <typename T>
 	class UserPairTestFunction {
 	public:
@@ -63,10 +63,10 @@ class GodotBroadPhase3DBVH : public GodotBroadPhase3D {
 		TREE_FLAG_DYNAMIC = 1 << TREE_DYNAMIC,
 	};
 
-	BVH_Manager<GodotCollisionObject3D, 2, true, 128, UserPairTestFunction<GodotCollisionObject3D>, UserCullTestFunction<GodotCollisionObject3D>> bvh;
+	BVH_Manager<RedotCollisionObject3D, 2, true, 128, UserPairTestFunction<RedotCollisionObject3D>, UserCullTestFunction<RedotCollisionObject3D>> bvh;
 
-	static void *_pair_callback(void *, uint32_t, GodotCollisionObject3D *, int, uint32_t, GodotCollisionObject3D *, int);
-	static void _unpair_callback(void *, uint32_t, GodotCollisionObject3D *, int, uint32_t, GodotCollisionObject3D *, int, void *);
+	static void *_pair_callback(void *, uint32_t, RedotCollisionObject3D *, int, uint32_t, RedotCollisionObject3D *, int);
+	static void _unpair_callback(void *, uint32_t, RedotCollisionObject3D *, int, uint32_t, RedotCollisionObject3D *, int, void *);
 
 	PairCallback pair_callback = nullptr;
 	void *pair_userdata = nullptr;
@@ -75,26 +75,26 @@ class GodotBroadPhase3DBVH : public GodotBroadPhase3D {
 
 public:
 	// 0 is an invalid ID
-	virtual ID create(GodotCollisionObject3D *p_object, int p_subindex = 0, const AABB &p_aabb = AABB(), bool p_static = false) override;
+	virtual ID create(RedotCollisionObject3D *p_object, int p_subindex = 0, const AABB &p_aabb = AABB(), bool p_static = false) override;
 	virtual void move(ID p_id, const AABB &p_aabb) override;
 	virtual void set_static(ID p_id, bool p_static) override;
 	virtual void remove(ID p_id) override;
 
-	virtual GodotCollisionObject3D *get_object(ID p_id) const override;
+	virtual RedotCollisionObject3D *get_object(ID p_id) const override;
 	virtual bool is_static(ID p_id) const override;
 	virtual int get_subindex(ID p_id) const override;
 
-	virtual int cull_point(const Vector3 &p_point, GodotCollisionObject3D **p_results, int p_max_results, int *p_result_indices = nullptr) override;
-	virtual int cull_segment(const Vector3 &p_from, const Vector3 &p_to, GodotCollisionObject3D **p_results, int p_max_results, int *p_result_indices = nullptr) override;
-	virtual int cull_aabb(const AABB &p_aabb, GodotCollisionObject3D **p_results, int p_max_results, int *p_result_indices = nullptr) override;
+	virtual int cull_point(const Vector3 &p_point, RedotCollisionObject3D **p_results, int p_max_results, int *p_result_indices = nullptr) override;
+	virtual int cull_segment(const Vector3 &p_from, const Vector3 &p_to, RedotCollisionObject3D **p_results, int p_max_results, int *p_result_indices = nullptr) override;
+	virtual int cull_aabb(const AABB &p_aabb, RedotCollisionObject3D **p_results, int p_max_results, int *p_result_indices = nullptr) override;
 
 	virtual void set_pair_callback(PairCallback p_pair_callback, void *p_userdata) override;
 	virtual void set_unpair_callback(UnpairCallback p_unpair_callback, void *p_userdata) override;
 
 	virtual void update() override;
 
-	static GodotBroadPhase3D *_create();
-	GodotBroadPhase3DBVH();
+	static RedotBroadPhase3D *_create();
+	RedotBroadPhase3DBVH();
 };
 
-#endif // GODOT_BROAD_PHASE_3D_BVH_H
+#endif // Redot_BROAD_PHASE_3D_BVH_H

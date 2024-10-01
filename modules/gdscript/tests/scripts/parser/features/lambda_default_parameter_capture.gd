@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/56751
+# https://github.com/Redotengine/Redot/issues/56751
 
 func test():
 	var x = "local"

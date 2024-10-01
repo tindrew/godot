@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Godot.SourceGenerators.Internal;
+namespace Redot.SourceGenerators.Internal;
 
 internal static class Common
 {
@@ -18,7 +18,7 @@ internal static class Common
                              "must be declared with the partial modifier.";
 
         context.ReportDiagnostic(Diagnostic.Create(
-            new DiagnosticDescriptor(id: "GODOT-INTERNAL-G0001",
+            new DiagnosticDescriptor(id: "Redot-INTERNAL-G0001",
                 title: message,
                 messageFormat: message,
                 category: "Usage",
@@ -52,7 +52,7 @@ internal static class Common
                              "containing types must be declared with the partial modifier.";
 
         context.ReportDiagnostic(Diagnostic.Create(
-            new DiagnosticDescriptor(id: "GODOT-INTERNAL-G0002",
+            new DiagnosticDescriptor(id: "Redot-INTERNAL-G0002",
                 title: message,
                 messageFormat: message,
                 category: "Usage",

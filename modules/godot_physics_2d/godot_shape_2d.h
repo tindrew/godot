@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_shape_2d.h                                                      */
+/*  Redot_shape_2d.h                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,28 +28,28 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_SHAPE_2D_H
-#define GODOT_SHAPE_2D_H
+#ifndef Redot_SHAPE_2D_H
+#define Redot_SHAPE_2D_H
 
 #include "servers/physics_server_2d.h"
 
-class GodotShape2D;
+class RedotShape2D;
 
-class GodotShapeOwner2D {
+class RedotShapeOwner2D {
 public:
 	virtual void _shape_changed() = 0;
-	virtual void remove_shape(GodotShape2D *p_shape) = 0;
+	virtual void remove_shape(RedotShape2D *p_shape) = 0;
 
-	virtual ~GodotShapeOwner2D() {}
+	virtual ~RedotShapeOwner2D() {}
 };
 
-class GodotShape2D {
+class RedotShape2D {
 	RID self;
 	Rect2 aabb;
 	bool configured = false;
 	real_t custom_bias = 0.0;
 
-	HashMap<GodotShapeOwner2D *, int> owners;
+	HashMap<RedotShapeOwner2D *, int> owners;
 
 protected:
 	const double segment_is_valid_support_threshold = 0.99998;
@@ -86,10 +86,10 @@ public:
 	_FORCE_INLINE_ void set_custom_bias(real_t p_bias) { custom_bias = p_bias; }
 	_FORCE_INLINE_ real_t get_custom_bias() const { return custom_bias; }
 
-	void add_owner(GodotShapeOwner2D *p_owner);
-	void remove_owner(GodotShapeOwner2D *p_owner);
-	bool is_owner(GodotShapeOwner2D *p_owner) const;
-	const HashMap<GodotShapeOwner2D *, int> &get_owners() const;
+	void add_owner(RedotShapeOwner2D *p_owner);
+	void remove_owner(RedotShapeOwner2D *p_owner);
+	bool is_owner(RedotShapeOwner2D *p_owner) const;
+	const HashMap<RedotShapeOwner2D *, int> &get_owners() const;
 
 	_FORCE_INLINE_ void get_supports_transformed_cast(const Vector2 &p_cast, const Vector2 &p_normal, const Transform2D &p_xform, Vector2 *r_supports, int &r_amount) const {
 		get_supports(p_xform.basis_xform_inv(p_normal).normalized(), r_supports, r_amount);
@@ -124,8 +124,8 @@ public:
 			}
 		}
 	}
-	GodotShape2D() {}
-	virtual ~GodotShape2D();
+	RedotShape2D() {}
+	virtual ~RedotShape2D();
 };
 
 //let the optimizer do the magic
@@ -144,7 +144,7 @@ public:
 		r_max = MAX(maxa, maxb);                                                                                                                                    \
 	}
 
-class GodotWorldBoundaryShape2D : public GodotShape2D {
+class RedotWorldBoundaryShape2D : public RedotShape2D {
 	Vector2 normal;
 	real_t d = 0.0;
 
@@ -181,7 +181,7 @@ public:
 	}
 };
 
-class GodotSeparationRayShape2D : public GodotShape2D {
+class RedotSeparationRayShape2D : public RedotShape2D {
 	real_t length = 0.0;
 	bool slide_on_slope = false;
 
@@ -214,11 +214,11 @@ public:
 
 	DEFAULT_PROJECT_RANGE_CAST
 
-	_FORCE_INLINE_ GodotSeparationRayShape2D() {}
-	_FORCE_INLINE_ GodotSeparationRayShape2D(real_t p_length) { length = p_length; }
+	_FORCE_INLINE_ RedotSeparationRayShape2D() {}
+	_FORCE_INLINE_ RedotSeparationRayShape2D(real_t p_length) { length = p_length; }
 };
 
-class GodotSegmentShape2D : public GodotShape2D {
+class RedotSegmentShape2D : public RedotShape2D {
 	Vector2 a;
 	Vector2 b;
 	Vector2 n;
@@ -254,15 +254,15 @@ public:
 
 	DEFAULT_PROJECT_RANGE_CAST
 
-	_FORCE_INLINE_ GodotSegmentShape2D() {}
-	_FORCE_INLINE_ GodotSegmentShape2D(const Vector2 &p_a, const Vector2 &p_b, const Vector2 &p_n) {
+	_FORCE_INLINE_ RedotSegmentShape2D() {}
+	_FORCE_INLINE_ RedotSegmentShape2D(const Vector2 &p_a, const Vector2 &p_b, const Vector2 &p_n) {
 		a = p_a;
 		b = p_b;
 		n = p_n;
 	}
 };
 
-class GodotCircleShape2D : public GodotShape2D {
+class RedotCircleShape2D : public RedotShape2D {
 	real_t radius;
 
 public:
@@ -295,7 +295,7 @@ public:
 	DEFAULT_PROJECT_RANGE_CAST
 };
 
-class GodotRectangleShape2D : public GodotShape2D {
+class RedotRectangleShape2D : public RedotShape2D {
 	Vector2 half_extents;
 
 public:
@@ -339,7 +339,7 @@ public:
 		return (p_xform.xform(he) - p_circle).normalized();
 	}
 
-	_FORCE_INLINE_ Vector2 get_box_axis(const Transform2D &p_xform, const Transform2D &p_xform_inv, const GodotRectangleShape2D *p_B, const Transform2D &p_B_xform, const Transform2D &p_B_xform_inv) const {
+	_FORCE_INLINE_ Vector2 get_box_axis(const Transform2D &p_xform, const Transform2D &p_xform_inv, const RedotRectangleShape2D *p_B, const Transform2D &p_B_xform, const Transform2D &p_B_xform_inv) const {
 		Vector2 a, b;
 
 		{
@@ -367,7 +367,7 @@ public:
 	DEFAULT_PROJECT_RANGE_CAST
 };
 
-class GodotCapsuleShape2D : public GodotShape2D {
+class RedotCapsuleShape2D : public RedotShape2D {
 	real_t radius = 0.0;
 	real_t height = 0.0;
 
@@ -408,7 +408,7 @@ public:
 	DEFAULT_PROJECT_RANGE_CAST
 };
 
-class GodotConvexPolygonShape2D : public GodotShape2D {
+class RedotConvexPolygonShape2D : public RedotShape2D {
 	struct Point {
 		Vector2 pos;
 		Vector2 normal; //normal to next segment
@@ -460,21 +460,21 @@ public:
 
 	DEFAULT_PROJECT_RANGE_CAST
 
-	GodotConvexPolygonShape2D() {}
-	~GodotConvexPolygonShape2D();
+	RedotConvexPolygonShape2D() {}
+	~RedotConvexPolygonShape2D();
 };
 
-class GodotConcaveShape2D : public GodotShape2D {
+class RedotConcaveShape2D : public RedotShape2D {
 public:
 	virtual bool is_concave() const override { return true; }
 
 	// Returns true to stop the query.
-	typedef bool (*QueryCallback)(void *p_userdata, GodotShape2D *p_convex);
+	typedef bool (*QueryCallback)(void *p_userdata, RedotShape2D *p_convex);
 
 	virtual void cull(const Rect2 &p_local_aabb, QueryCallback p_callback, void *p_userdata) const = 0;
 };
 
-class GodotConcavePolygonShape2D : public GodotConcaveShape2D {
+class RedotConcavePolygonShape2D : public RedotConcaveShape2D {
 	struct Segment {
 		int points[2] = {};
 	};
@@ -510,13 +510,13 @@ public:
 	virtual void project_rangev(const Vector2 &p_normal, const Transform2D &p_transform, real_t &r_min, real_t &r_max) const override {
 		r_min = 0;
 		r_max = 0;
-		ERR_FAIL_MSG("Unsupported call to project_rangev in GodotConcavePolygonShape2D");
+		ERR_FAIL_MSG("Unsupported call to project_rangev in RedotConcavePolygonShape2D");
 	}
 
 	void project_range(const Vector2 &p_normal, const Transform2D &p_transform, real_t &r_min, real_t &r_max) const {
 		r_min = 0;
 		r_max = 0;
-		ERR_FAIL_MSG("Unsupported call to project_range in GodotConcavePolygonShape2D");
+		ERR_FAIL_MSG("Unsupported call to project_range in RedotConcavePolygonShape2D");
 	}
 
 	virtual void get_supports(const Vector2 &p_normal, Vector2 *r_supports, int &r_amount) const override;
@@ -536,4 +536,4 @@ public:
 
 #undef DEFAULT_PROJECT_RANGE_CAST
 
-#endif // GODOT_SHAPE_2D_H
+#endif // Redot_SHAPE_2D_H

@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_collision_solver_3d.h                                           */
+/*  Redot_collision_solver_3d.h                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,30 +28,30 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_COLLISION_SOLVER_3D_H
-#define GODOT_COLLISION_SOLVER_3D_H
+#ifndef Redot_COLLISION_SOLVER_3D_H
+#define Redot_COLLISION_SOLVER_3D_H
 
-#include "godot_shape_3d.h"
+#include "Redot_shape_3d.h"
 
-class GodotCollisionSolver3D {
+class RedotCollisionSolver3D {
 public:
 	typedef void (*CallbackResult)(const Vector3 &p_point_A, int p_index_A, const Vector3 &p_point_B, int p_index_B, const Vector3 &normal, void *p_userdata);
 
 private:
 	static bool soft_body_query_callback(uint32_t p_node_index, void *p_userdata);
 	static void soft_body_contact_callback(const Vector3 &p_point_A, int p_index_A, const Vector3 &p_point_B, int p_index_B, const Vector3 &normal, void *p_userdata);
-	static bool soft_body_concave_callback(void *p_userdata, GodotShape3D *p_convex);
-	static bool concave_callback(void *p_userdata, GodotShape3D *p_convex);
-	static bool solve_static_world_boundary(const GodotShape3D *p_shape_A, const Transform3D &p_transform_A, const GodotShape3D *p_shape_B, const Transform3D &p_transform_B, CallbackResult p_result_callback, void *p_userdata, bool p_swap_result, real_t p_margin = 0);
-	static bool solve_separation_ray(const GodotShape3D *p_shape_A, const Transform3D &p_transform_A, const GodotShape3D *p_shape_B, const Transform3D &p_transform_B, CallbackResult p_result_callback, void *p_userdata, bool p_swap_result, real_t p_margin = 0);
-	static bool solve_soft_body(const GodotShape3D *p_shape_A, const Transform3D &p_transform_A, const GodotShape3D *p_shape_B, const Transform3D &p_transform_B, CallbackResult p_result_callback, void *p_userdata, bool p_swap_result);
-	static bool solve_concave(const GodotShape3D *p_shape_A, const Transform3D &p_transform_A, const GodotShape3D *p_shape_B, const Transform3D &p_transform_B, CallbackResult p_result_callback, void *p_userdata, bool p_swap_result, real_t p_margin_A = 0, real_t p_margin_B = 0);
-	static bool concave_distance_callback(void *p_userdata, GodotShape3D *p_convex);
-	static bool solve_distance_world_boundary(const GodotShape3D *p_shape_A, const Transform3D &p_transform_A, const GodotShape3D *p_shape_B, const Transform3D &p_transform_B, Vector3 &r_point_A, Vector3 &r_point_B);
+	static bool soft_body_concave_callback(void *p_userdata, RedotShape3D *p_convex);
+	static bool concave_callback(void *p_userdata, RedotShape3D *p_convex);
+	static bool solve_static_world_boundary(const RedotShape3D *p_shape_A, const Transform3D &p_transform_A, const RedotShape3D *p_shape_B, const Transform3D &p_transform_B, CallbackResult p_result_callback, void *p_userdata, bool p_swap_result, real_t p_margin = 0);
+	static bool solve_separation_ray(const RedotShape3D *p_shape_A, const Transform3D &p_transform_A, const RedotShape3D *p_shape_B, const Transform3D &p_transform_B, CallbackResult p_result_callback, void *p_userdata, bool p_swap_result, real_t p_margin = 0);
+	static bool solve_soft_body(const RedotShape3D *p_shape_A, const Transform3D &p_transform_A, const RedotShape3D *p_shape_B, const Transform3D &p_transform_B, CallbackResult p_result_callback, void *p_userdata, bool p_swap_result);
+	static bool solve_concave(const RedotShape3D *p_shape_A, const Transform3D &p_transform_A, const RedotShape3D *p_shape_B, const Transform3D &p_transform_B, CallbackResult p_result_callback, void *p_userdata, bool p_swap_result, real_t p_margin_A = 0, real_t p_margin_B = 0);
+	static bool concave_distance_callback(void *p_userdata, RedotShape3D *p_convex);
+	static bool solve_distance_world_boundary(const RedotShape3D *p_shape_A, const Transform3D &p_transform_A, const RedotShape3D *p_shape_B, const Transform3D &p_transform_B, Vector3 &r_point_A, Vector3 &r_point_B);
 
 public:
-	static bool solve_static(const GodotShape3D *p_shape_A, const Transform3D &p_transform_A, const GodotShape3D *p_shape_B, const Transform3D &p_transform_B, CallbackResult p_result_callback, void *p_userdata, Vector3 *r_sep_axis = nullptr, real_t p_margin_A = 0, real_t p_margin_B = 0);
-	static bool solve_distance(const GodotShape3D *p_shape_A, const Transform3D &p_transform_A, const GodotShape3D *p_shape_B, const Transform3D &p_transform_B, Vector3 &r_point_A, Vector3 &r_point_B, const AABB &p_concave_hint, Vector3 *r_sep_axis = nullptr);
+	static bool solve_static(const RedotShape3D *p_shape_A, const Transform3D &p_transform_A, const RedotShape3D *p_shape_B, const Transform3D &p_transform_B, CallbackResult p_result_callback, void *p_userdata, Vector3 *r_sep_axis = nullptr, real_t p_margin_A = 0, real_t p_margin_B = 0);
+	static bool solve_distance(const RedotShape3D *p_shape_A, const Transform3D &p_transform_A, const RedotShape3D *p_shape_B, const Transform3D &p_transform_B, Vector3 &r_point_A, Vector3 &r_point_B, const AABB &p_concave_hint, Vector3 *r_sep_axis = nullptr);
 };
 
-#endif // GODOT_COLLISION_SOLVER_3D_H
+#endif // Redot_COLLISION_SOLVER_3D_H

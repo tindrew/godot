@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace GodotTools.Core
+namespace RedotTools.Core
 {
     public static class FileUtils
     {

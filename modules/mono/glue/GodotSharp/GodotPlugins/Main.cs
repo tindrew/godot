@@ -5,10 +5,10 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
-using Godot.Bridge;
-using Godot.NativeInterop;
+using Redot.Bridge;
+using Redot.NativeInterop;
 
-namespace GodotPlugins
+namespace RedotPlugins
 {
     public static class Main
     {
@@ -73,7 +73,7 @@ namespace GodotPlugins
         }
 
         private static readonly List<AssemblyName> SharedAssemblies = new();
-        private static readonly Assembly CoreApiAssembly = typeof(global::Godot.GodotObject).Assembly;
+        private static readonly Assembly CoreApiAssembly = typeof(global::Redot.RedotObject).Assembly;
         private static Assembly? _editorApiAssembly;
         private static PluginLoadContextWrapper? _projectLoadContext;
         private static bool _editorHint = false;
@@ -87,7 +87,7 @@ namespace GodotPlugins
         // Right now we do it this way for simplicity as hot-reload is disabled. It will need to be changed later.
         [UnmanagedCallersOnly]
         // ReSharper disable once UnusedMember.Local
-        private static unsafe godot_bool InitializeFromEngine(IntPtr godotDllHandle, godot_bool editorHint,
+        private static unsafe Redot_bool InitializeFromEngine(IntPtr RedotDllHandle, Redot_bool editorHint,
             PluginsCallbacks* pluginsCallbacks, ManagedCallbacks* managedCallbacks,
             IntPtr unmanagedCallbacks, int unmanagedCallbacksSize)
         {
@@ -95,7 +95,7 @@ namespace GodotPlugins
             {
                 _editorHint = editorHint.ToBool();
 
-                _dllImportResolver = new GodotDllImportResolver(godotDllHandle).OnResolveDllImport;
+                _dllImportResolver = new RedotDllImportResolver(RedotDllHandle).OnResolveDllImport;
 
                 SharedAssemblies.Add(CoreApiAssembly.GetName());
                 NativeLibrary.SetDllImportResolver(CoreApiAssembly, _dllImportResolver);
@@ -105,7 +105,7 @@ namespace GodotPlugins
 
                 if (_editorHint)
                 {
-                    _editorApiAssembly = Assembly.Load("GodotSharpEditor");
+                    _editorApiAssembly = Assembly.Load("RedotSharpEditor");
                     SharedAssemblies.Add(_editorApiAssembly.GetName());
                     NativeLibrary.SetDllImportResolver(_editorApiAssembly, _dllImportResolver);
                 }
@@ -119,30 +119,30 @@ namespace GodotPlugins
 
                 *managedCallbacks = ManagedCallbacks.Create();
 
-                return godot_bool.True;
+                return Redot_bool.True;
             }
             catch (Exception e)
             {
                 Console.Error.WriteLine(e);
-                return godot_bool.False;
+                return Redot_bool.False;
             }
         }
 
         [StructLayout(LayoutKind.Sequential)]
         private struct PluginsCallbacks
         {
-            public unsafe delegate* unmanaged<char*, godot_string*, godot_bool> LoadProjectAssemblyCallback;
+            public unsafe delegate* unmanaged<char*, Redot_string*, Redot_bool> LoadProjectAssemblyCallback;
             public unsafe delegate* unmanaged<char*, IntPtr, int, IntPtr> LoadToolsAssemblyCallback;
-            public unsafe delegate* unmanaged<godot_bool> UnloadProjectPluginCallback;
+            public unsafe delegate* unmanaged<Redot_bool> UnloadProjectPluginCallback;
         }
 
         [UnmanagedCallersOnly]
-        private static unsafe godot_bool LoadProjectAssembly(char* nAssemblyPath, godot_string* outLoadedAssemblyPath)
+        private static unsafe Redot_bool LoadProjectAssembly(char* nAssemblyPath, Redot_string* outLoadedAssemblyPath)
         {
             try
             {
                 if (_projectLoadContext != null)
-                    return godot_bool.True; // Already loaded
+                    return Redot_bool.True; // Already loaded
 
                 string assemblyPath = new(nAssemblyPath);
 
@@ -153,12 +153,12 @@ namespace GodotPlugins
 
                 ScriptManagerBridge.LookupScriptsInAssembly(projectAssembly);
 
-                return godot_bool.True;
+                return Redot_bool.True;
             }
             catch (Exception e)
             {
                 Console.Error.WriteLine(e);
-                return godot_bool.False;
+                return Redot_bool.False;
             }
         }
 
@@ -171,19 +171,19 @@ namespace GodotPlugins
                 string assemblyPath = new(nAssemblyPath);
 
                 if (_editorApiAssembly == null)
-                    throw new InvalidOperationException("The Godot editor API assembly is not loaded.");
+                    throw new InvalidOperationException("The Redot editor API assembly is not loaded.");
 
                 var (assembly, _) = LoadPlugin(assemblyPath, isCollectible: false);
 
                 NativeLibrary.SetDllImportResolver(assembly, _dllImportResolver!);
 
-                var method = assembly.GetType("GodotTools.GodotSharpEditor")?
+                var method = assembly.GetType("RedotTools.RedotSharpEditor")?
                     .GetMethod("InternalCreateInstance",
                         BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
 
                 if (method == null)
                 {
-                    throw new MissingMethodException("GodotTools.GodotSharpEditor",
+                    throw new MissingMethodException("RedotTools.RedotSharpEditor",
                         "InternalCreateInstance");
                 }
 
@@ -216,16 +216,16 @@ namespace GodotPlugins
         }
 
         [UnmanagedCallersOnly]
-        private static godot_bool UnloadProjectPlugin()
+        private static Redot_bool UnloadProjectPlugin()
         {
             try
             {
-                return UnloadPlugin(ref _projectLoadContext).ToGodotBool();
+                return UnloadPlugin(ref _projectLoadContext).ToRedotBool();
             }
             catch (Exception e)
             {
                 Console.Error.WriteLine(e);
-                return godot_bool.False;
+                return Redot_bool.False;
             }
         }
 
@@ -263,12 +263,12 @@ namespace GodotPlugins
                     {
                         takingTooLong = true;
 
-                        // TODO: How to log from GodotPlugins? (delegate pointer?)
+                        // TODO: How to log from RedotPlugins? (delegate pointer?)
                         Console.Error.WriteLine("Assembly unloading is taking longer than expected...");
                     }
                     else if (elapsedTimeMs >= 1000)
                     {
-                        // TODO: How to log from GodotPlugins? (delegate pointer?)
+                        // TODO: How to log from RedotPlugins? (delegate pointer?)
                         Console.Error.WriteLine(
                             "Failed to unload assemblies. Possible causes: Strong GC handles, running threads, etc.");
 
@@ -283,7 +283,7 @@ namespace GodotPlugins
             }
             catch (Exception e)
             {
-                // TODO: How to log exceptions from GodotPlugins? (delegate pointer?)
+                // TODO: How to log exceptions from RedotPlugins? (delegate pointer?)
                 Console.Error.WriteLine(e);
                 return false;
             }

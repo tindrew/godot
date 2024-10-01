@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotTTS.java                                                         */
+/*  RedotTTS.java                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,9 +28,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot.tts;
+package org.Redotengine.Redot.tts;
 
-import org.godotengine.godot.GodotLib;
+import org.Redotengine.Redot.RedotLib;
 
 import android.app.Activity;
 import android.content.Context;
@@ -48,7 +48,7 @@ import java.util.Set;
 /**
  * Wrapper for Android Text to Speech API and custom utterance query implementation.
  * <p>
- * A [GodotTTS] provides the following features:
+ * A [RedotTTS] provides the following features:
  * <p>
  * <ul>
  * <li>Access to the Android Text to Speech API.
@@ -56,7 +56,7 @@ import java.util.Set;
  * </ul>
  */
 @Keep
-public class GodotTTS extends UtteranceProgressListener {
+public class RedotTTS extends UtteranceProgressListener {
 	// Note: These constants must be in sync with DisplayServer::TTSUtteranceEvent enum from "servers/display_server.h".
 	final private static int EVENT_START = 0;
 	final private static int EVENT_END = 1;
@@ -65,21 +65,21 @@ public class GodotTTS extends UtteranceProgressListener {
 
 	private final Context context;
 	private TextToSpeech synth;
-	private LinkedList<GodotUtterance> queue;
+	private LinkedList<RedotUtterance> queue;
 	final private Object lock = new Object();
-	private GodotUtterance lastUtterance;
+	private RedotUtterance lastUtterance;
 
 	private boolean speaking;
 	private boolean paused;
 
-	public GodotTTS(Context context) {
+	public RedotTTS(Context context) {
 		this.context = context;
 	}
 
 	private void updateTTS() {
 		if (!speaking && queue.size() > 0) {
 			int mode = TextToSpeech.QUEUE_FLUSH;
-			GodotUtterance message = queue.pollFirst();
+			RedotUtterance message = queue.pollFirst();
 
 			Set<Voice> voices = synth.getVoices();
 			for (Voice v : voices) {
@@ -112,7 +112,7 @@ public class GodotTTS extends UtteranceProgressListener {
 		synchronized (lock) {
 			if (lastUtterance != null && Integer.parseInt(utteranceId) == lastUtterance.id) {
 				lastUtterance.offset = start;
-				GodotLib.ttsCallback(EVENT_BOUNDARY, lastUtterance.id, start + lastUtterance.start);
+				RedotLib.ttsCallback(EVENT_BOUNDARY, lastUtterance.id, start + lastUtterance.start);
 			}
 		}
 	}
@@ -124,7 +124,7 @@ public class GodotTTS extends UtteranceProgressListener {
 	public void onStop(String utteranceId, boolean interrupted) {
 		synchronized (lock) {
 			if (lastUtterance != null && !paused && Integer.parseInt(utteranceId) == lastUtterance.id) {
-				GodotLib.ttsCallback(EVENT_CANCEL, lastUtterance.id, 0);
+				RedotLib.ttsCallback(EVENT_CANCEL, lastUtterance.id, 0);
 				speaking = false;
 				updateTTS();
 			}
@@ -138,7 +138,7 @@ public class GodotTTS extends UtteranceProgressListener {
 	public void onStart(String utteranceId) {
 		synchronized (lock) {
 			if (lastUtterance != null && lastUtterance.start == 0 && Integer.parseInt(utteranceId) == lastUtterance.id) {
-				GodotLib.ttsCallback(EVENT_START, lastUtterance.id, 0);
+				RedotLib.ttsCallback(EVENT_START, lastUtterance.id, 0);
 			}
 		}
 	}
@@ -150,7 +150,7 @@ public class GodotTTS extends UtteranceProgressListener {
 	public void onDone(String utteranceId) {
 		synchronized (lock) {
 			if (lastUtterance != null && !paused && Integer.parseInt(utteranceId) == lastUtterance.id) {
-				GodotLib.ttsCallback(EVENT_END, lastUtterance.id, 0);
+				RedotLib.ttsCallback(EVENT_END, lastUtterance.id, 0);
 				speaking = false;
 				updateTTS();
 			}
@@ -164,7 +164,7 @@ public class GodotTTS extends UtteranceProgressListener {
 	public void onError(String utteranceId, int errorCode) {
 		synchronized (lock) {
 			if (lastUtterance != null && !paused && Integer.parseInt(utteranceId) == lastUtterance.id) {
-				GodotLib.ttsCallback(EVENT_CANCEL, lastUtterance.id, 0);
+				RedotLib.ttsCallback(EVENT_CANCEL, lastUtterance.id, 0);
 				speaking = false;
 				updateTTS();
 			}
@@ -178,7 +178,7 @@ public class GodotTTS extends UtteranceProgressListener {
 	public void onError(String utteranceId) {
 		synchronized (lock) {
 			if (lastUtterance != null && !paused && Integer.parseInt(utteranceId) == lastUtterance.id) {
-				GodotLib.ttsCallback(EVENT_CANCEL, lastUtterance.id, 0);
+				RedotLib.ttsCallback(EVENT_CANCEL, lastUtterance.id, 0);
 				speaking = false;
 				updateTTS();
 			}
@@ -190,7 +190,7 @@ public class GodotTTS extends UtteranceProgressListener {
 	 */
 	public void init() {
 		synth = new TextToSpeech(context, null);
-		queue = new LinkedList<GodotUtterance>();
+		queue = new LinkedList<RedotUtterance>();
 
 		synth.setOnUtteranceProgressListener(this);
 	}
@@ -200,7 +200,7 @@ public class GodotTTS extends UtteranceProgressListener {
 	 */
 	public void speak(String text, String voice, int volume, float pitch, float rate, int utterance_id, boolean interrupt) {
 		synchronized (lock) {
-			GodotUtterance message = new GodotUtterance(text, voice, volume, pitch, rate, utterance_id);
+			RedotUtterance message = new RedotUtterance(text, voice, volume, pitch, rate, utterance_id);
 			queue.addLast(message);
 
 			if (isPaused()) {
@@ -261,13 +261,13 @@ public class GodotTTS extends UtteranceProgressListener {
 	 */
 	public void stopSpeaking() {
 		synchronized (lock) {
-			for (GodotUtterance u : queue) {
-				GodotLib.ttsCallback(EVENT_CANCEL, u.id, 0);
+			for (RedotUtterance u : queue) {
+				RedotLib.ttsCallback(EVENT_CANCEL, u.id, 0);
 			}
 			queue.clear();
 
 			if (lastUtterance != null) {
-				GodotLib.ttsCallback(EVENT_CANCEL, lastUtterance.id, 0);
+				RedotLib.ttsCallback(EVENT_CANCEL, lastUtterance.id, 0);
 			}
 			lastUtterance = null;
 

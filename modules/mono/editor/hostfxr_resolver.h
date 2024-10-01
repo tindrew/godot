@@ -2,10 +2,10 @@
 /*  hostfxr_resolver.h                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -33,13 +33,13 @@
 
 #include "core/string/ustring.h"
 
-namespace godotsharp {
+namespace Redotsharp {
 namespace hostfxr_resolver {
 
 bool try_get_path_from_dotnet_root(const String &p_dotnet_root, String &r_out_fxr_path);
 bool try_get_path(String &r_out_dotnet_root, String &r_out_fxr_path);
 
 } //namespace hostfxr_resolver
-} //namespace godotsharp
+} //namespace Redotsharp
 
 #endif // HOSTFXR_RESOLVER_H

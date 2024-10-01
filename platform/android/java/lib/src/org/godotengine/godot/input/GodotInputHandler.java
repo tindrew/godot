@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotInputHandler.java                                                */
+/*  RedotInputHandler.java                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,13 +28,13 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot.input;
+package org.Redotengine.Redot.input;
 
-import static org.godotengine.godot.utils.GLUtils.DEBUG;
+import static org.Redotengine.Redot.utils.GLUtils.DEBUG;
 
-import org.godotengine.godot.Godot;
-import org.godotengine.godot.GodotLib;
-import org.godotengine.godot.GodotRenderView;
+import org.Redotengine.Redot.Redot;
+import org.Redotengine.Redot.RedotLib;
+import org.Redotengine.Redot.RedotRenderView;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -60,10 +60,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Handles input related events for the {@link GodotRenderView} view.
+ * Handles input related events for the {@link RedotRenderView} view.
  */
-public class GodotInputHandler implements InputManager.InputDeviceListener, SensorEventListener {
-	private static final String TAG = GodotInputHandler.class.getSimpleName();
+public class RedotInputHandler implements InputManager.InputDeviceListener, SensorEventListener {
+	private static final String TAG = RedotInputHandler.class.getSimpleName();
 
 	private static final int ROTARY_INPUT_VERTICAL_AXIS = 1;
 	private static final int ROTARY_INPUT_HORIZONTAL_AXIS = 0;
@@ -72,12 +72,12 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 	private final SparseArray<Joystick> mJoysticksDevices = new SparseArray<>(4);
 	private final HashSet<Integer> mHardwareKeyboardIds = new HashSet<>();
 
-	private final Godot godot;
+	private final Redot Redot;
 	private final InputManager mInputManager;
 	private final WindowManager windowManager;
 	private final GestureDetector gestureDetector;
 	private final ScaleGestureDetector scaleGestureDetector;
-	private final GodotGestureHandler godotGestureHandler;
+	private final RedotGestureHandler RedotGestureHandler;
 
 	/**
 	 * Used to decide whether mouse capture can be enabled.
@@ -86,17 +86,17 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 
 	private int rotaryInputAxis = ROTARY_INPUT_VERTICAL_AXIS;
 
-	public GodotInputHandler(Context context, Godot godot) {
-		this.godot = godot;
+	public RedotInputHandler(Context context, Redot Redot) {
+		this.Redot = Redot;
 		mInputManager = (InputManager)context.getSystemService(Context.INPUT_SERVICE);
 		mInputManager.registerInputDeviceListener(this, null);
 
 		windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
 
-		this.godotGestureHandler = new GodotGestureHandler(this);
-		this.gestureDetector = new GestureDetector(context, godotGestureHandler);
+		this.RedotGestureHandler = new RedotGestureHandler(this);
+		this.gestureDetector = new GestureDetector(context, RedotGestureHandler);
 		this.gestureDetector.setIsLongpressEnabled(false);
-		this.scaleGestureDetector = new ScaleGestureDetector(context, godotGestureHandler);
+		this.scaleGestureDetector = new ScaleGestureDetector(context, RedotGestureHandler);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			this.scaleGestureDetector.setStylusScaleEnabled(true);
 		}
@@ -115,7 +115,7 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 	 * Note: This may interfere with multi-touch handling / support.
 	 */
 	public void enablePanningAndScalingGestures(boolean enable) {
-		this.godotGestureHandler.setPanningAndScalingEnabled(enable);
+		this.RedotGestureHandler.setPanningAndScalingEnabled(enable);
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 	 * dispatched from the UI thread.
 	 */
 	private boolean shouldDispatchInputToRenderThread() {
-		return GodotLib.shouldDispatchInputToRenderThread();
+		return RedotLib.shouldDispatchInputToRenderThread();
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 	}
 
 	public void onPointerCaptureChange(boolean hasCapture) {
-		godotGestureHandler.onPointerCaptureChange(hasCapture);
+		RedotGestureHandler.onPointerCaptureChange(hasCapture);
 	}
 
 	public boolean onKeyUp(final int keyCode, KeyEvent event) {
@@ -167,9 +167,9 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 			// Check if the device exists
 			final int deviceId = event.getDeviceId();
 			if (mJoystickIds.indexOfKey(deviceId) >= 0) {
-				final int button = getGodotButton(keyCode);
-				final int godotJoyId = mJoystickIds.get(deviceId);
-				handleJoystickButtonEvent(godotJoyId, button, false);
+				final int button = getRedotButton(keyCode);
+				final int RedotJoyId = mJoystickIds.get(deviceId);
+				handleJoystickButtonEvent(RedotJoyId, button, false);
 			}
 		} else {
 			// getKeyCode(): The physical key that was pressed.
@@ -184,7 +184,7 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 
 	public boolean onKeyDown(final int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			godot.onBackPressed();
+			Redot.onBackPressed();
 			// press 'back' button should not terminate program
 			//normal handle 'back' event in game logic
 			return true;
@@ -203,9 +203,9 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 				return true;
 
 			if (mJoystickIds.indexOfKey(deviceId) >= 0) {
-				final int button = getGodotButton(keyCode);
-				final int godotJoyId = mJoystickIds.get(deviceId);
-				handleJoystickButtonEvent(godotJoyId, button, true);
+				final int button = getRedotButton(keyCode);
+				final int RedotJoyId = mJoystickIds.get(deviceId);
+				handleJoystickButtonEvent(RedotJoyId, button, true);
 			}
 		} else {
 			final int physical_keycode = event.getKeyCode();
@@ -226,12 +226,12 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 			return true;
 		}
 
-		if (godotGestureHandler.onMotionEvent(event)) {
+		if (RedotGestureHandler.onMotionEvent(event)) {
 			// The gesture handler has handled the event.
 			return true;
 		}
 
-		// Drag events are handled by the [GodotGestureHandler]
+		// Drag events are handled by the [RedotGestureHandler]
 		if (event.getActionMasked() == MotionEvent.ACTION_MOVE) {
 			return true;
 		}
@@ -250,7 +250,7 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 			// Check if the device exists
 			final int deviceId = event.getDeviceId();
 			if (mJoystickIds.indexOfKey(deviceId) >= 0) {
-				final int godotJoyId = mJoystickIds.get(deviceId);
+				final int RedotJoyId = mJoystickIds.get(deviceId);
 				Joystick joystick = mJoysticksDevices.get(deviceId);
 				if (joystick == null) {
 					return true;
@@ -261,12 +261,12 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 					final float value = event.getAxisValue(axis);
 					/*
 					  As all axes are polled for each event, only fire an axis event if the value has actually changed.
-					  Prevents flooding Godot with repeated events.
+					  Prevents flooding Redot with repeated events.
 					 */
 					if (joystick.axesValues.indexOfKey(axis) < 0 || (float)joystick.axesValues.get(axis) != value) {
 						// save value to prevent repeats
 						joystick.axesValues.put(axis, value);
-						handleJoystickAxisEvent(godotJoyId, i, value);
+						handleJoystickAxisEvent(RedotJoyId, i, value);
 					}
 				}
 
@@ -276,7 +276,7 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 					if (joystick.hatX != hatX || joystick.hatY != hatY) {
 						joystick.hatX = hatX;
 						joystick.hatY = hatY;
-						handleJoystickHatEvent(godotJoyId, hatX, hatY);
+						handleJoystickHatEvent(RedotJoyId, hatX, hatY);
 					}
 				}
 				return true;
@@ -289,7 +289,7 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 			return true;
 		}
 
-		if (godotGestureHandler.onMotionEvent(event)) {
+		if (RedotGestureHandler.onMotionEvent(event)) {
 			// The gesture handler has handled the event.
 			return true;
 		}
@@ -312,12 +312,12 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 	}
 
 	private int assignJoystickIdNumber(int deviceId) {
-		int godotJoyId = 0;
-		while (mJoystickIds.indexOfValue(godotJoyId) >= 0) {
-			godotJoyId++;
+		int RedotJoyId = 0;
+		while (mJoystickIds.indexOfValue(RedotJoyId) >= 0) {
+			RedotJoyId++;
 		}
-		mJoystickIds.put(deviceId, godotJoyId);
-		return godotJoyId;
+		mJoystickIds.put(deviceId, RedotJoyId);
+		return RedotJoyId;
 	}
 
 	@Override
@@ -380,7 +380,7 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 		Collections.sort(joystick.axes);
 		for (int idx = 0; idx < joystick.axes.size(); idx++) {
 			//Helps with creating new joypad mappings.
-			Log.i(TAG, " - Mapping Android axis " + joystick.axes.get(idx) + " to Godot axis " + idx);
+			Log.i(TAG, " - Mapping Android axis " + joystick.axes.get(idx) + " to Redot axis " + idx);
 		}
 		mJoysticksDevices.put(deviceId, joystick);
 
@@ -395,10 +395,10 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 		if (mJoystickIds.indexOfKey(deviceId) < 0) {
 			return;
 		}
-		final int godotJoyId = mJoystickIds.get(deviceId);
+		final int RedotJoyId = mJoystickIds.get(deviceId);
 		mJoystickIds.delete(deviceId);
 		mJoysticksDevices.delete(deviceId);
-		handleJoystickConnectionChangedEvent(godotJoyId, false, "");
+		handleJoystickConnectionChangedEvent(RedotJoyId, false, "");
 	}
 
 	@Override
@@ -407,7 +407,7 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 		onInputDeviceAdded(deviceId);
 	}
 
-	public static int getGodotButton(int keyCode) {
+	public static int getRedotButton(int keyCode) {
 		int button;
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_BUTTON_A: // Android A is SNES B
@@ -734,7 +734,7 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 
 	private void dispatchInputEventRunnable(@NonNull InputEventRunnable runnable) {
 		if (shouldDispatchInputToRenderThread()) {
-			godot.runOnRenderThread(runnable);
+			Redot.runOnRenderThread(runnable);
 		} else {
 			runnable.run();
 		}
@@ -782,7 +782,7 @@ public class GodotInputHandler implements InputManager.InputDeviceListener, Sens
 		}
 
 		runnable.setSensorEvent(event.sensor.getType(), rotatedValue0, rotatedValue1, rotatedValue2);
-		godot.runOnRenderThread(runnable);
+		Redot.runOnRenderThread(runnable);
 	}
 
 	@Override

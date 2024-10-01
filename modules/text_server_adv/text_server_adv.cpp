@@ -2,10 +2,10 @@
 /*  text_server_adv.cpp                                                   */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -33,18 +33,18 @@
 #ifdef GDEXTENSION
 // Headers for building as GDExtension plug-in.
 
-#include <godot_cpp/classes/file_access.hpp>
-#include <godot_cpp/classes/os.hpp>
-#include <godot_cpp/classes/project_settings.hpp>
-#include <godot_cpp/classes/rendering_server.hpp>
-#include <godot_cpp/classes/translation_server.hpp>
-#include <godot_cpp/core/error_macros.hpp>
+#include <Redot_cpp/classes/file_access.hpp>
+#include <Redot_cpp/classes/os.hpp>
+#include <Redot_cpp/classes/project_settings.hpp>
+#include <Redot_cpp/classes/rendering_server.hpp>
+#include <Redot_cpp/classes/translation_server.hpp>
+#include <Redot_cpp/core/error_macros.hpp>
 
-using namespace godot;
+using namespace Redot;
 
 #define GLOBAL_GET(m_var) ProjectSettings::get_singleton()->get_setting_with_override(m_var)
 
-#elif defined(GODOT_MODULE)
+#elif defined(Redot_MODULE)
 // Headers for building as built-in module.
 
 #include "core/config/project_settings.h"
@@ -380,7 +380,7 @@ bool TextServerAdvanced::_has_feature(Feature p_feature) const {
 String TextServerAdvanced::_get_name() const {
 #ifdef GDEXTENSION
 	return "ICU / HarfBuzz / Graphite (GDExtension)";
-#elif defined(GODOT_MODULE)
+#elif defined(Redot_MODULE)
 	return "ICU / HarfBuzz / Graphite (Built-in)";
 #endif
 }
@@ -5055,7 +5055,7 @@ RID TextServerAdvanced::_find_sys_font_for_text(const RID &p_fdef, const String 
 #ifdef GDEXTENSION
 	for (int fb = 0; fb < fallback_font_name.size(); fb++) {
 		const String &E = fallback_font_name[fb];
-#elif defined(GODOT_MODULE)
+#elif defined(Redot_MODULE)
 	for (const String &E : fallback_font_name) {
 #endif
 		SystemFontKey key = SystemFontKey(E, font_style & TextServer::FONT_ITALIC, font_weight, font_stretch, p_fdef, this);
@@ -7060,7 +7060,7 @@ String TextServerAdvanced::_strip_diacritics(const String &p_string) const {
 		if (u_getCombiningClass(normalized_string[i]) == 0) {
 #ifdef GDEXTENSION
 			result = result + String::chr(normalized_string[i]);
-#elif defined(GODOT_MODULE)
+#elif defined(Redot_MODULE)
 			result = result + normalized_string[i];
 #endif
 		}

@@ -150,10 +150,10 @@ namespace embree
       }
     }
     else {
-      // -- GODOT start --
+      // -- Redot start --
       // throw std::runtime_error("not supported node type in bvh_statistics");
       abort();
-      // -- GODOT end --
+      // -- Redot end --
     }
     return s;
   } 

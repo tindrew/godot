@@ -2,10 +2,10 @@
 /*  voxel_gi.cpp                                                          */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -238,7 +238,7 @@ void VoxelGIData::_bind_methods() {
 
 #ifndef DISABLE_DEPRECATED
 bool VoxelGI::_set(const StringName &p_name, const Variant &p_value) {
-	if (p_name == "extents") { // Compatibility with Godot 3.x.
+	if (p_name == "extents") { // Compatibility with Redot 3.x.
 		set_size((Vector3)p_value * 2);
 		return true;
 	}
@@ -246,7 +246,7 @@ bool VoxelGI::_set(const StringName &p_name, const Variant &p_value) {
 }
 
 bool VoxelGI::_get(const StringName &p_name, Variant &r_property) const {
-	if (p_name == "extents") { // Compatibility with Godot 3.x.
+	if (p_name == "extents") { // Compatibility with Redot 3.x.
 		r_property = size / 2;
 		return true;
 	}

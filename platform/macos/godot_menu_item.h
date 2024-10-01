@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_menu_item.h                                                     */
+/*  Redot_menu_item.h                                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_MENU_ITEM_H
-#define GODOT_MENU_ITEM_H
+#ifndef Redot_MENU_ITEM_H
+#define Redot_MENU_ITEM_H
 
 #include "servers/display_server.h"
 
@@ -45,7 +45,7 @@ enum GlobalMenuCheckType {
 	CHECKABLE_TYPE_RADIO_BUTTON,
 };
 
-@interface GodotMenuItem : NSObject {
+@interface RedotMenuItem : NSObject {
 @public
 	Callable callback;
 	Callable key_callback;
@@ -60,4 +60,4 @@ enum GlobalMenuCheckType {
 
 @end
 
-#endif // GODOT_MENU_ITEM_H
+#endif // Redot_MENU_ITEM_H

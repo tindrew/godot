@@ -1,29 +1,29 @@
-using Godot;
-using GodotTools.Core;
-using GodotTools.Export;
-using GodotTools.Utils;
+using Redot;
+using RedotTools.Core;
+using RedotTools.Export;
+using RedotTools.Utils;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using GodotTools.Build;
-using GodotTools.Ides;
-using GodotTools.Ides.Rider;
-using GodotTools.Inspector;
-using GodotTools.Internals;
-using GodotTools.ProjectEditor;
+using RedotTools.Build;
+using RedotTools.Ides;
+using RedotTools.Ides.Rider;
+using RedotTools.Inspector;
+using RedotTools.Internals;
+using RedotTools.ProjectEditor;
 using JetBrains.Annotations;
-using static GodotTools.Internals.Globals;
+using static RedotTools.Internals.Globals;
 using Environment = System.Environment;
-using File = GodotTools.Utils.File;
-using OS = GodotTools.Utils.OS;
+using File = RedotTools.Utils.File;
+using OS = RedotTools.Utils.OS;
 using Path = System.IO.Path;
 
-namespace GodotTools
+namespace RedotTools
 {
-    public partial class GodotSharpEditor : EditorPlugin, ISerializationListener
+    public partial class RedotSharpEditor : EditorPlugin, ISerializationListener
     {
         public static class Settings
         {
@@ -51,7 +51,7 @@ namespace GodotTools
         private WeakRef _exportPluginWeak;
         private WeakRef _inspectorPluginWeak;
 
-        public GodotIdeManager GodotIdeManager { get; private set; }
+        public RedotIdeManager RedotIdeManager { get; private set; }
 
         public MSBuildPanel MSBuildPanel { get; private set; }
 #nullable enable
@@ -61,7 +61,7 @@ namespace GodotTools
         [UsedImplicitly]
         private bool CreateProjectSolutionIfNeeded()
         {
-            if (!File.Exists(GodotSharpDirs.ProjectSlnPath) || !File.Exists(GodotSharpDirs.ProjectCsProjPath))
+            if (!File.Exists(RedotSharpDirs.ProjectSlnPath) || !File.Exists(RedotSharpDirs.ProjectCsProjPath))
             {
                 return CreateProjectSolution();
             }
@@ -76,9 +76,9 @@ namespace GodotTools
             {
                 pr.Step("Generating C# project...".TTR());
 
-                string csprojDir = Path.GetDirectoryName(GodotSharpDirs.ProjectCsProjPath)!;
-                string slnDir = Path.GetDirectoryName(GodotSharpDirs.ProjectSlnPath)!;
-                string name = GodotSharpDirs.ProjectAssemblyName;
+                string csprojDir = Path.GetDirectoryName(RedotSharpDirs.ProjectCsProjPath)!;
+                string slnDir = Path.GetDirectoryName(RedotSharpDirs.ProjectSlnPath)!;
+                string name = RedotSharpDirs.ProjectAssemblyName;
                 string guid = CsProjOperations.GenerateGameProject(csprojDir, name);
 
                 if (guid.Length > 0)
@@ -86,7 +86,7 @@ namespace GodotTools
                     var solution = new DotNetSolution(name, slnDir);
 
                     var projectInfo = new DotNetSolution.ProjectInfo(guid,
-                        Path.GetRelativePath(slnDir, GodotSharpDirs.ProjectCsProjPath),
+                        Path.GetRelativePath(slnDir, RedotSharpDirs.ProjectCsProjPath),
                         new List<string> { "Debug", "ExportDebug", "ExportRelease" });
 
                     solution.AddNewProject(name, projectInfo);
@@ -128,7 +128,7 @@ namespace GodotTools
             {
                 case MenuOptions.CreateSln:
                 {
-                    if (File.Exists(GodotSharpDirs.ProjectSlnPath) || File.Exists(GodotSharpDirs.ProjectCsProjPath))
+                    if (File.Exists(RedotSharpDirs.ProjectSlnPath) || File.Exists(RedotSharpDirs.ProjectCsProjPath))
                     {
                         ShowConfirmCreateSlnDialog();
                     }
@@ -145,7 +145,7 @@ namespace GodotTools
 
         private void BuildProjectPressed()
         {
-            if (!File.Exists(GodotSharpDirs.ProjectCsProjPath))
+            if (!File.Exists(RedotSharpDirs.ProjectCsProjPath))
             {
                 if (!CreateProjectSolution())
                     return; // Failed to create project.
@@ -260,8 +260,8 @@ namespace GodotTools
 
                     var args = new List<string>
                     {
-                        Path.Combine(GodotSharpDirs.DataEditorToolsDir, "GodotTools.OpenVisualStudio.dll"),
-                        GodotSharpDirs.ProjectSlnPath,
+                        Path.Combine(RedotSharpDirs.DataEditorToolsDir, "RedotTools.OpenVisualStudio.dll"),
+                        RedotSharpDirs.ProjectSlnPath,
                         line >= 0 ? $"{scriptPath};{line + 1};{col + 1}" : scriptPath
                     };
 
@@ -269,7 +269,7 @@ namespace GodotTools
 
                     try
                     {
-                        if (Godot.OS.IsStdOutVerbose())
+                        if (Redot.OS.IsStdOutVerbose())
                             Console.WriteLine(
                                 $"Running: \"{command}\" {string.Join(" ", args.Select(a => $"\"{a}\""))}");
 
@@ -288,14 +288,14 @@ namespace GodotTools
                 case ExternalEditorId.Rider:
                 {
                     string scriptPath = ProjectSettings.GlobalizePath(script.ResourcePath);
-                    RiderPathManager.OpenFile(GodotSharpDirs.ProjectSlnPath, scriptPath, line + 1, col);
+                    RiderPathManager.OpenFile(RedotSharpDirs.ProjectSlnPath, scriptPath, line + 1, col);
                     return Error.Ok;
                 }
                 case ExternalEditorId.MonoDevelop:
                 {
                     string scriptPath = ProjectSettings.GlobalizePath(script.ResourcePath);
 
-                    GodotIdeManager.LaunchIdeAsync().ContinueWith(launchTask =>
+                    RedotIdeManager.LaunchIdeAsync().ContinueWith(launchTask =>
                     {
                         var editorPick = launchTask.Result;
                         if (line >= 0)
@@ -341,7 +341,7 @@ namespace GodotTools
                         }
                     }
 
-                    args.Add(Path.GetDirectoryName(GodotSharpDirs.ProjectSlnPath)!);
+                    args.Add(Path.GetDirectoryName(RedotSharpDirs.ProjectSlnPath)!);
 
                     string scriptPath = ProjectSettings.GlobalizePath(script.ResourcePath);
 
@@ -412,22 +412,22 @@ namespace GodotTools
             try
             {
                 // Migrate solution from old configuration names to: Debug, ExportDebug and ExportRelease
-                DotNetSolution.MigrateFromOldConfigNames(GodotSharpDirs.ProjectSlnPath);
+                DotNetSolution.MigrateFromOldConfigNames(RedotSharpDirs.ProjectSlnPath);
 
-                var msbuildProject = ProjectUtils.Open(GodotSharpDirs.ProjectCsProjPath)
+                var msbuildProject = ProjectUtils.Open(RedotSharpDirs.ProjectCsProjPath)
                                      ?? throw new InvalidOperationException("Cannot open C# project.");
 
                 // NOTE: The order in which changes are made to the project is important
 
                 // Migrate to MSBuild project Sdks style if using the old style
-                ProjectUtils.MigrateToProjectSdksStyle(msbuildProject, GodotSharpDirs.ProjectAssemblyName);
+                ProjectUtils.MigrateToProjectSdksStyle(msbuildProject, RedotSharpDirs.ProjectAssemblyName);
 
-                ProjectUtils.EnsureGodotSdkIsUpToDate(msbuildProject);
+                ProjectUtils.EnsureRedotSdkIsUpToDate(msbuildProject);
 
                 if (msbuildProject.HasUnsavedChanges)
                 {
                     // Save a copy of the project before replacing it
-                    FileUtils.SaveBackupCopy(GodotSharpDirs.ProjectCsProjPath);
+                    FileUtils.SaveBackupCopy(RedotSharpDirs.ProjectCsProjPath);
 
                     msbuildProject.Save();
                 }
@@ -448,7 +448,7 @@ namespace GodotTools
         {
             base._EnablePlugin();
 
-            ProjectSettings.SettingsChanged += GodotSharpDirs.DetermineProjectLocation;
+            ProjectSettings.SettingsChanged += RedotSharpDirs.DetermineProjectLocation;
 
             if (Instance != null)
                 throw new InvalidOperationException();
@@ -460,7 +460,7 @@ namespace GodotTools
             // correct version first, otherwise pick the latest.
             if (DotNetFinder.TryFindDotNetSdk(dotNetSdkSearchVersion, out var sdkVersion, out string? sdkPath))
             {
-                if (Godot.OS.IsStdOutVerbose())
+                if (Redot.OS.IsStdOutVerbose())
                     Console.WriteLine($"Found .NET Sdk version '{sdkVersion}': {sdkPath}");
 
                 ProjectUtils.MSBuildLocatorRegisterMSBuildPath(sdkPath);
@@ -470,12 +470,12 @@ namespace GodotTools
                 try
                 {
                     ProjectUtils.MSBuildLocatorRegisterLatest(out sdkVersion, out sdkPath);
-                    if (Godot.OS.IsStdOutVerbose())
+                    if (Redot.OS.IsStdOutVerbose())
                         Console.WriteLine($"Found .NET Sdk version '{sdkVersion}': {sdkPath}");
                 }
                 catch (InvalidOperationException e)
                 {
-                    if (Godot.OS.IsStdOutVerbose())
+                    if (Redot.OS.IsStdOutVerbose())
                         GD.PrintErr(e.ToString());
                     GD.PushError($".NET Sdk not found. The required version is '{dotNetSdkSearchVersion}'.");
                 }
@@ -522,7 +522,7 @@ namespace GodotTools
             // Move Build button so it appears to the left of the Play button.
             _toolBarBuildButton.GetParent().MoveChild(_toolBarBuildButton, 0);
 
-            if (File.Exists(GodotSharpDirs.ProjectCsProjPath))
+            if (File.Exists(RedotSharpDirs.ProjectCsProjPath))
             {
                 ApplyNecessaryChangesToSolution();
             }
@@ -570,7 +570,7 @@ namespace GodotTools
                                    $",Custom:{(int)ExternalEditorId.CustomEditor}";
             }
 
-            _editorSettings.AddPropertyInfo(new Godot.Collections.Dictionary
+            _editorSettings.AddPropertyInfo(new Redot.Collections.Dictionary
             {
                 ["type"] = (int)Variant.Type.Int,
                 ["name"] = Settings.ExternalEditor,
@@ -578,14 +578,14 @@ namespace GodotTools
                 ["hint_string"] = settingsHintStr
             });
 
-            _editorSettings.AddPropertyInfo(new Godot.Collections.Dictionary
+            _editorSettings.AddPropertyInfo(new Redot.Collections.Dictionary
             {
                 ["type"] = (int)Variant.Type.String,
                 ["name"] = Settings.CustomExecPath,
                 ["hint"] = (int)PropertyHint.GlobalFile,
             });
 
-            _editorSettings.AddPropertyInfo(new Godot.Collections.Dictionary
+            _editorSettings.AddPropertyInfo(new Redot.Collections.Dictionary
             {
                 ["type"] = (int)Variant.Type.String,
                 ["name"] = Settings.CustomExecPathArgs,
@@ -593,7 +593,7 @@ namespace GodotTools
             _editorSettings.SetInitialValue(Settings.CustomExecPathArgs, "{file}", false);
 
             var verbosityLevels = Enum.GetValues<VerbosityLevelId>().Select(level => $"{Enum.GetName(level)}:{(int)level}");
-            _editorSettings.AddPropertyInfo(new Godot.Collections.Dictionary
+            _editorSettings.AddPropertyInfo(new Redot.Collections.Dictionary
             {
                 ["type"] = (int)Variant.Type.Int,
                 ["name"] = Settings.VerbosityLevel,
@@ -601,7 +601,7 @@ namespace GodotTools
                 ["hint_string"] = string.Join(",", verbosityLevels),
             });
 
-            _editorSettings.AddPropertyInfo(new Godot.Collections.Dictionary
+            _editorSettings.AddPropertyInfo(new Redot.Collections.Dictionary
             {
                 ["type"] = (int)Variant.Type.Int,
                 ["name"] = Settings.ProblemsLayout,
@@ -625,8 +625,8 @@ namespace GodotTools
             BuildManager.Initialize();
             RiderPathManager.Initialize();
 
-            GodotIdeManager = new GodotIdeManager();
-            AddChild(GodotIdeManager);
+            RedotIdeManager = new RedotIdeManager();
+            AddChild(RedotIdeManager);
         }
 
         public override void _DisablePlugin()
@@ -666,19 +666,19 @@ namespace GodotTools
                     // Otherwise, if the GC disposes it at a later time, EditorExportPlatformAndroid
                     // will be freed after EditorSettings already was, and its device polling thread
                     // will try to access the EditorSettings singleton, resulting in null dereferencing.
-                    (_exportPluginWeak.GetRef().AsGodotObject() as ExportPlugin)?.Dispose();
+                    (_exportPluginWeak.GetRef().AsRedotObject() as ExportPlugin)?.Dispose();
 
                     _exportPluginWeak.Dispose();
                 }
 
                 if (IsInstanceValid(_inspectorPluginWeak))
                 {
-                    (_inspectorPluginWeak.GetRef().AsGodotObject() as InspectorPlugin)?.Dispose();
+                    (_inspectorPluginWeak.GetRef().AsRedotObject() as InspectorPlugin)?.Dispose();
 
                     _inspectorPluginWeak.Dispose();
                 }
 
-                GodotIdeManager?.Dispose();
+                RedotIdeManager?.Dispose();
             }
 
             base.Dispose(disposing);
@@ -695,7 +695,7 @@ namespace GodotTools
 
         // Singleton
 #nullable disable
-        public static GodotSharpEditor Instance { get; private set; }
+        public static RedotSharpEditor Instance { get; private set; }
 #nullable enable
 
         [UsedImplicitly]
@@ -706,20 +706,20 @@ namespace GodotTools
             var populateConstructorMethod =
                 AppDomain.CurrentDomain
                     .GetAssemblies()
-                    .First(x => x.GetName().Name == "GodotSharpEditor")
-                    .GetType("Godot.EditorConstructors")?
+                    .First(x => x.GetName().Name == "RedotSharpEditor")
+                    .GetType("Redot.EditorConstructors")?
                     .GetMethod("AddEditorConstructors",
                         BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
 
             if (populateConstructorMethod == null)
             {
-                throw new MissingMethodException("Godot.EditorConstructors",
+                throw new MissingMethodException("Redot.EditorConstructors",
                     "AddEditorConstructors");
             }
 
             populateConstructorMethod.Invoke(null, null);
 
-            return new GodotSharpEditor().NativeInstance;
+            return new RedotSharpEditor().NativeInstance;
         }
     }
 }

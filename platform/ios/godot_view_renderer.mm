@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_view_renderer.mm                                                */
+/*  Redot_view_renderer.mm                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#import "godot_view_renderer.h"
+#import "Redot_view_renderer.h"
 
 #import "display_server_ios.h"
 #import "os_ios.h"
@@ -44,7 +44,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
-@interface GodotViewRenderer ()
+@interface RedotViewRenderer ()
 
 @property(assign, nonatomic) BOOL hasFinishedProjectDataSetup;
 @property(assign, nonatomic) BOOL hasStartedMain;
@@ -52,7 +52,7 @@
 
 @end
 
-@implementation GodotViewRenderer
+@implementation RedotViewRenderer
 
 - (BOOL)setupView:(UIView *)view {
 	if (self.hasFinishedSetup) {

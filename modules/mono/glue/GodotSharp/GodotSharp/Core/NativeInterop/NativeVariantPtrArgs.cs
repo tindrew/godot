@@ -1,16 +1,16 @@
 using System.Runtime.CompilerServices;
 
-namespace Godot.NativeInterop
+namespace Redot.NativeInterop
 {
     // Our source generators will add trampolines methods that access variant arguments.
     // This struct makes that possible without having to enable `AllowUnsafeBlocks` in game projects.
 
     public unsafe ref struct NativeVariantPtrArgs
     {
-        private godot_variant** _args;
+        private Redot_variant** _args;
         private int _argc;
 
-        internal NativeVariantPtrArgs(godot_variant** args, int argc)
+        internal NativeVariantPtrArgs(Redot_variant** args, int argc)
         {
             _args = args;
             _argc = argc;
@@ -25,7 +25,7 @@ namespace Godot.NativeInterop
             get => _argc;
         }
 
-        public ref godot_variant this[int index]
+        public ref Redot_variant this[int index]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => ref *_args[index];

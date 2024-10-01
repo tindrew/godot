@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godotsharp_dirs.cpp                                                   */
+/*  Redotsharp_dirs.cpp                                                   */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "godotsharp_dirs.h"
+#include "Redotsharp_dirs.h"
 
 #include "mono_gd/gd_mono.h"
 #include "utils/path_utils.h"
@@ -42,7 +42,7 @@
 #include "editor/editor_paths.h"
 #endif
 
-namespace GodotSharpDirs {
+namespace RedotSharpDirs {
 
 String _get_expected_build_config() {
 #ifdef TOOLS_ENABLED
@@ -63,7 +63,7 @@ String _get_mono_user_dir() {
 	if (EditorPaths::get_singleton()) {
 		return EditorPaths::get_singleton()->get_data_dir().path_join("mono");
 	} else {
-		String settings_path = OS::get_singleton()->get_data_path().path_join(OS::get_singleton()->get_godot_dir_name());
+		String settings_path = OS::get_singleton()->get_data_path().path_join(OS::get_singleton()->get_Redot_dir_name());
 
 		// Self-contained mode if a `._sc_` or `_sc_` file is present in executable dir.
 		String exe_dir = OS::get_singleton()->get_executable_path().get_base_dir();
@@ -92,7 +92,7 @@ String _get_mono_user_dir() {
 }
 
 #if !TOOLS_ENABLED
-// This should be the equivalent of GodotTools.Utils.OS.PlatformNameMap.
+// This should be the equivalent of RedotTools.Utils.OS.PlatformNameMap.
 static const char *platform_name_map[][2] = {
 	{ "Windows", "windows" },
 	{ "macOS", "macos" },
@@ -121,7 +121,7 @@ String _get_platform_name() {
 }
 #endif
 
-class _GodotSharpDirs {
+class _RedotSharpDirs {
 public:
 	String res_metadata_dir;
 	String res_temp_assemblies_dir;
@@ -134,7 +134,7 @@ public:
 #endif
 
 private:
-	_GodotSharpDirs() {
+	_RedotSharpDirs() {
 		String res_data_dir = ProjectSettings::get_singleton()->get_project_data_path().path_join("mono");
 		res_metadata_dir = res_data_dir.path_join("metadata");
 
@@ -151,16 +151,16 @@ private:
 		String res_dir = OS::get_singleton()->get_bundle_resource_dir();
 
 #ifdef TOOLS_ENABLED
-		String data_dir_root = exe_dir.path_join("GodotSharp");
+		String data_dir_root = exe_dir.path_join("RedotSharp");
 		data_editor_tools_dir = data_dir_root.path_join("Tools");
 		String api_assemblies_base_dir = data_dir_root.path_join("Api");
 		build_logs_dir = mono_user_dir.path_join("build_logs");
 #ifdef MACOS_ENABLED
 		if (!DirAccess::exists(data_editor_tools_dir)) {
-			data_editor_tools_dir = res_dir.path_join("GodotSharp").path_join("Tools");
+			data_editor_tools_dir = res_dir.path_join("RedotSharp").path_join("Tools");
 		}
 		if (!DirAccess::exists(api_assemblies_base_dir)) {
-			api_assemblies_base_dir = res_dir.path_join("GodotSharp").path_join("Api");
+			api_assemblies_base_dir = res_dir.path_join("RedotSharp").path_join("Api");
 		}
 #endif
 		api_assemblies_dir = api_assemblies_base_dir.path_join(GDMono::get_expected_api_build_config());
@@ -168,7 +168,7 @@ private:
 		String platform = _get_platform_name();
 		String arch = Engine::get_singleton()->get_architecture_name();
 		String appname_safe = path::get_csharp_project_name();
-		String packed_path = "res://.godot/mono/publish/" + arch;
+		String packed_path = "res://.Redot/mono/publish/" + arch;
 		if (DirAccess::exists(packed_path)) {
 			// The dotnet publish data is packed in the pck/zip.
 			String data_dir_root = OS::get_singleton()->get_cache_path().path_join("data_" + appname_safe + "_" + platform + "_" + arch);
@@ -218,36 +218,36 @@ private:
 	}
 
 public:
-	static _GodotSharpDirs &get_singleton() {
-		static _GodotSharpDirs singleton;
+	static _RedotSharpDirs &get_singleton() {
+		static _RedotSharpDirs singleton;
 		return singleton;
 	}
 };
 
 String get_res_metadata_dir() {
-	return _GodotSharpDirs::get_singleton().res_metadata_dir;
+	return _RedotSharpDirs::get_singleton().res_metadata_dir;
 }
 
 String get_res_temp_assemblies_dir() {
-	return _GodotSharpDirs::get_singleton().res_temp_assemblies_dir;
+	return _RedotSharpDirs::get_singleton().res_temp_assemblies_dir;
 }
 
 String get_api_assemblies_dir() {
-	return _GodotSharpDirs::get_singleton().api_assemblies_dir;
+	return _RedotSharpDirs::get_singleton().api_assemblies_dir;
 }
 
 String get_mono_user_dir() {
-	return _GodotSharpDirs::get_singleton().mono_user_dir;
+	return _RedotSharpDirs::get_singleton().mono_user_dir;
 }
 
 #ifdef TOOLS_ENABLED
 String get_build_logs_dir() {
-	return _GodotSharpDirs::get_singleton().build_logs_dir;
+	return _RedotSharpDirs::get_singleton().build_logs_dir;
 }
 
 String get_data_editor_tools_dir() {
-	return _GodotSharpDirs::get_singleton().data_editor_tools_dir;
+	return _RedotSharpDirs::get_singleton().data_editor_tools_dir;
 }
 #endif
 
-} // namespace GodotSharpDirs
+} // namespace RedotSharpDirs

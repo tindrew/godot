@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_window_delegate.h                                               */
+/*  Redot_window_delegate.h                                               */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,15 +28,15 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_WINDOW_DELEGATE_H
-#define GODOT_WINDOW_DELEGATE_H
+#ifndef Redot_WINDOW_DELEGATE_H
+#define Redot_WINDOW_DELEGATE_H
 
 #include "servers/display_server.h"
 
 #import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
 
-@interface GodotWindowDelegate : NSObject <NSWindowDelegate> {
+@interface RedotWindowDelegate : NSObject <NSWindowDelegate> {
 	DisplayServer::WindowID window_id;
 }
 
@@ -44,4 +44,4 @@
 
 @end
 
-#endif // GODOT_WINDOW_DELEGATE_H
+#endif // Redot_WINDOW_DELEGATE_H

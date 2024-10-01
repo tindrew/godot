@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_body_3d.h                                                       */
+/*  Redot_body_3d.h                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,18 +28,18 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_BODY_3D_H
-#define GODOT_BODY_3D_H
+#ifndef Redot_BODY_3D_H
+#define Redot_BODY_3D_H
 
-#include "godot_area_3d.h"
-#include "godot_collision_object_3d.h"
+#include "Redot_area_3d.h"
+#include "Redot_collision_object_3d.h"
 
 #include "core/templates/vset.h"
 
-class GodotConstraint3D;
-class GodotPhysicsDirectBodyState3D;
+class RedotConstraint3D;
+class RedotPhysicsDirectBodyState3D;
 
-class GodotBody3D : public GodotCollisionObject3D {
+class RedotBody3D : public RedotCollisionObject3D {
 	PhysicsServer3D::BodyMode mode = PhysicsServer3D::BODY_MODE_RIGID;
 
 	Vector3 linear_velocity;
@@ -96,9 +96,9 @@ class GodotBody3D : public GodotCollisionObject3D {
 	Vector3 constant_force;
 	Vector3 constant_torque;
 
-	SelfList<GodotBody3D> active_list;
-	SelfList<GodotBody3D> mass_properties_update_list;
-	SelfList<GodotBody3D> direct_state_query_list;
+	SelfList<RedotBody3D> active_list;
+	SelfList<RedotBody3D> mass_properties_update_list;
+	SelfList<RedotBody3D> direct_state_query_list;
 
 	VSet<RID> exceptions;
 	bool omit_force_integration = false;
@@ -112,7 +112,7 @@ class GodotBody3D : public GodotCollisionObject3D {
 	virtual void _shapes_changed() override;
 	Transform3D new_transform;
 
-	HashMap<GodotConstraint3D *, int> constraint_map;
+	HashMap<RedotConstraint3D *, int> constraint_map;
 
 	Vector<AreaCMP> areas;
 
@@ -142,21 +142,21 @@ class GodotBody3D : public GodotCollisionObject3D {
 
 	ForceIntegrationCallbackData *fi_callback_data = nullptr;
 
-	GodotPhysicsDirectBodyState3D *direct_state = nullptr;
+	RedotPhysicsDirectBodyState3D *direct_state = nullptr;
 
 	uint64_t island_step = 0;
 
 	void _update_transform_dependent();
 
-	friend class GodotPhysicsDirectBodyState3D; // i give up, too many functions to expose
+	friend class RedotPhysicsDirectBodyState3D; // i give up, too many functions to expose
 
 public:
 	void set_state_sync_callback(const Callable &p_callable);
 	void set_force_integration_callback(const Callable &p_callable, const Variant &p_udata = Variant());
 
-	GodotPhysicsDirectBodyState3D *get_direct_state();
+	RedotPhysicsDirectBodyState3D *get_direct_state();
 
-	_FORCE_INLINE_ void add_area(GodotArea3D *p_area) {
+	_FORCE_INLINE_ void add_area(RedotArea3D *p_area) {
 		int index = areas.find(AreaCMP(p_area));
 		if (index > -1) {
 			areas.write[index].refCount += 1;
@@ -165,7 +165,7 @@ public:
 		}
 	}
 
-	_FORCE_INLINE_ void remove_area(GodotArea3D *p_area) {
+	_FORCE_INLINE_ void remove_area(RedotArea3D *p_area) {
 		int index = areas.find(AreaCMP(p_area));
 		if (index > -1) {
 			areas.write[index].refCount -= 1;
@@ -195,9 +195,9 @@ public:
 	_FORCE_INLINE_ uint64_t get_island_step() const { return island_step; }
 	_FORCE_INLINE_ void set_island_step(uint64_t p_step) { island_step = p_step; }
 
-	_FORCE_INLINE_ void add_constraint(GodotConstraint3D *p_constraint, int p_pos) { constraint_map[p_constraint] = p_pos; }
-	_FORCE_INLINE_ void remove_constraint(GodotConstraint3D *p_constraint) { constraint_map.erase(p_constraint); }
-	const HashMap<GodotConstraint3D *, int> &get_constraint_map() const { return constraint_map; }
+	_FORCE_INLINE_ void add_constraint(RedotConstraint3D *p_constraint, int p_pos) { constraint_map[p_constraint] = p_pos; }
+	_FORCE_INLINE_ void remove_constraint(RedotConstraint3D *p_constraint) { constraint_map.erase(p_constraint); }
+	const HashMap<RedotConstraint3D *, int> &get_constraint_map() const { return constraint_map; }
 	_FORCE_INLINE_ void clear_constraint_map() { constraint_map.clear(); }
 
 	_FORCE_INLINE_ void set_omit_force_integration(bool p_omit_force_integration) { omit_force_integration = p_omit_force_integration; }
@@ -302,7 +302,7 @@ public:
 	_FORCE_INLINE_ void set_continuous_collision_detection(bool p_enable) { continuous_cd = p_enable; }
 	_FORCE_INLINE_ bool is_continuous_collision_detection_enabled() const { return continuous_cd; }
 
-	void set_space(GodotSpace3D *p_space) override;
+	void set_space(RedotSpace3D *p_space) override;
 
 	void update_mass_properties();
 	void reset_mass_properties();
@@ -343,13 +343,13 @@ public:
 
 	bool sleep_test(real_t p_step);
 
-	GodotBody3D();
-	~GodotBody3D();
+	RedotBody3D();
+	~RedotBody3D();
 };
 
 //add contact inline
 
-void GodotBody3D::add_contact(const Vector3 &p_local_pos, const Vector3 &p_local_normal, real_t p_depth, int p_local_shape, const Vector3 &p_local_velocity_at_pos, const Vector3 &p_collider_pos, int p_collider_shape, ObjectID p_collider_instance_id, const RID &p_collider, const Vector3 &p_collider_velocity_at_pos, const Vector3 &p_impulse) {
+void RedotBody3D::add_contact(const Vector3 &p_local_pos, const Vector3 &p_local_normal, real_t p_depth, int p_local_shape, const Vector3 &p_local_velocity_at_pos, const Vector3 &p_collider_pos, int p_collider_shape, ObjectID p_collider_instance_id, const RID &p_collider, const Vector3 &p_collider_velocity_at_pos, const Vector3 &p_impulse) {
 	int c_max = contacts.size();
 
 	if (c_max == 0) {
@@ -393,4 +393,4 @@ void GodotBody3D::add_contact(const Vector3 &p_local_pos, const Vector3 &p_local
 	c[idx].impulse = p_impulse;
 }
 
-#endif // GODOT_BODY_3D_H
+#endif // Redot_BODY_3D_H

@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotFragment.java                                                    */
+/*  RedotFragment.java                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,11 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot;
+package org.Redotengine.Redot;
 
-import org.godotengine.godot.error.Error;
-import org.godotengine.godot.plugin.GodotPlugin;
-import org.godotengine.godot.utils.BenchmarkUtils;
+import org.Redotengine.Redot.error.Error;
+import org.Redotengine.Redot.plugin.RedotPlugin;
+import org.Redotengine.Redot.utils.BenchmarkUtils;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -72,10 +72,10 @@ import java.util.Locale;
 import java.util.Set;
 
 /**
- * Base fragment for Android apps intending to use Godot for part of the app's UI.
+ * Base fragment for Android apps intending to use Redot for part of the app's UI.
  */
-public class GodotFragment extends Fragment implements IDownloaderClient, GodotHost {
-	private static final String TAG = GodotFragment.class.getSimpleName();
+public class RedotFragment extends Fragment implements IDownloaderClient, RedotHost {
+	private static final String TAG = RedotFragment.class.getSimpleName();
 
 	private IStub mDownloaderClientStub;
 	private TextView mStatusText;
@@ -91,13 +91,13 @@ public class GodotFragment extends Fragment implements IDownloaderClient, GodotH
 	private Button mPauseButton;
 	private Button mWiFiSettingsButton;
 
-	private FrameLayout godotContainerLayout;
+	private FrameLayout RedotContainerLayout;
 	private boolean mStatePaused;
 	private int mState;
 
 	@Nullable
-	private GodotHost parentHost;
-	private Godot godot;
+	private RedotHost parentHost;
+	private Redot Redot;
 
 	static private Intent mCurrentIntent;
 
@@ -128,17 +128,17 @@ public class GodotFragment extends Fragment implements IDownloaderClient, GodotH
 	public ResultCallback resultCallback;
 
 	@Override
-	public Godot getGodot() {
-		return godot;
+	public Redot getRedot() {
+		return Redot;
 	}
 
 	@Override
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
-		if (getParentFragment() instanceof GodotHost) {
-			parentHost = (GodotHost)getParentFragment();
-		} else if (getActivity() instanceof GodotHost) {
-			parentHost = (GodotHost)getActivity();
+		if (getParentFragment() instanceof RedotHost) {
+			parentHost = (RedotHost)getParentFragment();
+		} else if (getActivity() instanceof RedotHost) {
+			parentHost = (RedotHost)getActivity();
 		}
 	}
 
@@ -152,7 +152,7 @@ public class GodotFragment extends Fragment implements IDownloaderClient, GodotH
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		godot.onConfigurationChanged(newConfig);
+		Redot.onConfigurationChanged(newConfig);
 	}
 
 	@CallSuper
@@ -164,14 +164,14 @@ public class GodotFragment extends Fragment implements IDownloaderClient, GodotH
 			resultCallback = null;
 		}
 
-		godot.onActivityResult(requestCode, resultCode, data);
+		Redot.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@CallSuper
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		godot.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		Redot.onRequestPermissionsResult(requestCode, permissions, grantResults);
 	}
 
 	@Override
@@ -182,32 +182,32 @@ public class GodotFragment extends Fragment implements IDownloaderClient, GodotH
 
 	@Override
 	public void onCreate(Bundle icicle) {
-		BenchmarkUtils.beginBenchmarkMeasure("Startup", "GodotFragment::onCreate");
+		BenchmarkUtils.beginBenchmarkMeasure("Startup", "RedotFragment::onCreate");
 		super.onCreate(icicle);
 
 		final Activity activity = getActivity();
 		mCurrentIntent = activity.getIntent();
 
 		if (parentHost != null) {
-			godot = parentHost.getGodot();
+			Redot = parentHost.getRedot();
 		}
-		if (godot == null) {
-			godot = new Godot(requireContext());
+		if (Redot == null) {
+			Redot = new Redot(requireContext());
 		}
 		performEngineInitialization();
-		BenchmarkUtils.endBenchmarkMeasure("Startup", "GodotFragment::onCreate");
+		BenchmarkUtils.endBenchmarkMeasure("Startup", "RedotFragment::onCreate");
 	}
 
 	private void performEngineInitialization() {
 		try {
-			godot.onCreate(this);
+			Redot.onCreate(this);
 
-			if (!godot.onInitNativeLayer(this)) {
+			if (!Redot.onInitNativeLayer(this)) {
 				throw new IllegalStateException("Unable to initialize engine native layer");
 			}
 
-			godotContainerLayout = godot.onInitRenderView(this);
-			if (godotContainerLayout == null) {
+			RedotContainerLayout = Redot.onInitRenderView(this);
+			if (RedotContainerLayout == null) {
 				throw new IllegalStateException("Unable to initialize engine render view");
 			}
 		} catch (IllegalStateException e) {
@@ -215,7 +215,7 @@ public class GodotFragment extends Fragment implements IDownloaderClient, GodotH
 			final String errorMessage = TextUtils.isEmpty(e.getMessage())
 					? getString(R.string.error_engine_setup_message)
 					: e.getMessage();
-			godot.alert(errorMessage, getString(R.string.text_error_title), godot::destroyAndKillProcess);
+			Redot.alert(errorMessage, getString(R.string.text_error_title), Redot::destroyAndKillProcess);
 		} catch (IllegalArgumentException ignored) {
 			final Activity activity = getActivity();
 			Intent notifierIntent = new Intent(activity, activity.getClass());
@@ -232,12 +232,12 @@ public class GodotFragment extends Fragment implements IDownloaderClient, GodotH
 
 			int startResult;
 			try {
-				startResult = DownloaderClientMarshaller.startDownloadServiceIfRequired(getContext(), pendingIntent, GodotDownloaderService.class);
+				startResult = DownloaderClientMarshaller.startDownloadServiceIfRequired(getContext(), pendingIntent, RedotDownloaderService.class);
 
 				if (startResult != DownloaderClientMarshaller.NO_DOWNLOAD_REQUIRED) {
 					// This is where you do set up to display the download
 					// progress (next step in onCreateView)
-					mDownloaderClientStub = DownloaderClientMarshaller.CreateStub(this, GodotDownloaderService.class);
+					mDownloaderClientStub = DownloaderClientMarshaller.CreateStub(this, RedotDownloaderService.class);
 					return;
 				}
 
@@ -268,12 +268,12 @@ public class GodotFragment extends Fragment implements IDownloaderClient, GodotH
 			return downloadingExpansionView;
 		}
 
-		return godotContainerLayout;
+		return RedotContainerLayout;
 	}
 
 	@Override
 	public void onDestroy() {
-		godot.onDestroy(this);
+		Redot.onDestroy(this);
 		super.onDestroy();
 	}
 
@@ -281,57 +281,57 @@ public class GodotFragment extends Fragment implements IDownloaderClient, GodotH
 	public void onPause() {
 		super.onPause();
 
-		if (!godot.isInitialized()) {
+		if (!Redot.isInitialized()) {
 			if (null != mDownloaderClientStub) {
 				mDownloaderClientStub.disconnect(getActivity());
 			}
 			return;
 		}
 
-		godot.onPause(this);
+		Redot.onPause(this);
 	}
 
 	@Override
 	public void onStop() {
 		super.onStop();
-		if (!godot.isInitialized()) {
+		if (!Redot.isInitialized()) {
 			if (null != mDownloaderClientStub) {
 				mDownloaderClientStub.disconnect(getActivity());
 			}
 			return;
 		}
 
-		godot.onStop(this);
+		Redot.onStop(this);
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
-		if (!godot.isInitialized()) {
+		if (!Redot.isInitialized()) {
 			if (null != mDownloaderClientStub) {
 				mDownloaderClientStub.connect(getActivity());
 			}
 			return;
 		}
 
-		godot.onStart(this);
+		Redot.onStart(this);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (!godot.isInitialized()) {
+		if (!Redot.isInitialized()) {
 			if (null != mDownloaderClientStub) {
 				mDownloaderClientStub.connect(getActivity());
 			}
 			return;
 		}
 
-		godot.onResume(this);
+		Redot.onResume(this);
 	}
 
 	public void onBackPressed() {
-		godot.onBackPressed();
+		Redot.onBackPressed();
 	}
 
 	/**
@@ -436,50 +436,50 @@ public class GodotFragment extends Fragment implements IDownloaderClient, GodotH
 
 	@CallSuper
 	@Override
-	public void onGodotSetupCompleted() {
+	public void onRedotSetupCompleted() {
 		if (parentHost != null) {
-			parentHost.onGodotSetupCompleted();
+			parentHost.onRedotSetupCompleted();
 		}
 	}
 
 	@CallSuper
 	@Override
-	public void onGodotMainLoopStarted() {
+	public void onRedotMainLoopStarted() {
 		if (parentHost != null) {
-			parentHost.onGodotMainLoopStarted();
+			parentHost.onRedotMainLoopStarted();
 		}
 	}
 
 	@Override
-	public void onGodotForceQuit(Godot instance) {
+	public void onRedotForceQuit(Redot instance) {
 		if (parentHost != null) {
-			parentHost.onGodotForceQuit(instance);
+			parentHost.onRedotForceQuit(instance);
 		}
 	}
 
 	@Override
-	public boolean onGodotForceQuit(int godotInstanceId) {
-		return parentHost != null && parentHost.onGodotForceQuit(godotInstanceId);
+	public boolean onRedotForceQuit(int RedotInstanceId) {
+		return parentHost != null && parentHost.onRedotForceQuit(RedotInstanceId);
 	}
 
 	@Override
-	public void onGodotRestartRequested(Godot instance) {
+	public void onRedotRestartRequested(Redot instance) {
 		if (parentHost != null) {
-			parentHost.onGodotRestartRequested(instance);
+			parentHost.onRedotRestartRequested(instance);
 		}
 	}
 
 	@Override
-	public int onNewGodotInstanceRequested(String[] args) {
+	public int onNewRedotInstanceRequested(String[] args) {
 		if (parentHost != null) {
-			return parentHost.onNewGodotInstanceRequested(args);
+			return parentHost.onNewRedotInstanceRequested(args);
 		}
 		return 0;
 	}
 
 	@Override
 	@CallSuper
-	public Set<GodotPlugin> getHostPlugins(Godot engine) {
+	public Set<RedotPlugin> getHostPlugins(Redot engine) {
 		if (parentHost != null) {
 			return parentHost.getHostPlugins(engine);
 		}

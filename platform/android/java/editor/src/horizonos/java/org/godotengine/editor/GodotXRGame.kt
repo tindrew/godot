@@ -1,12 +1,12 @@
 /*************************************************************************/
-/*  GodotXRGame.kt                                                       */
+/*  RedotXRGame.kt                                                       */
 /*************************************************************************/
 /*                       This file is part of:                           */
-/*                           GODOT ENGINE                                */
-/*                      https://godotengine.org                          */
+/*                           Redot ENGINE                                */
+/*                      https://Redotengine.org                          */
 /*************************************************************************/
 /* Copyright (c) 2007-2022 Juan Linietsky, Ariel Manzur.                 */
-/* Copyright (c) 2014-2022 Godot Engine contributors (cf. AUTHORS.md).   */
+/* Copyright (c) 2014-2022 Redot Engine contributors (cf. AUTHORS.md).   */
 /*                                                                       */
 /* Permission is hereby granted, free of charge, to any person obtaining */
 /* a copy of this software and associated documentation files (the       */
@@ -28,15 +28,15 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
 
-package org.godotengine.editor
+package org.Redotengine.editor
 
-import org.godotengine.godot.GodotLib
-import org.godotengine.godot.xr.XRMode
+import org.Redotengine.Redot.RedotLib
+import org.Redotengine.Redot.xr.XRMode
 
 /**
  * Provide support for running XR apps / games from the editor window.
  */
-open class GodotXRGame: GodotGame() {
+open class RedotXRGame: RedotGame() {
 
 	override fun overrideOrientationRequest() = true
 
@@ -59,13 +59,13 @@ open class GodotXRGame: GodotGame() {
 	override fun getProjectPermissionsToEnable(): MutableList<String> {
 		val permissionsToEnable = super.getProjectPermissionsToEnable()
 
-		val openxrEnabled = GodotLib.getGlobal("xr/openxr/enabled").toBoolean()
+		val openxrEnabled = RedotLib.getGlobal("xr/openxr/enabled").toBoolean()
 		if (openxrEnabled) {
 			// We only request permissions when the `automatically_request_runtime_permissions`
 			// project setting is enabled.
 			// If the project setting is not defined, we fall-back to the default behavior which is
 			// to automatically request permissions.
-			val automaticallyRequestPermissionsSetting = GodotLib.getGlobal("xr/openxr/extensions/automatically_request_runtime_permissions")
+			val automaticallyRequestPermissionsSetting = RedotLib.getGlobal("xr/openxr/extensions/automatically_request_runtime_permissions")
 			val automaticPermissionsRequestEnabled = automaticallyRequestPermissionsSetting.isNullOrEmpty() ||
 				automaticallyRequestPermissionsSetting.toBoolean()
 			if (automaticPermissionsRequestEnabled) {

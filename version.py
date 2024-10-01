@@ -1,9 +1,9 @@
-short_name = "godot"
-name = "Godot Engine"
+short_name = "Redot"
+name = "Redot Engine"
 major = 4
 minor = 4
 patch = 0
 status = "dev"
 module_config = ""
-website = "https://godotengine.org"
+website = "https://Redotengine.org"
 docs = "latest"

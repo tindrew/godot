@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotEditor.kt                                                        */
+/*  RedotEditor.kt                                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,22 +28,22 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.editor
+package org.Redotengine.editor
 
-import org.godotengine.godot.GodotLib
-import org.godotengine.godot.utils.isNativeXRDevice
+import org.Redotengine.Redot.RedotLib
+import org.Redotengine.Redot.utils.isNativeXRDevice
 
 /**
- * Primary window of the Godot Editor.
+ * Primary window of the Redot Editor.
  *
  * This is the implementation of the editor used when running on HorizonOS devices.
  */
-open class GodotEditor : BaseGodotEditor() {
+open class RedotEditor : BaseRedotEditor() {
 
 	companion object {
-		private val TAG = GodotEditor::class.java.simpleName
+		private val TAG = RedotEditor::class.java.simpleName
 
-		internal val XR_RUN_GAME_INFO = EditorWindowInfo(GodotXRGame::class.java, 1667, ":GodotXRGame")
+		internal val XR_RUN_GAME_INFO = EditorWindowInfo(RedotXRGame::class.java, 1667, ":RedotXRGame")
 
 		internal val USE_SCENE_PERMISSIONS = listOf("com.oculus.permission.USE_SCENE", "horizonos.permission.USE_SCENE")
 	}
@@ -74,7 +74,7 @@ open class GodotEditor : BaseGodotEditor() {
 		return if (hasEditor) {
 			EDITOR_MAIN_INFO
 		} else {
-			val openxrEnabled = GodotLib.getGlobal("xr/openxr/enabled").toBoolean()
+			val openxrEnabled = RedotLib.getGlobal("xr/openxr/enabled").toBoolean()
 			if (openxrEnabled && isNativeXRDevice()) {
 				XR_RUN_GAME_INFO
 			} else {

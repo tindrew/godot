@@ -1,27 +1,27 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Godot.Bridge;
-using Godot.NativeInterop;
+using Redot.Bridge;
+using Redot.NativeInterop;
 
 #nullable enable
 
-namespace Godot
+namespace Redot
 {
-    public partial class GodotObject : IDisposable
+    public partial class RedotObject : IDisposable
     {
         private bool _disposed;
-        private static readonly Type _cachedType = typeof(GodotObject);
+        private static readonly Type _cachedType = typeof(RedotObject);
 
         internal IntPtr NativePtr;
         private bool _memoryOwn;
 
-        private WeakReference<GodotObject>? _weakReferenceToSelf;
+        private WeakReference<RedotObject>? _weakReferenceToSelf;
 
         /// <summary>
-        /// Constructs a new <see cref="GodotObject"/>.
+        /// Constructs a new <see cref="RedotObject"/>.
         /// </summary>
-        public GodotObject() : this(false)
+        public RedotObject() : this(false)
         {
             unsafe
             {
@@ -29,7 +29,7 @@ namespace Godot
             }
         }
 
-        internal GodotObject(IntPtr nativePtr) : this(false)
+        internal RedotObject(IntPtr nativePtr) : this(false)
         {
             // NativePtr must be non-zero before calling ConstructAndInitialize to avoid invoking the constructor NativeCtor.
             // We don't want to invoke the constructor, because we already have a constructed instance in nativePtr.
@@ -41,7 +41,7 @@ namespace Godot
         }
 
         internal unsafe void ConstructAndInitialize(
-            delegate* unmanaged<godot_bool, IntPtr> nativeCtor,
+            delegate* unmanaged<Redot_bool, IntPtr> nativeCtor,
             StringName nativeName,
             Type cachedType,
             bool refCounted
@@ -52,7 +52,7 @@ namespace Godot
                 Debug.Assert(nativeCtor != null);
 
                 // Need postinitialization.
-                NativePtr = nativeCtor(godot_bool.True);
+                NativePtr = nativeCtor(Redot_bool.True);
 
                 InteropUtils.TieManagedToUnmanaged(this, NativePtr,
                     nativeName, refCounted, GetType(), cachedType);
@@ -63,20 +63,20 @@ namespace Godot
                     GetType(), cachedType);
             }
 
-            _weakReferenceToSelf = DisposablesTracker.RegisterGodotObject(this);
+            _weakReferenceToSelf = DisposablesTracker.RegisterRedotObject(this);
         }
 
-        internal GodotObject(bool memoryOwn)
+        internal RedotObject(bool memoryOwn)
         {
             _memoryOwn = memoryOwn;
         }
 
         /// <summary>
-        /// The pointer to the native instance of this <see cref="GodotObject"/>.
+        /// The pointer to the native instance of this <see cref="RedotObject"/>.
         /// </summary>
         public IntPtr NativeInstance => NativePtr;
 
-        internal static IntPtr GetPtr(GodotObject? instance)
+        internal static IntPtr GetPtr(RedotObject? instance)
         {
             if (instance == null)
                 return IntPtr.Zero;
@@ -92,13 +92,13 @@ namespace Godot
             return instance.NativePtr;
         }
 
-        ~GodotObject()
+        ~RedotObject()
         {
             Dispose(false);
         }
 
         /// <summary>
-        /// Disposes of this <see cref="GodotObject"/>.
+        /// Disposes of this <see cref="RedotObject"/>.
         /// </summary>
         public void Dispose()
         {
@@ -107,7 +107,7 @@ namespace Godot
         }
 
         /// <summary>
-        /// Disposes implementation of this <see cref="GodotObject"/>.
+        /// Disposes implementation of this <see cref="RedotObject"/>.
         /// </summary>
         protected virtual void Dispose(bool disposing)
         {
@@ -118,7 +118,7 @@ namespace Godot
 
             if (NativePtr != IntPtr.Zero)
             {
-                IntPtr gcHandleToFree = NativeFuncs.godotsharp_internal_object_get_associated_gchandle(NativePtr);
+                IntPtr gcHandleToFree = NativeFuncs.Redotsharp_internal_object_get_associated_gchandle(NativePtr);
 
                 if (gcHandleToFree != IntPtr.Zero)
                 {
@@ -131,12 +131,12 @@ namespace Godot
 
                 if (_memoryOwn)
                 {
-                    NativeFuncs.godotsharp_internal_refcounted_disposed(NativePtr, gcHandleToFree,
-                        (!disposing).ToGodotBool());
+                    NativeFuncs.Redotsharp_internal_refcounted_disposed(NativePtr, gcHandleToFree,
+                        (!disposing).ToRedotBool());
                 }
                 else
                 {
-                    NativeFuncs.godotsharp_internal_object_disposed(NativePtr, gcHandleToFree);
+                    NativeFuncs.Redotsharp_internal_object_disposed(NativePtr, gcHandleToFree);
                 }
 
                 NativePtr = IntPtr.Zero;
@@ -144,17 +144,17 @@ namespace Godot
 
             if (_weakReferenceToSelf != null)
             {
-                DisposablesTracker.UnregisterGodotObject(this, _weakReferenceToSelf);
+                DisposablesTracker.UnregisterRedotObject(this, _weakReferenceToSelf);
             }
         }
 
         /// <summary>
-        /// Converts this <see cref="GodotObject"/> to a string.
+        /// Converts this <see cref="RedotObject"/> to a string.
         /// </summary>
         /// <returns>A string representation of this object.</returns>
         public override string ToString()
         {
-            NativeFuncs.godotsharp_object_to_string(GetPtr(this), out godot_string str);
+            NativeFuncs.Redotsharp_object_to_string(GetPtr(this), out Redot_string str);
             using (str)
                 return Marshaling.ConvertStringToManaged(str);
         }
@@ -186,7 +186,7 @@ namespace Godot
         /// A <see cref="SignalAwaiter"/> that completes when
         /// <paramref name="source"/> emits the <paramref name="signal"/>.
         /// </returns>
-        public SignalAwaiter ToSignal(GodotObject source, StringName signal)
+        public SignalAwaiter ToSignal(RedotObject source, StringName signal)
         {
             return new SignalAwaiter(source, signal, this);
         }
@@ -195,10 +195,10 @@ namespace Godot
         {
             var name = t.Assembly.GetName().Name;
 
-            if (name == "GodotSharp" || name == "GodotSharpEditor")
+            if (name == "RedotSharp" || name == "RedotSharpEditor")
                 return t;
 
-            Debug.Assert(t.BaseType is not null, "Script types must derive from a native Godot type.");
+            Debug.Assert(t.BaseType is not null, "Script types must derive from a native Redot type.");
 
             return InternalGetClassNativeBase(t.BaseType);
         }
@@ -206,14 +206,14 @@ namespace Godot
         // ReSharper disable once VirtualMemberNeverOverridden.Global
         /// <summary>
         /// Set the value of a property contained in this class.
-        /// This method is used by Godot to assign property values.
+        /// This method is used by Redot to assign property values.
         /// Do not call or override this method.
         /// </summary>
         /// <param name="name">Name of the property to set.</param>
         /// <param name="value">Value to set the property to if it was found.</param>
         /// <returns><see langword="true"/> if a property with the given name was found.</returns>
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        protected internal virtual bool SetGodotClassPropertyValue(in godot_string_name name, in godot_variant value)
+        protected internal virtual bool SetRedotClassPropertyValue(in Redot_string_name name, in Redot_variant value)
         {
             return false;
         }
@@ -221,14 +221,14 @@ namespace Godot
         // ReSharper disable once VirtualMemberNeverOverridden.Global
         /// <summary>
         /// Get the value of a property contained in this class.
-        /// This method is used by Godot to retrieve property values.
+        /// This method is used by Redot to retrieve property values.
         /// Do not call or override this method.
         /// </summary>
         /// <param name="name">Name of the property to get.</param>
         /// <param name="value">Value of the property if it was found.</param>
         /// <returns><see langword="true"/> if a property with the given name was found.</returns>
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        protected internal virtual bool GetGodotClassPropertyValue(in godot_string_name name, out godot_variant value)
+        protected internal virtual bool GetRedotClassPropertyValue(in Redot_string_name name, out Redot_variant value)
         {
             value = default;
             return false;
@@ -237,22 +237,22 @@ namespace Godot
         // ReSharper disable once VirtualMemberNeverOverridden.Global
         /// <summary>
         /// Raises the signal with the given name, using the given arguments.
-        /// This method is used by Godot to raise signals from the engine side.\n"
+        /// This method is used by Redot to raise signals from the engine side.\n"
         /// Do not call or override this method.
         /// </summary>
         /// <param name="signal">Name of the signal to raise.</param>
         /// <param name="args">Arguments to use with the raised signal.</param>
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        protected internal virtual void RaiseGodotClassSignalCallbacks(in godot_string_name signal,
+        protected internal virtual void RaiseRedotClassSignalCallbacks(in Redot_string_name signal,
             NativeVariantPtrArgs args)
         {
         }
 
         internal static IntPtr ClassDB_get_method(StringName type, StringName method)
         {
-            var typeSelf = (godot_string_name)type.NativeValue;
-            var methodSelf = (godot_string_name)method.NativeValue;
-            IntPtr methodBind = NativeFuncs.godotsharp_method_bind_get_method(typeSelf, methodSelf);
+            var typeSelf = (Redot_string_name)type.NativeValue;
+            var methodSelf = (Redot_string_name)method.NativeValue;
+            IntPtr methodBind = NativeFuncs.Redotsharp_method_bind_get_method(typeSelf, methodSelf);
 
             if (methodBind == IntPtr.Zero)
                 throw new NativeMethodBindNotFoundException(type + "." + method);
@@ -262,9 +262,9 @@ namespace Godot
 
         internal static IntPtr ClassDB_get_method_with_compatibility(StringName type, StringName method, ulong hash)
         {
-            var typeSelf = (godot_string_name)type.NativeValue;
-            var methodSelf = (godot_string_name)method.NativeValue;
-            IntPtr methodBind = NativeFuncs.godotsharp_method_bind_get_method_with_compatibility(typeSelf, methodSelf, hash);
+            var typeSelf = (Redot_string_name)type.NativeValue;
+            var methodSelf = (Redot_string_name)method.NativeValue;
+            IntPtr methodBind = NativeFuncs.Redotsharp_method_bind_get_method_with_compatibility(typeSelf, methodSelf, hash);
 
             if (methodBind == IntPtr.Zero)
                 throw new NativeMethodBindNotFoundException(type + "." + method);
@@ -272,11 +272,11 @@ namespace Godot
             return methodBind;
         }
 
-        internal static unsafe delegate* unmanaged<godot_bool, IntPtr> ClassDB_get_constructor(StringName type)
+        internal static unsafe delegate* unmanaged<Redot_bool, IntPtr> ClassDB_get_constructor(StringName type)
         {
             // for some reason the '??' operator doesn't support 'delegate*'
-            var typeSelf = (godot_string_name)type.NativeValue;
-            var nativeConstructor = NativeFuncs.godotsharp_get_class_constructor(typeSelf);
+            var typeSelf = (Redot_string_name)type.NativeValue;
+            var nativeConstructor = NativeFuncs.Redotsharp_get_class_constructor(typeSelf);
 
             if (nativeConstructor == null)
                 throw new NativeConstructorNotFoundException(type);
@@ -291,7 +291,7 @@ namespace Godot
         /// </summary>
         /// <param name="info">Object used to save the data.</param>
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        protected internal virtual void SaveGodotObjectData(GodotSerializationInfo info)
+        protected internal virtual void SaveRedotObjectData(RedotSerializationInfo info)
         {
         }
 
@@ -303,7 +303,7 @@ namespace Godot
         /// </summary>
         /// <param name="info">Object that contains the previously saved data.</param>
         [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-        protected internal virtual void RestoreGodotObjectData(GodotSerializationInfo info)
+        protected internal virtual void RestoreRedotObjectData(RedotSerializationInfo info)
         {
         }
     }

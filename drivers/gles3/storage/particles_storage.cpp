@@ -2,10 +2,10 @@
 /*  particles_storage.cpp                                                 */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -809,7 +809,7 @@ void ParticlesStorage::particles_set_view_axis(RID p_particles, const Vector3 &p
 		LocalVector<ParticleInstanceData3D> particle_vector;
 		particle_vector.resize(particles->amount);
 		particle_array = particle_vector.ptr();
-		godot_webgl2_glGetBufferSubData(GL_ARRAY_BUFFER, 0, particles->amount * sizeof(ParticleInstanceData3D), particle_array);
+		Redot_webgl2_glGetBufferSubData(GL_ARRAY_BUFFER, 0, particles->amount * sizeof(ParticleInstanceData3D), particle_array);
 #endif
 		SortArray<ParticleInstanceData3D, ParticlesViewSort> sorter;
 		sorter.compare.z_dir = axis;
@@ -1174,7 +1174,7 @@ void ParticlesStorage::_particles_reverse_lifetime_sort(Particles *particles) {
 	LocalVector<ParticleInstanceData> particle_vector;
 	particle_vector.resize(particles->amount);
 	particle_array = particle_vector.ptr();
-	godot_webgl2_glGetBufferSubData(GL_ARRAY_BUFFER, 0, buffer_size, particle_array);
+	Redot_webgl2_glGetBufferSubData(GL_ARRAY_BUFFER, 0, buffer_size, particle_array);
 #endif
 
 	uint32_t lifetime_split = (MIN(int(particles->amount * particles->sort_buffer_phase), particles->amount - 1) + 1) % particles->amount;

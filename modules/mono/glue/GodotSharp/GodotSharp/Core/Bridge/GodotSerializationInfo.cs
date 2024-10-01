@@ -1,10 +1,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
-namespace Godot.Bridge;
+namespace Redot.Bridge;
 
-public sealed class GodotSerializationInfo : IDisposable
+public sealed class RedotSerializationInfo : IDisposable
 {
     private readonly Collections.Dictionary _properties;
     private readonly Collections.Dictionary _signalEvents;
@@ -17,17 +17,17 @@ public sealed class GodotSerializationInfo : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    private GodotSerializationInfo(in godot_dictionary properties, in godot_dictionary signalEvents)
+    private RedotSerializationInfo(in Redot_dictionary properties, in Redot_dictionary signalEvents)
     {
         _properties = Collections.Dictionary.CreateTakingOwnershipOfDisposableValue(properties);
         _signalEvents = Collections.Dictionary.CreateTakingOwnershipOfDisposableValue(signalEvents);
     }
 
-    internal static GodotSerializationInfo CreateCopyingBorrowed(
-        in godot_dictionary properties, in godot_dictionary signalEvents)
+    internal static RedotSerializationInfo CreateCopyingBorrowed(
+        in Redot_dictionary properties, in Redot_dictionary signalEvents)
     {
-        return new(NativeFuncs.godotsharp_dictionary_new_copy(properties),
-            NativeFuncs.godotsharp_dictionary_new_copy(signalEvents));
+        return new(NativeFuncs.Redotsharp_dictionary_new_copy(properties),
+            NativeFuncs.Redotsharp_dictionary_new_copy(signalEvents));
     }
 
     public void AddProperty(StringName name, Variant value)
@@ -59,7 +59,7 @@ public sealed class GodotSerializationInfo : IDisposable
     {
         if (_signalEvents.TryGetValue(name, out Variant serializedData))
         {
-            if (DelegateUtils.TryDeserializeDelegate(serializedData.AsGodotArray(), out var eventDelegate))
+            if (DelegateUtils.TryDeserializeDelegate(serializedData.AsRedotArray(), out var eventDelegate))
             {
                 value = eventDelegate as T;
 

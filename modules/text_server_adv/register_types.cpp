@@ -2,10 +2,10 @@
 /*  register_types.cpp                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -54,11 +54,11 @@ void uninitialize_text_server_adv_module(ModuleInitializationLevel p_level) {
 
 #ifdef GDEXTENSION
 
-#include <godot_cpp/core/class_db.hpp>
-#include <godot_cpp/core/defs.hpp>
-#include <godot_cpp/core/memory.hpp>
+#include <Redot_cpp/core/class_db.hpp>
+#include <Redot_cpp/core/defs.hpp>
+#include <Redot_cpp/core/memory.hpp>
 
-using namespace godot;
+using namespace Redot;
 
 extern "C" {
 

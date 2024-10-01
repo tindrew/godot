@@ -2,10 +2,10 @@
 /*  audio.worklet.js                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -93,7 +93,7 @@ class RingBuffer {
 	}
 }
 
-class GodotProcessor extends AudioWorkletProcessor {
+class RedotProcessor extends AudioWorkletProcessor {
 	constructor() {
 		super();
 		this.threads = false;
@@ -153,7 +153,7 @@ class GodotProcessor extends AudioWorkletProcessor {
 		if (this.output === null) {
 			return true; // Not ready yet, keep processing.
 		}
-		const process_input = GodotProcessor.array_has_data(inputs);
+		const process_input = RedotProcessor.array_has_data(inputs);
 		if (process_input) {
 			const input = inputs[0];
 			const chunk = input[0].length * input.length;
@@ -161,16 +161,16 @@ class GodotProcessor extends AudioWorkletProcessor {
 				this.input_buffer = new Float32Array(chunk);
 			}
 			if (!this.threads) {
-				GodotProcessor.write_input(this.input_buffer, input);
+				RedotProcessor.write_input(this.input_buffer, input);
 				this.port.postMessage({ 'cmd': 'input', 'data': this.input_buffer });
 			} else if (this.input.space_left() >= chunk) {
-				GodotProcessor.write_input(this.input_buffer, input);
+				RedotProcessor.write_input(this.input_buffer, input);
 				this.input.write(this.input_buffer);
 			} else {
 				// this.port.postMessage('Input buffer is full! Skipping input frame.'); // Uncomment this line to debug input buffer.
 			}
 		}
-		const process_output = GodotProcessor.array_has_data(outputs);
+		const process_output = RedotProcessor.array_has_data(outputs);
 		if (process_output) {
 			const output = outputs[0];
 			const chunk = output[0].length * output.length;
@@ -179,7 +179,7 @@ class GodotProcessor extends AudioWorkletProcessor {
 			}
 			if (this.output.data_left() >= chunk) {
 				this.output.read(this.output_buffer);
-				GodotProcessor.write_output(output, this.output_buffer);
+				RedotProcessor.write_output(output, this.output_buffer);
 				if (!this.threads) {
 					this.port.postMessage({ 'cmd': 'read', 'data': chunk });
 				}
@@ -210,4 +210,4 @@ class GodotProcessor extends AudioWorkletProcessor {
 	}
 }
 
-registerProcessor('godot-processor', GodotProcessor);
+registerProcessor('Redot-processor', RedotProcessor);

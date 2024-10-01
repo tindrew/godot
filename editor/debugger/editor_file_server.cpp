@@ -2,10 +2,10 @@
 /*  editor_file_server.cpp                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -206,7 +206,7 @@ void EditorFileServer::poll() {
 		_add_custom_file(forced_export[i], files_to_send, cached_files);
 	}
 
-	_add_custom_file("res://project.godot", files_to_send, cached_files);
+	_add_custom_file("res://project.Redot", files_to_send, cached_files);
 	// Check which files were removed and also add them
 	for (KeyValue<String, uint64_t> K : cached_files) {
 		if (!files_to_send.has(K.key)) {

@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godotsharp_defs.h                                                     */
+/*  Redotsharp_defs.h                                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,17 +28,17 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOTSHARP_DEFS_H
-#define GODOTSHARP_DEFS_H
+#ifndef RedotSHARP_DEFS_H
+#define RedotSHARP_DEFS_H
 
-#define BINDINGS_NAMESPACE "Godot"
+#define BINDINGS_NAMESPACE "Redot"
 #define BINDINGS_NAMESPACE_COLLECTIONS BINDINGS_NAMESPACE ".Collections"
-#define API_SOLUTION_NAME "GodotSharp"
-#define CORE_API_ASSEMBLY_NAME "GodotSharp"
-#define EDITOR_API_ASSEMBLY_NAME "GodotSharpEditor"
-#define TOOLS_ASM_NAME "GodotTools"
+#define API_SOLUTION_NAME "RedotSharp"
+#define CORE_API_ASSEMBLY_NAME "RedotSharp"
+#define EDITOR_API_ASSEMBLY_NAME "RedotSharpEditor"
+#define TOOLS_ASM_NAME "RedotTools"
 
 #define BINDINGS_CLASS_NATIVECALLS "NativeCalls"
 #define BINDINGS_CLASS_NATIVECALLS_EDITOR "EditorNativeCalls"
 
-#endif // GODOTSHARP_DEFS_H
+#endif // RedotSHARP_DEFS_H

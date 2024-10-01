@@ -1,7 +1,7 @@
-using Godot;
+using Redot;
 using System.Globalization;
 
-namespace GodotTools.Build
+namespace RedotTools.Build
 {
     public class BuildProblemsFilter
     {

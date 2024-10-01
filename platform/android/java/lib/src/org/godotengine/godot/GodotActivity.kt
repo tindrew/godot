@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotActivity.kt                                                      */
+/*  RedotActivity.kt                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot
+package org.Redotengine.Redot
 
 import android.app.Activity
 import android.content.Intent
@@ -38,78 +38,78 @@ import android.util.Log
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.FragmentActivity
-import org.godotengine.godot.utils.PermissionsUtil
-import org.godotengine.godot.utils.ProcessPhoenix
+import org.Redotengine.Redot.utils.PermissionsUtil
+import org.Redotengine.Redot.utils.ProcessPhoenix
 
 /**
- * Base abstract activity for Android apps intending to use Godot as the primary screen.
+ * Base abstract activity for Android apps intending to use Redot as the primary screen.
  *
- * Also a reference implementation for how to setup and use the [GodotFragment] fragment
+ * Also a reference implementation for how to setup and use the [RedotFragment] fragment
  * within an Android app.
  */
-abstract class GodotActivity : FragmentActivity(), GodotHost {
+abstract class RedotActivity : FragmentActivity(), RedotHost {
 
 	companion object {
-		private val TAG = GodotActivity::class.java.simpleName
+		private val TAG = RedotActivity::class.java.simpleName
 
 		@JvmStatic
 		protected val EXTRA_NEW_LAUNCH = "new_launch_requested"
 	}
 
 	/**
-	 * Interaction with the [Godot] object is delegated to the [GodotFragment] class.
+	 * Interaction with the [Redot] object is delegated to the [RedotFragment] class.
 	 */
-	protected var godotFragment: GodotFragment? = null
+	protected var RedotFragment: RedotFragment? = null
 		private set
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(getGodotAppLayout())
+		setContentView(getRedotAppLayout())
 
 		handleStartIntent(intent, true)
 
-		val currentFragment = supportFragmentManager.findFragmentById(R.id.godot_fragment_container)
-		if (currentFragment is GodotFragment) {
-			Log.v(TAG, "Reusing existing Godot fragment instance.")
-			godotFragment = currentFragment
+		val currentFragment = supportFragmentManager.findFragmentById(R.id.Redot_fragment_container)
+		if (currentFragment is RedotFragment) {
+			Log.v(TAG, "Reusing existing Redot fragment instance.")
+			RedotFragment = currentFragment
 		} else {
-			Log.v(TAG, "Creating new Godot fragment instance.")
-			godotFragment = initGodotInstance()
-			supportFragmentManager.beginTransaction().replace(R.id.godot_fragment_container, godotFragment!!).setPrimaryNavigationFragment(godotFragment).commitNowAllowingStateLoss()
+			Log.v(TAG, "Creating new Redot fragment instance.")
+			RedotFragment = initRedotInstance()
+			supportFragmentManager.beginTransaction().replace(R.id.Redot_fragment_container, RedotFragment!!).setPrimaryNavigationFragment(RedotFragment).commitNowAllowingStateLoss()
 		}
 	}
 
 	@LayoutRes
-	protected open fun getGodotAppLayout() = R.layout.godot_app_layout
+	protected open fun getRedotAppLayout() = R.layout.Redot_app_layout
 
 	override fun onDestroy() {
-		Log.v(TAG, "Destroying GodotActivity $this...")
+		Log.v(TAG, "Destroying RedotActivity $this...")
 		super.onDestroy()
 	}
 
-	override fun onGodotForceQuit(instance: Godot) {
-		runOnUiThread { terminateGodotInstance(instance) }
+	override fun onRedotForceQuit(instance: Redot) {
+		runOnUiThread { terminateRedotInstance(instance) }
 	}
 
-	private fun terminateGodotInstance(instance: Godot) {
-		godotFragment?.let {
-			if (instance === it.godot) {
-				Log.v(TAG, "Force quitting Godot instance")
+	private fun terminateRedotInstance(instance: Redot) {
+		RedotFragment?.let {
+			if (instance === it.Redot) {
+				Log.v(TAG, "Force quitting Redot instance")
 				ProcessPhoenix.forceQuit(this)
 			}
 		}
 	}
 
-	override fun onGodotRestartRequested(instance: Godot) {
+	override fun onRedotRestartRequested(instance: Redot) {
 		runOnUiThread {
-			godotFragment?.let {
-				if (instance === it.godot) {
-					// It's very hard to properly de-initialize Godot on Android to restart the game
+			RedotFragment?.let {
+				if (instance === it.Redot) {
+					// It's very hard to properly de-initialize Redot on Android to restart the game
 					// from scratch. Therefore, we need to kill the whole app process and relaunch it.
 					//
 					// Restarting only the activity, wouldn't be enough unless it did proper cleanup (including
 					// releasing and reloading native libs or resetting their state somehow and clearing static data).
-					Log.v(TAG, "Restarting Godot instance...")
+					Log.v(TAG, "Restarting Redot instance...")
 					ProcessPhoenix.triggerRebirth(this)
 				}
 			}
@@ -122,7 +122,7 @@ abstract class GodotActivity : FragmentActivity(), GodotHost {
 
 		handleStartIntent(newIntent, false)
 
-		godotFragment?.onNewIntent(newIntent)
+		RedotFragment?.onNewIntent(newIntent)
 	}
 
 	private fun handleStartIntent(intent: Intent, newLaunch: Boolean) {
@@ -140,13 +140,13 @@ abstract class GodotActivity : FragmentActivity(), GodotHost {
 	@CallSuper
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 		super.onActivityResult(requestCode, resultCode, data)
-		godotFragment?.onActivityResult(requestCode, resultCode, data)
+		RedotFragment?.onActivityResult(requestCode, resultCode, data)
 	}
 
 	@CallSuper
 	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-		godotFragment?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+		RedotFragment?.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
 		// Logging the result of permission requests
 		if (requestCode == PermissionsUtil.REQUEST_ALL_PERMISSION_REQ_CODE || requestCode == PermissionsUtil.REQUEST_SINGLE_PERMISSION_REQ_CODE) {
@@ -159,21 +159,21 @@ abstract class GodotActivity : FragmentActivity(), GodotHost {
 	}
 
 	override fun onBackPressed() {
-		godotFragment?.onBackPressed() ?: super.onBackPressed()
+		RedotFragment?.onBackPressed() ?: super.onBackPressed()
 	}
 
 	override fun getActivity(): Activity? {
 		return this
 	}
 
-	override fun getGodot(): Godot? {
-		return godotFragment?.godot
+	override fun getRedot(): Redot? {
+		return RedotFragment?.Redot
 	}
 
 	/**
-	 * Used to initialize the Godot fragment instance in [onCreate].
+	 * Used to initialize the Redot fragment instance in [onCreate].
 	 */
-	protected open fun initGodotInstance(): GodotFragment {
-		return GodotFragment()
+	protected open fun initRedotInstance(): RedotFragment {
+		return RedotFragment()
 	}
 }

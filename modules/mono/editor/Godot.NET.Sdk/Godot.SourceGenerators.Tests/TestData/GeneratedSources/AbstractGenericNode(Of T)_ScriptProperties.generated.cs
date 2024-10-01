@@ -1,5 +1,5 @@
-using Godot;
-using Godot.NativeInterop;
+using Redot;
+using Redot.NativeInterop;
 
 partial class AbstractGenericNode<T>
 {
@@ -7,42 +7,42 @@ partial class AbstractGenericNode<T>
     /// <summary>
     /// Cached StringNames for the properties and fields contained in this class, for fast lookup.
     /// </summary>
-    public new class PropertyName : global::Godot.Node.PropertyName {
+    public new class PropertyName : global::Redot.Node.PropertyName {
         /// <summary>
         /// Cached name for the 'MyArray' property.
         /// </summary>
-        public new static readonly global::Godot.StringName @MyArray = "MyArray";
+        public new static readonly global::Redot.StringName @MyArray = "MyArray";
     }
     /// <inheritdoc/>
     [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-    protected override bool SetGodotClassPropertyValue(in godot_string_name name, in godot_variant value)
+    protected override bool SetRedotClassPropertyValue(in Redot_string_name name, in Redot_variant value)
     {
         if (name == PropertyName.@MyArray) {
-            this.@MyArray = global::Godot.NativeInterop.VariantUtils.ConvertToArray<T>(value);
+            this.@MyArray = global::Redot.NativeInterop.VariantUtils.ConvertToArray<T>(value);
             return true;
         }
-        return base.SetGodotClassPropertyValue(name, value);
+        return base.SetRedotClassPropertyValue(name, value);
     }
     /// <inheritdoc/>
     [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-    protected override bool GetGodotClassPropertyValue(in godot_string_name name, out godot_variant value)
+    protected override bool GetRedotClassPropertyValue(in Redot_string_name name, out Redot_variant value)
     {
         if (name == PropertyName.@MyArray) {
-            value = global::Godot.NativeInterop.VariantUtils.CreateFromArray(this.@MyArray);
+            value = global::Redot.NativeInterop.VariantUtils.CreateFromArray(this.@MyArray);
             return true;
         }
-        return base.GetGodotClassPropertyValue(name, out value);
+        return base.GetRedotClassPropertyValue(name, out value);
     }
     /// <summary>
     /// Get the property information for all the properties declared in this class.
-    /// This method is used by Godot to register the available properties in the editor.
+    /// This method is used by Redot to register the available properties in the editor.
     /// Do not call this method.
     /// </summary>
     [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-    internal new static global::System.Collections.Generic.List<global::Godot.Bridge.PropertyInfo> GetGodotPropertyList()
+    internal new static global::System.Collections.Generic.List<global::Redot.Bridge.PropertyInfo> GetRedotPropertyList()
     {
-        var properties = new global::System.Collections.Generic.List<global::Godot.Bridge.PropertyInfo>();
-        properties.Add(new(type: (global::Godot.Variant.Type)28, name: PropertyName.@MyArray, hint: (global::Godot.PropertyHint)0, hintString: "", usage: (global::Godot.PropertyUsageFlags)4102, exported: true));
+        var properties = new global::System.Collections.Generic.List<global::Redot.Bridge.PropertyInfo>();
+        properties.Add(new(type: (global::Redot.Variant.Type)28, name: PropertyName.@MyArray, hint: (global::Redot.PropertyHint)0, hintString: "", usage: (global::Redot.PropertyUsageFlags)4102, exported: true));
         return properties;
     }
 #pragma warning restore CS0109

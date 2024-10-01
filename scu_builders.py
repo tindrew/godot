@@ -272,7 +272,7 @@ def generate_scu_files(max_includes_per_scu):
 
     # check we are running from the correct folder
     if folder_not_found("core") or folder_not_found("platform") or folder_not_found("scene"):
-        raise RuntimeError("scu_builders.py must be run from the godot folder.")
+        raise RuntimeError("scu_builders.py must be run from the Redot folder.")
         return
 
     process_folder(["core"])
@@ -322,9 +322,9 @@ def generate_scu_files(max_includes_per_scu):
     process_folder(["modules/openxr"], ["register_types"])
     process_folder(["modules/openxr/action_map"])
     process_folder(["modules/openxr/editor"])
-    process_folder(["modules/godot_physics_2d"])
-    process_folder(["modules/godot_physics_3d"])
-    process_folder(["modules/godot_physics_3d/joints"])
+    process_folder(["modules/Redot_physics_2d"])
+    process_folder(["modules/Redot_physics_3d"])
+    process_folder(["modules/Redot_physics_3d/joints"])
 
     process_folder(["modules/csg"])
     process_folder(["modules/gdscript"])

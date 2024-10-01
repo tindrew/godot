@@ -2,10 +2,10 @@
 /*  json.cpp                                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -1022,7 +1022,7 @@ Variant JSON::to_native(const Variant &p_json, bool p_allow_classes, bool p_allo
 		case Variant::DICTIONARY: {
 			Dictionary d = p_json;
 			if (d.has(GDTYPE)) {
-				// Specific Godot Variant types serialized to JSON.
+				// Specific Redot Variant types serialized to JSON.
 				String type = d[GDTYPE];
 				if (type == Variant::get_type_name(Variant::VECTOR2)) {
 					ERR_FAIL_COND_V(!d.has(VALUES), Variant());

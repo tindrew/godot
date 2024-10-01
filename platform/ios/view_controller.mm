@@ -2,10 +2,10 @@
 /*  view_controller.mm                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -31,8 +31,8 @@
 #import "view_controller.h"
 
 #import "display_server_ios.h"
-#import "godot_view.h"
-#import "godot_view_renderer.h"
+#import "Redot_view.h"
+#import "Redot_view_renderer.h"
 #import "key_mapping_ios.h"
 #import "keyboard_input_view.h"
 #import "os_ios.h"
@@ -42,19 +42,19 @@
 #import <AVFoundation/AVFoundation.h>
 #import <GameController/GameController.h>
 
-@interface ViewController () <GodotViewDelegate>
+@interface ViewController () <RedotViewDelegate>
 
-@property(strong, nonatomic) GodotViewRenderer *renderer;
-@property(strong, nonatomic) GodotKeyboardInputView *keyboardView;
+@property(strong, nonatomic) RedotViewRenderer *renderer;
+@property(strong, nonatomic) RedotKeyboardInputView *keyboardView;
 
-@property(strong, nonatomic) UIView *godotLoadingOverlay;
+@property(strong, nonatomic) UIView *RedotLoadingOverlay;
 
 @end
 
 @implementation ViewController
 
-- (GodotView *)godotView {
-	return (GodotView *)self.view;
+- (RedotView *)RedotView {
+	return (RedotView *)self.view;
 }
 
 - (void)pressesBegan:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
@@ -120,8 +120,8 @@
 }
 
 - (void)loadView {
-	GodotView *view = [[GodotView alloc] init];
-	GodotViewRenderer *renderer = [[GodotViewRenderer alloc] init];
+	RedotView *view = [[RedotView alloc] init];
+	RedotViewRenderer *renderer = [[RedotViewRenderer alloc] init];
 
 	self.renderer = renderer;
 	self.view = view;
@@ -134,7 +134,7 @@
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 
 	if (self) {
-		[self godot_commonInit];
+		[self Redot_commonInit];
 	}
 
 	return self;
@@ -144,13 +144,13 @@
 	self = [super initWithCoder:coder];
 
 	if (self) {
-		[self godot_commonInit];
+		[self Redot_commonInit];
 	}
 
 	return self;
 }
 
-- (void)godot_commonInit {
+- (void)Redot_commonInit {
 	// Initialize view controller values.
 }
 
@@ -170,7 +170,7 @@
 
 - (void)observeKeyboard {
 	print_verbose("Setting up keyboard input view.");
-	self.keyboardView = [GodotKeyboardInputView new];
+	self.keyboardView = [RedotKeyboardInputView new];
 	[self.view addSubview:self.keyboardView];
 
 	print_verbose("Adding observer for keyboard show/hide.");
@@ -197,16 +197,16 @@
 	UIStoryboard *launchStoryboard = [UIStoryboard storyboardWithName:storyboardName bundle:bundle];
 
 	UIViewController *controller = [launchStoryboard instantiateInitialViewController];
-	self.godotLoadingOverlay = controller.view;
-	self.godotLoadingOverlay.frame = self.view.bounds;
-	self.godotLoadingOverlay.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	self.RedotLoadingOverlay = controller.view;
+	self.RedotLoadingOverlay.frame = self.view.bounds;
+	self.RedotLoadingOverlay.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 
-	[self.view addSubview:self.godotLoadingOverlay];
+	[self.view addSubview:self.RedotLoadingOverlay];
 }
 
-- (BOOL)godotViewFinishedSetup:(GodotView *)view {
-	[self.godotLoadingOverlay removeFromSuperview];
-	self.godotLoadingOverlay = nil;
+- (BOOL)RedotViewFinishedSetup:(RedotView *)view {
+	[self.RedotLoadingOverlay removeFromSuperview];
+	self.RedotLoadingOverlay = nil;
 
 	return YES;
 }
@@ -216,9 +216,9 @@
 
 	self.renderer = nil;
 
-	if (self.godotLoadingOverlay) {
-		[self.godotLoadingOverlay removeFromSuperview];
-		self.godotLoadingOverlay = nil;
+	if (self.RedotLoadingOverlay) {
+		[self.RedotLoadingOverlay removeFromSuperview];
+		self.RedotLoadingOverlay = nil;
 	}
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];

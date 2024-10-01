@@ -1,8 +1,8 @@
-using GodotTools.IdeMessaging.Requests;
-using GodotTools.IdeMessaging.Utils;
+using RedotTools.IdeMessaging.Requests;
+using RedotTools.IdeMessaging.Utils;
 using Newtonsoft.Json;
 
-namespace GodotTools.IdeMessaging
+namespace RedotTools.IdeMessaging
 {
     public abstract class ResponseAwaiter : NotifyAwaiter<Response>
     {

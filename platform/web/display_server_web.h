@@ -2,10 +2,10 @@
 /*  display_server_web.h                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -33,7 +33,7 @@
 
 #include "servers/display_server.h"
 
-#include "godot_js.h"
+#include "Redot_js.h"
 
 #include <emscripten.h>
 #include <emscripten/html5.h>
@@ -107,8 +107,8 @@ private:
 	NativeMenu *native_menu = nullptr;
 
 	// utilities
-	static void dom2godot_mod(Ref<InputEventWithModifiers> ev, int p_mod, Key p_keycode);
-	static const char *godot2dom_cursor(DisplayServer::CursorShape p_shape);
+	static void dom2Redot_mod(Ref<InputEventWithModifiers> ev, int p_mod, Key p_keycode);
+	static const char *Redot2dom_cursor(DisplayServer::CursorShape p_shape);
 
 	// events
 	WASM_EXPORT static void fullscreen_change_callback(int p_fullscreen);

@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotDownloaderAlarmReceiver.java                                     */
+/*  RedotDownloaderAlarmReceiver.java                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot;
+package org.Redotengine.Redot;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -43,17 +43,17 @@ import com.google.android.vending.expansion.downloader.DownloaderClientMarshalle
  * from the alarm service using the provided service helper function within the
  * DownloaderClientMarshaller. This class must be then registered in your AndroidManifest.xml
  * file with a section like this:
- *         <receiver android:name=".GodotDownloaderAlarmReceiver"/>
+ *         <receiver android:name=".RedotDownloaderAlarmReceiver"/>
  */
-public class GodotDownloaderAlarmReceiver extends BroadcastReceiver {
+public class RedotDownloaderAlarmReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Log.d("GODOT", "Alarma recivida");
+		Log.d("Redot", "Alarma recivida");
 		try {
-			DownloaderClientMarshaller.startDownloadServiceIfRequired(context, intent, GodotDownloaderService.class);
+			DownloaderClientMarshaller.startDownloadServiceIfRequired(context, intent, RedotDownloaderService.class);
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
-			Log.d("GODOT", "Exception: " + e.getClass().getName() + ":" + e.getMessage());
+			Log.d("Redot", "Exception: " + e.getClass().getName() + ":" + e.getMessage());
 		}
 	}
 }

@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  java_godot_view_wrapper.h                                             */
+/*  java_Redot_view_wrapper.h                                             */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef JAVA_GODOT_VIEW_WRAPPER_H
-#define JAVA_GODOT_VIEW_WRAPPER_H
+#ifndef JAVA_Redot_VIEW_WRAPPER_H
+#define JAVA_Redot_VIEW_WRAPPER_H
 
 #include "string_android.h"
 
@@ -38,12 +38,12 @@
 #include <android/log.h>
 #include <jni.h>
 
-// Class that makes functions in java/src/org/godotengine/godot/GodotRenderView.java callable from C++
-class GodotJavaViewWrapper {
+// Class that makes functions in java/src/org/Redotengine/Redot/RedotRenderView.java callable from C++
+class RedotJavaViewWrapper {
 private:
 	jclass _cls;
 
-	jobject _godot_view;
+	jobject _Redot_view;
 
 	jmethodID _can_capture_pointer = 0;
 	jmethodID _request_pointer_capture = 0;
@@ -53,7 +53,7 @@ private:
 	jmethodID _set_pointer_icon = 0;
 
 public:
-	GodotJavaViewWrapper(jobject godot_view);
+	RedotJavaViewWrapper(jobject Redot_view);
 
 	bool can_update_pointer_icon() const;
 	bool can_capture_pointer() const;
@@ -64,7 +64,7 @@ public:
 	void configure_pointer_icon(int pointer_type, const String &image_path, const Vector2 &p_hotspot);
 	void set_pointer_icon(int pointer_type);
 
-	~GodotJavaViewWrapper();
+	~RedotJavaViewWrapper();
 };
 
-#endif // JAVA_GODOT_VIEW_WRAPPER_H
+#endif // JAVA_Redot_VIEW_WRAPPER_H

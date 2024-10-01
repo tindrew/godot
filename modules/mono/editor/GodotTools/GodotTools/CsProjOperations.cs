@@ -1,8 +1,8 @@
-using Godot;
+using Redot;
 using System;
-using GodotTools.ProjectEditor;
+using RedotTools.ProjectEditor;
 
-namespace GodotTools
+namespace RedotTools
 {
     public static class CsProjOperations
     {

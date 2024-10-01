@@ -1,6 +1,6 @@
 using System;
 
-namespace Godot
+namespace Redot
 {
     [AttributeUsage(AttributeTargets.Delegate)]
     public sealed class SignalAttribute : Attribute { }

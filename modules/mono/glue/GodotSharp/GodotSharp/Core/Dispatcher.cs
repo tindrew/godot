@@ -1,19 +1,19 @@
 using System;
 using System.Runtime.InteropServices;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
-namespace Godot
+namespace Redot
 {
     public static class Dispatcher
     {
-        internal static GodotTaskScheduler DefaultGodotTaskScheduler;
+        internal static RedotTaskScheduler DefaultRedotTaskScheduler;
 
-        internal static void InitializeDefaultGodotTaskScheduler()
+        internal static void InitializeDefaultRedotTaskScheduler()
         {
-            DefaultGodotTaskScheduler?.Dispose();
-            DefaultGodotTaskScheduler = new GodotTaskScheduler();
+            DefaultRedotTaskScheduler?.Dispose();
+            DefaultRedotTaskScheduler = new RedotTaskScheduler();
         }
 
-        public static GodotSynchronizationContext SynchronizationContext => DefaultGodotTaskScheduler.Context;
+        public static RedotSynchronizationContext SynchronizationContext => DefaultRedotTaskScheduler.Context;
     }
 }

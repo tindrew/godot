@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_shape_3d.h                                                      */
+/*  Redot_shape_3d.h                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,30 +28,30 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_SHAPE_3D_H
-#define GODOT_SHAPE_3D_H
+#ifndef Redot_SHAPE_3D_H
+#define Redot_SHAPE_3D_H
 
 #include "core/math/geometry_3d.h"
 #include "core/templates/local_vector.h"
 #include "servers/physics_server_3d.h"
 
-class GodotShape3D;
+class RedotShape3D;
 
-class GodotShapeOwner3D {
+class RedotShapeOwner3D {
 public:
 	virtual void _shape_changed() = 0;
-	virtual void remove_shape(GodotShape3D *p_shape) = 0;
+	virtual void remove_shape(RedotShape3D *p_shape) = 0;
 
-	virtual ~GodotShapeOwner3D() {}
+	virtual ~RedotShapeOwner3D() {}
 };
 
-class GodotShape3D {
+class RedotShape3D {
 	RID self;
 	AABB aabb;
 	bool configured = false;
 	real_t custom_bias = 0.0;
 
-	HashMap<GodotShapeOwner3D *, int> owners;
+	HashMap<RedotShapeOwner3D *, int> owners;
 
 protected:
 	void configure(const AABB &p_aabb);
@@ -90,29 +90,29 @@ public:
 	_FORCE_INLINE_ void set_custom_bias(real_t p_bias) { custom_bias = p_bias; }
 	_FORCE_INLINE_ real_t get_custom_bias() const { return custom_bias; }
 
-	void add_owner(GodotShapeOwner3D *p_owner);
-	void remove_owner(GodotShapeOwner3D *p_owner);
-	bool is_owner(GodotShapeOwner3D *p_owner) const;
-	const HashMap<GodotShapeOwner3D *, int> &get_owners() const;
+	void add_owner(RedotShapeOwner3D *p_owner);
+	void remove_owner(RedotShapeOwner3D *p_owner);
+	bool is_owner(RedotShapeOwner3D *p_owner) const;
+	const HashMap<RedotShapeOwner3D *, int> &get_owners() const;
 
-	GodotShape3D() {}
-	virtual ~GodotShape3D();
+	RedotShape3D() {}
+	virtual ~RedotShape3D();
 };
 
-class GodotConcaveShape3D : public GodotShape3D {
+class RedotConcaveShape3D : public RedotShape3D {
 public:
 	virtual bool is_concave() const override { return true; }
 	virtual void get_supports(const Vector3 &p_normal, int p_max, Vector3 *r_supports, int &r_amount, FeatureType &r_type) const override { r_amount = 0; }
 
 	// Returns true to stop the query.
-	typedef bool (*QueryCallback)(void *p_userdata, GodotShape3D *p_convex);
+	typedef bool (*QueryCallback)(void *p_userdata, RedotShape3D *p_convex);
 
 	virtual void cull(const AABB &p_local_aabb, QueryCallback p_callback, void *p_userdata, bool p_invert_backface_collision) const = 0;
 
-	GodotConcaveShape3D() {}
+	RedotConcaveShape3D() {}
 };
 
-class GodotWorldBoundaryShape3D : public GodotShape3D {
+class RedotWorldBoundaryShape3D : public RedotShape3D {
 	Plane plane;
 
 	void _setup(const Plane &p_plane);
@@ -134,10 +134,10 @@ public:
 	virtual void set_data(const Variant &p_data) override;
 	virtual Variant get_data() const override;
 
-	GodotWorldBoundaryShape3D();
+	RedotWorldBoundaryShape3D();
 };
 
-class GodotSeparationRayShape3D : public GodotShape3D {
+class RedotSeparationRayShape3D : public RedotShape3D {
 	real_t length = 1.0;
 	bool slide_on_slope = false;
 
@@ -162,10 +162,10 @@ public:
 	virtual void set_data(const Variant &p_data) override;
 	virtual Variant get_data() const override;
 
-	GodotSeparationRayShape3D();
+	RedotSeparationRayShape3D();
 };
 
-class GodotSphereShape3D : public GodotShape3D {
+class RedotSphereShape3D : public RedotShape3D {
 	real_t radius = 0.0;
 
 	void _setup(real_t p_radius);
@@ -189,10 +189,10 @@ public:
 	virtual void set_data(const Variant &p_data) override;
 	virtual Variant get_data() const override;
 
-	GodotSphereShape3D();
+	RedotSphereShape3D();
 };
 
-class GodotBoxShape3D : public GodotShape3D {
+class RedotBoxShape3D : public RedotShape3D {
 	Vector3 half_extents;
 	void _setup(const Vector3 &p_half_extents);
 
@@ -214,10 +214,10 @@ public:
 	virtual void set_data(const Variant &p_data) override;
 	virtual Variant get_data() const override;
 
-	GodotBoxShape3D();
+	RedotBoxShape3D();
 };
 
-class GodotCapsuleShape3D : public GodotShape3D {
+class RedotCapsuleShape3D : public RedotShape3D {
 	real_t height = 0.0;
 	real_t radius = 0.0;
 
@@ -243,10 +243,10 @@ public:
 	virtual void set_data(const Variant &p_data) override;
 	virtual Variant get_data() const override;
 
-	GodotCapsuleShape3D();
+	RedotCapsuleShape3D();
 };
 
-class GodotCylinderShape3D : public GodotShape3D {
+class RedotCylinderShape3D : public RedotShape3D {
 	real_t height = 0.0;
 	real_t radius = 0.0;
 
@@ -272,10 +272,10 @@ public:
 	virtual void set_data(const Variant &p_data) override;
 	virtual Variant get_data() const override;
 
-	GodotCylinderShape3D();
+	RedotCylinderShape3D();
 };
 
-struct GodotConvexPolygonShape3D : public GodotShape3D {
+struct RedotConvexPolygonShape3D : public RedotShape3D {
 	Geometry3D::MeshData mesh;
 	LocalVector<int> extreme_vertices;
 	LocalVector<LocalVector<int>> vertex_neighbors;
@@ -299,13 +299,13 @@ public:
 	virtual void set_data(const Variant &p_data) override;
 	virtual Variant get_data() const override;
 
-	GodotConvexPolygonShape3D();
+	RedotConvexPolygonShape3D();
 };
 
 struct _Volume_BVH;
-struct GodotFaceShape3D;
+struct RedotFaceShape3D;
 
-struct GodotConcavePolygonShape3D : public GodotConcaveShape3D {
+struct RedotConcavePolygonShape3D : public RedotConcaveShape3D {
 	// always a trimesh
 
 	struct Face {
@@ -333,7 +333,7 @@ struct GodotConcavePolygonShape3D : public GodotConcaveShape3D {
 		const Face *faces = nullptr;
 		const Vector3 *vertices = nullptr;
 		const BVH *bvh = nullptr;
-		GodotFaceShape3D *face = nullptr;
+		RedotFaceShape3D *face = nullptr;
 	};
 
 	struct _SegmentCullParams {
@@ -343,7 +343,7 @@ struct GodotConcavePolygonShape3D : public GodotConcaveShape3D {
 		const Face *faces = nullptr;
 		const Vector3 *vertices = nullptr;
 		const BVH *bvh = nullptr;
-		GodotFaceShape3D *face = nullptr;
+		RedotFaceShape3D *face = nullptr;
 
 		Vector3 result;
 		Vector3 normal;
@@ -380,10 +380,10 @@ public:
 	virtual void set_data(const Variant &p_data) override;
 	virtual Variant get_data() const override;
 
-	GodotConcavePolygonShape3D();
+	RedotConcavePolygonShape3D();
 };
 
-struct GodotHeightMapShape3D : public GodotConcaveShape3D {
+struct RedotHeightMapShape3D : public RedotConcaveShape3D {
 	Vector<real_t> heights;
 	int width = 0;
 	int depth = 0;
@@ -443,11 +443,11 @@ public:
 	virtual void set_data(const Variant &p_data) override;
 	virtual Variant get_data() const override;
 
-	GodotHeightMapShape3D();
+	RedotHeightMapShape3D();
 };
 
 //used internally
-struct GodotFaceShape3D : public GodotShape3D {
+struct RedotFaceShape3D : public RedotShape3D {
 	Vector3 normal; //cache
 	Vector3 vertex[3];
 	bool backface_collision = false;
@@ -469,11 +469,11 @@ struct GodotFaceShape3D : public GodotShape3D {
 	virtual void set_data(const Variant &p_data) override {}
 	virtual Variant get_data() const override { return Variant(); }
 
-	GodotFaceShape3D();
+	RedotFaceShape3D();
 };
 
-struct GodotMotionShape3D : public GodotShape3D {
-	GodotShape3D *shape = nullptr;
+struct RedotMotionShape3D : public RedotShape3D {
+	RedotShape3D *shape = nullptr;
 	Vector3 motion;
 
 	virtual PhysicsServer3D::ShapeType get_type() const override { return PhysicsServer3D::SHAPE_CONVEX_POLYGON; }
@@ -508,7 +508,7 @@ struct GodotMotionShape3D : public GodotShape3D {
 	virtual void set_data(const Variant &p_data) override {}
 	virtual Variant get_data() const override { return Variant(); }
 
-	GodotMotionShape3D() { configure(AABB()); }
+	RedotMotionShape3D() { configure(AABB()); }
 };
 
-#endif // GODOT_SHAPE_3D_H
+#endif // Redot_SHAPE_3D_H

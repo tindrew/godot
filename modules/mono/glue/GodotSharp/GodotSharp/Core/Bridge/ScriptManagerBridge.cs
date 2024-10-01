@@ -12,9 +12,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using System.Runtime.Serialization;
 using System.Text;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
-namespace Godot.Bridge
+namespace Redot.Bridge
 {
     // TODO: Make class internal once we replace LookupScriptsInAssembly (the only public member) with source generators
     public static partial class ScriptManagerBridge
@@ -81,7 +81,7 @@ namespace Godot.Bridge
         {
             try
             {
-                Dispatcher.DefaultGodotTaskScheduler?.Activate();
+                Dispatcher.DefaultRedotTaskScheduler?.Activate();
             }
             catch (Exception e)
             {
@@ -90,16 +90,16 @@ namespace Godot.Bridge
         }
 
         [UnmanagedCallersOnly]
-        internal static unsafe IntPtr CreateManagedForGodotObjectBinding(godot_string_name* nativeTypeName,
-            IntPtr godotObject)
+        internal static unsafe IntPtr CreateManagedForRedotObjectBinding(Redot_string_name* nativeTypeName,
+            IntPtr RedotObject)
         {
             try
             {
                 using var stringName = StringName.CreateTakingOwnershipOfDisposableValue(
-                    NativeFuncs.godotsharp_string_name_new_copy(CustomUnsafe.AsRef(nativeTypeName)));
+                    NativeFuncs.Redotsharp_string_name_new_copy(CustomUnsafe.AsRef(nativeTypeName)));
                 string nativeTypeNameStr = stringName.ToString();
 
-                var instance = Constructors.Invoke(nativeTypeNameStr, godotObject);
+                var instance = Constructors.Invoke(nativeTypeNameStr, RedotObject);
 
                 return GCHandle.ToIntPtr(CustomGCHandle.AllocStrong(instance));
             }
@@ -111,9 +111,9 @@ namespace Godot.Bridge
         }
 
         [UnmanagedCallersOnly]
-        internal static unsafe godot_bool CreateManagedForGodotObjectScriptInstance(IntPtr scriptPtr,
-            IntPtr godotObject,
-            godot_variant** args, int argCount)
+        internal static unsafe Redot_bool CreateManagedForRedotObjectScriptInstance(IntPtr scriptPtr,
+            IntPtr RedotObject,
+            Redot_variant** args, int argCount)
         {
             // TODO: Optimize with source generators and delegate pointers.
 
@@ -143,7 +143,7 @@ namespace Godot.Bridge
                     }
                 }
 
-                var obj = (GodotObject)FormatterServices.GetUninitializedObject(scriptType);
+                var obj = (RedotObject)FormatterServices.GetUninitializedObject(scriptType);
 
                 var parameters = ctor.GetParameters();
                 int paramCount = parameters.Length;
@@ -156,22 +156,22 @@ namespace Godot.Bridge
                         *args[i], parameters[i].ParameterType);
                 }
 
-                obj.NativePtr = godotObject;
+                obj.NativePtr = RedotObject;
 
                 _ = ctor.Invoke(obj, invokeParams);
 
 
-                return godot_bool.True;
+                return Redot_bool.True;
             }
             catch (Exception e)
             {
                 ExceptionUtils.LogException(e);
-                return godot_bool.False;
+                return Redot_bool.False;
             }
         }
 
         [UnmanagedCallersOnly]
-        internal static unsafe void GetScriptNativeName(IntPtr scriptPtr, godot_string_name* outRes)
+        internal static unsafe void GetScriptNativeName(IntPtr scriptPtr, Redot_string_name* outRes)
         {
             try
             {
@@ -182,7 +182,7 @@ namespace Godot.Bridge
                     return;
                 }
 
-                var native = GodotObject.InternalGetClassNativeBase(scriptType);
+                var native = RedotObject.InternalGetClassNativeBase(scriptType);
 
                 var field = native.GetField("NativeName", BindingFlags.DeclaredOnly | BindingFlags.Static |
                                                            BindingFlags.Public | BindingFlags.NonPublic);
@@ -201,7 +201,7 @@ namespace Godot.Bridge
                     return;
                 }
 
-                *outRes = NativeFuncs.godotsharp_string_name_new_copy((godot_string_name)nativeName.NativeValue);
+                *outRes = NativeFuncs.Redotsharp_string_name_new_copy((Redot_string_name)nativeName.NativeValue);
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Godot.Bridge
         }
 
         [UnmanagedCallersOnly]
-        internal static unsafe void GetGlobalClassName(godot_string* scriptPath, godot_string* outBaseType, godot_string* outIconPath, godot_string* outClassName)
+        internal static unsafe void GetGlobalClassName(Redot_string* scriptPath, Redot_string* outBaseType, Redot_string* outIconPath, Redot_string* outClassName)
         {
             // This method must always return the outBaseType for every script, even if the script is
             // not a global class. But if the script is not a global class it must return an empty
@@ -246,7 +246,7 @@ namespace Godot.Bridge
             {
                 bool foundGlobalBaseScript = false;
 
-                Type native = GodotObject.InternalGetClassNativeBase(scriptType);
+                Type native = RedotObject.InternalGetClassNativeBase(scriptType);
                 Type? top = scriptType.BaseType;
 
                 while (top != null && top != native)
@@ -282,11 +282,11 @@ namespace Godot.Bridge
         }
 
         [UnmanagedCallersOnly]
-        internal static void SetGodotObjectPtr(IntPtr gcHandlePtr, IntPtr newPtr)
+        internal static void SetRedotObjectPtr(IntPtr gcHandlePtr, IntPtr newPtr)
         {
             try
             {
-                var target = (GodotObject?)GCHandle.FromIntPtr(gcHandlePtr).Target;
+                var target = (RedotObject?)GCHandle.FromIntPtr(gcHandlePtr).Target;
                 if (target != null)
                     target.NativePtr = newPtr;
             }
@@ -296,7 +296,7 @@ namespace Godot.Bridge
             }
         }
 
-        // Called from GodotPlugins
+        // Called from RedotPlugins
         // ReSharper disable once UnusedMember.Local
         public static void LookupScriptsInAssembly(Assembly assembly)
         {
@@ -330,14 +330,14 @@ namespace Godot.Bridge
                 // such as when disabling C# source generators (for whatever reason) or when using a
                 // language other than C# that has nothing similar to source generators to automate it.
 
-                var typeOfGodotObject = typeof(GodotObject);
+                var typeOfRedotObject = typeof(RedotObject);
 
                 foreach (var type in assembly.GetTypes())
                 {
                     if (type.IsNested)
                         continue;
 
-                    if (!typeOfGodotObject.IsAssignableFrom(type))
+                    if (!typeOfRedotObject.IsAssignableFrom(type))
                         continue;
 
                     LookupScriptForClass(type);
@@ -359,75 +359,75 @@ namespace Godot.Bridge
             }
 
             // This method may be called before initialization.
-            if (NativeFuncs.godotsharp_dotnet_module_is_initialized().ToBool() && Engine.IsEditorHint())
+            if (NativeFuncs.Redotsharp_dotnet_module_is_initialized().ToBool() && Engine.IsEditorHint())
             {
                 if (_pathTypeBiMap.Paths.Count > 0)
                 {
                     string[] scriptPaths = _pathTypeBiMap.Paths.ToArray();
-                    using godot_packed_string_array scriptPathsNative = Marshaling.ConvertSystemArrayToNativePackedStringArray(scriptPaths);
-                    NativeFuncs.godotsharp_internal_editor_file_system_update_files(scriptPathsNative);
+                    using Redot_packed_string_array scriptPathsNative = Marshaling.ConvertSystemArrayToNativePackedStringArray(scriptPaths);
+                    NativeFuncs.Redotsharp_internal_editor_file_system_update_files(scriptPathsNative);
                 }
             }
         }
 
         [UnmanagedCallersOnly]
         internal static unsafe void RaiseEventSignal(IntPtr ownerGCHandlePtr,
-            godot_string_name* eventSignalName, godot_variant** args, int argCount, godot_bool* outOwnerIsNull)
+            Redot_string_name* eventSignalName, Redot_variant** args, int argCount, Redot_bool* outOwnerIsNull)
         {
             try
             {
-                var owner = (GodotObject?)GCHandle.FromIntPtr(ownerGCHandlePtr).Target;
+                var owner = (RedotObject?)GCHandle.FromIntPtr(ownerGCHandlePtr).Target;
 
                 if (owner == null)
                 {
-                    *outOwnerIsNull = godot_bool.True;
+                    *outOwnerIsNull = Redot_bool.True;
                     return;
                 }
 
-                *outOwnerIsNull = godot_bool.False;
+                *outOwnerIsNull = Redot_bool.False;
 
-                owner.RaiseGodotClassSignalCallbacks(CustomUnsafe.AsRef(eventSignalName),
+                owner.RaiseRedotClassSignalCallbacks(CustomUnsafe.AsRef(eventSignalName),
                     new NativeVariantPtrArgs(args, argCount));
             }
             catch (Exception e)
             {
                 ExceptionUtils.LogException(e);
-                *outOwnerIsNull = godot_bool.False;
+                *outOwnerIsNull = Redot_bool.False;
             }
         }
 
         [UnmanagedCallersOnly]
-        internal static godot_bool ScriptIsOrInherits(IntPtr scriptPtr, IntPtr scriptPtrMaybeBase)
+        internal static Redot_bool ScriptIsOrInherits(IntPtr scriptPtr, IntPtr scriptPtrMaybeBase)
         {
             try
             {
                 if (!_scriptTypeBiMap.TryGetScriptType(scriptPtr, out Type? scriptType))
-                    return godot_bool.False;
+                    return Redot_bool.False;
 
                 if (!_scriptTypeBiMap.TryGetScriptType(scriptPtrMaybeBase, out Type? maybeBaseType))
-                    return godot_bool.False;
+                    return Redot_bool.False;
 
-                return (scriptType == maybeBaseType || maybeBaseType.IsAssignableFrom(scriptType)).ToGodotBool();
+                return (scriptType == maybeBaseType || maybeBaseType.IsAssignableFrom(scriptType)).ToRedotBool();
             }
             catch (Exception e)
             {
                 ExceptionUtils.LogException(e);
-                return godot_bool.False;
+                return Redot_bool.False;
             }
         }
 
         [UnmanagedCallersOnly]
-        internal static unsafe godot_bool AddScriptBridge(IntPtr scriptPtr, godot_string* scriptPath)
+        internal static unsafe Redot_bool AddScriptBridge(IntPtr scriptPtr, Redot_string* scriptPath)
         {
             try
             {
                 string scriptPathStr = Marshaling.ConvertStringToManaged(*scriptPath);
-                return AddScriptBridgeCore(scriptPtr, scriptPathStr).ToGodotBool();
+                return AddScriptBridgeCore(scriptPtr, scriptPathStr).ToRedotBool();
             }
             catch (Exception e)
             {
                 ExceptionUtils.LogException(e);
-                return godot_bool.False;
+                return Redot_bool.False;
             }
         }
 
@@ -448,13 +448,13 @@ namespace Godot.Bridge
         }
 
         [UnmanagedCallersOnly]
-        internal static unsafe void GetOrCreateScriptBridgeForPath(godot_string* scriptPath, godot_ref* outScript)
+        internal static unsafe void GetOrCreateScriptBridgeForPath(Redot_string* scriptPath, Redot_ref* outScript)
         {
             string scriptPathStr = Marshaling.ConvertStringToManaged(*scriptPath);
 
             if (!_pathTypeBiMap.TryGetScriptType(scriptPathStr, out Type? scriptType))
             {
-                NativeFuncs.godotsharp_internal_new_csharp_script(outScript);
+                NativeFuncs.Redotsharp_internal_new_csharp_script(outScript);
                 return;
             }
 
@@ -463,14 +463,14 @@ namespace Godot.Bridge
             GetOrCreateScriptBridgeForType(scriptType, outScript);
         }
 
-        private static unsafe void GetOrCreateScriptBridgeForType(Type scriptType, godot_ref* outScript)
+        private static unsafe void GetOrCreateScriptBridgeForType(Type scriptType, Redot_ref* outScript)
         {
             lock (_scriptTypeBiMap.ReadWriteLock)
             {
                 if (_scriptTypeBiMap.TryGetScriptPtr(scriptType, out IntPtr scriptPtr))
                 {
                     // Use existing
-                    NativeFuncs.godotsharp_ref_new_from_ref_counted_ptr(out *outScript, scriptPtr);
+                    NativeFuncs.Redotsharp_ref_new_from_ref_counted_ptr(out *outScript, scriptPtr);
                     return;
                 }
 
@@ -479,9 +479,9 @@ namespace Godot.Bridge
             }
         }
 
-        internal static unsafe void GetOrLoadOrCreateScriptForType(Type scriptType, godot_ref* outScript)
+        internal static unsafe void GetOrLoadOrCreateScriptForType(Type scriptType, Redot_ref* outScript)
         {
-            static bool GetPathOtherwiseGetOrCreateScript(Type scriptType, godot_ref* outScript,
+            static bool GetPathOtherwiseGetOrCreateScript(Type scriptType, Redot_ref* outScript,
                 [MaybeNullWhen(false)] out string scriptPath)
             {
                 lock (_scriptTypeBiMap.ReadWriteLock)
@@ -489,7 +489,7 @@ namespace Godot.Bridge
                     if (_scriptTypeBiMap.TryGetScriptPtr(scriptType, out IntPtr scriptPtr))
                     {
                         // Use existing
-                        NativeFuncs.godotsharp_ref_new_from_ref_counted_ptr(out *outScript, scriptPtr);
+                        NativeFuncs.Redotsharp_ref_new_from_ref_counted_ptr(out *outScript, scriptPtr);
                         scriptPath = null;
                         return false;
                     }
@@ -516,7 +516,7 @@ namespace Godot.Bridge
 
             static string GetVirtualConstructedGenericTypeScriptPath(Type scriptType, string scriptPath)
             {
-                // Constructed generic types all have the same path which is not allowed by Godot
+                // Constructed generic types all have the same path which is not allowed by Redot
                 // (every Resource must have a unique path). So we create a unique "virtual" path
                 // for each type.
 
@@ -545,8 +545,8 @@ namespace Godot.Bridge
                 }
 
                 // This must be done outside the read-write lock, as the script resource loading can lock it
-                using godot_string scriptPathIn = Marshaling.ConvertStringToNative(scriptPath);
-                if (!NativeFuncs.godotsharp_internal_script_load(scriptPathIn, outScript).ToBool())
+                using Redot_string scriptPathIn = Marshaling.ConvertStringToNative(scriptPath);
+                if (!NativeFuncs.Redotsharp_internal_script_load(scriptPathIn, outScript).ToBool())
                 {
                     GD.PushError($"Cannot load script for type '{scriptType.FullName}'. Path: '{scriptPath}'.");
 
@@ -567,17 +567,17 @@ namespace Godot.Bridge
             }
         }
 
-        private static unsafe void CreateScriptBridgeForType(Type scriptType, godot_ref* outScript)
+        private static unsafe void CreateScriptBridgeForType(Type scriptType, Redot_ref* outScript)
         {
             Debug.Assert(!scriptType.IsGenericTypeDefinition, $"Script type must be a constructed generic type or not generic at all. Type: {scriptType}.");
 
-            NativeFuncs.godotsharp_internal_new_csharp_script(outScript);
+            NativeFuncs.Redotsharp_internal_new_csharp_script(outScript);
             IntPtr scriptPtr = outScript->Reference;
 
             // Caller takes care of locking
             _scriptTypeBiMap.Add(scriptPtr, scriptType);
 
-            NativeFuncs.godotsharp_internal_reload_registered_script(scriptPtr);
+            NativeFuncs.Redotsharp_internal_reload_registered_script(scriptPtr);
         }
 
         [UnmanagedCallersOnly]
@@ -597,7 +597,7 @@ namespace Godot.Bridge
         }
 
         [UnmanagedCallersOnly]
-        internal static godot_bool TryReloadRegisteredScriptWithClass(IntPtr scriptPtr)
+        internal static Redot_bool TryReloadRegisteredScriptWithClass(IntPtr scriptPtr)
         {
             try
             {
@@ -608,14 +608,14 @@ namespace Godot.Bridge
                         // NOTE:
                         // Currently, we reload all scripts, not only the ones from the unloaded ALC.
                         // As such, we need to handle this case instead of treating it as an error.
-                        NativeFuncs.godotsharp_internal_reload_registered_script(scriptPtr);
-                        return godot_bool.True;
+                        NativeFuncs.Redotsharp_internal_reload_registered_script(scriptPtr);
+                        return Redot_bool.True;
                     }
 
                     if (!_scriptDataForReload.TryGetValue(scriptPtr, out var dataForReload))
                     {
                         GD.PushError("Missing class qualified name for reloading script");
-                        return godot_bool.False;
+                        return Redot_bool.False;
                     }
 
                     _ = _scriptDataForReload.TryRemove(scriptPtr, out _);
@@ -624,7 +624,7 @@ namespace Godot.Bridge
                     {
                         GD.PushError(
                             $"Missing assembly name of class '{dataForReload.classFullName}' for reloading script");
-                        return godot_bool.False;
+                        return Redot_bool.False;
                     }
 
                     var scriptType = ReflectionUtils.FindTypeInLoadedAssemblies(dataForReload.assemblyName,
@@ -633,34 +633,34 @@ namespace Godot.Bridge
                     if (scriptType == null)
                     {
                         // The class was removed, can't reload
-                        return godot_bool.False;
+                        return Redot_bool.False;
                     }
 
-                    if (!typeof(GodotObject).IsAssignableFrom(scriptType))
+                    if (!typeof(RedotObject).IsAssignableFrom(scriptType))
                     {
-                        // The class no longer inherits GodotObject, can't reload
-                        return godot_bool.False;
+                        // The class no longer inherits RedotObject, can't reload
+                        return Redot_bool.False;
                     }
 
                     _scriptTypeBiMap.Add(scriptPtr, scriptType);
 
-                    NativeFuncs.godotsharp_internal_reload_registered_script(scriptPtr);
+                    NativeFuncs.Redotsharp_internal_reload_registered_script(scriptPtr);
 
-                    return godot_bool.True;
+                    return Redot_bool.True;
                 }
             }
             catch (Exception e)
             {
                 ExceptionUtils.LogException(e);
-                return godot_bool.False;
+                return Redot_bool.False;
             }
         }
 
-        private static unsafe void GetScriptTypeInfo(Type scriptType, godot_csharp_type_info* outTypeInfo)
+        private static unsafe void GetScriptTypeInfo(Type scriptType, Redot_csharp_type_info* outTypeInfo)
         {
-            Type native = GodotObject.InternalGetClassNativeBase(scriptType);
+            Type native = RedotObject.InternalGetClassNativeBase(scriptType);
 
-            godot_string className = Marshaling.ConvertStringToNative(ReflectionUtils.ConstructTypeName(scriptType));
+            Redot_string className = Marshaling.ConvertStringToNative(ReflectionUtils.ConstructTypeName(scriptType));
 
             bool isTool = scriptType.IsDefined(typeof(ToolAttribute), inherit: false);
 
@@ -671,8 +671,8 @@ namespace Godot.Bridge
                 isTool = scriptType.DeclaringType?.IsDefined(typeof(ToolAttribute), inherit: false) ?? false;
             }
 
-            // Every script in the GodotTools assembly is a tool script.
-            if (!isTool && scriptType.Assembly.GetName().Name == "GodotTools")
+            // Every script in the RedotTools assembly is a tool script.
+            if (!isTool && scriptType.Assembly.GetName().Name == "RedotTools")
             {
                 isTool = true;
             }
@@ -683,21 +683,21 @@ namespace Godot.Bridge
                 .OfType<IconAttribute>()
                 .FirstOrDefault();
 
-            godot_string iconPath = Marshaling.ConvertStringToNative(iconAttr?.Path);
+            Redot_string iconPath = Marshaling.ConvertStringToNative(iconAttr?.Path);
 
             outTypeInfo->ClassName = className;
             outTypeInfo->IconPath = iconPath;
-            outTypeInfo->IsTool = isTool.ToGodotBool();
-            outTypeInfo->IsGlobalClass = isGlobalClass.ToGodotBool();
-            outTypeInfo->IsAbstract = scriptType.IsAbstract.ToGodotBool();
-            outTypeInfo->IsGenericTypeDefinition = scriptType.IsGenericTypeDefinition.ToGodotBool();
-            outTypeInfo->IsConstructedGenericType = scriptType.IsConstructedGenericType.ToGodotBool();
+            outTypeInfo->IsTool = isTool.ToRedotBool();
+            outTypeInfo->IsGlobalClass = isGlobalClass.ToRedotBool();
+            outTypeInfo->IsAbstract = scriptType.IsAbstract.ToRedotBool();
+            outTypeInfo->IsGenericTypeDefinition = scriptType.IsGenericTypeDefinition.ToRedotBool();
+            outTypeInfo->IsConstructedGenericType = scriptType.IsConstructedGenericType.ToRedotBool();
 
         }
 
         [UnmanagedCallersOnly]
-        internal static unsafe void UpdateScriptClassInfo(IntPtr scriptPtr, godot_csharp_type_info* outTypeInfo,
-            godot_array* outMethodsDest, godot_dictionary* outRpcFunctionsDest, godot_dictionary* outEventSignalsDest, godot_ref* outBaseScript)
+        internal static unsafe void UpdateScriptClassInfo(IntPtr scriptPtr, Redot_csharp_type_info* outTypeInfo,
+            Redot_array* outMethodsDest, Redot_dictionary* outRpcFunctionsDest, Redot_dictionary* outEventSignalsDest, Redot_ref* outBaseScript)
         {
             try
             {
@@ -707,7 +707,7 @@ namespace Godot.Bridge
 
                 GetScriptTypeInfo(scriptType, outTypeInfo);
 
-                Type native = GodotObject.InternalGetClassNativeBase(scriptType);
+                Type native = RedotObject.InternalGetClassNativeBase(scriptType);
 
                 // Methods
 
@@ -770,8 +770,8 @@ namespace Godot.Bridge
                     }
                 }
 
-                *outMethodsDest = NativeFuncs.godotsharp_array_new_copy(
-                    (godot_array)methods.NativeValue);
+                *outMethodsDest = NativeFuncs.Redotsharp_array_new_copy(
+                    (Redot_array)methods.NativeValue);
 
                 // RPC functions
 
@@ -811,8 +811,8 @@ namespace Godot.Bridge
                     top = top.BaseType;
                 }
 
-                *outRpcFunctionsDest = NativeFuncs.godotsharp_dictionary_new_copy(
-                    (godot_dictionary)rpcFunctions.NativeValue);
+                *outRpcFunctionsDest = NativeFuncs.Redotsharp_dictionary_new_copy(
+                    (Redot_dictionary)rpcFunctions.NativeValue);
 
                 // Event signals
 
@@ -858,8 +858,8 @@ namespace Godot.Bridge
                     }
                 }
 
-                *outEventSignalsDest = NativeFuncs.godotsharp_dictionary_new_copy(
-                    (godot_dictionary)signals.NativeValue);
+                *outEventSignalsDest = NativeFuncs.Redotsharp_dictionary_new_copy(
+                    (Redot_dictionary)signals.NativeValue);
 
                 // Base script
 
@@ -877,52 +877,52 @@ namespace Godot.Bridge
             {
                 ExceptionUtils.LogException(e);
                 *outTypeInfo = default;
-                *outMethodsDest = NativeFuncs.godotsharp_array_new();
-                *outRpcFunctionsDest = NativeFuncs.godotsharp_dictionary_new();
-                *outEventSignalsDest = NativeFuncs.godotsharp_dictionary_new();
+                *outMethodsDest = NativeFuncs.Redotsharp_array_new();
+                *outRpcFunctionsDest = NativeFuncs.Redotsharp_dictionary_new();
+                *outEventSignalsDest = NativeFuncs.Redotsharp_dictionary_new();
                 *outBaseScript = default;
             }
         }
 
         private static List<MethodInfo>? GetSignalListForType(Type type)
         {
-            var getGodotSignalListMethod = type.GetMethod(
-                "GetGodotSignalList",
+            var getRedotSignalListMethod = type.GetMethod(
+                "GetRedotSignalList",
                 BindingFlags.DeclaredOnly | BindingFlags.Static |
                 BindingFlags.NonPublic | BindingFlags.Public);
 
-            if (getGodotSignalListMethod == null)
+            if (getRedotSignalListMethod == null)
                 return null;
 
-            return (List<MethodInfo>?)getGodotSignalListMethod.Invoke(null, null);
+            return (List<MethodInfo>?)getRedotSignalListMethod.Invoke(null, null);
         }
 
         private static List<MethodInfo>? GetMethodListForType(Type type)
         {
-            var getGodotMethodListMethod = type.GetMethod(
-                "GetGodotMethodList",
+            var getRedotMethodListMethod = type.GetMethod(
+                "GetRedotMethodList",
                 BindingFlags.DeclaredOnly | BindingFlags.Static |
                 BindingFlags.NonPublic | BindingFlags.Public);
 
-            if (getGodotMethodListMethod == null)
+            if (getRedotMethodListMethod == null)
                 return null;
 
-            return (List<MethodInfo>?)getGodotMethodListMethod.Invoke(null, null);
+            return (List<MethodInfo>?)getRedotMethodListMethod.Invoke(null, null);
         }
 
 #pragma warning disable IDE1006 // Naming rule violation
         // ReSharper disable once InconsistentNaming
         // ReSharper disable once NotAccessedField.Local
         [StructLayout(LayoutKind.Sequential)]
-        private ref struct godotsharp_property_info
+        private ref struct Redotsharp_property_info
         {
             // Careful with padding...
-            public godot_string_name Name; // Not owned
-            public godot_string HintString;
+            public Redot_string_name Name; // Not owned
+            public Redot_string HintString;
             public int Type;
             public int Hint;
             public int Usage;
-            public godot_bool Exported;
+            public Redot_bool Exported;
 
             public void Dispose()
             {
@@ -933,7 +933,7 @@ namespace Godot.Bridge
 
         [UnmanagedCallersOnly]
         internal static unsafe void GetPropertyInfoList(IntPtr scriptPtr,
-            delegate* unmanaged<IntPtr, godot_string*, void*, int, void> addPropInfoFunc)
+            delegate* unmanaged<IntPtr, Redot_string*, void*, int, void> addPropInfoFunc)
         {
             try
             {
@@ -947,20 +947,20 @@ namespace Godot.Bridge
         }
 
         private static unsafe void GetPropertyInfoListForType(Type type, IntPtr scriptPtr,
-            delegate* unmanaged<IntPtr, godot_string*, void*, int, void> addPropInfoFunc)
+            delegate* unmanaged<IntPtr, Redot_string*, void*, int, void> addPropInfoFunc)
         {
             try
             {
-                var getGodotPropertyListMethod = type.GetMethod(
-                    "GetGodotPropertyList",
+                var getRedotPropertyListMethod = type.GetMethod(
+                    "GetRedotPropertyList",
                     BindingFlags.DeclaredOnly | BindingFlags.Static |
                     BindingFlags.NonPublic | BindingFlags.Public);
 
-                if (getGodotPropertyListMethod == null)
+                if (getRedotPropertyListMethod == null)
                     return;
 
                 var properties = (List<PropertyInfo>?)
-                    getGodotPropertyListMethod.Invoke(null, null);
+                    getRedotPropertyListMethod.Invoke(null, null);
 
                 if (properties == null || properties.Count <= 0)
                     return;
@@ -968,23 +968,23 @@ namespace Godot.Bridge
                 int length = properties.Count;
 
                 // There's no recursion here, so it's ok to go with a big enough number for most cases
-                // StackMaxSize = StackMaxLength * sizeof(godotsharp_property_info)
+                // StackMaxSize = StackMaxLength * sizeof(Redotsharp_property_info)
                 const int StackMaxLength = 32;
                 bool useStack = length < StackMaxLength;
 
-                godotsharp_property_info* interopProperties;
+                Redotsharp_property_info* interopProperties;
 
                 if (useStack)
                 {
                     // Weird limitation, hence the need for aux:
                     // "In the case of pointer types, you can use a stackalloc expression only in a local variable declaration to initialize the variable."
-                    var aux = stackalloc godotsharp_property_info[StackMaxLength];
+                    var aux = stackalloc Redotsharp_property_info[StackMaxLength];
                     interopProperties = aux;
                 }
                 else
                 {
-                    interopProperties = ((godotsharp_property_info*)NativeMemory.Alloc(
-                        (nuint)length, (nuint)sizeof(godotsharp_property_info)))!;
+                    interopProperties = ((Redotsharp_property_info*)NativeMemory.Alloc(
+                        (nuint)length, (nuint)sizeof(Redotsharp_property_info)))!;
                 }
 
                 try
@@ -993,20 +993,20 @@ namespace Godot.Bridge
                     {
                         var property = properties[i];
 
-                        godotsharp_property_info interopProperty = new()
+                        Redotsharp_property_info interopProperty = new()
                         {
                             Type = (int)property.Type,
-                            Name = (godot_string_name)property.Name.NativeValue, // Not owned
+                            Name = (Redot_string_name)property.Name.NativeValue, // Not owned
                             Hint = (int)property.Hint,
                             HintString = Marshaling.ConvertStringToNative(property.HintString),
                             Usage = (int)property.Usage,
-                            Exported = property.Exported.ToGodotBool()
+                            Exported = property.Exported.ToRedotBool()
                         };
 
                         interopProperties[i] = interopProperty;
                     }
 
-                    using godot_string currentClassName = Marshaling.ConvertStringToNative(ReflectionUtils.ConstructTypeName(type));
+                    using Redot_string currentClassName = Marshaling.ConvertStringToNative(ReflectionUtils.ConstructTypeName(type));
 
                     addPropInfoFunc(scriptPtr, &currentClassName, interopProperties, length);
 
@@ -1033,19 +1033,19 @@ namespace Godot.Bridge
         // ReSharper disable once InconsistentNaming
         // ReSharper disable once NotAccessedField.Local
         [StructLayout(LayoutKind.Sequential)]
-        private ref struct godotsharp_property_def_val_pair
+        private ref struct Redotsharp_property_def_val_pair
         {
             // Careful with padding...
-            public godot_string_name Name; // Not owned
-            public godot_variant Value; // Not owned
+            public Redot_string_name Name; // Not owned
+            public Redot_variant Value; // Not owned
         }
 #pragma warning restore IDE1006
 
-        private delegate bool InvokeGodotClassStaticMethodDelegate(in godot_string_name method, NativeVariantPtrArgs args, out godot_variant ret);
+        private delegate bool InvokeRedotClassStaticMethodDelegate(in Redot_string_name method, NativeVariantPtrArgs args, out Redot_variant ret);
 
         [UnmanagedCallersOnly]
-        internal static unsafe godot_bool CallStatic(IntPtr scriptPtr, godot_string_name* method,
-            godot_variant** args, int argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+        internal static unsafe Redot_bool CallStatic(IntPtr scriptPtr, Redot_string_name* method,
+            Redot_variant** args, int argCount, Redot_variant_call_error* refCallError, Redot_variant* ret)
         {
             // TODO: Optimize with source generators and delegate pointers.
 
@@ -1054,23 +1054,23 @@ namespace Godot.Bridge
                 Type scriptType = _scriptTypeBiMap.GetScriptType(scriptPtr);
 
                 Type? top = scriptType;
-                Type native = GodotObject.InternalGetClassNativeBase(top);
+                Type native = RedotObject.InternalGetClassNativeBase(top);
 
                 while (top != null && top != native)
                 {
-                    var invokeGodotClassStaticMethod = top.GetMethod(
-                        "InvokeGodotClassStaticMethod",
+                    var invokeRedotClassStaticMethod = top.GetMethod(
+                        "InvokeRedotClassStaticMethod",
                         BindingFlags.DeclaredOnly | BindingFlags.Static |
                         BindingFlags.NonPublic | BindingFlags.Public);
 
-                    if (invokeGodotClassStaticMethod != null)
+                    if (invokeRedotClassStaticMethod != null)
                     {
-                        var invoked = invokeGodotClassStaticMethod.CreateDelegate<InvokeGodotClassStaticMethodDelegate>()(
-                            CustomUnsafe.AsRef(method), new NativeVariantPtrArgs(args, argCount), out godot_variant retValue);
+                        var invoked = invokeRedotClassStaticMethod.CreateDelegate<InvokeRedotClassStaticMethodDelegate>()(
+                            CustomUnsafe.AsRef(method), new NativeVariantPtrArgs(args, argCount), out Redot_variant retValue);
                         if (invoked)
                         {
                             *ret = retValue;
-                            return godot_bool.True;
+                            return Redot_bool.True;
                         }
                     }
 
@@ -1081,12 +1081,12 @@ namespace Godot.Bridge
             {
                 ExceptionUtils.LogException(e);
                 *ret = default;
-                return godot_bool.False;
+                return Redot_bool.False;
             }
 
             *ret = default;
-            (*refCallError).Error = godot_variant_call_error_error.GODOT_CALL_ERROR_CALL_ERROR_INVALID_METHOD;
-            return godot_bool.False;
+            (*refCallError).Error = Redot_variant_call_error_error.Redot_CALL_ERROR_CALL_ERROR_INVALID_METHOD;
+            return Redot_bool.False;
         }
 
         [UnmanagedCallersOnly]
@@ -1096,7 +1096,7 @@ namespace Godot.Bridge
             try
             {
                 Type? top = _scriptTypeBiMap.GetScriptType(scriptPtr);
-                Type native = GodotObject.InternalGetClassNativeBase(top);
+                Type native = RedotObject.InternalGetClassNativeBase(top);
 
                 while (top != null && top != native)
                 {
@@ -1117,15 +1117,15 @@ namespace Godot.Bridge
         {
             try
             {
-                var getGodotPropertyDefaultValuesMethod = type.GetMethod(
-                    "GetGodotPropertyDefaultValues",
+                var getRedotPropertyDefaultValuesMethod = type.GetMethod(
+                    "GetRedotPropertyDefaultValues",
                     BindingFlags.DeclaredOnly | BindingFlags.Static |
                     BindingFlags.NonPublic | BindingFlags.Public);
 
-                if (getGodotPropertyDefaultValuesMethod == null)
+                if (getRedotPropertyDefaultValuesMethod == null)
                     return;
 
-                var defaultValuesObj = getGodotPropertyDefaultValuesMethod.Invoke(null, null);
+                var defaultValuesObj = getRedotPropertyDefaultValuesMethod.Invoke(null, null);
 
                 if (defaultValuesObj == null)
                     return;
@@ -1135,7 +1135,7 @@ namespace Godot.Bridge
                 if (defaultValuesObj is Dictionary<StringName, object> defaultValuesLegacy)
                 {
                     // We have to support this for some time, otherwise this could cause data loss for projects
-                    // built with previous releases. Ideally, we should remove this before Godot 4.0 stable.
+                    // built with previous releases. Ideally, we should remove this before Redot 4.0 stable.
 
                     if (defaultValuesLegacy.Count <= 0)
                         return;
@@ -1159,23 +1159,23 @@ namespace Godot.Bridge
                 int length = defaultValues.Count;
 
                 // There's no recursion here, so it's ok to go with a big enough number for most cases
-                // StackMaxSize = StackMaxLength * sizeof(godotsharp_property_def_val_pair)
+                // StackMaxSize = StackMaxLength * sizeof(Redotsharp_property_def_val_pair)
                 const int StackMaxLength = 32;
                 bool useStack = length < StackMaxLength;
 
-                godotsharp_property_def_val_pair* interopDefaultValues;
+                Redotsharp_property_def_val_pair* interopDefaultValues;
 
                 if (useStack)
                 {
                     // Weird limitation, hence the need for aux:
                     // "In the case of pointer types, you can use a stackalloc expression only in a local variable declaration to initialize the variable."
-                    var aux = stackalloc godotsharp_property_def_val_pair[StackMaxLength];
+                    var aux = stackalloc Redotsharp_property_def_val_pair[StackMaxLength];
                     interopDefaultValues = aux;
                 }
                 else
                 {
-                    interopDefaultValues = ((godotsharp_property_def_val_pair*)NativeMemory.Alloc(
-                        (nuint)length, (nuint)sizeof(godotsharp_property_def_val_pair)))!;
+                    interopDefaultValues = ((Redotsharp_property_def_val_pair*)NativeMemory.Alloc(
+                        (nuint)length, (nuint)sizeof(Redotsharp_property_def_val_pair)))!;
                 }
 
                 try
@@ -1183,10 +1183,10 @@ namespace Godot.Bridge
                     int i = 0;
                     foreach (var defaultValuePair in defaultValues)
                     {
-                        godotsharp_property_def_val_pair interopProperty = new()
+                        Redotsharp_property_def_val_pair interopProperty = new()
                         {
-                            Name = (godot_string_name)defaultValuePair.Key.NativeValue, // Not owned
-                            Value = (godot_variant)defaultValuePair.Value.NativeVar // Not owned
+                            Name = (Redot_string_name)defaultValuePair.Key.NativeValue, // Not owned
+                            Value = (Redot_variant)defaultValuePair.Value.NativeVar // Not owned
                         };
 
                         interopDefaultValues[i] = interopProperty;
@@ -1213,8 +1213,8 @@ namespace Godot.Bridge
         }
 
         [UnmanagedCallersOnly]
-        internal static unsafe godot_bool SwapGCHandleForType(IntPtr oldGCHandlePtr, IntPtr* outNewGCHandlePtr,
-            godot_bool createWeak)
+        internal static unsafe Redot_bool SwapGCHandleForType(IntPtr oldGCHandlePtr, IntPtr* outNewGCHandlePtr,
+            Redot_bool createWeak)
         {
             try
             {
@@ -1226,7 +1226,7 @@ namespace Godot.Bridge
                 {
                     CustomGCHandle.Free(oldGCHandle);
                     *outNewGCHandlePtr = IntPtr.Zero;
-                    return godot_bool.False; // Called after the managed side was collected, so nothing to do here
+                    return Redot_bool.False; // Called after the managed side was collected, so nothing to do here
                 }
 
                 // Release the current weak handle and replace it with a strong handle.
@@ -1236,13 +1236,13 @@ namespace Godot.Bridge
 
                 CustomGCHandle.Free(oldGCHandle);
                 *outNewGCHandlePtr = GCHandle.ToIntPtr(newGCHandle);
-                return godot_bool.True;
+                return Redot_bool.True;
             }
             catch (Exception e)
             {
                 ExceptionUtils.LogException(e);
                 *outNewGCHandlePtr = IntPtr.Zero;
-                return godot_bool.False;
+                return Redot_bool.False;
             }
         }
     }

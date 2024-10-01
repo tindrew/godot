@@ -5,16 +5,16 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using OS = GodotTools.Utils.OS;
+using OS = RedotTools.Utils.OS;
 
-namespace GodotTools.Build
+namespace RedotTools.Build
 {
     public static class DotNetFinder
     {
         public static string? FindDotNetExe()
         {
             // In the future, this method may do more than just search in PATH. We could look in
-            // known locations or use Godot's linked nethost to search from the hostfxr location.
+            // known locations or use Redot's linked nethost to search from the hostfxr location.
 
             if (OS.IsMacOS)
             {

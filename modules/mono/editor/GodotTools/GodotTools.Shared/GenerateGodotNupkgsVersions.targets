@@ -1,39 +1,39 @@
 <Project>
-  <!-- Generate C# file with the version of all the nupkgs bundled with Godot -->
+  <!-- Generate C# file with the version of all the nupkgs bundled with Redot -->
 
-  <Target Name="SetPropertiesForGenerateGodotNupkgsVersions">
+  <Target Name="SetPropertiesForGenerateRedotNupkgsVersions">
     <PropertyGroup>
-      <GeneratedGodotNupkgsVersionsFile>$(IntermediateOutputPath)GodotNupkgsVersions.g.cs</GeneratedGodotNupkgsVersionsFile>
+      <GeneratedRedotNupkgsVersionsFile>$(IntermediateOutputPath)RedotNupkgsVersions.g.cs</GeneratedRedotNupkgsVersionsFile>
     </PropertyGroup>
   </Target>
 
-  <Target Name="GenerateGodotNupkgsVersionsFile"
-          DependsOnTargets="_GenerateGodotNupkgsVersionsFile"
+  <Target Name="GenerateRedotNupkgsVersionsFile"
+          DependsOnTargets="_GenerateRedotNupkgsVersionsFile"
           BeforeTargets="PrepareForBuild;CompileDesignTime;BeforeCompile;CoreCompile">
     <ItemGroup>
-      <Compile Include="$(GeneratedGodotNupkgsVersionsFile)" />
-      <FileWrites Include="$(GeneratedGodotNupkgsVersionsFile)" />
+      <Compile Include="$(GeneratedRedotNupkgsVersionsFile)" />
+      <FileWrites Include="$(GeneratedRedotNupkgsVersionsFile)" />
     </ItemGroup>
   </Target>
-  <Target Name="_GenerateGodotNupkgsVersionsFile"
-          DependsOnTargets="SetPropertiesForGenerateGodotNupkgsVersions"
+  <Target Name="_GenerateRedotNupkgsVersionsFile"
+          DependsOnTargets="SetPropertiesForGenerateRedotNupkgsVersions"
           Inputs="$(MSBuildProjectFile);$(MSBuildThisFileDirectory);$(MSBuildProjectFile)\..\..\..\SdkPackageVersions.props"
-          Outputs="$(GeneratedGodotNupkgsVersionsFile)">
+          Outputs="$(GeneratedRedotNupkgsVersionsFile)">
     <PropertyGroup>
-      <GenerateGodotNupkgsVersionsCode><![CDATA[
+      <GenerateRedotNupkgsVersionsCode><![CDATA[
 namespace $(RootNamespace)
 {
-    public class GeneratedGodotNupkgsVersions
+    public class GeneratedRedotNupkgsVersions
     {
-        public const string GodotNETSdk = "$(PackageVersion_Godot_NET_Sdk)"%3b
-        public const string GodotSourceGenerators = "$(PackageVersion_Godot_SourceGenerators)"%3b
-        public const string GodotSharp = "$(PackageVersion_GodotSharp)"%3b
+        public const string RedotNETSdk = "$(PackageVersion_Redot_NET_Sdk)"%3b
+        public const string RedotSourceGenerators = "$(PackageVersion_Redot_SourceGenerators)"%3b
+        public const string RedotSharp = "$(PackageVersion_RedotSharp)"%3b
     }
 }
-]]></GenerateGodotNupkgsVersionsCode>
+]]></GenerateRedotNupkgsVersionsCode>
     </PropertyGroup>
-    <WriteLinesToFile Lines="$(GenerateGodotNupkgsVersionsCode)"
-                      File="$(GeneratedGodotNupkgsVersionsFile)"
+    <WriteLinesToFile Lines="$(GenerateRedotNupkgsVersionsCode)"
+                      File="$(GeneratedRedotNupkgsVersionsFile)"
                       Overwrite="True" WriteOnlyWhenDifferent="True" />
   </Target>
 </Project>

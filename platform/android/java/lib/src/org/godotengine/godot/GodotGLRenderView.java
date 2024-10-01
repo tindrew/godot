@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotGLRenderView.java                                                */
+/*  RedotGLRenderView.java                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,18 +28,18 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot;
+package org.Redotengine.Redot;
 
-import org.godotengine.godot.gl.GLSurfaceView;
-import org.godotengine.godot.gl.GodotRenderer;
-import org.godotengine.godot.input.GodotInputHandler;
-import org.godotengine.godot.xr.XRMode;
-import org.godotengine.godot.xr.ovr.OvrConfigChooser;
-import org.godotengine.godot.xr.ovr.OvrContextFactory;
-import org.godotengine.godot.xr.ovr.OvrWindowSurfaceFactory;
-import org.godotengine.godot.xr.regular.RegularConfigChooser;
-import org.godotengine.godot.xr.regular.RegularContextFactory;
-import org.godotengine.godot.xr.regular.RegularFallbackConfigChooser;
+import org.Redotengine.Redot.gl.GLSurfaceView;
+import org.Redotengine.Redot.gl.RedotRenderer;
+import org.Redotengine.Redot.input.RedotInputHandler;
+import org.Redotengine.Redot.xr.XRMode;
+import org.Redotengine.Redot.xr.ovr.OvrConfigChooser;
+import org.Redotengine.Redot.xr.ovr.OvrContextFactory;
+import org.Redotengine.Redot.xr.ovr.OvrWindowSurfaceFactory;
+import org.Redotengine.Redot.xr.regular.RegularConfigChooser;
+import org.Redotengine.Redot.xr.regular.RegularContextFactory;
+import org.Redotengine.Redot.xr.regular.RegularFallbackConfigChooser;
 
 import android.annotation.SuppressLint;
 import android.content.res.AssetManager;
@@ -76,20 +76,20 @@ import java.io.InputStream;
  *   that matches it exactly (with regards to red/green/blue/alpha channels
  *   bit depths). Failure to do so would result in an EGL_BAD_MATCH error.
  */
-class GodotGLRenderView extends GLSurfaceView implements GodotRenderView {
-	private final GodotHost host;
-	private final Godot godot;
-	private final GodotInputHandler inputHandler;
-	private final GodotRenderer godotRenderer;
+class RedotGLRenderView extends GLSurfaceView implements RedotRenderView {
+	private final RedotHost host;
+	private final Redot Redot;
+	private final RedotInputHandler inputHandler;
+	private final RedotRenderer RedotRenderer;
 	private final SparseArray<PointerIcon> customPointerIcons = new SparseArray<>();
 
-	public GodotGLRenderView(GodotHost host, Godot godot, GodotInputHandler inputHandler, XRMode xrMode, boolean useDebugOpengl) {
+	public RedotGLRenderView(RedotHost host, Redot Redot, RedotInputHandler inputHandler, XRMode xrMode, boolean useDebugOpengl) {
 		super(host.getActivity());
 
 		this.host = host;
-		this.godot = godot;
+		this.Redot = Redot;
 		this.inputHandler = inputHandler;
-		this.godotRenderer = new GodotRenderer();
+		this.RedotRenderer = new RedotRenderer();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 			setPointerIcon(PointerIcon.getSystemIcon(getContext(), PointerIcon.TYPE_DEFAULT));
 		}
@@ -109,9 +109,9 @@ class GodotGLRenderView extends GLSurfaceView implements GodotRenderView {
 	@Override
 	public void onActivityPaused() {
 		queueEvent(() -> {
-			GodotLib.focusout();
+			RedotLib.focusout();
 			// Pause the renderer
-			godotRenderer.onActivityPaused();
+			RedotRenderer.onActivityPaused();
 		});
 	}
 
@@ -124,8 +124,8 @@ class GodotGLRenderView extends GLSurfaceView implements GodotRenderView {
 	public void onActivityResumed() {
 		queueEvent(() -> {
 			// Resume the renderer
-			godotRenderer.onActivityResumed();
-			GodotLib.focusin();
+			RedotRenderer.onActivityResumed();
+			RedotLib.focusin();
 		});
 	}
 
@@ -140,7 +140,7 @@ class GodotGLRenderView extends GLSurfaceView implements GodotRenderView {
 	}
 
 	@Override
-	public GodotInputHandler getInputHandler() {
+	public RedotInputHandler getInputHandler() {
 		return inputHandler;
 	}
 
@@ -203,10 +203,10 @@ class GodotGLRenderView extends GLSurfaceView implements GodotRenderView {
 			try {
 				Bitmap bitmap = null;
 				if (!TextUtils.isEmpty(imagePath)) {
-					if (godot.getDirectoryAccessHandler().filesystemFileExists(imagePath)) {
+					if (Redot.getDirectoryAccessHandler().filesystemFileExists(imagePath)) {
 						// Try to load the bitmap from the file system
 						bitmap = BitmapFactory.decodeFile(imagePath);
-					} else if (godot.getDirectoryAccessHandler().assetsFileExists(imagePath)) {
+					} else if (Redot.getDirectoryAccessHandler().assetsFileExists(imagePath)) {
 						// Try to load the bitmap from the assets directory
 						AssetManager am = getContext().getAssets();
 						InputStream imageInputStream = am.open(imagePath);
@@ -293,6 +293,6 @@ class GodotGLRenderView extends GLSurfaceView implements GodotRenderView {
 	@Override
 	public void startRenderer() {
 		/* Set the renderer responsible for frame rendering */
-		setRenderer(godotRenderer);
+		setRenderer(RedotRenderer);
 	}
 }

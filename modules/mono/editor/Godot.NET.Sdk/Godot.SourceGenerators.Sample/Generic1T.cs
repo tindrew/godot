@@ -1,8 +1,8 @@
 #pragma warning disable CS0169
 
-namespace Godot.SourceGenerators.Sample
+namespace Redot.SourceGenerators.Sample
 {
-    public partial class Generic1T<T> : GodotObject
+    public partial class Generic1T<T> : RedotObject
     {
         private int _field;
     }

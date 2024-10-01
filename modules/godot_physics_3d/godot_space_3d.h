@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_space_3d.h                                                      */
+/*  Redot_space_3d.h                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,26 +28,26 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_SPACE_3D_H
-#define GODOT_SPACE_3D_H
+#ifndef Redot_SPACE_3D_H
+#define Redot_SPACE_3D_H
 
-#include "godot_area_3d.h"
-#include "godot_area_pair_3d.h"
-#include "godot_body_3d.h"
-#include "godot_body_pair_3d.h"
-#include "godot_broad_phase_3d.h"
-#include "godot_collision_object_3d.h"
-#include "godot_soft_body_3d.h"
+#include "Redot_area_3d.h"
+#include "Redot_area_pair_3d.h"
+#include "Redot_body_3d.h"
+#include "Redot_body_pair_3d.h"
+#include "Redot_broad_phase_3d.h"
+#include "Redot_collision_object_3d.h"
+#include "Redot_soft_body_3d.h"
 
 #include "core/config/project_settings.h"
 #include "core/templates/hash_map.h"
 #include "core/typedefs.h"
 
-class GodotPhysicsDirectSpaceState3D : public PhysicsDirectSpaceState3D {
-	GDCLASS(GodotPhysicsDirectSpaceState3D, PhysicsDirectSpaceState3D);
+class RedotPhysicsDirectSpaceState3D : public PhysicsDirectSpaceState3D {
+	GDCLASS(RedotPhysicsDirectSpaceState3D, PhysicsDirectSpaceState3D);
 
 public:
-	GodotSpace3D *space = nullptr;
+	RedotSpace3D *space = nullptr;
 
 	virtual int intersect_point(const PointParameters &p_parameters, ShapeResult *r_results, int p_result_max) override;
 	virtual bool intersect_ray(const RayParameters &p_parameters, RayResult &r_result) override;
@@ -57,10 +57,10 @@ public:
 	virtual bool rest_info(const ShapeParameters &p_parameters, ShapeRestInfo *r_info) override;
 	virtual Vector3 get_closest_point_to_object_volume(RID p_object, const Vector3 p_point) const override;
 
-	GodotPhysicsDirectSpaceState3D();
+	RedotPhysicsDirectSpaceState3D();
 };
 
-class GodotSpace3D {
+class RedotSpace3D {
 public:
 	enum ElapsedTime {
 		ELAPSED_TIME_INTEGRATE_FORCES,
@@ -75,23 +75,23 @@ public:
 private:
 	uint64_t elapsed_time[ELAPSED_TIME_MAX] = {};
 
-	GodotPhysicsDirectSpaceState3D *direct_access = nullptr;
+	RedotPhysicsDirectSpaceState3D *direct_access = nullptr;
 	RID self;
 
-	GodotBroadPhase3D *broadphase = nullptr;
-	SelfList<GodotBody3D>::List active_list;
-	SelfList<GodotBody3D>::List mass_properties_update_list;
-	SelfList<GodotBody3D>::List state_query_list;
-	SelfList<GodotArea3D>::List monitor_query_list;
-	SelfList<GodotArea3D>::List area_moved_list;
-	SelfList<GodotSoftBody3D>::List active_soft_body_list;
+	RedotBroadPhase3D *broadphase = nullptr;
+	SelfList<RedotBody3D>::List active_list;
+	SelfList<RedotBody3D>::List mass_properties_update_list;
+	SelfList<RedotBody3D>::List state_query_list;
+	SelfList<RedotArea3D>::List monitor_query_list;
+	SelfList<RedotArea3D>::List area_moved_list;
+	SelfList<RedotSoftBody3D>::List active_soft_body_list;
 
-	static void *_broadphase_pair(GodotCollisionObject3D *A, int p_subindex_A, GodotCollisionObject3D *B, int p_subindex_B, void *p_self);
-	static void _broadphase_unpair(GodotCollisionObject3D *A, int p_subindex_A, GodotCollisionObject3D *B, int p_subindex_B, void *p_data, void *p_self);
+	static void *_broadphase_pair(RedotCollisionObject3D *A, int p_subindex_A, RedotCollisionObject3D *B, int p_subindex_B, void *p_self);
+	static void _broadphase_unpair(RedotCollisionObject3D *A, int p_subindex_A, RedotCollisionObject3D *B, int p_subindex_B, void *p_data, void *p_self);
 
-	HashSet<GodotCollisionObject3D *> objects;
+	HashSet<RedotCollisionObject3D *> objects;
 
-	GodotArea3D *area = nullptr;
+	RedotArea3D *area = nullptr;
 
 	int solver_iterations = 0;
 
@@ -104,7 +104,7 @@ private:
 		INTERSECTION_QUERY_MAX = 2048
 	};
 
-	GodotCollisionObject3D *intersection_query_results[INTERSECTION_QUERY_MAX];
+	RedotCollisionObject3D *intersection_query_results[INTERSECTION_QUERY_MAX];
 	int intersection_query_subindex_results[INTERSECTION_QUERY_MAX];
 
 	real_t body_linear_velocity_sleep_threshold = 0.0;
@@ -124,41 +124,41 @@ private:
 	Vector<Vector3> contact_debug;
 	int contact_debug_count = 0;
 
-	friend class GodotPhysicsDirectSpaceState3D;
+	friend class RedotPhysicsDirectSpaceState3D;
 
-	int _cull_aabb_for_body(GodotBody3D *p_body, const AABB &p_aabb);
+	int _cull_aabb_for_body(RedotBody3D *p_body, const AABB &p_aabb);
 
 public:
 	_FORCE_INLINE_ void set_self(const RID &p_self) { self = p_self; }
 	_FORCE_INLINE_ RID get_self() const { return self; }
 
-	void set_default_area(GodotArea3D *p_area) { area = p_area; }
-	GodotArea3D *get_default_area() const { return area; }
+	void set_default_area(RedotArea3D *p_area) { area = p_area; }
+	RedotArea3D *get_default_area() const { return area; }
 
-	const SelfList<GodotBody3D>::List &get_active_body_list() const;
-	void body_add_to_active_list(SelfList<GodotBody3D> *p_body);
-	void body_remove_from_active_list(SelfList<GodotBody3D> *p_body);
-	void body_add_to_mass_properties_update_list(SelfList<GodotBody3D> *p_body);
-	void body_remove_from_mass_properties_update_list(SelfList<GodotBody3D> *p_body);
+	const SelfList<RedotBody3D>::List &get_active_body_list() const;
+	void body_add_to_active_list(SelfList<RedotBody3D> *p_body);
+	void body_remove_from_active_list(SelfList<RedotBody3D> *p_body);
+	void body_add_to_mass_properties_update_list(SelfList<RedotBody3D> *p_body);
+	void body_remove_from_mass_properties_update_list(SelfList<RedotBody3D> *p_body);
 
-	void body_add_to_state_query_list(SelfList<GodotBody3D> *p_body);
-	void body_remove_from_state_query_list(SelfList<GodotBody3D> *p_body);
+	void body_add_to_state_query_list(SelfList<RedotBody3D> *p_body);
+	void body_remove_from_state_query_list(SelfList<RedotBody3D> *p_body);
 
-	void area_add_to_monitor_query_list(SelfList<GodotArea3D> *p_area);
-	void area_remove_from_monitor_query_list(SelfList<GodotArea3D> *p_area);
-	void area_add_to_moved_list(SelfList<GodotArea3D> *p_area);
-	void area_remove_from_moved_list(SelfList<GodotArea3D> *p_area);
-	const SelfList<GodotArea3D>::List &get_moved_area_list() const;
+	void area_add_to_monitor_query_list(SelfList<RedotArea3D> *p_area);
+	void area_remove_from_monitor_query_list(SelfList<RedotArea3D> *p_area);
+	void area_add_to_moved_list(SelfList<RedotArea3D> *p_area);
+	void area_remove_from_moved_list(SelfList<RedotArea3D> *p_area);
+	const SelfList<RedotArea3D>::List &get_moved_area_list() const;
 
-	const SelfList<GodotSoftBody3D>::List &get_active_soft_body_list() const;
-	void soft_body_add_to_active_list(SelfList<GodotSoftBody3D> *p_soft_body);
-	void soft_body_remove_from_active_list(SelfList<GodotSoftBody3D> *p_soft_body);
+	const SelfList<RedotSoftBody3D>::List &get_active_soft_body_list() const;
+	void soft_body_add_to_active_list(SelfList<RedotSoftBody3D> *p_soft_body);
+	void soft_body_remove_from_active_list(SelfList<RedotSoftBody3D> *p_soft_body);
 
-	GodotBroadPhase3D *get_broadphase();
+	RedotBroadPhase3D *get_broadphase();
 
-	void add_object(GodotCollisionObject3D *p_object);
-	void remove_object(GodotCollisionObject3D *p_object);
-	const HashSet<GodotCollisionObject3D *> &get_objects() const;
+	void add_object(RedotCollisionObject3D *p_object);
+	void remove_object(RedotCollisionObject3D *p_object);
+	const HashSet<RedotCollisionObject3D *> &get_objects() const;
 
 	_FORCE_INLINE_ int get_solver_iterations() const { return solver_iterations; }
 	_FORCE_INLINE_ real_t get_contact_recycle_radius() const { return contact_recycle_radius; }
@@ -191,7 +191,7 @@ public:
 
 	int get_collision_pairs() const { return collision_pairs; }
 
-	GodotPhysicsDirectSpaceState3D *get_direct_state();
+	RedotPhysicsDirectSpaceState3D *get_direct_state();
 
 	void set_debug_contacts(int p_amount) { contact_debug.resize(p_amount); }
 	_FORCE_INLINE_ bool is_debugging_contacts() const { return !contact_debug.is_empty(); }
@@ -209,10 +209,10 @@ public:
 	void set_elapsed_time(ElapsedTime p_time, uint64_t p_msec) { elapsed_time[p_time] = p_msec; }
 	uint64_t get_elapsed_time(ElapsedTime p_time) const { return elapsed_time[p_time]; }
 
-	bool test_body_motion(GodotBody3D *p_body, const PhysicsServer3D::MotionParameters &p_parameters, PhysicsServer3D::MotionResult *r_result);
+	bool test_body_motion(RedotBody3D *p_body, const PhysicsServer3D::MotionParameters &p_parameters, PhysicsServer3D::MotionResult *r_result);
 
-	GodotSpace3D();
-	~GodotSpace3D();
+	RedotSpace3D();
+	~RedotSpace3D();
 };
 
-#endif // GODOT_SPACE_3D_H
+#endif // Redot_SPACE_3D_H

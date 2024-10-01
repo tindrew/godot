@@ -2,10 +2,10 @@
 /*  os.cpp                                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -256,7 +256,7 @@ String OS::get_safe_dir_name(const String &p_dir_name, bool p_allow_paths) const
 // Path to data, config, cache, etc. OS-specific folders
 
 // Get properly capitalized engine name for system paths
-String OS::get_godot_dir_name() const {
+String OS::get_Redot_dir_name() const {
 	// Default to lowercase, so only override when different case is needed
 	return String(VERSION_SHORT_NAME).to_lower();
 }

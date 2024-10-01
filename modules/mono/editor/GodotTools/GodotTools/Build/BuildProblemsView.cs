@@ -4,12 +4,12 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Godot;
-using GodotTools.Internals;
-using static GodotTools.Internals.Globals;
-using FileAccess = Godot.FileAccess;
+using Redot;
+using RedotTools.Internals;
+using static RedotTools.Internals.Globals;
+using FileAccess = Redot.FileAccess;
 
-namespace GodotTools.Build
+namespace RedotTools.Build
 {
     public partial class BuildProblemsView : HBoxContainer
     {
@@ -168,7 +168,7 @@ namespace GodotTools.Build
             _layout = pressed ? ProblemsLayout.List : ProblemsLayout.Tree;
 
             var editorSettings = EditorInterface.Singleton.GetEditorSettings();
-            editorSettings.SetSetting(GodotSharpEditor.Settings.ProblemsLayout, Variant.From(_layout));
+            editorSettings.SetSetting(RedotSharpEditor.Settings.ProblemsLayout, Variant.From(_layout));
 
             _toggleLayoutButton.Icon = GetToggleLayoutIcon();
             _toggleLayoutButton.TooltipText = GetToggleLayoutTooltipText();
@@ -239,12 +239,12 @@ namespace GodotTools.Build
 
             string? projectDir = !string.IsNullOrEmpty(diagnostic.ProjectFile) ?
                 diagnostic.ProjectFile.GetBaseDir() :
-                GodotSharpEditor.Instance.MSBuildPanel.LastBuildInfo?.Solution.GetBaseDir();
+                RedotSharpEditor.Instance.MSBuildPanel.LastBuildInfo?.Solution.GetBaseDir();
             if (string.IsNullOrEmpty(projectDir))
                 return;
 
             string? file = !string.IsNullOrEmpty(diagnostic.File) ?
-                Path.Combine(projectDir.SimplifyGodotPath(), diagnostic.File.SimplifyGodotPath()) :
+                Path.Combine(projectDir.SimplifyRedotPath(), diagnostic.File.SimplifyRedotPath()) :
                 null;
 
             if (!File.Exists(file))
@@ -256,7 +256,7 @@ namespace GodotTools.Build
             {
                 var script = (Script)ResourceLoader.Load(file, typeHint: Internal.CSharpLanguageType);
 
-                // Godot's ScriptEditor.Edit is 0-based but the diagnostic lines are 1-based.
+                // Redot's ScriptEditor.Edit is 0-based but the diagnostic lines are 1-based.
                 if (script != null && Internal.ScriptEditorEdit(script, diagnostic.Line - 1, diagnostic.Column - 1))
                     Internal.EditorNodeShowScriptScreen();
             }
@@ -518,7 +518,7 @@ namespace GodotTools.Build
         public override void _Ready()
         {
             var editorSettings = EditorInterface.Singleton.GetEditorSettings();
-            _layout = editorSettings.GetSetting(GodotSharpEditor.Settings.ProblemsLayout).As<ProblemsLayout>();
+            _layout = editorSettings.GetSetting(RedotSharpEditor.Settings.ProblemsLayout).As<ProblemsLayout>();
 
             Name = "Problems".TTR();
 
@@ -657,7 +657,7 @@ namespace GodotTools.Build
             {
                 case EditorSettings.NotificationEditorSettingsChanged:
                     var editorSettings = EditorInterface.Singleton.GetEditorSettings();
-                    _layout = editorSettings.GetSetting(GodotSharpEditor.Settings.ProblemsLayout).As<ProblemsLayout>();
+                    _layout = editorSettings.GetSetting(RedotSharpEditor.Settings.ProblemsLayout).As<ProblemsLayout>();
                     _toggleLayoutButton.ButtonPressed = GetToggleLayoutPressedState();
                     UpdateProblemsView();
                     break;

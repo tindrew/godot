@@ -2,10 +2,10 @@
 /*  metal_objects.h                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -880,7 +880,7 @@ public:
 };
 
 // These functions are used to convert between Objective-C objects and
-// the RIDs used by Godot, respecting automatic reference counting.
+// the RIDs used by Redot, respecting automatic reference counting.
 namespace rid {
 
 // Converts an Objective-C object to a pointer, and incrementing the

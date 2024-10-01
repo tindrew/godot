@@ -4,14 +4,14 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace Godot.SourceGenerators
+namespace Redot.SourceGenerators
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public sealed class GlobalClassAnalyzer : DiagnosticAnalyzer
     {
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
             => ImmutableArray.Create(
-                Common.GlobalClassMustDeriveFromGodotObjectRule,
+                Common.GlobalClassMustDeriveFromRedotObjectRule,
                 Common.GlobalClassMustNotBeGenericRule);
 
         public override void Initialize(AnalysisContext context)
@@ -25,7 +25,7 @@ namespace Godot.SourceGenerators
         {
             // Return if not a type symbol or the type is not a global class.
             if (context.ContainingSymbol is not INamedTypeSymbol typeSymbol ||
-                !typeSymbol.GetAttributes().Any(a => a.AttributeClass?.IsGodotGlobalClassAttribute() ?? false))
+                !typeSymbol.GetAttributes().Any(a => a.AttributeClass?.IsRedotGlobalClassAttribute() ?? false))
                 return;
 
             if (typeSymbol.IsGenericType)
@@ -37,10 +37,10 @@ namespace Godot.SourceGenerators
                 ));
             }
 
-            if (!typeSymbol.InheritsFrom("GodotSharp", GodotClasses.GodotObject))
+            if (!typeSymbol.InheritsFrom("RedotSharp", RedotClasses.RedotObject))
             {
                 context.ReportDiagnostic(Diagnostic.Create(
-                    Common.GlobalClassMustDeriveFromGodotObjectRule,
+                    Common.GlobalClassMustDeriveFromRedotObjectRule,
                     typeSymbol.Locations.FirstLocationWithSourceTreeOrDefault(),
                     typeSymbol.ToDisplayString()
                 ));

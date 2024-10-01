@@ -2,10 +2,10 @@
 /*  export_plugin.cpp                                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -76,7 +76,7 @@ Error EditorExportPlatformWeb::_extract_template(const String &p_template, const
 		}
 
 		// Skip service worker and offline page if not exporting pwa.
-		if (!pwa && (file == "godot.service.worker.js" || file == "godot.offline.html")) {
+		if (!pwa && (file == "Redot.service.worker.js" || file == "Redot.offline.html")) {
 			continue;
 		}
 		Vector<uint8_t> data;
@@ -88,7 +88,7 @@ Error EditorExportPlatformWeb::_extract_template(const String &p_template, const
 		unzCloseCurrentFile(pkg);
 
 		//write
-		String dst = p_dir.path_join(file.replace("godot", p_name));
+		String dst = p_dir.path_join(file.replace("Redot", p_name));
 		Ref<FileAccess> f = FileAccess::open(dst, FileAccess::WRITE);
 		if (f.is_null()) {
 			add_message(EXPORT_MESSAGE_ERROR, TTR("Prepare Templates"), vformat(TTR("Could not write file: \"%s\"."), dst));
@@ -165,16 +165,16 @@ void EditorExportPlatformWeb::_fix_html(Vector<uint8_t> &p_html, const Ref<Edito
 	const String str_config = Variant(config).to_json_string();
 	const String custom_head_include = p_preset->get("html/head_include");
 	HashMap<String, String> replaces;
-	replaces["$GODOT_URL"] = p_name + ".js";
-	replaces["$GODOT_PROJECT_NAME"] = GLOBAL_GET("application/config/name");
-	replaces["$GODOT_HEAD_INCLUDE"] = head_include + custom_head_include;
-	replaces["$GODOT_CONFIG"] = str_config;
-	replaces["$GODOT_SPLASH"] = p_name + ".png";
+	replaces["$Redot_URL"] = p_name + ".js";
+	replaces["$Redot_PROJECT_NAME"] = GLOBAL_GET("application/config/name");
+	replaces["$Redot_HEAD_INCLUDE"] = head_include + custom_head_include;
+	replaces["$Redot_CONFIG"] = str_config;
+	replaces["$Redot_SPLASH"] = p_name + ".png";
 
 	if (p_preset->get("variant/thread_support")) {
-		replaces["$GODOT_THREADS_ENABLED"] = "true";
+		replaces["$Redot_THREADS_ENABLED"] = "true";
 	} else {
-		replaces["$GODOT_THREADS_ENABLED"] = "false";
+		replaces["$Redot_THREADS_ENABLED"] = "false";
 	}
 
 	_replace_strings(replaces, p_html);
@@ -216,7 +216,7 @@ Error EditorExportPlatformWeb::_add_manifest_icon(const String &p_path, const St
 Error EditorExportPlatformWeb::_build_pwa(const Ref<EditorExportPreset> &p_preset, const String p_path, const Vector<SharedObject> &p_shared_objects) {
 	String proj_name = GLOBAL_GET("application/config/name");
 	if (proj_name.is_empty()) {
-		proj_name = "Godot Game";
+		proj_name = "Redot Game";
 	}
 
 	// Service worker
@@ -225,10 +225,10 @@ Error EditorExportPlatformWeb::_build_pwa(const Ref<EditorExportPreset> &p_prese
 	bool extensions = (bool)p_preset->get("variant/extensions_support");
 	bool ensure_crossorigin_isolation_headers = (bool)p_preset->get("progressive_web_app/ensure_cross_origin_isolation_headers");
 	HashMap<String, String> replaces;
-	replaces["___GODOT_VERSION___"] = String::num_int64(OS::get_singleton()->get_unix_time()) + "|" + String::num_int64(OS::get_singleton()->get_ticks_usec());
-	replaces["___GODOT_NAME___"] = proj_name.substr(0, 16);
-	replaces["___GODOT_OFFLINE_PAGE___"] = name + ".offline.html";
-	replaces["___GODOT_ENSURE_CROSSORIGIN_ISOLATION_HEADERS___"] = ensure_crossorigin_isolation_headers ? "true" : "false";
+	replaces["___Redot_VERSION___"] = String::num_int64(OS::get_singleton()->get_unix_time()) + "|" + String::num_int64(OS::get_singleton()->get_ticks_usec());
+	replaces["___Redot_NAME___"] = proj_name.substr(0, 16);
+	replaces["___Redot_OFFLINE_PAGE___"] = name + ".offline.html";
+	replaces["___Redot_ENSURE_CROSSORIGIN_ISOLATION_HEADERS___"] = ensure_crossorigin_isolation_headers ? "true" : "false";
 
 	// Files cached during worker install.
 	Array cache_files;
@@ -242,7 +242,7 @@ Error EditorExportPlatformWeb::_build_pwa(const Ref<EditorExportPreset> &p_prese
 	cache_files.push_back(name + ".worker.js");
 	cache_files.push_back(name + ".audio.worklet.js");
 	cache_files.push_back(name + ".audio.position.worklet.js");
-	replaces["___GODOT_CACHE___"] = Variant(cache_files).to_json_string();
+	replaces["___Redot_CACHE___"] = Variant(cache_files).to_json_string();
 
 	// Heavy files that are cached on demand.
 	Array opt_cache_files;
@@ -254,7 +254,7 @@ Error EditorExportPlatformWeb::_build_pwa(const Ref<EditorExportPreset> &p_prese
 			opt_cache_files.push_back(p_shared_objects[i].path.get_file());
 		}
 	}
-	replaces["___GODOT_OPT_CACHE___"] = Variant(opt_cache_files).to_json_string();
+	replaces["___Redot_OPT_CACHE___"] = Variant(opt_cache_files).to_json_string();
 
 	const String sw_path = dir.path_join(name + ".service.worker.js");
 	Vector<uint8_t> sw;
@@ -386,7 +386,7 @@ Ref<Texture2D> EditorExportPlatformWeb::get_logo() const {
 bool EditorExportPlatformWeb::has_valid_export_configuration(const Ref<EditorExportPreset> &p_preset, String &r_error, bool &r_missing_templates, bool p_debug) const {
 #ifdef MODULE_MONO_ENABLED
 	// Don't check for additional errors, as this particular error cannot be resolved.
-	r_error += TTR("Exporting to Web is currently not supported in Godot 4 when using C#/.NET. Use Godot 3 to target Web with C#/Mono instead.") + "\n";
+	r_error += TTR("Exporting to Web is currently not supported in Redot 4 when using C#/.NET. Use Redot 3 to target Web with C#/Mono instead.") + "\n";
 	r_error += TTR("If this project does not use C#, use a non-C# editor build to export the project.") + "\n";
 	return false;
 #else

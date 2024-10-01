@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_lsp.h                                                           */
+/*  Redot_lsp.h                                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,8 +28,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_LSP_H
-#define GODOT_LSP_H
+#ifndef Redot_LSP_H
+#define Redot_LSP_H
 
 #include "core/doc_data.h"
 #include "core/object/class_db.h"
@@ -1869,7 +1869,7 @@ struct InitializeResult {
 	}
 };
 
-struct GodotNativeClassInfo {
+struct RedotNativeClassInfo {
 	String name;
 	const DocData::ClassDoc *class_doc = nullptr;
 	const ClassDB::ClassInfo *class_info = nullptr;
@@ -1883,16 +1883,16 @@ struct GodotNativeClassInfo {
 };
 
 /** Features not included in the standard lsp specifications */
-struct GodotCapabilities {
+struct RedotCapabilities {
 	/**
 	 * Native class list
 	 */
-	List<GodotNativeClassInfo> native_classes;
+	List<RedotNativeClassInfo> native_classes;
 
 	Dictionary to_json() {
 		Dictionary dict;
 		Array classes;
-		for (List<GodotNativeClassInfo>::Element *E = native_classes.front(); E; E = E->next()) {
+		for (List<RedotNativeClassInfo>::Element *E = native_classes.front(); E; E = E->next()) {
 			classes.push_back(E->get().to_json());
 		}
 		dict["native_classes"] = classes;
@@ -1955,4 +1955,4 @@ static String marked_documentation(const String &p_bbcode) {
 }
 } // namespace lsp
 
-#endif // GODOT_LSP_H
+#endif // Redot_LSP_H

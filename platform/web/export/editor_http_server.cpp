@@ -2,10 +2,10 @@
 /*  editor_http_server.cpp                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -65,7 +65,7 @@ void EditorHTTPServer::_set_internal_certs(Ref<Crypto> p_crypto) {
 	if (regen) {
 		key = p_crypto->generate_rsa(2048);
 		key->save(key_path);
-		cert = p_crypto->generate_self_signed_certificate(key, "CN=godot-debug.local,O=A Game Dev,C=XXA", "20140101000000", "20340101000000");
+		cert = p_crypto->generate_self_signed_certificate(key, "CN=Redot-debug.local,O=A Game Dev,C=XXA", "20140101000000", "20340101000000");
 		cert->save(crt_path);
 	}
 }

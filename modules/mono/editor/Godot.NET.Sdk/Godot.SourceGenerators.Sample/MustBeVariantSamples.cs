@@ -1,8 +1,8 @@
 using System;
-using Godot.Collections;
-using Array = Godot.Collections.Array;
+using Redot.Collections;
+using Array = Redot.Collections.Array;
 
-namespace Godot.SourceGenerators.Sample;
+namespace Redot.SourceGenerators.Sample;
 
 public class MustBeVariantMethods
 {
@@ -39,7 +39,7 @@ public class MustBeVariantMethods
         Method<Plane>();
         Method<Callable>();
         Method<Signal>();
-        Method<GodotObject>();
+        Method<RedotObject>();
         Method<StringName>();
         Method<NodePath>();
         Method<Rid>();
@@ -54,7 +54,7 @@ public class MustBeVariantMethods
         Method<Vector2[]>();
         Method<Vector3[]>();
         Method<Color[]>();
-        Method<GodotObject[]>();
+        Method<RedotObject[]>();
         Method<StringName[]>();
         Method<NodePath[]>();
         Method<Rid[]>();
@@ -100,7 +100,7 @@ public class MustBeVariantMethods
         new ClassWithGenericVariant<Plane>();
         new ClassWithGenericVariant<Callable>();
         new ClassWithGenericVariant<Signal>();
-        new ClassWithGenericVariant<GodotObject>();
+        new ClassWithGenericVariant<RedotObject>();
         new ClassWithGenericVariant<StringName>();
         new ClassWithGenericVariant<NodePath>();
         new ClassWithGenericVariant<Rid>();
@@ -115,7 +115,7 @@ public class MustBeVariantMethods
         new ClassWithGenericVariant<Vector2[]>();
         new ClassWithGenericVariant<Vector3[]>();
         new ClassWithGenericVariant<Color[]>();
-        new ClassWithGenericVariant<GodotObject[]>();
+        new ClassWithGenericVariant<RedotObject[]>();
         new ClassWithGenericVariant<StringName[]>();
         new ClassWithGenericVariant<NodePath[]>();
         new ClassWithGenericVariant<Rid[]>();
@@ -286,8 +286,8 @@ public class MustBeVariantAnnotatedMethods
     {
     }
 
-    [GenericTypeAttribute<GodotObject>()]
-    public void MethodWithAttributeGodotObject()
+    [GenericTypeAttribute<RedotObject>()]
+    public void MethodWithAttributeRedotObject()
     {
     }
 
@@ -361,8 +361,8 @@ public class MustBeVariantAnnotatedMethods
     {
     }
 
-    [GenericTypeAttribute<GodotObject[]>()]
-    public void MethodWithAttributeGodotObjectArray()
+    [GenericTypeAttribute<RedotObject[]>()]
+    public void MethodWithAttributeRedotObjectArray()
     {
     }
 
@@ -545,8 +545,8 @@ public class ClassVariantAnnotatedSignal
 {
 }
 
-[GenericTypeAttribute<GodotObject>()]
-public class ClassVariantAnnotatedGodotObject
+[GenericTypeAttribute<RedotObject>()]
+public class ClassVariantAnnotatedRedotObject
 {
 }
 
@@ -620,8 +620,8 @@ public class ClassVariantAnnotatedColorArray
 {
 }
 
-[GenericTypeAttribute<GodotObject[]>()]
-public class ClassVariantAnnotatedGodotObjectArray
+[GenericTypeAttribute<RedotObject[]>()]
+public class ClassVariantAnnotatedRedotObjectArray
 {
 }
 

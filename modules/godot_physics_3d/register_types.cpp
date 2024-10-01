@@ -2,10 +2,10 @@
 /*  register_types.cpp                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -30,31 +30,31 @@
 
 #include "register_types.h"
 
-#include "godot_physics_server_3d.h"
+#include "Redot_physics_server_3d.h"
 #include "servers/physics_server_3d.h"
 #include "servers/physics_server_3d_wrap_mt.h"
 
-static PhysicsServer3D *_createGodotPhysics3DCallback() {
+static PhysicsServer3D *_createRedotPhysics3DCallback() {
 #ifdef THREADS_ENABLED
 	bool using_threads = GLOBAL_GET("physics/3d/run_on_separate_thread");
 #else
 	bool using_threads = false;
 #endif
 
-	PhysicsServer3D *physics_server_3d = memnew(GodotPhysicsServer3D(using_threads));
+	PhysicsServer3D *physics_server_3d = memnew(RedotPhysicsServer3D(using_threads));
 
 	return memnew(PhysicsServer3DWrapMT(physics_server_3d, using_threads));
 }
 
-void initialize_godot_physics_3d_module(ModuleInitializationLevel p_level) {
+void initialize_Redot_physics_3d_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SERVERS) {
 		return;
 	}
-	PhysicsServer3DManager::get_singleton()->register_server("GodotPhysics3D", callable_mp_static(_createGodotPhysics3DCallback));
-	PhysicsServer3DManager::get_singleton()->set_default_server("GodotPhysics3D");
+	PhysicsServer3DManager::get_singleton()->register_server("RedotPhysics3D", callable_mp_static(_createRedotPhysics3DCallback));
+	PhysicsServer3DManager::get_singleton()->set_default_server("RedotPhysics3D");
 }
 
-void uninitialize_godot_physics_3d_module(ModuleInitializationLevel p_level) {
+void uninitialize_Redot_physics_3d_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SERVERS) {
 		return;
 	}

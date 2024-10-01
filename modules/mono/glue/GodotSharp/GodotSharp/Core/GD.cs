@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
-    /// Godot's global functions.
+    /// Redot's global functions.
     /// </summary>
     public static partial class GD
     {
@@ -20,7 +20,7 @@ namespace Godot
         public static Variant BytesToVar(Span<byte> bytes)
         {
             using var varBytes = Marshaling.ConvertSystemArrayToNativePackedByteArray(bytes);
-            NativeFuncs.godotsharp_bytes_to_var(varBytes, godot_bool.False, out godot_variant ret);
+            NativeFuncs.Redotsharp_bytes_to_var(varBytes, Redot_bool.False, out Redot_variant ret);
             return Variant.CreateTakingOwnershipOfDisposableValue(ret);
         }
 
@@ -35,7 +35,7 @@ namespace Godot
         public static Variant BytesToVarWithObjects(Span<byte> bytes)
         {
             using var varBytes = Marshaling.ConvertSystemArrayToNativePackedByteArray(bytes);
-            NativeFuncs.godotsharp_bytes_to_var(varBytes, godot_bool.True, out godot_variant ret);
+            NativeFuncs.Redotsharp_bytes_to_var(varBytes, Redot_bool.True, out Redot_variant ret);
             return Variant.CreateTakingOwnershipOfDisposableValue(ret);
         }
 
@@ -45,7 +45,7 @@ namespace Godot
         /// </summary>
         /// <example>
         /// <code>
-        /// Variant a = new Godot.Collections.Array { 4, 2.5, 1.2 };
+        /// Variant a = new Redot.Collections.Array { 4, 2.5, 1.2 };
         /// GD.Print(a.VariantType == Variant.Type.Array); // Prints true
         ///
         /// var b = GD.Convert(a, Variant.Type.PackedByteArray);
@@ -56,7 +56,7 @@ namespace Godot
         /// <returns>The <c>Variant</c> converted to the given <paramref name="type"/>.</returns>
         public static Variant Convert(Variant what, Variant.Type type)
         {
-            NativeFuncs.godotsharp_convert((godot_variant)what.NativeVar, (int)type, out godot_variant ret);
+            NativeFuncs.Redotsharp_convert((Redot_variant)what.NativeVar, (int)type, out Redot_variant ret);
             return Variant.CreateTakingOwnershipOfDisposableValue(ret);
         }
 
@@ -72,7 +72,7 @@ namespace Godot
         /// <returns>Hash of the variable passed.</returns>
         public static int Hash(Variant var)
         {
-            return NativeFuncs.godotsharp_hash((godot_variant)var.NativeVar);
+            return NativeFuncs.Redotsharp_hash((Redot_variant)var.NativeVar);
         }
 
         /// <summary>
@@ -172,8 +172,8 @@ namespace Godot
         /// <param name="what">Message that will be printed.</param>
         public static void Print(string what)
         {
-            using var godotStr = Marshaling.ConvertStringToNative(what);
-            NativeFuncs.godotsharp_print(godotStr);
+            using var RedotStr = Marshaling.ConvertStringToNative(what);
+            NativeFuncs.Redotsharp_print(RedotStr);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Godot
         /// </summary>
         /// <example>
         /// <code>
-        /// var a = new Godot.Collections.Array { 1, 2, 3 };
+        /// var a = new Redot.Collections.Array { 1, 2, 3 };
         /// GD.Print("a", "b", a); // Prints ab[1, 2, 3]
         /// </code>
         /// </example>
@@ -217,8 +217,8 @@ namespace Godot
         /// <param name="what">Message that will be printed.</param>
         public static void PrintRich(string what)
         {
-            using var godotStr = Marshaling.ConvertStringToNative(what);
-            NativeFuncs.godotsharp_print_rich(godotStr);
+            using var RedotStr = Marshaling.ConvertStringToNative(what);
+            NativeFuncs.Redotsharp_print_rich(RedotStr);
         }
 
         /// <summary>
@@ -256,8 +256,8 @@ namespace Godot
         /// <param name="what">Message that will be printed.</param>
         public static void PrintErr(string what)
         {
-            using var godotStr = Marshaling.ConvertStringToNative(what);
-            NativeFuncs.godotsharp_printerr(godotStr);
+            using var RedotStr = Marshaling.ConvertStringToNative(what);
+            NativeFuncs.Redotsharp_printerr(RedotStr);
         }
 
         /// <summary>
@@ -281,8 +281,8 @@ namespace Godot
         /// <param name="what">Message that will be printed.</param>
         public static void PrintRaw(string what)
         {
-            using var godotStr = Marshaling.ConvertStringToNative(what);
-            NativeFuncs.godotsharp_printraw(godotStr);
+            using var RedotStr = Marshaling.ConvertStringToNative(what);
+            NativeFuncs.Redotsharp_printraw(RedotStr);
         }
 
         /// <summary>
@@ -315,8 +315,8 @@ namespace Godot
         public static void PrintS(params object[] what)
         {
             string message = AppendPrintParams(' ', what);
-            using var godotStr = Marshaling.ConvertStringToNative(message);
-            NativeFuncs.godotsharp_prints(godotStr);
+            using var RedotStr = Marshaling.ConvertStringToNative(message);
+            NativeFuncs.Redotsharp_prints(RedotStr);
         }
 
         /// <summary>
@@ -331,12 +331,12 @@ namespace Godot
         public static void PrintT(params object[] what)
         {
             string message = AppendPrintParams('\t', what);
-            using var godotStr = Marshaling.ConvertStringToNative(message);
-            NativeFuncs.godotsharp_printt(godotStr);
+            using var RedotStr = Marshaling.ConvertStringToNative(message);
+            NativeFuncs.Redotsharp_printt(RedotStr);
         }
 
         [StackTraceHidden]
-        private static void ErrPrintError(string message, godot_error_handler_type type = godot_error_handler_type.ERR_HANDLER_ERROR)
+        private static void ErrPrintError(string message, Redot_error_handler_type type = Redot_error_handler_type.ERR_HANDLER_ERROR)
         {
             // Skip 1 frame to avoid current method.
             var stackFrame = DebuggingUtils.GetCurrentStackFrame(skipFrames: 1);
@@ -344,14 +344,14 @@ namespace Godot
             DebuggingUtils.GetStackFrameMethodDecl(stackFrame, out string callerName);
             int callerLineNumber = stackFrame.GetFileLineNumber();
 
-            using godot_string messageStr = Marshaling.ConvertStringToNative(message);
-            using godot_string callerNameStr = Marshaling.ConvertStringToNative(callerName);
-            using godot_string callerFilePathStr = Marshaling.ConvertStringToNative(callerFilePath);
-            NativeFuncs.godotsharp_err_print_error(callerNameStr, callerFilePathStr, callerLineNumber, messageStr, p_type: type);
+            using Redot_string messageStr = Marshaling.ConvertStringToNative(message);
+            using Redot_string callerNameStr = Marshaling.ConvertStringToNative(callerName);
+            using Redot_string callerFilePathStr = Marshaling.ConvertStringToNative(callerFilePath);
+            NativeFuncs.Redotsharp_err_print_error(callerNameStr, callerFilePathStr, callerLineNumber, messageStr, p_type: type);
         }
 
         /// <summary>
-        /// Pushes an error message to Godot's built-in debugger and to the OS terminal.
+        /// Pushes an error message to Redot's built-in debugger and to the OS terminal.
         ///
         /// Note: Errors printed this way will not pause project execution.
         /// </summary>
@@ -367,7 +367,7 @@ namespace Godot
         }
 
         /// <summary>
-        /// Pushes an error message to Godot's built-in debugger and to the OS terminal.
+        /// Pushes an error message to Redot's built-in debugger and to the OS terminal.
         ///
         /// Note: Errors printed this way will not pause project execution.
         /// </summary>
@@ -383,7 +383,7 @@ namespace Godot
         }
 
         /// <summary>
-        /// Pushes a warning message to Godot's built-in debugger and to the OS terminal.
+        /// Pushes a warning message to Redot's built-in debugger and to the OS terminal.
         /// </summary>
         /// <example>
         /// <code>
@@ -393,11 +393,11 @@ namespace Godot
         /// <param name="message">Warning message.</param>
         public static void PushWarning(string message)
         {
-            ErrPrintError(message, type: godot_error_handler_type.ERR_HANDLER_WARNING);
+            ErrPrintError(message, type: Redot_error_handler_type.ERR_HANDLER_WARNING);
         }
 
         /// <summary>
-        /// Pushes a warning message to Godot's built-in debugger and to the OS terminal.
+        /// Pushes a warning message to Redot's built-in debugger and to the OS terminal.
         /// </summary>
         /// <example>
         /// <code>
@@ -407,7 +407,7 @@ namespace Godot
         /// <param name="what">Arguments that form the warning message.</param>
         public static void PushWarning(params object[] what)
         {
-            ErrPrintError(AppendPrintParams(what), type: godot_error_handler_type.ERR_HANDLER_WARNING);
+            ErrPrintError(AppendPrintParams(what), type: Redot_error_handler_type.ERR_HANDLER_WARNING);
         }
 
         /// <summary>
@@ -421,7 +421,7 @@ namespace Godot
         /// <returns>A random <see langword="float"/> number.</returns>
         public static float Randf()
         {
-            return NativeFuncs.godotsharp_randf();
+            return NativeFuncs.Redotsharp_randf();
         }
 
         /// <summary>
@@ -433,7 +433,7 @@ namespace Godot
         /// <returns>A random normally-distributed <see langword="float"/> number.</returns>
         public static double Randfn(double mean, double deviation)
         {
-            return NativeFuncs.godotsharp_randfn(mean, deviation);
+            return NativeFuncs.Redotsharp_randfn(mean, deviation);
         }
 
         /// <summary>
@@ -452,7 +452,7 @@ namespace Godot
         /// <returns>A random <see langword="uint"/> number.</returns>
         public static uint Randi()
         {
-            return NativeFuncs.godotsharp_randi();
+            return NativeFuncs.Redotsharp_randi();
         }
 
         /// <summary>
@@ -465,7 +465,7 @@ namespace Godot
         /// </summary>
         public static void Randomize()
         {
-            NativeFuncs.godotsharp_randomize();
+            NativeFuncs.Redotsharp_randomize();
         }
 
         /// <summary>
@@ -481,7 +481,7 @@ namespace Godot
         /// <returns>A random <see langword="double"/> number inside the given range.</returns>
         public static double RandRange(double from, double to)
         {
-            return NativeFuncs.godotsharp_randf_range(from, to);
+            return NativeFuncs.Redotsharp_randf_range(from, to);
         }
 
         /// <summary>
@@ -498,7 +498,7 @@ namespace Godot
         /// <returns>A random <see langword="int"/> number inside the given range.</returns>
         public static int RandRange(int from, int to)
         {
-            return NativeFuncs.godotsharp_randi_range(from, to);
+            return NativeFuncs.Redotsharp_randi_range(from, to);
         }
 
         /// <summary>
@@ -521,7 +521,7 @@ namespace Godot
         /// <returns>A random <see langword="uint"/> number.</returns>
         public static uint RandFromSeed(ref ulong seed)
         {
-            return NativeFuncs.godotsharp_rand_from_seed(seed, out seed);
+            return NativeFuncs.Redotsharp_rand_from_seed(seed, out seed);
         }
 
         /// <summary>
@@ -589,7 +589,7 @@ namespace Godot
         /// </summary>
         /// <example>
         /// <code>
-        /// ulong mySeed = (ulong)GD.Hash("Godot Rocks");
+        /// ulong mySeed = (ulong)GD.Hash("Redot Rocks");
         /// GD.Seed(mySeed);
         /// var a = GD.Randf() + GD.Randi();
         /// GD.Seed(mySeed);
@@ -600,7 +600,7 @@ namespace Godot
         /// <param name="seed">Seed that will be used.</param>
         public static void Seed(ulong seed)
         {
-            NativeFuncs.godotsharp_seed(seed);
+            NativeFuncs.Redotsharp_seed(seed);
         }
 
         /// <summary>
@@ -610,7 +610,7 @@ namespace Godot
         /// <example>
         /// <code>
         /// string a = "{ \"a\": 1, \"b\": 2 }";        // a is a string
-        /// var b = GD.StrToVar(a).AsGodotDictionary(); // b is a Dictionary
+        /// var b = GD.StrToVar(a).AsRedotDictionary(); // b is a Dictionary
         /// GD.Print(b["a"]);                           // Prints 1
         /// </code>
         /// </example>
@@ -618,8 +618,8 @@ namespace Godot
         /// <returns>The decoded <c>Variant</c>.</returns>
         public static Variant StrToVar(string str)
         {
-            using var godotStr = Marshaling.ConvertStringToNative(str);
-            NativeFuncs.godotsharp_str_to_var(godotStr, out godot_variant ret);
+            using var RedotStr = Marshaling.ConvertStringToNative(str);
+            NativeFuncs.Redotsharp_str_to_var(RedotStr, out Redot_variant ret);
             return Variant.CreateTakingOwnershipOfDisposableValue(ret);
         }
 
@@ -632,7 +632,7 @@ namespace Godot
         /// <returns>The <see cref="Variant"/> encoded as an array of bytes.</returns>
         public static byte[] VarToBytes(Variant var)
         {
-            NativeFuncs.godotsharp_var_to_bytes((godot_variant)var.NativeVar, godot_bool.False, out var varBytes);
+            NativeFuncs.Redotsharp_var_to_bytes((Redot_variant)var.NativeVar, Redot_bool.False, out var varBytes);
             using (varBytes)
                 return Marshaling.ConvertNativePackedByteArrayToSystemArray(varBytes);
         }
@@ -645,7 +645,7 @@ namespace Godot
         /// <returns>The <see cref="Variant"/> encoded as an array of bytes.</returns>
         public static byte[] VarToBytesWithObjects(Variant var)
         {
-            NativeFuncs.godotsharp_var_to_bytes((godot_variant)var.NativeVar, godot_bool.True, out var varBytes);
+            NativeFuncs.Redotsharp_var_to_bytes((Redot_variant)var.NativeVar, Redot_bool.True, out var varBytes);
             using (varBytes)
                 return Marshaling.ConvertNativePackedByteArrayToSystemArray(varBytes);
         }
@@ -656,7 +656,7 @@ namespace Godot
         /// </summary>
         /// <example>
         /// <code>
-        /// var a = new Godot.Collections.Dictionary { ["a"] = 1, ["b"] = 2 };
+        /// var a = new Redot.Collections.Dictionary { ["a"] = 1, ["b"] = 2 };
         /// GD.Print(GD.VarToStr(a));
         /// // Prints:
         /// // {
@@ -669,7 +669,7 @@ namespace Godot
         /// <returns>The <see cref="Variant"/> encoded as a string.</returns>
         public static string VarToStr(Variant var)
         {
-            NativeFuncs.godotsharp_var_to_str((godot_variant)var.NativeVar, out godot_string ret);
+            NativeFuncs.Redotsharp_var_to_str((Redot_variant)var.NativeVar, out Redot_string ret);
             using (ret)
                 return Marshaling.ConvertStringToManaged(ret);
         }

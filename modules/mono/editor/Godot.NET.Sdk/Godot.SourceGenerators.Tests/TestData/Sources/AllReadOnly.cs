@@ -1,6 +1,6 @@
-using Godot;
+using Redot;
 
-public partial class AllReadOnly : GodotObject
+public partial class AllReadOnly : RedotObject
 {
     public readonly string ReadOnlyField = "foo";
     public string ReadOnlyAutoProperty { get; } = "foo";

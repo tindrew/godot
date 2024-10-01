@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_body_2d.h                                                       */
+/*  Redot_body_2d.h                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,20 +28,20 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_BODY_2D_H
-#define GODOT_BODY_2D_H
+#ifndef Redot_BODY_2D_H
+#define Redot_BODY_2D_H
 
-#include "godot_area_2d.h"
-#include "godot_collision_object_2d.h"
+#include "Redot_area_2d.h"
+#include "Redot_collision_object_2d.h"
 
 #include "core/templates/list.h"
 #include "core/templates/pair.h"
 #include "core/templates/vset.h"
 
-class GodotConstraint2D;
-class GodotPhysicsDirectBodyState2D;
+class RedotConstraint2D;
+class RedotPhysicsDirectBodyState2D;
 
-class GodotBody2D : public GodotCollisionObject2D {
+class RedotBody2D : public RedotCollisionObject2D {
 	PhysicsServer2D::BodyMode mode = PhysicsServer2D::BODY_MODE_RIGID;
 
 	Vector2 biased_linear_velocity;
@@ -92,9 +92,9 @@ class GodotBody2D : public GodotCollisionObject2D {
 	Vector2 constant_force;
 	real_t constant_torque = 0.0;
 
-	SelfList<GodotBody2D> active_list;
-	SelfList<GodotBody2D> mass_properties_update_list;
-	SelfList<GodotBody2D> direct_state_query_list;
+	SelfList<RedotBody2D> active_list;
+	SelfList<RedotBody2D> mass_properties_update_list;
+	SelfList<RedotBody2D> direct_state_query_list;
 
 	VSet<RID> exceptions;
 	PhysicsServer2D::CCDMode continuous_cd_mode = PhysicsServer2D::CCD_MODE_DISABLED;
@@ -106,15 +106,15 @@ class GodotBody2D : public GodotCollisionObject2D {
 	virtual void _shapes_changed() override;
 	Transform2D new_transform;
 
-	List<Pair<GodotConstraint2D *, int>> constraint_list;
+	List<Pair<RedotConstraint2D *, int>> constraint_list;
 
 	struct AreaCMP {
-		GodotArea2D *area = nullptr;
+		RedotArea2D *area = nullptr;
 		int refCount = 0;
 		_FORCE_INLINE_ bool operator==(const AreaCMP &p_cmp) const { return area->get_self() == p_cmp.area->get_self(); }
 		_FORCE_INLINE_ bool operator<(const AreaCMP &p_cmp) const { return area->get_priority() < p_cmp.area->get_priority(); }
 		_FORCE_INLINE_ AreaCMP() {}
-		_FORCE_INLINE_ AreaCMP(GodotArea2D *p_area) {
+		_FORCE_INLINE_ AreaCMP(RedotArea2D *p_area) {
 			area = p_area;
 			refCount = 1;
 		}
@@ -148,21 +148,21 @@ class GodotBody2D : public GodotCollisionObject2D {
 
 	ForceIntegrationCallbackData *fi_callback_data = nullptr;
 
-	GodotPhysicsDirectBodyState2D *direct_state = nullptr;
+	RedotPhysicsDirectBodyState2D *direct_state = nullptr;
 
 	uint64_t island_step = 0;
 
 	void _update_transform_dependent();
 
-	friend class GodotPhysicsDirectBodyState2D; // i give up, too many functions to expose
+	friend class RedotPhysicsDirectBodyState2D; // i give up, too many functions to expose
 
 public:
 	void set_state_sync_callback(const Callable &p_callable);
 	void set_force_integration_callback(const Callable &p_callable, const Variant &p_udata = Variant());
 
-	GodotPhysicsDirectBodyState2D *get_direct_state();
+	RedotPhysicsDirectBodyState2D *get_direct_state();
 
-	_FORCE_INLINE_ void add_area(GodotArea2D *p_area) {
+	_FORCE_INLINE_ void add_area(RedotArea2D *p_area) {
 		int index = areas.find(AreaCMP(p_area));
 		if (index > -1) {
 			areas.write[index].refCount += 1;
@@ -171,7 +171,7 @@ public:
 		}
 	}
 
-	_FORCE_INLINE_ void remove_area(GodotArea2D *p_area) {
+	_FORCE_INLINE_ void remove_area(RedotArea2D *p_area) {
 		int index = areas.find(AreaCMP(p_area));
 		if (index > -1) {
 			areas.write[index].refCount -= 1;
@@ -202,9 +202,9 @@ public:
 	_FORCE_INLINE_ uint64_t get_island_step() const { return island_step; }
 	_FORCE_INLINE_ void set_island_step(uint64_t p_step) { island_step = p_step; }
 
-	_FORCE_INLINE_ void add_constraint(GodotConstraint2D *p_constraint, int p_pos) { constraint_list.push_back({ p_constraint, p_pos }); }
-	_FORCE_INLINE_ void remove_constraint(GodotConstraint2D *p_constraint, int p_pos) { constraint_list.erase({ p_constraint, p_pos }); }
-	const List<Pair<GodotConstraint2D *, int>> &get_constraint_list() const { return constraint_list; }
+	_FORCE_INLINE_ void add_constraint(RedotConstraint2D *p_constraint, int p_pos) { constraint_list.push_back({ p_constraint, p_pos }); }
+	_FORCE_INLINE_ void remove_constraint(RedotConstraint2D *p_constraint, int p_pos) { constraint_list.erase({ p_constraint, p_pos }); }
+	const List<Pair<RedotConstraint2D *, int>> &get_constraint_list() const { return constraint_list; }
 	_FORCE_INLINE_ void clear_constraint_list() { constraint_list.clear(); }
 
 	_FORCE_INLINE_ void set_omit_force_integration(bool p_omit_force_integration) { omit_force_integration = p_omit_force_integration; }
@@ -303,7 +303,7 @@ public:
 	_FORCE_INLINE_ void set_continuous_collision_detection_mode(PhysicsServer2D::CCDMode p_mode) { continuous_cd_mode = p_mode; }
 	_FORCE_INLINE_ PhysicsServer2D::CCDMode get_continuous_collision_detection_mode() const { return continuous_cd_mode; }
 
-	void set_space(GodotSpace2D *p_space) override;
+	void set_space(RedotSpace2D *p_space) override;
 
 	void update_mass_properties();
 	void reset_mass_properties();
@@ -336,13 +336,13 @@ public:
 
 	bool sleep_test(real_t p_step);
 
-	GodotBody2D();
-	~GodotBody2D();
+	RedotBody2D();
+	~RedotBody2D();
 };
 
 //add contact inline
 
-void GodotBody2D::add_contact(const Vector2 &p_local_pos, const Vector2 &p_local_normal, real_t p_depth, int p_local_shape, const Vector2 &p_local_velocity_at_pos, const Vector2 &p_collider_pos, int p_collider_shape, ObjectID p_collider_instance_id, const RID &p_collider, const Vector2 &p_collider_velocity_at_pos, const Vector2 &p_impulse) {
+void RedotBody2D::add_contact(const Vector2 &p_local_pos, const Vector2 &p_local_normal, real_t p_depth, int p_local_shape, const Vector2 &p_local_velocity_at_pos, const Vector2 &p_collider_pos, int p_collider_shape, ObjectID p_collider_instance_id, const RID &p_collider, const Vector2 &p_collider_velocity_at_pos, const Vector2 &p_impulse) {
 	int c_max = contacts.size();
 
 	if (c_max == 0) {
@@ -386,4 +386,4 @@ void GodotBody2D::add_contact(const Vector2 &p_local_pos, const Vector2 &p_local
 	c[idx].impulse = p_impulse;
 }
 
-#endif // GODOT_BODY_2D_H
+#endif // Redot_BODY_2D_H

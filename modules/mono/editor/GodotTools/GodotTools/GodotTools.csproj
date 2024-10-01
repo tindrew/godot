@@ -5,25 +5,25 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <LangVersion>10</LangVersion>
     <Nullable>enable</Nullable>
-    <!-- The Godot editor uses the Debug Godot API assemblies -->
-    <GodotApiConfiguration>Debug</GodotApiConfiguration>
-    <GodotSourceRootPath>$(SolutionDir)/../../../../</GodotSourceRootPath>
-    <GodotOutputDataDir>$(GodotSourceRootPath)/bin/GodotSharp</GodotOutputDataDir>
-    <GodotApiAssembliesDir>$(GodotOutputDataDir)/Api/$(GodotApiConfiguration)</GodotApiAssembliesDir>
+    <!-- The Redot editor uses the Debug Redot API assemblies -->
+    <RedotApiConfiguration>Debug</RedotApiConfiguration>
+    <RedotSourceRootPath>$(SolutionDir)/../../../../</RedotSourceRootPath>
+    <RedotOutputDataDir>$(RedotSourceRootPath)/bin/RedotSharp</RedotOutputDataDir>
+    <RedotApiAssembliesDir>$(RedotOutputDataDir)/Api/$(RedotApiConfiguration)</RedotApiAssembliesDir>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <!-- Needed for our source generators to work despite this not being a Godot game project -->
+  <!-- Needed for our source generators to work despite this not being a Redot game project -->
   <PropertyGroup>
-    <IsGodotToolsProject>true</IsGodotToolsProject>
+    <IsRedotToolsProject>true</IsRedotToolsProject>
   </PropertyGroup>
   <ItemGroup>
-    <CompilerVisibleProperty Include="IsGodotToolsProject" />
+    <CompilerVisibleProperty Include="IsRedotToolsProject" />
   </ItemGroup>
-  <PropertyGroup Condition=" Exists('$(GodotApiAssembliesDir)/GodotSharp.dll') ">
-    <!-- The project is part of the Godot source tree -->
-    <!-- Use the Godot source tree output folder instead of '$(ProjectDir)/bin' -->
-    <OutputPath>$(GodotOutputDataDir)/Tools</OutputPath>
+  <PropertyGroup Condition=" Exists('$(RedotApiAssembliesDir)/RedotSharp.dll') ">
+    <!-- The project is part of the Redot source tree -->
+    <!-- Use the Redot source tree output folder instead of '$(ProjectDir)/bin' -->
+    <OutputPath>$(RedotOutputDataDir)/Tools</OutputPath>
     <!-- Must not append '$(TargetFramework)' to the output path in this case -->
     <AppendTargetFrameworkToOutputPath>False</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
@@ -32,23 +32,23 @@
     <PackageReference Include="JetBrains.Rider.PathLocator" Version="1.0.9" />
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <Reference Include="GodotSharp">
-      <HintPath>$(GodotApiAssembliesDir)/GodotSharp.dll</HintPath>
+    <Reference Include="RedotSharp">
+      <HintPath>$(RedotApiAssembliesDir)/RedotSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="GodotSharpEditor">
-      <HintPath>$(GodotApiAssembliesDir)/GodotSharpEditor.dll</HintPath>
+    <Reference Include="RedotSharpEditor">
+      <HintPath>$(RedotApiAssembliesDir)/RedotSharpEditor.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Godot.NET.Sdk\Godot.SourceGenerators\Godot.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\..\..\glue\GodotSharp\Godot.SourceGenerators.Internal\Godot.SourceGenerators.Internal.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\Redot.NET.Sdk\Redot.SourceGenerators\Redot.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\..\glue\RedotSharp\Redot.SourceGenerators.Internal\Redot.SourceGenerators.Internal.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GodotTools.BuildLogger\GodotTools.BuildLogger.csproj" />
-    <ProjectReference Include="..\GodotTools.IdeMessaging\GodotTools.IdeMessaging.csproj" />
-    <ProjectReference Include="..\GodotTools.ProjectEditor\GodotTools.ProjectEditor.csproj" />
-    <ProjectReference Include="..\GodotTools.Core\GodotTools.Core.csproj" />
+    <ProjectReference Include="..\RedotTools.BuildLogger\RedotTools.BuildLogger.csproj" />
+    <ProjectReference Include="..\RedotTools.IdeMessaging\RedotTools.IdeMessaging.csproj" />
+    <ProjectReference Include="..\RedotTools.ProjectEditor\RedotTools.ProjectEditor.csproj" />
+    <ProjectReference Include="..\RedotTools.Core\RedotTools.Core.csproj" />
   </ItemGroup>
 </Project>

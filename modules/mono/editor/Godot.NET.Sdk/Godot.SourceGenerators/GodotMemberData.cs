@@ -1,11 +1,11 @@
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 
-namespace Godot.SourceGenerators
+namespace Redot.SourceGenerators
 {
-    public readonly struct GodotMethodData
+    public readonly struct RedotMethodData
     {
-        public GodotMethodData(IMethodSymbol method, ImmutableArray<MarshalType> paramTypes,
+        public RedotMethodData(IMethodSymbol method, ImmutableArray<MarshalType> paramTypes,
             ImmutableArray<ITypeSymbol> paramTypeSymbols, (MarshalType MarshalType, ITypeSymbol TypeSymbol)? retType)
         {
             Method = method;
@@ -20,9 +20,9 @@ namespace Godot.SourceGenerators
         public (MarshalType MarshalType, ITypeSymbol TypeSymbol)? RetType { get; }
     }
 
-    public readonly struct GodotSignalDelegateData
+    public readonly struct RedotSignalDelegateData
     {
-        public GodotSignalDelegateData(string name, INamedTypeSymbol delegateSymbol, GodotMethodData invokeMethodData)
+        public RedotSignalDelegateData(string name, INamedTypeSymbol delegateSymbol, RedotMethodData invokeMethodData)
         {
             Name = name;
             DelegateSymbol = delegateSymbol;
@@ -31,12 +31,12 @@ namespace Godot.SourceGenerators
 
         public string Name { get; }
         public INamedTypeSymbol DelegateSymbol { get; }
-        public GodotMethodData InvokeMethodData { get; }
+        public RedotMethodData InvokeMethodData { get; }
     }
 
-    public readonly struct GodotPropertyData
+    public readonly struct RedotPropertyData
     {
-        public GodotPropertyData(IPropertySymbol propertySymbol, MarshalType type)
+        public RedotPropertyData(IPropertySymbol propertySymbol, MarshalType type)
         {
             PropertySymbol = propertySymbol;
             Type = type;
@@ -46,9 +46,9 @@ namespace Godot.SourceGenerators
         public MarshalType Type { get; }
     }
 
-    public readonly struct GodotFieldData
+    public readonly struct RedotFieldData
     {
-        public GodotFieldData(IFieldSymbol fieldSymbol, MarshalType type)
+        public RedotFieldData(IFieldSymbol fieldSymbol, MarshalType type)
         {
             FieldSymbol = fieldSymbol;
             Type = type;
@@ -58,20 +58,20 @@ namespace Godot.SourceGenerators
         public MarshalType Type { get; }
     }
 
-    public struct GodotPropertyOrFieldData
+    public struct RedotPropertyOrFieldData
     {
-        public GodotPropertyOrFieldData(ISymbol symbol, MarshalType type)
+        public RedotPropertyOrFieldData(ISymbol symbol, MarshalType type)
         {
             Symbol = symbol;
             Type = type;
         }
 
-        public GodotPropertyOrFieldData(GodotPropertyData propertyData)
+        public RedotPropertyOrFieldData(RedotPropertyData propertyData)
             : this(propertyData.PropertySymbol, propertyData.Type)
         {
         }
 
-        public GodotPropertyOrFieldData(GodotFieldData fieldData)
+        public RedotPropertyOrFieldData(RedotFieldData fieldData)
             : this(fieldData.FieldSymbol, fieldData.Type)
         {
         }

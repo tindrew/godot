@@ -1,9 +1,9 @@
 using System;
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
-    /// Exports the annotated member as a property of the Godot Object.
+    /// Exports the annotated member as a property of the Redot Object.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public sealed class ExportAttribute : Attribute

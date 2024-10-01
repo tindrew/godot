@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  BaseGodotEditor.kt                                                    */
+/*  BaseRedotEditor.kt                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,7 +28,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.editor
+package org.Redotengine.editor
 
 import android.Manifest
 import android.app.ActivityManager
@@ -45,29 +45,29 @@ import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.window.layout.WindowMetricsCalculator
-import org.godotengine.editor.utils.signApk
-import org.godotengine.editor.utils.verifyApk
-import org.godotengine.godot.GodotActivity
-import org.godotengine.godot.GodotLib
-import org.godotengine.godot.error.Error
-import org.godotengine.godot.utils.PermissionsUtil
-import org.godotengine.godot.utils.ProcessPhoenix
-import org.godotengine.godot.utils.isHorizonOSDevice
-import org.godotengine.godot.utils.isNativeXRDevice
+import org.Redotengine.editor.utils.signApk
+import org.Redotengine.editor.utils.verifyApk
+import org.Redotengine.Redot.RedotActivity
+import org.Redotengine.Redot.RedotLib
+import org.Redotengine.Redot.error.Error
+import org.Redotengine.Redot.utils.PermissionsUtil
+import org.Redotengine.Redot.utils.ProcessPhoenix
+import org.Redotengine.Redot.utils.isHorizonOSDevice
+import org.Redotengine.Redot.utils.isNativeXRDevice
 import java.util.*
 import kotlin.math.min
 
 /**
- * Base class for the Godot Android Editor activities.
+ * Base class for the Redot Android Editor activities.
  *
  * This provides the basic templates for the activities making up this application.
  * Each derived activity runs in its own process, which enable up to have several instances of
- * the Godot engine up and running at the same time.
+ * the Redot engine up and running at the same time.
  */
-abstract class BaseGodotEditor : GodotActivity() {
+abstract class BaseRedotEditor : RedotActivity() {
 
 	companion object {
-		private val TAG = BaseGodotEditor::class.java.simpleName
+		private val TAG = BaseRedotEditor::class.java.simpleName
 
 		private const val WAIT_FOR_DEBUGGER = false
 
@@ -90,8 +90,8 @@ abstract class BaseGodotEditor : GodotActivity() {
 		internal const val XR_MODE_ARG = "--xr-mode"
 
 		// Info for the various classes used by the editor
-		internal val EDITOR_MAIN_INFO = EditorWindowInfo(GodotEditor::class.java, 777, "")
-		internal val RUN_GAME_INFO = EditorWindowInfo(GodotGame::class.java, 667, ":GodotGame", LaunchPolicy.AUTO, true)
+		internal val EDITOR_MAIN_INFO = EditorWindowInfo(RedotEditor::class.java, 777, "")
+		internal val RUN_GAME_INFO = EditorWindowInfo(RedotGame::class.java, 667, ":RedotGame", LaunchPolicy.AUTO, true)
 
 		/**
 		 * Sets of constants to specify the window to use to run the project.
@@ -119,7 +119,7 @@ abstract class BaseGodotEditor : GodotActivity() {
 	private val commandLineParams = ArrayList<String>()
 	private val editorLoadingIndicator: View? by lazy { findViewById(R.id.editor_loading_indicator) }
 
-	override fun getGodotAppLayout() = R.layout.godot_editor_layout
+	override fun getRedotAppLayout() = R.layout.Redot_editor_layout
 
 	internal open fun getEditorWindowInfo() = EDITOR_MAIN_INFO
 
@@ -162,22 +162,22 @@ abstract class BaseGodotEditor : GodotActivity() {
 		super.onCreate(savedInstanceState)
 	}
 
-	override fun onGodotSetupCompleted() {
-		super.onGodotSetupCompleted()
+	override fun onRedotSetupCompleted() {
+		super.onRedotSetupCompleted()
 		val longPressEnabled = enableLongPressGestures()
 		val panScaleEnabled = enablePanAndScaleGestures()
 
 		runOnUiThread {
 			// Enable long press, panning and scaling gestures
-			godotFragment?.godot?.renderView?.inputHandler?.apply {
+			RedotFragment?.Redot?.renderView?.inputHandler?.apply {
 				enableLongPress(longPressEnabled)
 				enablePanningAndScalingGestures(panScaleEnabled)
 			}
 		}
 	}
 
-	override fun onGodotMainLoopStarted() {
-		super.onGodotMainLoopStarted()
+	override fun onRedotMainLoopStarted() {
+		super.onRedotMainLoopStarted()
 		runOnUiThread {
 			// Hide the loading indicator
 			editorLoadingIndicator?.visibility = View.GONE
@@ -223,9 +223,9 @@ abstract class BaseGodotEditor : GodotActivity() {
 		}
 	}
 
-	protected fun getNewGodotInstanceIntent(editorWindowInfo: EditorWindowInfo, args: Array<String>): Intent {
+	protected fun getNewRedotInstanceIntent(editorWindowInfo: EditorWindowInfo, args: Array<String>): Intent {
 		val updatedArgs = if (editorWindowInfo == EDITOR_MAIN_INFO &&
-			godot?.isInImmersiveMode() == true &&
+			Redot?.isInImmersiveMode() == true &&
 			!args.contains(FULLSCREEN_ARG) &&
 			!args.contains(FULLSCREEN_ARG_SHORT)
 		) {
@@ -274,11 +274,11 @@ abstract class BaseGodotEditor : GodotActivity() {
 		return newInstance
 	}
 
-	override fun onNewGodotInstanceRequested(args: Array<String>): Int {
+	override fun onNewRedotInstanceRequested(args: Array<String>): Int {
 		val editorWindowInfo = retrieveEditorWindowInfo(args)
 
 		// Launch a new activity
-		val sourceView = godotFragment?.view
+		val sourceView = RedotFragment?.view
 		val activityOptions = if (sourceView == null) {
 			null
 		} else {
@@ -287,12 +287,12 @@ abstract class BaseGodotEditor : GodotActivity() {
 			ActivityOptions.makeScaleUpAnimation(sourceView, startX, startY, 0, 0)
 		}
 
-		val newInstance = getNewGodotInstanceIntent(editorWindowInfo, args)
+		val newInstance = getNewRedotInstanceIntent(editorWindowInfo, args)
 		if (editorWindowInfo.windowClassName == javaClass.name) {
 			Log.d(TAG, "Restarting ${editorWindowInfo.windowClassName} with parameters ${args.contentToString()}")
-			val godot = godot
-			if (godot != null) {
-				godot.destroyAndKillProcess {
+			val Redot = Redot
+			if (Redot != null) {
+				Redot.destroyAndKillProcess {
 					ProcessPhoenix.triggerRebirth(this, activityOptions?.toBundle(), newInstance)
 				}
 			} else {
@@ -307,8 +307,8 @@ abstract class BaseGodotEditor : GodotActivity() {
 		return editorWindowInfo.windowId
 	}
 
-	final override fun onGodotForceQuit(godotInstanceId: Int): Boolean {
-		val editorWindowInfo = getEditorWindowInfoForInstanceId(godotInstanceId) ?: return super.onGodotForceQuit(godotInstanceId)
+	final override fun onRedotForceQuit(RedotInstanceId: Int): Boolean {
+		val editorWindowInfo = getEditorWindowInfoForInstanceId(RedotInstanceId) ?: return super.onRedotForceQuit(RedotInstanceId)
 
 		if (editorWindowInfo.windowClassName == javaClass.name) {
 			Log.d(TAG, "Force quitting ${editorWindowInfo.windowClassName}")
@@ -328,13 +328,13 @@ abstract class BaseGodotEditor : GodotActivity() {
 		for (runningProcess in runningProcesses) {
 			if (runningProcess.processName == processName) {
 				// Killing process directly
-				Log.v(TAG, "Killing Godot process ${runningProcess.processName}")
+				Log.v(TAG, "Killing Redot process ${runningProcess.processName}")
 				Process.killProcess(runningProcess.pid)
 				return true
 			}
 		}
 
-		return super.onGodotForceQuit(godotInstanceId)
+		return super.onRedotForceQuit(RedotInstanceId)
 	}
 
 	// Get the screen's density scale
@@ -359,28 +359,28 @@ abstract class BaseGodotEditor : GodotActivity() {
 	}
 
 	/**
-	 * The Godot Android Editor sets its own orientation via its AndroidManifest
+	 * The Redot Android Editor sets its own orientation via its AndroidManifest
 	 */
 	protected open fun overrideOrientationRequest() = true
 
 	/**
-	 * Enable long press gestures for the Godot Android editor.
+	 * Enable long press gestures for the Redot Android editor.
 	 */
 	protected open fun enableLongPressGestures() =
-		java.lang.Boolean.parseBoolean(GodotLib.getEditorSetting("interface/touchscreen/enable_long_press_as_right_click"))
+		java.lang.Boolean.parseBoolean(RedotLib.getEditorSetting("interface/touchscreen/enable_long_press_as_right_click"))
 
 	/**
-	 * Enable pan and scale gestures for the Godot Android editor.
+	 * Enable pan and scale gestures for the Redot Android editor.
 	 */
 	protected open fun enablePanAndScaleGestures() =
-		java.lang.Boolean.parseBoolean(GodotLib.getEditorSetting("interface/touchscreen/enable_pan_and_scale_gestures"))
+		java.lang.Boolean.parseBoolean(RedotLib.getEditorSetting("interface/touchscreen/enable_pan_and_scale_gestures"))
 
 	/**
 	 * Retrieves the play window pip mode editor setting.
 	 */
 	private fun getPlayWindowPiPMode(): Int {
 		return try {
-			Integer.parseInt(GodotLib.getEditorSetting("run/window_placement/play_window_pip_mode"))
+			Integer.parseInt(RedotLib.getEditorSetting("run/window_placement/play_window_pip_mode"))
 		} catch (e: NumberFormatException) {
 			PLAY_WINDOW_PIP_ENABLED_FOR_SAME_AS_EDITOR
 		}
@@ -413,7 +413,7 @@ abstract class BaseGodotEditor : GodotActivity() {
 					LaunchPolicy.ADJACENT
 				} else {
 					try {
-						when (Integer.parseInt(GodotLib.getEditorSetting("run/window_placement/android_window"))) {
+						when (Integer.parseInt(RedotLib.getEditorSetting("run/window_placement/android_window"))) {
 							ANDROID_WINDOW_SAME_AS_EDITOR -> LaunchPolicy.SAME
 							ANDROID_WINDOW_SIDE_BY_SIDE_WITH_EDITOR -> LaunchPolicy.ADJACENT
 							ANDROID_WINDOW_SAME_AS_EDITOR_AND_LAUNCH_IN_PIP_MODE -> LaunchPolicy.SAME_AND_LAUNCH_IN_PIP_MODE
@@ -503,13 +503,13 @@ abstract class BaseGodotEditor : GodotActivity() {
 		keystoreUser: String,
 		keystorePassword: String
 	): Error {
-		val godot = godot ?: return Error.ERR_UNCONFIGURED
-		return signApk(godot.fileAccessHandler, inputPath, outputPath, keystorePath, keystoreUser, keystorePassword)
+		val Redot = Redot ?: return Error.ERR_UNCONFIGURED
+		return signApk(Redot.fileAccessHandler, inputPath, outputPath, keystorePath, keystoreUser, keystorePassword)
 	}
 
 	override fun verifyApk(apkPath: String): Error {
-		val godot = godot ?: return Error.ERR_UNCONFIGURED
-		return verifyApk(godot.fileAccessHandler, apkPath)
+		val Redot = Redot ?: return Error.ERR_UNCONFIGURED
+		return verifyApk(Redot.fileAccessHandler, apkPath)
 	}
 
 	override fun supportsFeature(featureTag: String): Boolean {

@@ -25,14 +25,14 @@
 		            iterate(child)
 		[/gdscript]
 		[csharp]
-		using Godot;
+		using Redot;
 
 		// This sample changes all node names.
 		// Called right after the scene is imported and gets the root node.
 		[Tool]
 		public partial class NodeRenamer : EditorScenePostImport
 		{
-		    public override GodotObject _PostImport(Node scene)
+		    public override RedotObject _PostImport(Node scene)
 		    {
 		        // Change all node names to "modified_[oldnodename]"
 		        Iterate(scene);

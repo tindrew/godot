@@ -1,13 +1,13 @@
-# https://github.com/godotengine/godot/issues/63965
+# https://github.com/Redotengine/Redot/issues/63965
 
 func test():
 	var array_str: Array = []
-	array_str.push_back("godot")
-	print("StringName in Array: ", &"godot" in array_str)
+	array_str.push_back("Redot")
+	print("StringName in Array: ", &"Redot" in array_str)
 
 	var array_sname: Array = []
-	array_sname.push_back(&"godot")
-	print("String in Array: ", "godot" in array_sname)
+	array_sname.push_back(&"Redot")
+	print("String in Array: ", "Redot" in array_sname)
 
 	# Not equal because the values are different types.
 	print("Arrays not equal: ", array_str != array_sname)

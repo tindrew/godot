@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/73273
+# https://github.com/Redotengine/Redot/issues/73273
 
 func other(callable : Callable):
     callable.call()

@@ -3,7 +3,7 @@
     <ProjectGuid>{AEBF0036-DA76-4341-B651-A3F2856AB2FA}</ProjectGuid>
     <OutputPath>bin/$(Configuration)</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <RootNamespace>Godot</RootNamespace>
+    <RootNamespace>Redot</RootNamespace>
     <TargetFramework>net6.0</TargetFramework>
     <DocumentationFile>$(OutputPath)/$(AssemblyName).xml</DocumentationFile>
     <EnableDefaultItems>false</EnableDefaultItems>
@@ -13,16 +13,16 @@
     <AnalysisMode>Recommended</AnalysisMode>
   </PropertyGroup>
   <PropertyGroup>
-    <Description>Godot C# Core API.</Description>
-    <Authors>Godot Engine contributors</Authors>
+    <Description>Redot C# Core API.</Description>
+    <Authors>Redot Engine contributors</Authors>
 
-    <PackageId>GodotSharp</PackageId>
+    <PackageId>RedotSharp</PackageId>
     <Version>4.4.0</Version>
-    <PackageVersion>$(PackageVersion_GodotSharp)</PackageVersion>
-    <RepositoryUrl>https://github.com/godotengine/godot/tree/master/modules/mono/glue/GodotSharp/GodotSharp</RepositoryUrl>
+    <PackageVersion>$(PackageVersion_RedotSharp)</PackageVersion>
+    <RepositoryUrl>https://github.com/Redotengine/Redot/tree/master/modules/mono/glue/RedotSharp/RedotSharp</RepositoryUrl>
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Copyright (c) Godot Engine contributors</Copyright>
+    <Copyright>Copyright (c) Redot Engine contributors</Copyright>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
@@ -30,25 +30,25 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- SdkPackageVersions.props for easy access -->
-    <None Include="$(GodotSdkPackageVersionsFilePath)">
+    <None Include="$(RedotSdkPackageVersionsFilePath)">
       <Link>SdkPackageVersions.props</Link>
     </None>
   </ItemGroup>
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants);GODOT</DefineConstants>
-    <DefineConstants Condition=" '$(GodotFloat64)' == 'true' ">REAL_T_IS_DOUBLE;$(DefineConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);Redot</DefineConstants>
+    <DefineConstants Condition=" '$(RedotFloat64)' == 'true' ">REAL_T_IS_DOUBLE;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="ReflectionAnalyzers" Version="0.1.22-dev" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" />
     <!--PackageReference Include="IDisposableAnalyzers" Version="3.4.13" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers" /-->
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Godot.SourceGenerators.Internal\Godot.SourceGenerators.Internal.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\Redot.SourceGenerators.Internal\Redot.SourceGenerators.Internal.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
   <!-- Sources -->
   <ItemGroup>
     <Compile Include="Core\Aabb.cs" />
-    <Compile Include="Core\Bridge\GodotSerializationInfo.cs" />
+    <Compile Include="Core\Bridge\RedotSerializationInfo.cs" />
     <Compile Include="Core\Bridge\MethodInfo.cs" />
     <Compile Include="Core\Callable.generics.cs" />
     <Compile Include="Core\CustomGCHandle.cs" />
@@ -59,7 +59,7 @@
     <Compile Include="Core\Attributes\ExportGroupAttribute.cs" />
     <Compile Include="Core\Attributes\ExportSubgroupAttribute.cs" />
     <Compile Include="Core\Attributes\GlobalClassAttribute.cs" />
-    <Compile Include="Core\Attributes\GodotClassNameAttribute.cs" />
+    <Compile Include="Core\Attributes\RedotClassNameAttribute.cs" />
     <Compile Include="Core\Attributes\IconAttribute.cs" />
     <Compile Include="Core\Attributes\MustBeVariantAttribute.cs" />
     <Compile Include="Core\Attributes\RpcAttribute.cs" />
@@ -82,17 +82,17 @@
     <Compile Include="Core\DelegateUtils.cs" />
     <Compile Include="Core\Dictionary.cs" />
     <Compile Include="Core\Dispatcher.cs" />
-    <Compile Include="Core\Extensions\GodotObjectExtensions.cs" />
+    <Compile Include="Core\Extensions\RedotObjectExtensions.cs" />
     <Compile Include="Core\Extensions\NodeExtensions.cs" />
     <Compile Include="Core\Extensions\PackedSceneExtensions.cs" />
     <Compile Include="Core\Extensions\ResourceLoaderExtensions.cs" />
     <Compile Include="Core\GD.cs" />
-    <Compile Include="Core\GodotObject.base.cs" />
-    <Compile Include="Core\GodotObject.exceptions.cs" />
-    <Compile Include="Core\GodotSynchronizationContext.cs" />
-    <Compile Include="Core\GodotTaskScheduler.cs" />
-    <Compile Include="Core\GodotTraceListener.cs" />
-    <Compile Include="Core\GodotUnhandledExceptionEvent.cs" />
+    <Compile Include="Core\RedotObject.base.cs" />
+    <Compile Include="Core\RedotObject.exceptions.cs" />
+    <Compile Include="Core\RedotSynchronizationContext.cs" />
+    <Compile Include="Core\RedotTaskScheduler.cs" />
+    <Compile Include="Core\RedotTraceListener.cs" />
+    <Compile Include="Core\RedotUnhandledExceptionEvent.cs" />
     <Compile Include="Core\DisposablesTracker.cs" />
     <Compile Include="Core\Interfaces\IAwaitable.cs" />
     <Compile Include="Core\Interfaces\IAwaiter.cs" />
@@ -101,7 +101,7 @@
     <Compile Include="Core\MathfEx.cs" />
     <Compile Include="Core\NativeInterop\CustomUnsafe.cs" />
     <Compile Include="Core\NativeInterop\ExceptionUtils.cs" />
-    <Compile Include="Core\NativeInterop\GodotDllImportResolver.cs" />
+    <Compile Include="Core\NativeInterop\RedotDllImportResolver.cs" />
     <Compile Include="Core\NativeInterop\InteropUtils.cs" />
     <Compile Include="Core\NativeInterop\NativeFuncs.extended.cs" />
     <Compile Include="Core\NativeInterop\NativeVariantPtrArgs.cs" />
@@ -135,7 +135,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <!-- Compat Sources -->
-  <ItemGroup Condition=" '$(GodotNoDeprecated)' == '' ">
+  <ItemGroup Condition=" '$(RedotNoDeprecated)' == '' ">
     <Compile Include="Compat.cs" />
   </ItemGroup>
   <!--
@@ -144,5 +144,5 @@
   We can't use wildcards as there may be undesired old files still hanging around.
   Fortunately code completion, go to definition and such still work.
   -->
-  <Import Condition=" '$(GodotSkipGenerated)' == '' " Project="Generated\GeneratedIncludes.props" />
+  <Import Condition=" '$(RedotSkipGenerated)' == '' " Project="Generated\GeneratedIncludes.props" />
 </Project>

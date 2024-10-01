@@ -2,10 +2,10 @@
 /*  editor_run.cpp                                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -226,7 +226,7 @@ Error EditorRun::run(const String &p_scene, const String &p_write_movie) {
 	// Pass the debugger stop shortcut to the running instance(s).
 	String shortcut;
 	VariantWriter::write_to_string(ED_GET_SHORTCUT("editor/stop_running_project"), shortcut);
-	OS::get_singleton()->set_environment("__GODOT_EDITOR_STOP_SHORTCUT__", shortcut);
+	OS::get_singleton()->set_environment("__Redot_EDITOR_STOP_SHORTCUT__", shortcut);
 
 	String exec = OS::get_singleton()->get_executable_path();
 	int instance_count = RunInstancesDialog::get_singleton()->get_instance_count();

@@ -1,6 +1,6 @@
-using Godot;
+using Redot;
 
-public partial class Foo : GodotObject
+public partial class Foo : RedotObject
 {
 }
 

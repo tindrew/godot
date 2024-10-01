@@ -1,6 +1,6 @@
-using Godot;
+using Redot;
 
-public partial class EventSignals : GodotObject
+public partial class EventSignals : RedotObject
 {
     [Signal]
     public delegate void MySignalEventHandler(string str, int num);

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.godotengine.godot.gl;
+package org.Redotengine.Redot.gl;
 
 import android.content.Context;
 import android.opengl.EGL14;
@@ -568,7 +568,7 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 	}
 
 
-	// -- GODOT start --
+	// -- Redot start --
 	/**
 	 * Pause the rendering thread, optionally tearing down the EGL context
 	 * depending upon the value of {@link #setPreserveEGLContextOnPause(boolean)}.
@@ -604,7 +604,7 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 			mGLThread.requestExitAndWait();
 		}
 	}
-	// -- GODOT end --
+	// -- Redot end --
 
 	/**
 	 * Queue a runnable to be run on the GL rendering thread. This can be used
@@ -772,7 +772,7 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 		 */
 		void onSurfaceChanged(GL10 gl, int width, int height);
 
-		// -- GODOT start --
+		// -- Redot start --
 		/**
 		 * Called to draw the current frame.
 		 * <p>
@@ -797,7 +797,7 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 		 * Invoked when the render thread is in the process of shutting down.
 		 */
 		void onRenderThreadExiting();
-		// -- GODOT end --
+		// -- Redot end --
 	}
 
 	/**
@@ -1552,7 +1552,7 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 						createGlInterface = false;
 					}
 
-					// -- GODOT start --
+					// -- Redot start --
 					if (createEglContext) {
 						if (LOG_RENDERER) {
 							Log.w("GLThread", "onSurfaceCreated");
@@ -1622,7 +1622,7 @@ public class GLSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 								break;
 						}
 					}
-					// -- GODOT end --
+					// -- Redot end --
 
 					if (wantRenderNotification) {
 						doRenderNotification = true;

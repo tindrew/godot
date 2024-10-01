@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_hinge_joint_3d.h                                                */
+/*  Redot_hinge_joint_3d.h                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,15 +28,15 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_HINGE_JOINT_3D_H
-#define GODOT_HINGE_JOINT_3D_H
+#ifndef Redot_HINGE_JOINT_3D_H
+#define Redot_HINGE_JOINT_3D_H
 
 /*
-Adapted to Godot from the Bullet library.
+Adapted to Redot from the Bullet library.
 */
 
-#include "../godot_joint_3d.h"
-#include "godot_jacobian_entry_3d.h"
+#include "../Redot_joint_3d.h"
+#include "Redot_jacobian_entry_3d.h"
 
 /*
 Bullet Continuous Collision Detection and Physics Library
@@ -53,18 +53,18 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-class GodotHingeJoint3D : public GodotJoint3D {
+class RedotHingeJoint3D : public RedotJoint3D {
 	union {
 		struct {
-			GodotBody3D *A;
-			GodotBody3D *B;
+			RedotBody3D *A;
+			RedotBody3D *B;
 		};
 
-		GodotBody3D *_arr[2] = {};
+		RedotBody3D *_arr[2] = {};
 	};
 
-	GodotJacobianEntry3D m_jac[3]; //3 orthogonal linear constraints
-	GodotJacobianEntry3D m_jacAng[3]; //2 orthogonal angular constraints+ 1 for limit/motor
+	RedotJacobianEntry3D m_jac[3]; //3 orthogonal linear constraints
+	RedotJacobianEntry3D m_jacAng[3]; //2 orthogonal angular constraints+ 1 for limit/motor
 
 	Transform3D m_rbAFrame; // constraint axii. Assumes z is hinge axis.
 	Transform3D m_rbBFrame;
@@ -109,8 +109,8 @@ public:
 	void set_flag(PhysicsServer3D::HingeJointFlag p_flag, bool p_value);
 	bool get_flag(PhysicsServer3D::HingeJointFlag p_flag) const;
 
-	GodotHingeJoint3D(GodotBody3D *rbA, GodotBody3D *rbB, const Transform3D &frameA, const Transform3D &frameB);
-	GodotHingeJoint3D(GodotBody3D *rbA, GodotBody3D *rbB, const Vector3 &pivotInA, const Vector3 &pivotInB, const Vector3 &axisInA, const Vector3 &axisInB);
+	RedotHingeJoint3D(RedotBody3D *rbA, RedotBody3D *rbB, const Transform3D &frameA, const Transform3D &frameB);
+	RedotHingeJoint3D(RedotBody3D *rbA, RedotBody3D *rbB, const Vector3 &pivotInA, const Vector3 &pivotInB, const Vector3 &axisInA, const Vector3 &axisInB);
 };
 
-#endif // GODOT_HINGE_JOINT_3D_H
+#endif // Redot_HINGE_JOINT_3D_H

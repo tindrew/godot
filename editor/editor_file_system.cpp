@@ -2,10 +2,10 @@
 /*  editor_file_system.cpp                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -48,7 +48,7 @@
 #include "scene/resources/packed_scene.h"
 
 EditorFileSystem *EditorFileSystem::singleton = nullptr;
-//the name is the version, to keep compatibility with different versions of Godot
+//the name is the version, to keep compatibility with different versions of Redot
 #define CACHE_FILE_NAME "filesystem_cache8"
 
 int EditorFileSystemDirectory::find_file_index(const String &p_file) const {
@@ -3033,10 +3033,10 @@ bool EditorFileSystem::_should_skip_directory(const String &p_path) {
 		return true;
 	}
 
-	if (FileAccess::exists(p_path.path_join("project.godot"))) {
+	if (FileAccess::exists(p_path.path_join("project.Redot"))) {
 		// Skip if another project inside this.
 		if (EditorFileSystem::get_singleton()->first_scan) {
-			WARN_PRINT_ONCE(vformat("Detected another project.godot at %s. The folder will be ignored.", p_path));
+			WARN_PRINT_ONCE(vformat("Detected another project.Redot at %s. The folder will be ignored.", p_path));
 		}
 		return true;
 	}

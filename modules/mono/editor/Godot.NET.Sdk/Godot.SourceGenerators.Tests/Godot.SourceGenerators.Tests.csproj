@@ -34,8 +34,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\glue\GodotSharp\GodotSharp\GodotSharp.csproj" />
-    <ProjectReference Include="..\Godot.SourceGenerators\Godot.SourceGenerators.csproj" />
+    <ProjectReference Include="..\..\..\glue\RedotSharp\RedotSharp\RedotSharp.csproj" />
+    <ProjectReference Include="..\Redot.SourceGenerators\Redot.SourceGenerators.csproj" />
   </ItemGroup>
 
   <ItemGroup>

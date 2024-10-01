@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotUtterance.java                                                   */
+/*  RedotUtterance.java                                                   */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,12 +28,12 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot.tts;
+package org.Redotengine.Redot.tts;
 
 /**
- * A speech request for GodotTTS.
+ * A speech request for RedotTTS.
  */
-class GodotUtterance {
+class RedotUtterance {
 	final String text;
 	final String voice;
 	final int volume;
@@ -44,7 +44,7 @@ class GodotUtterance {
 	int offset = -1;
 	int start = 0;
 
-	GodotUtterance(String text, String voice, int volume, float pitch, float rate, int id) {
+	RedotUtterance(String text, String voice, int volume, float pitch, float rate, int id) {
 		this.text = text;
 		this.voice = voice;
 		this.volume = volume;

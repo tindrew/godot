@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotRenderer.java                                                    */
+/*  RedotRenderer.java                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,11 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot.gl;
+package org.Redotengine.Redot.gl;
 
-import org.godotengine.godot.GodotLib;
-import org.godotengine.godot.plugin.GodotPlugin;
-import org.godotengine.godot.plugin.GodotPluginRegistry;
+import org.Redotengine.Redot.RedotLib;
+import org.Redotengine.Redot.plugin.RedotPlugin;
+import org.Redotengine.Redot.plugin.RedotPluginRegistry;
 
 import android.util.Log;
 
@@ -40,26 +40,26 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 /**
- * Godot's GL renderer implementation.
+ * Redot's GL renderer implementation.
  */
-public class GodotRenderer implements GLSurfaceView.Renderer {
-	private final String TAG = GodotRenderer.class.getSimpleName();
+public class RedotRenderer implements GLSurfaceView.Renderer {
+	private final String TAG = RedotRenderer.class.getSimpleName();
 
-	private final GodotPluginRegistry pluginRegistry;
+	private final RedotPluginRegistry pluginRegistry;
 	private boolean activityJustResumed = false;
 
-	public GodotRenderer() {
-		this.pluginRegistry = GodotPluginRegistry.getPluginRegistry();
+	public RedotRenderer() {
+		this.pluginRegistry = RedotPluginRegistry.getPluginRegistry();
 	}
 
 	public boolean onDrawFrame(GL10 gl) {
 		if (activityJustResumed) {
-			GodotLib.onRendererResumed();
+			RedotLib.onRendererResumed();
 			activityJustResumed = false;
 		}
 
-		boolean swapBuffers = GodotLib.step();
-		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
+		boolean swapBuffers = RedotLib.step();
+		for (RedotPlugin plugin : pluginRegistry.getAllPlugins()) {
 			plugin.onGLDrawFrame(gl);
 		}
 
@@ -68,31 +68,31 @@ public class GodotRenderer implements GLSurfaceView.Renderer {
 
 	@Override
 	public void onRenderThreadExiting() {
-		Log.d(TAG, "Destroying Godot Engine");
-		GodotLib.ondestroy();
+		Log.d(TAG, "Destroying Redot Engine");
+		RedotLib.ondestroy();
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
-		GodotLib.resize(null, width, height);
-		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
+		RedotLib.resize(null, width, height);
+		for (RedotPlugin plugin : pluginRegistry.getAllPlugins()) {
 			plugin.onGLSurfaceChanged(gl, width, height);
 		}
 	}
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		GodotLib.newcontext(null);
-		for (GodotPlugin plugin : pluginRegistry.getAllPlugins()) {
+		RedotLib.newcontext(null);
+		for (RedotPlugin plugin : pluginRegistry.getAllPlugins()) {
 			plugin.onGLSurfaceCreated(gl, config);
 		}
 	}
 
 	public void onActivityResumed() {
-		// We defer invoking GodotLib.onRendererResumed() until the first draw frame call.
+		// We defer invoking RedotLib.onRendererResumed() until the first draw frame call.
 		// This ensures we have a valid GL context and surface when we do so.
 		activityJustResumed = true;
 	}
 
 	public void onActivityPaused() {
-		GodotLib.onRendererPaused();
+		RedotLib.onRendererPaused();
 	}
 }

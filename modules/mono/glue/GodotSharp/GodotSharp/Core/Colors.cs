@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Godot
+namespace Redot
 {
     /// <summary>
     /// This class contains color constants created from standardized color names.

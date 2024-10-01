@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_space_2d.h                                                      */
+/*  Redot_space_2d.h                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,25 +28,25 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_SPACE_2D_H
-#define GODOT_SPACE_2D_H
+#ifndef Redot_SPACE_2D_H
+#define Redot_SPACE_2D_H
 
-#include "godot_area_2d.h"
-#include "godot_area_pair_2d.h"
-#include "godot_body_2d.h"
-#include "godot_body_pair_2d.h"
-#include "godot_broad_phase_2d.h"
-#include "godot_collision_object_2d.h"
+#include "Redot_area_2d.h"
+#include "Redot_area_pair_2d.h"
+#include "Redot_body_2d.h"
+#include "Redot_body_pair_2d.h"
+#include "Redot_broad_phase_2d.h"
+#include "Redot_collision_object_2d.h"
 
 #include "core/config/project_settings.h"
 #include "core/templates/hash_map.h"
 #include "core/typedefs.h"
 
-class GodotPhysicsDirectSpaceState2D : public PhysicsDirectSpaceState2D {
-	GDCLASS(GodotPhysicsDirectSpaceState2D, PhysicsDirectSpaceState2D);
+class RedotPhysicsDirectSpaceState2D : public PhysicsDirectSpaceState2D {
+	GDCLASS(RedotPhysicsDirectSpaceState2D, PhysicsDirectSpaceState2D);
 
 public:
-	GodotSpace2D *space = nullptr;
+	RedotSpace2D *space = nullptr;
 
 	virtual int intersect_point(const PointParameters &p_parameters, ShapeResult *r_results, int p_result_max) override;
 	virtual bool intersect_ray(const RayParameters &p_parameters, RayResult &r_result) override;
@@ -55,10 +55,10 @@ public:
 	virtual bool collide_shape(const ShapeParameters &p_parameters, Vector2 *r_results, int p_result_max, int &r_result_count) override;
 	virtual bool rest_info(const ShapeParameters &p_parameters, ShapeRestInfo *r_info) override;
 
-	GodotPhysicsDirectSpaceState2D() {}
+	RedotPhysicsDirectSpaceState2D() {}
 };
 
-class GodotSpace2D {
+class RedotSpace2D {
 public:
 	enum ElapsedTime {
 		ELAPSED_TIME_INTEGRATE_FORCES,
@@ -72,29 +72,29 @@ public:
 
 private:
 	struct ExcludedShapeSW {
-		GodotShape2D *local_shape = nullptr;
-		const GodotCollisionObject2D *against_object = nullptr;
+		RedotShape2D *local_shape = nullptr;
+		const RedotCollisionObject2D *against_object = nullptr;
 		int against_shape_index = 0;
 	};
 
 	uint64_t elapsed_time[ELAPSED_TIME_MAX] = {};
 
-	GodotPhysicsDirectSpaceState2D *direct_access = nullptr;
+	RedotPhysicsDirectSpaceState2D *direct_access = nullptr;
 	RID self;
 
-	GodotBroadPhase2D *broadphase = nullptr;
-	SelfList<GodotBody2D>::List active_list;
-	SelfList<GodotBody2D>::List mass_properties_update_list;
-	SelfList<GodotBody2D>::List state_query_list;
-	SelfList<GodotArea2D>::List monitor_query_list;
-	SelfList<GodotArea2D>::List area_moved_list;
+	RedotBroadPhase2D *broadphase = nullptr;
+	SelfList<RedotBody2D>::List active_list;
+	SelfList<RedotBody2D>::List mass_properties_update_list;
+	SelfList<RedotBody2D>::List state_query_list;
+	SelfList<RedotArea2D>::List monitor_query_list;
+	SelfList<RedotArea2D>::List area_moved_list;
 
-	static void *_broadphase_pair(GodotCollisionObject2D *A, int p_subindex_A, GodotCollisionObject2D *B, int p_subindex_B, void *p_self);
-	static void _broadphase_unpair(GodotCollisionObject2D *A, int p_subindex_A, GodotCollisionObject2D *B, int p_subindex_B, void *p_data, void *p_self);
+	static void *_broadphase_pair(RedotCollisionObject2D *A, int p_subindex_A, RedotCollisionObject2D *B, int p_subindex_B, void *p_self);
+	static void _broadphase_unpair(RedotCollisionObject2D *A, int p_subindex_A, RedotCollisionObject2D *B, int p_subindex_B, void *p_data, void *p_self);
 
-	HashSet<GodotCollisionObject2D *> objects;
+	HashSet<RedotCollisionObject2D *> objects;
 
-	GodotArea2D *area = nullptr;
+	RedotArea2D *area = nullptr;
 
 	int solver_iterations = 0;
 
@@ -108,7 +108,7 @@ private:
 		INTERSECTION_QUERY_MAX = 2048
 	};
 
-	GodotCollisionObject2D *intersection_query_results[INTERSECTION_QUERY_MAX];
+	RedotCollisionObject2D *intersection_query_results[INTERSECTION_QUERY_MAX];
 	int intersection_query_subindex_results[INTERSECTION_QUERY_MAX];
 
 	real_t body_linear_velocity_sleep_threshold = 0.0;
@@ -123,40 +123,40 @@ private:
 	int active_objects = 0;
 	int collision_pairs = 0;
 
-	int _cull_aabb_for_body(GodotBody2D *p_body, const Rect2 &p_aabb);
+	int _cull_aabb_for_body(RedotBody2D *p_body, const Rect2 &p_aabb);
 
 	Vector<Vector2> contact_debug;
 	int contact_debug_count = 0;
 
-	friend class GodotPhysicsDirectSpaceState2D;
+	friend class RedotPhysicsDirectSpaceState2D;
 
 public:
 	_FORCE_INLINE_ void set_self(const RID &p_self) { self = p_self; }
 	_FORCE_INLINE_ RID get_self() const { return self; }
 
-	void set_default_area(GodotArea2D *p_area) { area = p_area; }
-	GodotArea2D *get_default_area() const { return area; }
+	void set_default_area(RedotArea2D *p_area) { area = p_area; }
+	RedotArea2D *get_default_area() const { return area; }
 
-	const SelfList<GodotBody2D>::List &get_active_body_list() const;
-	void body_add_to_active_list(SelfList<GodotBody2D> *p_body);
-	void body_remove_from_active_list(SelfList<GodotBody2D> *p_body);
-	void body_add_to_mass_properties_update_list(SelfList<GodotBody2D> *p_body);
-	void body_remove_from_mass_properties_update_list(SelfList<GodotBody2D> *p_body);
-	void area_add_to_moved_list(SelfList<GodotArea2D> *p_area);
-	void area_remove_from_moved_list(SelfList<GodotArea2D> *p_area);
-	const SelfList<GodotArea2D>::List &get_moved_area_list() const;
+	const SelfList<RedotBody2D>::List &get_active_body_list() const;
+	void body_add_to_active_list(SelfList<RedotBody2D> *p_body);
+	void body_remove_from_active_list(SelfList<RedotBody2D> *p_body);
+	void body_add_to_mass_properties_update_list(SelfList<RedotBody2D> *p_body);
+	void body_remove_from_mass_properties_update_list(SelfList<RedotBody2D> *p_body);
+	void area_add_to_moved_list(SelfList<RedotArea2D> *p_area);
+	void area_remove_from_moved_list(SelfList<RedotArea2D> *p_area);
+	const SelfList<RedotArea2D>::List &get_moved_area_list() const;
 
-	void body_add_to_state_query_list(SelfList<GodotBody2D> *p_body);
-	void body_remove_from_state_query_list(SelfList<GodotBody2D> *p_body);
+	void body_add_to_state_query_list(SelfList<RedotBody2D> *p_body);
+	void body_remove_from_state_query_list(SelfList<RedotBody2D> *p_body);
 
-	void area_add_to_monitor_query_list(SelfList<GodotArea2D> *p_area);
-	void area_remove_from_monitor_query_list(SelfList<GodotArea2D> *p_area);
+	void area_add_to_monitor_query_list(SelfList<RedotArea2D> *p_area);
+	void area_remove_from_monitor_query_list(SelfList<RedotArea2D> *p_area);
 
-	GodotBroadPhase2D *get_broadphase();
+	RedotBroadPhase2D *get_broadphase();
 
-	void add_object(GodotCollisionObject2D *p_object);
-	void remove_object(GodotCollisionObject2D *p_object);
-	const HashSet<GodotCollisionObject2D *> &get_objects() const;
+	void add_object(RedotCollisionObject2D *p_object);
+	void remove_object(RedotCollisionObject2D *p_object);
+	const HashSet<RedotCollisionObject2D *> &get_objects() const;
 
 	_FORCE_INLINE_ int get_solver_iterations() const { return solver_iterations; }
 	_FORCE_INLINE_ real_t get_contact_recycle_radius() const { return contact_recycle_radius; }
@@ -190,7 +190,7 @@ public:
 
 	int get_collision_pairs() const { return collision_pairs; }
 
-	bool test_body_motion(GodotBody2D *p_body, const PhysicsServer2D::MotionParameters &p_parameters, PhysicsServer2D::MotionResult *r_result);
+	bool test_body_motion(RedotBody2D *p_body, const PhysicsServer2D::MotionParameters &p_parameters, PhysicsServer2D::MotionResult *r_result);
 
 	void set_debug_contacts(int p_amount) { contact_debug.resize(p_amount); }
 	_FORCE_INLINE_ bool is_debugging_contacts() const { return !contact_debug.is_empty(); }
@@ -202,13 +202,13 @@ public:
 	_FORCE_INLINE_ Vector<Vector2> get_debug_contacts() { return contact_debug; }
 	_FORCE_INLINE_ int get_debug_contact_count() { return contact_debug_count; }
 
-	GodotPhysicsDirectSpaceState2D *get_direct_state();
+	RedotPhysicsDirectSpaceState2D *get_direct_state();
 
 	void set_elapsed_time(ElapsedTime p_time, uint64_t p_msec) { elapsed_time[p_time] = p_msec; }
 	uint64_t get_elapsed_time(ElapsedTime p_time) const { return elapsed_time[p_time]; }
 
-	GodotSpace2D();
-	~GodotSpace2D();
+	RedotSpace2D();
+	~RedotSpace2D();
 };
 
-#endif // GODOT_SPACE_2D_H
+#endif // Redot_SPACE_2D_H

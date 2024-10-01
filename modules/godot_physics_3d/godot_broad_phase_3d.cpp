@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_broad_phase_3d.cpp                                              */
+/*  Redot_broad_phase_3d.cpp                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,9 +28,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "godot_broad_phase_3d.h"
+#include "Redot_broad_phase_3d.h"
 
-GodotBroadPhase3D::CreateFunction GodotBroadPhase3D::create_func = nullptr;
+RedotBroadPhase3D::CreateFunction RedotBroadPhase3D::create_func = nullptr;
 
-GodotBroadPhase3D::~GodotBroadPhase3D() {
+RedotBroadPhase3D::~RedotBroadPhase3D() {
 }

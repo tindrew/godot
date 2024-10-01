@@ -29,11 +29,11 @@ dotnet_diagnostic.CS1573.severity = none
 # CS1734: XML comment on '' has a paramref tag for '', but there is no parameter by that name
 dotnet_diagnostic.CS1734.severity = none
 
-[GodotSharp/Core/NativeInterop/**.cs]
+[RedotSharp/Core/NativeInterop/**.cs]
 # CA1720: Identifiers should not contain type names
 dotnet_diagnostic.CA1720.severity = none
 
-[GodotSharp/Core/**.cs]
+[RedotSharp/Core/**.cs]
 # CS1591: Missing XML comment for publicly visible type or member
 # TODO: Temporary change to not pollute the warnings, but we need to document public APIs
 dotnet_diagnostic.CS1591.severity = suggestion

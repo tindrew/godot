@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_hinge_joint_3d.cpp                                              */
+/*  Redot_hinge_joint_3d.cpp                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -29,7 +29,7 @@
 /**************************************************************************/
 
 /*
-Adapted to Godot from the Bullet library.
+Adapted to Redot from the Bullet library.
 */
 
 /*
@@ -47,10 +47,10 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "godot_hinge_joint_3d.h"
+#include "Redot_hinge_joint_3d.h"
 
-GodotHingeJoint3D::GodotHingeJoint3D(GodotBody3D *rbA, GodotBody3D *rbB, const Transform3D &frameA, const Transform3D &frameB) :
-		GodotJoint3D(_arr, 2) {
+RedotHingeJoint3D::RedotHingeJoint3D(RedotBody3D *rbA, RedotBody3D *rbB, const Transform3D &frameA, const Transform3D &frameB) :
+		RedotJoint3D(_arr, 2) {
 	A = rbA;
 	B = rbB;
 
@@ -65,9 +65,9 @@ GodotHingeJoint3D::GodotHingeJoint3D(GodotBody3D *rbA, GodotBody3D *rbB, const T
 	B->add_constraint(this, 1);
 }
 
-GodotHingeJoint3D::GodotHingeJoint3D(GodotBody3D *rbA, GodotBody3D *rbB, const Vector3 &pivotInA, const Vector3 &pivotInB,
+RedotHingeJoint3D::RedotHingeJoint3D(RedotBody3D *rbA, RedotBody3D *rbB, const Vector3 &pivotInA, const Vector3 &pivotInB,
 		const Vector3 &axisInA, const Vector3 &axisInB) :
-		GodotJoint3D(_arr, 2) {
+		RedotJoint3D(_arr, 2) {
 	A = rbA;
 	B = rbB;
 
@@ -106,7 +106,7 @@ GodotHingeJoint3D::GodotHingeJoint3D(GodotBody3D *rbA, GodotBody3D *rbB, const V
 	B->add_constraint(this, 1);
 }
 
-bool GodotHingeJoint3D::setup(real_t p_step) {
+bool RedotHingeJoint3D::setup(real_t p_step) {
 	dynamic_A = (A->get_mode() > PhysicsServer3D::BODY_MODE_KINEMATIC);
 	dynamic_B = (B->get_mode() > PhysicsServer3D::BODY_MODE_KINEMATIC);
 
@@ -133,7 +133,7 @@ bool GodotHingeJoint3D::setup(real_t p_step) {
 		for (int i = 0; i < 3; i++) {
 			memnew_placement(
 					&m_jac[i],
-					GodotJacobianEntry3D(
+					RedotJacobianEntry3D(
 							A->get_principal_inertia_axes().transposed(),
 							B->get_principal_inertia_axes().transposed(),
 							pivotAInW - A->get_transform().origin - A->get_center_of_mass(),
@@ -161,7 +161,7 @@ bool GodotHingeJoint3D::setup(real_t p_step) {
 
 	memnew_placement(
 			&m_jacAng[0],
-			GodotJacobianEntry3D(
+			RedotJacobianEntry3D(
 					jointAxis0,
 					A->get_principal_inertia_axes().transposed(),
 					B->get_principal_inertia_axes().transposed(),
@@ -170,7 +170,7 @@ bool GodotHingeJoint3D::setup(real_t p_step) {
 
 	memnew_placement(
 			&m_jacAng[1],
-			GodotJacobianEntry3D(
+			RedotJacobianEntry3D(
 					jointAxis1,
 					A->get_principal_inertia_axes().transposed(),
 					B->get_principal_inertia_axes().transposed(),
@@ -179,7 +179,7 @@ bool GodotHingeJoint3D::setup(real_t p_step) {
 
 	memnew_placement(
 			&m_jacAng[2],
-			GodotJacobianEntry3D(
+			RedotJacobianEntry3D(
 					hingeAxisWorld,
 					A->get_principal_inertia_axes().transposed(),
 					B->get_principal_inertia_axes().transposed(),
@@ -214,7 +214,7 @@ bool GodotHingeJoint3D::setup(real_t p_step) {
 	return true;
 }
 
-void GodotHingeJoint3D::solve(real_t p_step) {
+void RedotHingeJoint3D::solve(real_t p_step) {
 	Vector3 pivotAInW = A->get_transform().xform(m_rbAFrame.origin);
 	Vector3 pivotBInW = B->get_transform().xform(m_rbBFrame.origin);
 
@@ -350,7 +350,7 @@ void	HingeJointSW::updateRHS(real_t	timeStep)
 
 */
 
-real_t GodotHingeJoint3D::get_hinge_angle() {
+real_t RedotHingeJoint3D::get_hinge_angle() {
 	const Vector3 refAxis0 = A->get_transform().basis.xform(m_rbAFrame.basis.get_column(0));
 	const Vector3 refAxis1 = A->get_transform().basis.xform(m_rbAFrame.basis.get_column(1));
 	const Vector3 swingAxis = B->get_transform().basis.xform(m_rbBFrame.basis.get_column(1));
@@ -358,7 +358,7 @@ real_t GodotHingeJoint3D::get_hinge_angle() {
 	return atan2fast(swingAxis.dot(refAxis0), swingAxis.dot(refAxis1));
 }
 
-void GodotHingeJoint3D::set_param(PhysicsServer3D::HingeJointParam p_param, real_t p_value) {
+void RedotHingeJoint3D::set_param(PhysicsServer3D::HingeJointParam p_param, real_t p_value) {
 	switch (p_param) {
 		case PhysicsServer3D::HINGE_JOINT_BIAS:
 			tau = p_value;
@@ -389,7 +389,7 @@ void GodotHingeJoint3D::set_param(PhysicsServer3D::HingeJointParam p_param, real
 	}
 }
 
-real_t GodotHingeJoint3D::get_param(PhysicsServer3D::HingeJointParam p_param) const {
+real_t RedotHingeJoint3D::get_param(PhysicsServer3D::HingeJointParam p_param) const {
 	switch (p_param) {
 		case PhysicsServer3D::HINGE_JOINT_BIAS:
 			return tau;
@@ -414,7 +414,7 @@ real_t GodotHingeJoint3D::get_param(PhysicsServer3D::HingeJointParam p_param) co
 	return 0;
 }
 
-void GodotHingeJoint3D::set_flag(PhysicsServer3D::HingeJointFlag p_flag, bool p_value) {
+void RedotHingeJoint3D::set_flag(PhysicsServer3D::HingeJointFlag p_flag, bool p_value) {
 	switch (p_flag) {
 		case PhysicsServer3D::HINGE_JOINT_FLAG_USE_LIMIT:
 			m_useLimit = p_value;
@@ -427,7 +427,7 @@ void GodotHingeJoint3D::set_flag(PhysicsServer3D::HingeJointFlag p_flag, bool p_
 	}
 }
 
-bool GodotHingeJoint3D::get_flag(PhysicsServer3D::HingeJointFlag p_flag) const {
+bool RedotHingeJoint3D::get_flag(PhysicsServer3D::HingeJointFlag p_flag) const {
 	switch (p_flag) {
 		case PhysicsServer3D::HINGE_JOINT_FLAG_USE_LIMIT:
 			return m_useLimit;

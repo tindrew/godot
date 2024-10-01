@@ -2,10 +2,10 @@
 /*  javascript_bridge_singleton.cpp                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -35,7 +35,7 @@
 #include <emscripten.h>
 
 extern "C" {
-extern void godot_js_os_download_buffer(const uint8_t *p_buf, int p_buf_size, const char *p_name, const char *p_mime);
+extern void Redot_js_os_download_buffer(const uint8_t *p_buf, int p_buf_size, const char *p_name, const char *p_mime);
 }
 
 #ifdef JAVASCRIPT_EVAL_ENABLED
@@ -45,22 +45,22 @@ typedef union {
 	int64_t i;
 	double r;
 	void *p;
-} godot_js_wrapper_ex;
+} Redot_js_wrapper_ex;
 
-typedef int (*GodotJSWrapperVariant2JSCallback)(const void **p_args, int p_pos, godot_js_wrapper_ex *r_val, void **p_lock);
-typedef void (*GodotJSWrapperFreeLockCallback)(void **p_lock, int p_type);
-extern int godot_js_wrapper_interface_get(const char *p_name);
-extern int godot_js_wrapper_object_call(int p_id, const char *p_method, void **p_args, int p_argc, GodotJSWrapperVariant2JSCallback p_variant2js_callback, godot_js_wrapper_ex *p_cb_rval, void **p_lock, GodotJSWrapperFreeLockCallback p_lock_callback);
-extern int godot_js_wrapper_object_get(int p_id, godot_js_wrapper_ex *p_val, const char *p_prop);
-extern int godot_js_wrapper_object_getvar(int p_id, int p_type, godot_js_wrapper_ex *p_val);
-extern int godot_js_wrapper_object_setvar(int p_id, int p_key_type, godot_js_wrapper_ex *p_key_ex, int p_val_type, godot_js_wrapper_ex *p_val_ex);
-extern void godot_js_wrapper_object_set(int p_id, const char *p_name, int p_type, godot_js_wrapper_ex *p_val);
-extern void godot_js_wrapper_object_unref(int p_id);
-extern int godot_js_wrapper_create_cb(void *p_ref, void (*p_callback)(void *p_ref, int p_arg_id, int p_argc));
-extern void godot_js_wrapper_object_set_cb_ret(int p_type, godot_js_wrapper_ex *p_val);
-extern int godot_js_wrapper_create_object(const char *p_method, void **p_args, int p_argc, GodotJSWrapperVariant2JSCallback p_variant2js_callback, godot_js_wrapper_ex *p_cb_rval, void **p_lock, GodotJSWrapperFreeLockCallback p_lock_callback);
-extern int godot_js_wrapper_object_is_buffer(int p_id);
-extern int godot_js_wrapper_object_transfer_buffer(int p_id, void *p_byte_arr, void *p_byte_arr_write, void *(*p_callback)(void *p_ptr, void *p_ptr2, int p_len));
+typedef int (*RedotJSWrapperVariant2JSCallback)(const void **p_args, int p_pos, Redot_js_wrapper_ex *r_val, void **p_lock);
+typedef void (*RedotJSWrapperFreeLockCallback)(void **p_lock, int p_type);
+extern int Redot_js_wrapper_interface_get(const char *p_name);
+extern int Redot_js_wrapper_object_call(int p_id, const char *p_method, void **p_args, int p_argc, RedotJSWrapperVariant2JSCallback p_variant2js_callback, Redot_js_wrapper_ex *p_cb_rval, void **p_lock, RedotJSWrapperFreeLockCallback p_lock_callback);
+extern int Redot_js_wrapper_object_get(int p_id, Redot_js_wrapper_ex *p_val, const char *p_prop);
+extern int Redot_js_wrapper_object_getvar(int p_id, int p_type, Redot_js_wrapper_ex *p_val);
+extern int Redot_js_wrapper_object_setvar(int p_id, int p_key_type, Redot_js_wrapper_ex *p_key_ex, int p_val_type, Redot_js_wrapper_ex *p_val_ex);
+extern void Redot_js_wrapper_object_set(int p_id, const char *p_name, int p_type, Redot_js_wrapper_ex *p_val);
+extern void Redot_js_wrapper_object_unref(int p_id);
+extern int Redot_js_wrapper_create_cb(void *p_ref, void (*p_callback)(void *p_ref, int p_arg_id, int p_argc));
+extern void Redot_js_wrapper_object_set_cb_ret(int p_type, Redot_js_wrapper_ex *p_val);
+extern int Redot_js_wrapper_create_object(const char *p_method, void **p_args, int p_argc, RedotJSWrapperVariant2JSCallback p_variant2js_callback, Redot_js_wrapper_ex *p_cb_rval, void **p_lock, RedotJSWrapperFreeLockCallback p_lock_callback);
+extern int Redot_js_wrapper_object_is_buffer(int p_id);
+extern int Redot_js_wrapper_object_transfer_buffer(int p_id, void *p_byte_arr, void *p_byte_arr_write, void *(*p_callback)(void *p_ptr, void *p_ptr2, int p_len));
 };
 
 class JavaScriptObjectImpl : public JavaScriptObject {
@@ -70,9 +70,9 @@ private:
 	int _js_id = 0;
 	Callable _callable;
 
-	WASM_EXPORT static int _variant2js(const void **p_args, int p_pos, godot_js_wrapper_ex *r_val, void **p_lock);
+	WASM_EXPORT static int _variant2js(const void **p_args, int p_pos, Redot_js_wrapper_ex *r_val, void **p_lock);
 	WASM_EXPORT static void _free_lock(void **p_lock, int p_type);
-	WASM_EXPORT static Variant _js2variant(int p_type, godot_js_wrapper_ex *p_val);
+	WASM_EXPORT static Variant _js2variant(int p_type, Redot_js_wrapper_ex *p_val);
 	WASM_EXPORT static void *_alloc_variants(int p_size);
 	WASM_EXPORT static void callback(void *p_ref, int p_arg_id, int p_argc);
 	static void _callback(const JavaScriptObjectImpl *obj, Variant arg);
@@ -90,7 +90,7 @@ public:
 	JavaScriptObjectImpl(int p_id) { _js_id = p_id; }
 	~JavaScriptObjectImpl() {
 		if (_js_id) {
-			godot_js_wrapper_object_unref(_js_id);
+			Redot_js_wrapper_object_unref(_js_id);
 		}
 	}
 };
@@ -98,11 +98,11 @@ public:
 bool JavaScriptObjectImpl::_set(const StringName &p_name, const Variant &p_value) {
 	ERR_FAIL_COND_V_MSG(!_js_id, false, "Invalid JS instance");
 	const String name = p_name;
-	godot_js_wrapper_ex exchange;
+	Redot_js_wrapper_ex exchange;
 	void *lock = nullptr;
 	const Variant *v = &p_value;
 	int type = _variant2js((const void **)&v, 0, &exchange, &lock);
-	godot_js_wrapper_object_set(_js_id, name.utf8().get_data(), type, &exchange);
+	Redot_js_wrapper_object_set(_js_id, name.utf8().get_data(), type, &exchange);
 	if (lock) {
 		_free_lock(&lock, type);
 	}
@@ -112,8 +112,8 @@ bool JavaScriptObjectImpl::_set(const StringName &p_name, const Variant &p_value
 bool JavaScriptObjectImpl::_get(const StringName &p_name, Variant &r_ret) const {
 	ERR_FAIL_COND_V_MSG(!_js_id, false, "Invalid JS instance");
 	const String name = p_name;
-	godot_js_wrapper_ex exchange;
-	int type = godot_js_wrapper_object_get(_js_id, &exchange, name.utf8().get_data());
+	Redot_js_wrapper_ex exchange;
+	int type = Redot_js_wrapper_object_get(_js_id, &exchange, name.utf8().get_data());
 	r_ret = _js2variant(type, &exchange);
 	return true;
 }
@@ -122,11 +122,11 @@ Variant JavaScriptObjectImpl::getvar(const Variant &p_key, bool *r_valid) const 
 	if (r_valid) {
 		*r_valid = false;
 	}
-	godot_js_wrapper_ex exchange;
+	Redot_js_wrapper_ex exchange;
 	void *lock = nullptr;
 	const Variant *v = &p_key;
 	int prop_type = _variant2js((const void **)&v, 0, &exchange, &lock);
-	int type = godot_js_wrapper_object_getvar(_js_id, prop_type, &exchange);
+	int type = Redot_js_wrapper_object_getvar(_js_id, prop_type, &exchange);
 	if (lock) {
 		_free_lock(&lock, prop_type);
 	}
@@ -143,14 +143,14 @@ void JavaScriptObjectImpl::setvar(const Variant &p_key, const Variant &p_value, 
 	if (r_valid) {
 		*r_valid = false;
 	}
-	godot_js_wrapper_ex kex, vex;
+	Redot_js_wrapper_ex kex, vex;
 	void *klock = nullptr;
 	void *vlock = nullptr;
 	const Variant *kv = &p_key;
 	const Variant *vv = &p_value;
 	int ktype = _variant2js((const void **)&kv, 0, &kex, &klock);
 	int vtype = _variant2js((const void **)&vv, 0, &vex, &vlock);
-	int ret = godot_js_wrapper_object_setvar(_js_id, ktype, &kex, vtype, &vex);
+	int ret = Redot_js_wrapper_object_setvar(_js_id, ktype, &kex, vtype, &vex);
 	if (klock) {
 		_free_lock(&klock, ktype);
 	}
@@ -179,7 +179,7 @@ void JavaScriptObjectImpl::_free_lock(void **p_lock, int p_type) {
 	}
 }
 
-Variant JavaScriptObjectImpl::_js2variant(int p_type, godot_js_wrapper_ex *p_val) {
+Variant JavaScriptObjectImpl::_js2variant(int p_type, Redot_js_wrapper_ex *p_val) {
 	Variant::Type type = (Variant::Type)p_type;
 	switch (type) {
 		case Variant::BOOL:
@@ -201,7 +201,7 @@ Variant JavaScriptObjectImpl::_js2variant(int p_type, godot_js_wrapper_ex *p_val
 	}
 }
 
-int JavaScriptObjectImpl::_variant2js(const void **p_args, int p_pos, godot_js_wrapper_ex *r_val, void **p_lock) {
+int JavaScriptObjectImpl::_variant2js(const void **p_args, int p_pos, Redot_js_wrapper_ex *r_val, void **p_lock) {
 	const Variant **args = (const Variant **)p_args;
 	const Variant *v = args[p_pos];
 	Variant::Type type = v->get_type();
@@ -236,10 +236,10 @@ int JavaScriptObjectImpl::_variant2js(const void **p_args, int p_pos, godot_js_w
 }
 
 Variant JavaScriptObjectImpl::callp(const StringName &p_method, const Variant **p_args, int p_argc, Callable::CallError &r_error) {
-	godot_js_wrapper_ex exchange;
+	Redot_js_wrapper_ex exchange;
 	const String method = p_method;
 	void *lock = nullptr;
-	const int type = godot_js_wrapper_object_call(_js_id, method.utf8().get_data(), (void **)p_args, p_argc, &_variant2js, &exchange, &lock, &_free_lock);
+	const int type = Redot_js_wrapper_object_call(_js_id, method.utf8().get_data(), (void **)p_args, p_argc, &_variant2js, &exchange, &lock, &_free_lock);
 	r_error.error = Callable::CallError::CALL_OK;
 	if (type < 0) {
 		r_error.error = Callable::CallError::CALL_ERROR_INSTANCE_IS_NULL;
@@ -255,9 +255,9 @@ void JavaScriptObjectImpl::callback(void *p_ref, int p_args_id, int p_argc) {
 	Vector<const Variant *> argp;
 	Array arg_arr;
 	for (int i = 0; i < p_argc; i++) {
-		godot_js_wrapper_ex exchange;
+		Redot_js_wrapper_ex exchange;
 		exchange.i = i;
-		int type = godot_js_wrapper_object_getvar(p_args_id, Variant::INT, &exchange);
+		int type = Redot_js_wrapper_object_getvar(p_args_id, Variant::INT, &exchange);
 		arg_arr.push_back(_js2variant(type, &exchange));
 	}
 	Variant arg = arg_arr;
@@ -276,12 +276,12 @@ void JavaScriptObjectImpl::_callback(const JavaScriptObjectImpl *obj, Variant ar
 	obj->_callable.call(arg);
 
 	// Set return value
-	godot_js_wrapper_ex exchange;
+	Redot_js_wrapper_ex exchange;
 	void *lock = nullptr;
 	Variant ret;
 	const Variant *v = &ret;
 	int type = _variant2js((const void **)&v, 0, &exchange, &lock);
-	godot_js_wrapper_object_set_cb_ret(type, &exchange);
+	Redot_js_wrapper_object_set_cb_ret(type, &exchange);
 	if (lock) {
 		_free_lock(&lock, type);
 	}
@@ -290,12 +290,12 @@ void JavaScriptObjectImpl::_callback(const JavaScriptObjectImpl *obj, Variant ar
 Ref<JavaScriptObject> JavaScriptBridge::create_callback(const Callable &p_callable) {
 	Ref<JavaScriptObjectImpl> out = memnew(JavaScriptObjectImpl);
 	out->_callable = p_callable;
-	out->_js_id = godot_js_wrapper_create_cb(out.ptr(), JavaScriptObjectImpl::callback);
+	out->_js_id = Redot_js_wrapper_create_cb(out.ptr(), JavaScriptObjectImpl::callback);
 	return out;
 }
 
 Ref<JavaScriptObject> JavaScriptBridge::get_interface(const String &p_interface) {
-	int js_id = godot_js_wrapper_interface_get(p_interface.utf8().get_data());
+	int js_id = Redot_js_wrapper_interface_get(p_interface.utf8().get_data());
 	ERR_FAIL_COND_V_MSG(!js_id, Ref<JavaScriptObject>(), "No interface '" + p_interface + "' registered.");
 	return Ref<JavaScriptObject>(memnew(JavaScriptObjectImpl(js_id)));
 }
@@ -312,11 +312,11 @@ Variant JavaScriptBridge::_create_object_bind(const Variant **p_args, int p_argc
 		r_error.expected = Variant::STRING;
 		return Ref<JavaScriptObject>();
 	}
-	godot_js_wrapper_ex exchange;
+	Redot_js_wrapper_ex exchange;
 	const String object = *p_args[0];
 	void *lock = nullptr;
 	const Variant **args = p_argcount > 1 ? &p_args[1] : nullptr;
-	const int type = godot_js_wrapper_create_object(object.utf8().get_data(), (void **)args, p_argcount - 1, &JavaScriptObjectImpl::_variant2js, &exchange, &lock, &JavaScriptObjectImpl::_free_lock);
+	const int type = Redot_js_wrapper_create_object(object.utf8().get_data(), (void **)args, p_argcount - 1, &JavaScriptObjectImpl::_variant2js, &exchange, &lock, &JavaScriptObjectImpl::_free_lock);
 	r_error.error = Callable::CallError::CALL_OK;
 	if (type < 0) {
 		r_error.error = Callable::CallError::CALL_ERROR_INSTANCE_IS_NULL;
@@ -332,7 +332,7 @@ union js_eval_ret {
 	char *s;
 };
 
-extern int godot_js_eval(const char *p_js, int p_use_global_ctx, union js_eval_ret *p_union_ptr, void *p_byte_arr, void *p_byte_arr_write, void *(*p_callback)(void *p_ptr, void *p_ptr2, int p_len));
+extern int Redot_js_eval(const char *p_js, int p_use_global_ctx, union js_eval_ret *p_union_ptr, void *p_byte_arr, void *p_byte_arr_write, void *(*p_callback)(void *p_ptr, void *p_ptr2, int p_len));
 }
 
 void *resize_PackedByteArray_and_open_write(void *p_arr, void *r_write, int p_len) {
@@ -348,7 +348,7 @@ Variant JavaScriptBridge::eval(const String &p_code, bool p_use_global_exec_cont
 	PackedByteArray arr;
 	VectorWriteProxy<uint8_t> arr_write;
 
-	Variant::Type return_type = static_cast<Variant::Type>(godot_js_eval(p_code.utf8().get_data(), p_use_global_exec_context, &js_data, &arr, &arr_write, resize_PackedByteArray_and_open_write));
+	Variant::Type return_type = static_cast<Variant::Type>(Redot_js_eval(p_code.utf8().get_data(), p_use_global_exec_context, &js_data, &arr, &arr_write, resize_PackedByteArray_and_open_write));
 
 	switch (return_type) {
 		case Variant::BOOL:
@@ -373,7 +373,7 @@ bool JavaScriptBridge::is_js_buffer(Ref<JavaScriptObject> p_js_obj) {
 	if (obj.is_null()) {
 		return false;
 	}
-	return godot_js_wrapper_object_is_buffer(obj->_js_id);
+	return Redot_js_wrapper_object_is_buffer(obj->_js_id);
 }
 
 PackedByteArray JavaScriptBridge::js_buffer_to_packed_byte_array(Ref<JavaScriptObject> p_js_obj) {
@@ -383,7 +383,7 @@ PackedByteArray JavaScriptBridge::js_buffer_to_packed_byte_array(Ref<JavaScriptO
 	PackedByteArray arr;
 	VectorWriteProxy<uint8_t> arr_write;
 
-	godot_js_wrapper_object_transfer_buffer(obj->_js_id, &arr, &arr_write, resize_PackedByteArray_and_open_write);
+	Redot_js_wrapper_object_transfer_buffer(obj->_js_id, &arr, &arr_write, resize_PackedByteArray_and_open_write);
 
 	arr_write = VectorWriteProxy<uint8_t>();
 	return arr;
@@ -392,7 +392,7 @@ PackedByteArray JavaScriptBridge::js_buffer_to_packed_byte_array(Ref<JavaScriptO
 #endif // JAVASCRIPT_EVAL_ENABLED
 
 void JavaScriptBridge::download_buffer(Vector<uint8_t> p_arr, const String &p_name, const String &p_mime) {
-	godot_js_os_download_buffer(p_arr.ptr(), p_arr.size(), p_name.utf8().get_data(), p_mime.utf8().get_data());
+	Redot_js_os_download_buffer(p_arr.ptr(), p_arr.size(), p_name.utf8().get_data(), p_mime.utf8().get_data());
 }
 
 bool JavaScriptBridge::pwa_needs_update() const {

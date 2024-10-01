@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GodotSharp\GodotSharp.csproj" />
+    <ProjectReference Include="..\RedotSharp\RedotSharp.csproj" />
   </ItemGroup>
 
 </Project>

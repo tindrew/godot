@@ -1,17 +1,17 @@
 using System;
 using System.Runtime.InteropServices;
-using Godot.NativeInterop;
+using Redot.NativeInterop;
 
-namespace Godot
+namespace Redot
 {
     public static partial class GD
     {
         [UnmanagedCallersOnly]
-        internal static void OnCoreApiAssemblyLoaded(godot_bool isDebug)
+        internal static void OnCoreApiAssemblyLoaded(Redot_bool isDebug)
         {
             try
             {
-                Dispatcher.InitializeDefaultGodotTaskScheduler();
+                Dispatcher.InitializeDefaultRedotTaskScheduler();
 
                 if (isDebug.ToBool())
                 {

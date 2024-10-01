@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  GodotTextInputWrapper.java                                            */
+/*  RedotTextInputWrapper.java                                            */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,9 +28,9 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-package org.godotengine.godot.input;
+package org.Redotengine.Redot.input;
 
-import org.godotengine.godot.*;
+import org.Redotengine.Redot.*;
 
 import android.content.Context;
 import android.text.Editable;
@@ -41,17 +41,17 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-public class GodotTextInputWrapper implements TextWatcher, OnEditorActionListener {
+public class RedotTextInputWrapper implements TextWatcher, OnEditorActionListener {
 	// ===========================================================
 	// Constants
 	// ===========================================================
-	private static final String TAG = GodotTextInputWrapper.class.getSimpleName();
+	private static final String TAG = RedotTextInputWrapper.class.getSimpleName();
 
 	// ===========================================================
 	// Fields
 	// ===========================================================
-	private final GodotRenderView mRenderView;
-	private final GodotEditText mEdit;
+	private final RedotRenderView mRenderView;
+	private final RedotEditText mEdit;
 	private String mOriginText;
 	private boolean mHasSelection;
 
@@ -59,7 +59,7 @@ public class GodotTextInputWrapper implements TextWatcher, OnEditorActionListene
 	// Constructors
 	// ===========================================================
 
-	public GodotTextInputWrapper(final GodotRenderView view, final GodotEditText edit) {
+	public RedotTextInputWrapper(final RedotRenderView view, final RedotEditText edit) {
 		mRenderView = view;
 		mEdit = edit;
 	}
@@ -111,7 +111,7 @@ public class GodotTextInputWrapper implements TextWatcher, OnEditorActionListene
 		}
 		for (int i = 0; i < count; ++i) {
 			final int character = newChars[i];
-			if ((character == '\n') && !(mEdit.getKeyboardType() == GodotEditText.VirtualKeyboardType.KEYBOARD_TYPE_MULTILINE)) {
+			if ((character == '\n') && !(mEdit.getKeyboardType() == RedotEditText.VirtualKeyboardType.KEYBOARD_TYPE_MULTILINE)) {
 				// Return keys are handled through action events
 				continue;
 			}

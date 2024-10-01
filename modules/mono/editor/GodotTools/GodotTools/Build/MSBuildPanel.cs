@@ -1,11 +1,11 @@
 using System;
 using System.IO;
-using Godot;
-using GodotTools.Internals;
-using static GodotTools.Internals.Globals;
-using File = GodotTools.Utils.File;
+using Redot;
+using RedotTools.Internals;
+using static RedotTools.Internals.Globals;
+using File = RedotTools.Utils.File;
 
-namespace GodotTools.Build
+namespace RedotTools.Build
 {
     public partial class MSBuildPanel : MarginContainer, ISerializationListener
     {
@@ -74,7 +74,7 @@ namespace GodotTools.Build
 
         public void BuildProject()
         {
-            if (!File.Exists(GodotSharpDirs.ProjectCsProjPath))
+            if (!File.Exists(RedotSharpDirs.ProjectCsProjPath))
                 return; // No project to build.
 
             if (!BuildManager.BuildProjectBlocking("Debug"))
@@ -84,7 +84,7 @@ namespace GodotTools.Build
             Internal.EditorDebuggerNodeReloadScripts();
 
             // Hot-reload in the editor.
-            GodotSharpEditor.Instance.GetNode<HotReloadAssemblyWatcher>("HotReloadAssemblyWatcher").RestartTimer();
+            RedotSharpEditor.Instance.GetNode<HotReloadAssemblyWatcher>("HotReloadAssemblyWatcher").RestartTimer();
 
             if (Internal.IsAssembliesReloadingNeeded())
             {
@@ -95,7 +95,7 @@ namespace GodotTools.Build
 
         private void RebuildProject()
         {
-            if (!File.Exists(GodotSharpDirs.ProjectCsProjPath))
+            if (!File.Exists(RedotSharpDirs.ProjectCsProjPath))
                 return; // No project to build.
 
             if (!BuildManager.BuildProjectBlocking("Debug", rebuild: true))
@@ -105,7 +105,7 @@ namespace GodotTools.Build
             Internal.EditorDebuggerNodeReloadScripts();
 
             // Hot-reload in the editor.
-            GodotSharpEditor.Instance.GetNode<HotReloadAssemblyWatcher>("HotReloadAssemblyWatcher").RestartTimer();
+            RedotSharpEditor.Instance.GetNode<HotReloadAssemblyWatcher>("HotReloadAssemblyWatcher").RestartTimer();
 
             if (Internal.IsAssembliesReloadingNeeded())
             {
@@ -116,14 +116,14 @@ namespace GodotTools.Build
 
         private void CleanProject()
         {
-            if (!File.Exists(GodotSharpDirs.ProjectCsProjPath))
+            if (!File.Exists(RedotSharpDirs.ProjectCsProjPath))
                 return; // No project to build.
 
             _ = BuildManager.CleanProjectBlocking("Debug");
         }
 
         private void OpenLogsFolder() => OS.ShellOpen(
-            $"file://{GodotSharpDirs.LogsDirPathFor("Debug")}"
+            $"file://{RedotSharpDirs.LogsDirPathFor("Debug")}"
         );
 
         private void BuildLaunchFailed(BuildInfo buildInfo, string cause)
@@ -290,7 +290,7 @@ namespace GodotTools.Build
             UpdateBuildLogText();
 
             // NOTE:
-            // Currently, GodotTools is loaded in its own load context. This load context is not reloaded, but the script still are.
+            // Currently, RedotTools is loaded in its own load context. This load context is not reloaded, but the script still are.
             // Until that changes, we need workarounds like this one because events keep strong references to disposed objects.
             BuildManager.BuildLaunchFailed -= BuildLaunchFailed;
             BuildManager.BuildStarted -= BuildStarted;

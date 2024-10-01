@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace GodotTools.Core
+namespace RedotTools.Core
 {
     public static class StringExtensions
     {

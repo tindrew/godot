@@ -1,11 +1,11 @@
 /**************************************************************************/
-/*  godot_view.mm                                                         */
+/*  Redot_view.mm                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             Redot ENGINE                               */
+/*                        https://Redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
@@ -28,11 +28,11 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#import "godot_view.h"
+#import "Redot_view.h"
 
 #import "display_layer.h"
 #import "display_server_ios.h"
-#import "godot_view_renderer.h"
+#import "Redot_view_renderer.h"
 
 #include "core/config/project_settings.h"
 #include "core/os/keyboard.h"
@@ -43,8 +43,8 @@
 static const int max_touches = 32;
 static const float earth_gravity = 9.80665;
 
-@interface GodotView () {
-	UITouch *godot_touches[max_touches];
+@interface RedotView () {
+	UITouch *Redot_touches[max_touches];
 }
 
 @property(assign, nonatomic) BOOL isActive;
@@ -62,7 +62,7 @@ static const float earth_gravity = 9.80665;
 
 @end
 
-@implementation GodotView
+@implementation RedotView
 
 - (CALayer<DisplayLayer> *)initializeRenderingForDriver:(NSString *)driverName {
 	if (self.renderingLayer) {
@@ -74,17 +74,17 @@ static const float earth_gravity = 9.80665;
 	if ([driverName isEqualToString:@"vulkan"] || [driverName isEqualToString:@"metal"]) {
 #if defined(TARGET_OS_SIMULATOR) && TARGET_OS_SIMULATOR
 		if (@available(iOS 13, *)) {
-			layer = [GodotMetalLayer layer];
+			layer = [RedotMetalLayer layer];
 		} else {
 			return nil;
 		}
 #else
-		layer = [GodotMetalLayer layer];
+		layer = [RedotMetalLayer layer];
 #endif
 	} else if ([driverName isEqualToString:@"opengl3"]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations" // OpenGL is deprecated in iOS 12.0
-		layer = [GodotOpenGLLayer layer];
+		layer = [RedotOpenGLLayer layer];
 #pragma clang diagnostic pop
 	} else {
 		return nil;
@@ -105,7 +105,7 @@ static const float earth_gravity = 9.80665;
 	self = [super initWithCoder:coder];
 
 	if (self) {
-		[self godot_commonInit];
+		[self Redot_commonInit];
 	}
 
 	return self;
@@ -115,7 +115,7 @@ static const float earth_gravity = 9.80665;
 	self = [super initWithFrame:frame];
 
 	if (self) {
-		[self godot_commonInit];
+		[self Redot_commonInit];
 	}
 
 	return self;
@@ -148,7 +148,7 @@ static const float earth_gravity = 9.80665;
 	}
 }
 
-- (void)godot_commonInit {
+- (void)Redot_commonInit {
 	self.contentScaleFactor = [UIScreen mainScreen].scale;
 
 	[self initTouches];
@@ -259,7 +259,7 @@ static const float earth_gravity = 9.80665;
 	}
 
 	if (self.delegate) {
-		BOOL delegateFinishedSetup = [self.delegate godotViewFinishedSetup:self];
+		BOOL delegateFinishedSetup = [self.delegate RedotViewFinishedSetup:self];
 
 		if (!delegateFinishedSetup) {
 			return;
@@ -308,24 +308,24 @@ static const float earth_gravity = 9.80665;
 
 - (void)initTouches {
 	for (int i = 0; i < max_touches; i++) {
-		godot_touches[i] = nullptr;
+		Redot_touches[i] = nullptr;
 	}
 }
 
 - (int)getTouchIDForTouch:(UITouch *)p_touch {
 	int first = -1;
 	for (int i = 0; i < max_touches; i++) {
-		if (first == -1 && godot_touches[i] == nullptr) {
+		if (first == -1 && Redot_touches[i] == nullptr) {
 			first = i;
 			continue;
 		}
-		if (godot_touches[i] == p_touch) {
+		if (Redot_touches[i] == p_touch) {
 			return i;
 		}
 	}
 
 	if (first != -1) {
-		godot_touches[first] = p_touch;
+		Redot_touches[first] = p_touch;
 		return first;
 	}
 
@@ -335,11 +335,11 @@ static const float earth_gravity = 9.80665;
 - (int)removeTouch:(UITouch *)p_touch {
 	int remaining = 0;
 	for (int i = 0; i < max_touches; i++) {
-		if (godot_touches[i] == nullptr) {
+		if (Redot_touches[i] == nullptr) {
 			continue;
 		}
-		if (godot_touches[i] == p_touch) {
-			godot_touches[i] = nullptr;
+		if (Redot_touches[i] == p_touch) {
+			Redot_touches[i] = nullptr;
 		} else {
 			++remaining;
 		}
@@ -349,7 +349,7 @@ static const float earth_gravity = 9.80665;
 
 - (void)clearTouches {
 	for (int i = 0; i < max_touches; i++) {
-		godot_touches[i] = nullptr;
+		Redot_touches[i] = nullptr;
 	}
 }
 
@@ -435,7 +435,7 @@ static const float earth_gravity = 9.80665;
 	// output
 
 	///@TODO Using [[UIApplication sharedApplication] statusBarOrientation]
-	/// is a bit of a hack. Godot obviously knows the orientation so maybe
+	/// is a bit of a hack. Redot obviously knows the orientation so maybe
 	/// we
 	// can use that instead? (note that left and right seem swapped)
 

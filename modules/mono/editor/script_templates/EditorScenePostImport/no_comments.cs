@@ -7,7 +7,7 @@ using System;
 [Tool]
 public partial class _CLASS_ : _BASE_
 {
-    public override GodotObject _PostImport(Node scene)
+    public override RedotObject _PostImport(Node scene)
     {
         return scene;
     }

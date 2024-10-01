@@ -4,16 +4,16 @@ partial class ExportDiagnostics_GD0106_OK
 #if TOOLS
     /// <summary>
     /// Get the default values for all properties declared in this class.
-    /// This method is used by Godot to determine the value that will be
+    /// This method is used by Redot to determine the value that will be
     /// used by the inspector when resetting properties.
     /// Do not call this method.
     /// </summary>
     [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
-    internal new static global::System.Collections.Generic.Dictionary<global::Godot.StringName, global::Godot.Variant> GetGodotPropertyDefaultValues()
+    internal new static global::System.Collections.Generic.Dictionary<global::Redot.StringName, global::Redot.Variant> GetRedotPropertyDefaultValues()
     {
-        var values = new global::System.Collections.Generic.Dictionary<global::Godot.StringName, global::Godot.Variant>(1);
+        var values = new global::System.Collections.Generic.Dictionary<global::Redot.StringName, global::Redot.Variant>(1);
         int __MyProperty_default_value = default;
-        values.Add(PropertyName.@MyProperty, global::Godot.Variant.From<int>(__MyProperty_default_value));
+        values.Add(PropertyName.@MyProperty, global::Redot.Variant.From<int>(__MyProperty_default_value));
         return values;
     }
 #endif // TOOLS

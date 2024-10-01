@@ -26,9 +26,9 @@ import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-// -- GODOT start --
+// -- Redot start --
 import android.annotation.SuppressLint;
-// -- GODOT end --
+// -- Redot end --
 
 /**
  * Contains useful helper functions, typically tied to the application context.
