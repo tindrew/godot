@@ -16,13 +16,12 @@ We stand for promoting video games and the community, while keeping politics and
 Redot is free and open source engine under the MIT license. This means as long as you keep
 the original license, you are free to do whatever you like, distribute it, modify it, whatever.
 
-
-![Screenshot of a 3D scene in the Redot Engine editor](https://raw.githubusercontent.com/godotengine/godot-design/master/screenshots/editor_tps_demo_1920x1080.jpg)
-
 ## Community and contributing
 
 Feel free to join the community!
 
 [Discord](discord.gg/eWFDjKtd6G)
+
 [Twitter/X](https://x.com/RedotEngine)
+
 [Youtube](https://www.youtube.com/@RedotEngine)
