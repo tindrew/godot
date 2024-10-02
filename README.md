@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://Redotengine.org">
-    <img src="logo_outlined.svg" width="800" alt="Redot Engine logo">
+    <img src="logo.png" width="800" alt="Redot Engine logo">
   </a>
 </p>
 
