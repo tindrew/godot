@@ -825,7 +825,16 @@ def get_compiler_version(env):
             for line in version.splitlines():
                 split = line.split(":", 1)
                 if split[0] == "catalog_productDisplayVersion":
-                    sem_ver = split[1].split(".")
+                    # When Visual Studio Preview is installed, the display string
+                    # contains a space followed by the preview version.
+                    # Example: "xx.xx.xx Preview x.x"
+                    catalog_version = split[1].strip()
+                    space = catalog_version.find(" ")
+
+                    if space != -1:
+                        catalog_version = catalog_version[:space]
+
+                    sem_ver = catalog_version.split(".")
                     ret["major"] = int(sem_ver[0])
                     ret["minor"] = int(sem_ver[1])
                     ret["patch"] = int(sem_ver[2])
