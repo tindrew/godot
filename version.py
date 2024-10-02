@@ -5,5 +5,5 @@ minor = 4
 patch = 0
 status = "dev"
 module_config = ""
-website = "https://www.redotengine.org/"
+website = "https://redotengine.org/"
 docs = "latest"
