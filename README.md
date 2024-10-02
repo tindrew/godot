@@ -20,7 +20,7 @@ the original license, you are free to do whatever you like, distribute it, modif
 
 Feel free to join the community!
 
-[Discord](discord.gg/eWFDjKtd6G)
+[Discord](https://discord.gg/eWFDjKtd6G)
 
 [Twitter/X](https://x.com/RedotEngine)
 
