@@ -1,6 +1,6 @@
-# Rodot Engine
+# Redot Engine
 
-<p align="center">
+<p align="center">e
   <a href="https://godotengine.org">
     <img src="logo_outlined.svg" width="400" alt="Godot Engine logo">
   </a>
