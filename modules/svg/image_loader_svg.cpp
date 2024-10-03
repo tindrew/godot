@@ -35,6 +35,14 @@
 
 #include <thorvg.h>
 
+#ifdef __AVX__
+#ifdef _MSC_VER
+#include <intrin.h>
+#else
+#include <x86intrin.h>
+#endif
+#endif
+
 HashMap<Color, Color> ImageLoaderSVG::forced_color_map = HashMap<Color, Color>();
 
 void ImageLoaderSVG::set_forced_color_map(const HashMap<Color, Color> &p_color_map) {
@@ -134,16 +142,38 @@ Error ImageLoaderSVG::create_image_from_utf8_buffer(Ref<Image> p_image, const ui
 	Vector<uint8_t> image;
 	image.resize(width * height * sizeof(uint32_t));
 
-	for (uint32_t y = 0; y < height; y++) {
-		for (uint32_t x = 0; x < width; x++) {
-			uint32_t n = buffer[y * width + x];
-			const size_t offset = sizeof(uint32_t) * width * y + sizeof(uint32_t) * x;
+	// RGBA to BGRA
+#ifdef __AVX__
+	{
+		uint8_t *dst = image.ptrw();
+		const uint32_t wh = width * height;
+		const __m128i mask = _mm_setr_epi8(2, 1, 0, 3, 6, 5, 4, 7, 10, 9, 8, 11, 14, 13, 12, 15);
+		for (uint32_t i = 0; i < wh / 4; ++i) {
+			__m128i s4 = _mm_loadu_epi8(&buffer[i * 4]);
+			__m128i d4 = _mm_shuffle_epi8(s4, mask);
+			_mm_storeu_epi8(dst, d4);
+			dst += 16;
+		}
+		for (uint32_t i = wh / 4 * 4; i < wh; ++i) {
+			uint32_t n = buffer[i];
+			const size_t offset = sizeof(uint32_t) * i;
 			image.write[offset + 0] = (n >> 16) & 0xff;
 			image.write[offset + 1] = (n >> 8) & 0xff;
 			image.write[offset + 2] = n & 0xff;
 			image.write[offset + 3] = (n >> 24) & 0xff;
 		}
 	}
+#else
+	const uint32_t wh = width * height;
+	for (uint32_t i = 0; i < wh; ++i) {
+		uint32_t n = buffer[i];
+		const size_t offset = sizeof(uint32_t) * i;
+		image.write[offset + 0] = (n >> 16) & 0xff;
+		image.write[offset + 1] = (n >> 8) & 0xff;
+		image.write[offset + 2] = n & 0xff;
+		image.write[offset + 3] = (n >> 24) & 0xff;
+	}
+#endif
 
 	res = sw_canvas->clear(true);
 	memfree(buffer);
