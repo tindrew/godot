@@ -8,7 +8,7 @@
 
 ## Free and Open Source 2D and 3D cross-platform game engine
 
-**[Redot Engine](https://Redotengine.org) is a Fork of Godot** With the goal of fulfilling the promise of godot.
+**[Redot Engine](https://redotengine.org) is a Fork of Godot** With the goal of fulfilling the promise of godot.
 We stand for promoting video games and the community, while keeping politics and religious views out.
 
 ## License
