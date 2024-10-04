@@ -477,7 +477,7 @@
 			<return type="float" />
 			<param index="0" name="x" type="float" />
 			<description>
-				Computes the sigmoid of [param x], which maps the input value into the range (0, 1).
+				Computes the sigmoid for [param x], which maps the input value into the range (0, 1).
 				The sigmoid function is defined as:
 				[codeblock]
 				sigmoid(x) = 1 / (1 + exp(-x))
@@ -496,8 +496,8 @@
 			<return type="float" />
 			<param index="0" name="x" type="float" />
 			<description>
-				Computes an approximation of the sigmoid function for [param x].
-				The approximation is defined as:
+				Computes an approximation of the sigmoid function for [param x], which maps the input value into the range (0, 1).
+				The approximation function is defined as:
 				[codeblock]
 				sigmoid_approx(x) = 0.5 + (x / (4 + abs(x)))
 				[/codeblock]
@@ -515,8 +515,8 @@
 			<return type="float" />
 			<param index="0" name="x" type="float" />
 			<description>
-				Computes a fast approximation of the sigmoid function for [param x].
-				The fast sigmoid is defined as:
+				Computes a fast approximation of the sigmoid function for [param x], which maps the input value into the range (-1, 1).
+				The fast sigmoid function is defined as:
 				[codeblock]
 				fast_sigmoid(x) = x / (1 + abs(x))
 				[/codeblock]
