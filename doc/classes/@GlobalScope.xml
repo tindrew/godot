@@ -473,6 +473,63 @@
 				[/codeblock]
 			</description>
 		</method>
+		<method name="sigmoid">
+			<return type="float" />
+			<param index="0" name="x" type="float" />
+			<description>
+				Computes the sigmoid of [param x], which maps the input value into the range (0, 1).
+				The sigmoid function is defined as:
+				[codeblock]
+				sigmoid(x) = 1 / (1 + exp(-x))
+				[/codeblock]
+				This is the most accurate implementation of the sigmoid.
+				[codeblock]
+				var result = sigmoid(0.0)  # result is 0.5
+				var result = sigmoid(1.0)  # result is approximately 0.88
+				var result = sigmoid(-1.0) # result is approximately 0.27
+				var result = sigmoid(5.0)  # result is approximately 0.99
+				[/codeblock]
+				[b]Note:[/b] For faster but less accurate approximation, see [method sigmoid_approx] or [method sigmoid_fast].
+			</description>
+		</method>
+		<method name="sigmoid_approx">
+			<return type="float" />
+			<param index="0" name="x" type="float" />
+			<description>
+				Computes an approximation of the sigmoid function for [param x].
+				The approximation is defined as:
+				[codeblock]
+				sigmoid_approx(x) = 0.5 + (x / (4 + abs(x)))
+				[/codeblock]
+				This function is faster than the standard [method sigmoid], especially useful in performance-sensitive environments where a balance between accuracy and speed is desired.
+				It provides a closer approximation to the sigmoid than the [method sigmoid_fast] function, especially around [param x] = 0.
+				[codeblock]
+				var result = sigmoid_approx(0.0)  # result is 0.5
+				var result = sigmoid_approx(2.0)  # result is approximately 0.83
+				var result = sigmoid_approx(-1.0) # result is approximately 0.3
+				var result = sigmoid_approx(5.0)  # result is approximately 1.05
+				[/codeblock]
+			</description>
+		</method>
+		<method name="sigmoid_fast">
+			<return type="float" />
+			<param index="0" name="x" type="float" />
+			<description>
+				Computes a fast approximation of the sigmoid function for [param x].
+				The fast sigmoid is defined as:
+				[codeblock]
+				fast_sigmoid(x) = x / (1 + abs(x))
+				[/codeblock]
+				This function is faster to compute than the standard [method sigmoid] and [method sigmoid_approx], but is less accurate, particularly in the steep transition area around 0.
+				It is commonly used in real-time systems and machine learning where performance is critical.
+				[codeblock]
+				var result = sigmoid_fast(0.0)  # result is 0
+				var result = sigmoid_fast(2.0)  # result is approximately 0.67
+				var result = sigmoid_fast(-1.0) # result is approximately -0.5
+				var result = sigmoid_fast(5.0)  # result is approximately 0.83
+				[/codeblock]
+			</description>
+		</method>
 		<method name="hash">
 			<return type="int" />
 			<param index="0" name="variable" type="Variant" />

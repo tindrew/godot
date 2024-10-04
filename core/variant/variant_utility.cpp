@@ -639,6 +639,18 @@ double VariantUtilityFunctions::pingpong(double value, double length) {
 	return Math::pingpong(value, length);
 }
 
+double VariantUtilityFunctions::sigmoid(double x) {
+	return Math::sigmoid(x);
+}
+
+double VariantUtilityFunctions::sigmoid_approx(double x) {
+	return Math::sigmoid_approx(x);
+}
+
+double VariantUtilityFunctions::sigmoid_fast(double x) {
+	return Math::sigmoid_fast(x);
+}
+
 Variant VariantUtilityFunctions::max(const Variant **p_args, int p_argcount, Callable::CallError &r_error) {
 	if (p_argcount < 2) {
 		r_error.error = Callable::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
@@ -1786,6 +1798,10 @@ void Variant::_register_variant_utility_functions() {
 
 	FUNCBINDR(nearest_po2, sarray("value"), Variant::UTILITY_FUNC_TYPE_MATH);
 	FUNCBINDR(pingpong, sarray("value", "length"), Variant::UTILITY_FUNC_TYPE_MATH);
+
+	FUNCBINDR(sigmoid, sarray("x"), Variant::UTILITY_FUNC_TYPE_MATH);
+	FUNCBINDR(sigmoid_approx, sarray("x"), Variant::UTILITY_FUNC_TYPE_MATH);
+	FUNCBINDR(sigmoid_fast, sarray("x"), Variant::UTILITY_FUNC_TYPE_MATH);
 
 	// Random
 

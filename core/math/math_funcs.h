@@ -757,6 +757,15 @@ public:
 		}
 		return p_target;
 	}
+
+	static _ALWAYS_INLINE_ double sigmoid(double p_x) { return 1.0 / (1.0 + ::exp(-p_x)); }
+	static _ALWAYS_INLINE_ float sigmoid(float p_x) { return 1.0f / (1.0f + expf(-p_x)); }
+
+	static _ALWAYS_INLINE_ double sigmoid_approx(double p_x) { return 0.5 + p_x / (4.0 + fabs(p_x)); }
+	static _ALWAYS_INLINE_ float sigmoid_approx(float p_x) { return 0.5f + p_x / (4.0f + fabsf(p_x)); }
+
+	static _ALWAYS_INLINE_ double sigmoid_fast(double p_x) { return p_x / (1.0 + fabs(p_x)); }
+	static _ALWAYS_INLINE_ float sigmoid_fast(float p_x) { return p_x / (1.0f + fabsf(p_x)); }
 };
 
 #endif // MATH_FUNCS_H
