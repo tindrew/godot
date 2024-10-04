@@ -1,7 +1,7 @@
  # Redot Engine x Godot Engine
 
 <p align="center">
-  <a href="https://godotengine.org">
+  <a href="https://redotengine.org">
     <img src="logo_outlined.svg" width="400" alt="Redot Engine logo">
   </a>
 </p>
@@ -25,13 +25,13 @@ community-driven, empowering users to help shape their engine to match their
 expectations. It is supported by the [Godot Foundation](https://redotengine.foundation/)
 not-for-profit.
 
-Before being open sourced in [February 2014](https://github.com/redotengine/godot/commit/0b806ee0fc9097fa7bda7ac0109191c9c5e0a1ac),
-Redot had been developed by [Juan Linietsky](https://github.com/reduz) and
+Before being open sourced in [February 2014](https://github.com/redotengine/redot/commit/0b806ee0fc9097fa7bda7ac0109191c9c5e0a1ac),
+Redot was originally developed as Godot by [Juan Linietsky](https://github.com/reduz) and
 [Ariel Manzur](https://github.com/punto-) (both still maintaining the project)
 for several years as an in-house engine, used to publish several work-for-hire
 titles.
 
-![Screenshot of a 3D scene in the Redot Engine editor](https://raw.githubusercontent.com/godotengine/godot-design/master/screenshots/editor_tps_demo_1920x1080.jpg)
+![Screenshot of a 3D scene in the Redot Engine editor](https://raw.githubusercontent.com/redotengine/redot-design/master/screenshots/editor_tps_demo_1920x1080.jpg)
 
 ## Getting the engine
 
