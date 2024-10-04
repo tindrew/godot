@@ -1,7 +1,7 @@
 # Godot Engine
 
 <p align="center">
-  <a href="https://godotengine.org">
+  <a href="https://www.redotengine.org/">
     <img src="logo_outlined.svg" width="400" alt="Godot Engine logo">
   </a>
 </p>
