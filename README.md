@@ -50,10 +50,10 @@ The official documentation is hosted on [Read the Docs](https://docs.godotengine
 It is maintained by the Redot community in its own [GitHub repository](https://github.com/Redot-Engine/redot-docs).
 
 The [class reference](https://docs.godotengine.org/en/latest/classes/)
-is also accessible from the Godot editor.
+is also accessible from the Redot engine editor.
 
 We also maintain official demos in their own [GitHub repository](https://github.com/Redot-Engine/redot-demo-projects)
-as well as a list of [awesome Godot community resources](https://github.com/Redot-Engine/redot-awesome).
+as well as a list of [awesome Redot community resources](https://github.com/Redot-Engine/redot-awesome).
 
 There are also a number of other
 [learning resources](https://docs.godotengine.org/en/latest/community/tutorials.html)
