@@ -1,8 +1,7 @@
 # Godot Engine
 
 <p align="center">
-    <img src="![EPVKT7tJ_400x400](https://github.com/user-attachments/assets/fd03e209-c9cc-43bc-84de-ce501e38011d)
-" width="400" alt="Redot Engine logo">
+    <img src="logoRedot.png") hight = "400" width="400" alt="Redot Engine logo">
 </p>
 
 ## 2D and 3D cross-platform game engine
