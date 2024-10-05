@@ -1,9 +1,9 @@
 # Contributors guidelines
 
 This document summarizes the most important points for people interested in
-contributing to Godot, especially via bug reports or pull requests.
+contributing to skibididot, especially via bug reports or pull requests.
 
-The Godot documentation has a dedicated [Contributing section](https://docs.godotengine.org/en/latest/contributing/how_to_contribute.html)
+The skibididot documentation has a dedicated [Contributing section](https://docs.skibididotengine.org/en/latest/contributing/how_to_contribute.html)
 which details these points and more, and is a recommended read.
 
 ## Table of contents
@@ -11,25 +11,25 @@ which details these points and more, and is a recommended read.
 - [Reporting bugs](#reporting-bugs)
 - [Proposing features or improvements](#proposing-features-or-improvements)
 - [Contributing pull requests](#contributing-pull-requests)
-- [Contributing to Godot translations](#contributing-to-godot-translations)
+- [Contributing to skibididot translations](#contributing-to-skibididot-translations)
 - [Communicating with developers](#communicating-with-developers)
 
 ## Reporting bugs
 
-Report bugs [here](https://github.com/godotengine/godot/issues/new?assignees=&labels=&template=bug_report.yml).
+Report bugs [here](https://github.com/skibididotengine/skibididot/issues/new?assignees=&labels=&template=bug_report.yml).
 Please follow the instructions in the template when you do.
 
 Notably, please include a Minimal Reproduction Project (MRP), which is a small
-Godot project which reproduces the issue, with no unnecessary files included.
-Be sure to not include the `.godot` folder in the archive to save space.
+skibididot project which reproduces the issue, with no unnecessary files included.
+Be sure to not include the `.skibididot` folder in the archive to save space.
 
-Make sure that the bug you are experiencing is reproducible in the latest Godot
-releases. You can find an overview of all Godot releases [on the website](https://godotengine.org/download/archive/)
+Make sure that the bug you are experiencing is reproducible in the latest skibididot
+releases. You can find an overview of all skibididot releases [on the website](https://skibididotengine.org/download/archive/)
 to confirm whether your current version is the latest one. It's worth testing
 against both the latest stable release and the latest dev snapshot for the next
-Godot release.
+skibididot release.
 
-If you run into a bug which wasn't present in an earlier Godot version (what we
+If you run into a bug which wasn't present in an earlier skibididot version (what we
 call a _regression_), please mention it and clarify which versions you tested
 (both the one(s) working and the one(s) exhibiting the bug).
 
@@ -37,7 +37,7 @@ call a _regression_), please mention it and clarify which versions you tested
 
 **The main issue tracker is for bug reports and does not accept feature proposals.**
 
-Instead, head to the [Godot Proposals repository](https://github.com/godotengine/godot-proposals)
+Instead, head to the [skibididot Proposals repository](https://github.com/skibididotengine/skibididot-proposals)
 and follow the instructions in the README file and issue template.
 
 ## Contributing pull requests
@@ -55,17 +55,17 @@ Similar rules can be applied when contributing bug fixes - it's always best to
 discuss the implementation in the bug report first if you are not 100% about
 what would be the best fix.
 
-You can refer to the [Pull request review process](https://docs.godotengine.org/en/latest/contributing/workflow/pr_review_guidelines.html)
+You can refer to the [Pull request review process](https://docs.skibididotengine.org/en/latest/contributing/workflow/pr_review_guidelines.html)
 for insights into the intended lifecycle of pull requests. This should help you
 ensure that your pull request fulfills the requirements.
 
 In addition to the following tips, also take a look at the
-[Engine development guide](https://docs.godotengine.org/en/latest/contributing/development/index.html)
-for an introduction to developing on Godot.
+[Engine development guide](https://docs.skibididotengine.org/en/latest/contributing/development/index.html)
+for an introduction to developing on skibididot.
 
-The [Contributing docs](https://docs.godotengine.org/en/latest/contributing/how_to_contribute.html)
-also have important information on the [PR workflow](https://docs.godotengine.org/en/latest/contributing/workflow/pr_workflow.html)
-(with a helpful guide for Git usage), and our [Code style guidelines](https://docs.godotengine.org/en/latest/contributing/development/code_style_guidelines.html)
+The [Contributing docs](https://docs.skibididotengine.org/en/latest/contributing/how_to_contribute.html)
+also have important information on the [PR workflow](https://docs.skibididotengine.org/en/latest/contributing/workflow/pr_workflow.html)
+(with a helpful guide for Git usage), and our [Code style guidelines](https://docs.skibididotengine.org/en/latest/contributing/development/code_style_guidelines.html)
 which all contributions need to follow.
 
 ### Be mindful of your commits
@@ -84,7 +84,7 @@ stable state, i.e. if your first commit has a bug that you fixed in the second
 commit, try to merge them together before making your pull request. This
 includes fixing build issues or typos, adding documentation, etc.
 
-See our [PR workflow](https://docs.godotengine.org/en/latest/contributing/workflow/pr_workflow.html)
+See our [PR workflow](https://docs.skibididotengine.org/en/latest/contributing/workflow/pr_workflow.html)
 documentation for tips on using Git, amending commits and rebasing branches.
 
 This [Git style guide](https://github.com/agis-/git-style-guide) also has some
@@ -125,12 +125,12 @@ description is also manually wrapped at 80 chars for readability):
 ```text
 Prevent French fries carbonization by fixing heat regulation
 
-When using the French fries frying module, Godot would not regulate the heat
+When using the French fries frying module, skibididot would not regulate the heat
 and thus bring the oil bath to supercritical liquid conditions, thus causing
 unwanted side effects in the physics engine.
 
 By fixing the regulation system via an added binding to the internal feature,
-this commit now ensures that Godot will not go past the ebullition temperature
+this commit now ensures that skibididot will not go past the ebullition temperature
 of cooking oil under normal atmospheric conditions.
 ```
 
@@ -145,10 +145,10 @@ scripting APIs, you **must** update the class reference to document those.
 This is to ensure the documentation coverage doesn't decrease as contributions
 are merged.
 
-[Update documentation XML files](https://docs.godotengine.org/en/latest/contributing/documentation/updating_the_class_reference.html)
+[Update documentation XML files](https://docs.skibididotengine.org/en/latest/contributing/documentation/updating_the_class_reference.html)
 using your compiled binary, then fill in the descriptions.
 Follow the style guide described in the
-[Documentation writing guidelines](https://docs.godotengine.org/en/latest/contributing/documentation/docs_writing_guidelines.html).
+[Documentation writing guidelines](https://docs.skibididotengine.org/en/latest/contributing/documentation/docs_writing_guidelines.html).
 
 If your pull request modifies parts of the code in a non-obvious way, make sure
 to add comments in the code as well. This helps other people understand the
@@ -174,40 +174,40 @@ applicable.
 Feel free to contribute standalone pull requests to add new tests or improve
 existing tests as well.
 
-See [Unit testing](https://docs.godotengine.org/en/latest/contributing/development/core_and_modules/unit_testing.html)
-for information on writing tests in Godot's C++ codebase.
+See [Unit testing](https://docs.skibididotengine.org/en/latest/contributing/development/core_and_modules/unit_testing.html)
+for information on writing tests in skibididot's C++ codebase.
 
-## Contributing to Godot translations
+## Contributing to skibididot translations
 
-You can contribute to Godot translations on [Hosted Weblate](https://hosted.weblate.org/projects/godot-engine/),
+You can contribute to skibididot translations on [Hosted Weblate](https://hosted.weblate.org/projects/skibididot-engine/),
 an open source and web-based translation platform.
 
-Please refer to our [editor and documentation localization guidelines](https://docs.godotengine.org/en/latest/contributing/documentation/editor_and_docs_localization.html)
+Please refer to our [editor and documentation localization guidelines](https://docs.skibididotengine.org/en/latest/contributing/documentation/editor_and_docs_localization.html)
 for an overview of the translation resources and what they correspond to.
 
 ## Communicating with developers
 
-The Godot Engine community has [many communication
-channels](https://godotengine.org/community), some used more for user-level
+The skibididot Engine community has [many communication
+channels](https://skibididotengine.org/community), some used more for user-level
 discussions and support, others more for development discussions.
 
 To communicate with developers (e.g. to discuss a feature you want to implement
 or a bug you want to fix), the following channels can be used:
 
-- [Godot Contributors Chat](https://chat.godotengine.org): You will
+- [skibididot Contributors Chat](https://chat.skibididotengine.org): You will
   find most core developers there, so it's the go-to platform for direct chat
-  about Godot Engine development. Browse the [Directory](https://chat.godotengine.org/directory/channels)
+  about skibididot Engine development. Browse the [Directory](https://chat.skibididotengine.org/directory/channels)
   for an overview of public channels focusing on various engine areas which you
   might be interested in.
-- [Bug tracker](https://github.com/godotengine/godot/issues): If there is an
+- [Bug tracker](https://github.com/skibididotengine/skibididot/issues): If there is an
   existing issue about a topic you want to discuss, you can participate directly.
   If not, you can open a new issue. Please mind the guidelines outlined above
   for bug reporting.
-- [Feature proposals](https://github.com/godotengine/godot-proposals/issues):
+- [Feature proposals](https://github.com/skibididotengine/skibididot-proposals/issues):
   To propose a new feature, we have a dedicated issue tracker for that. Don't
-  hesitate to start by talking about your idea on the Godot Contributors Chat
-  to make sure that it makes sense in Godot's context.
+  hesitate to start by talking about your idea on the skibididot Contributors Chat
+  to make sure that it makes sense in skibididot's context.
 
 Thanks for your interest in contributing!
 
-—The Godot development team
+—The skibididot development team
