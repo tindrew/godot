@@ -1,10 +1,7 @@
-# Godot Engine
+# Skibididot Engine
 
-<p align="center">
-  <a href="https://godotengine.org">
-    <img src="logo_outlined.svg" width="400" alt="Godot Engine logo">
-  </a>
-</p>
+![skibididot](https://github.com/user-attachments/assets/fec42606-5036-4bd7-b2bc-b9089c971831)
+
 
 ## 2D and 3D cross-platform game engine
 
