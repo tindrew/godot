@@ -1,9 +1,9 @@
-# Exhaustive licensing information for files in the Godot Engine repository
+# Exhaustive licensing information for files in the Skibididot Engine repository
 # =========================================================================
 #
 # This file aims at documenting the copyright and license for every source
-# file in the Godot Engine repository, and especially outline the files
-# whose license differs from the MIT/Expat license used by Godot Engine.
+# file in the Skibididot Engine repository, and especially outline the files
+# whose license differs from the MIT/Expat license used by Skibididot Engine.
 #
 # It is written as a machine-readable format following the debian/copyright
 # specification. Globbing patterns (e.g. "Files: *") mean that they affect
@@ -27,23 +27,23 @@
 #   License: Zlib
 # The exact copyright for each file in that library *may* differ, and some
 # files or code snippets might be distributed under other compatible licenses
-# (e.g. a public domain dedication), but as far as Godot Engine is concerned
+# (e.g. a public domain dedication), but as far as Skibididot Engine is concerned
 # the library is considered as a whole under the Zlib license.
 #
 # Note: When linking dynamically against thirdparty libraries instead of
-# building them into the Godot binary, you may remove the corresponding
+# building them into the Skibididot binary, you may remove the corresponding
 # license details from this file.
 
 -----------------------------------------------------------------------
 
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Godot Engine
-Upstream-Contact: Rémi Verschelde <contact@godotengine.org>
-Source: https://github.com/godotengine/godot
+Upstream-Name: Skibididot Engine
+Upstream-Contact: Rémi Verschelde <contact@Skibididotengine.org>
+Source: https://github.com/Skibididotengine/Skibididot
 
 Files: *
-Comment: Godot Engine
-Copyright: 2014-present, Godot Engine contributors
+Comment: Skibididot Engine
+Copyright: 2014-present, Skibididot Engine contributors
  2007-2014, Juan Linietsky, Ariel Manzur
 License: Expat
 
@@ -51,7 +51,7 @@ Files: ./icon.png
  ./icon.svg
  ./logo.png
  ./logo.svg
-Comment: Godot Engine logo
+Comment: Skibididot Engine logo
 Copyright: 2017, Andrea Calabró
 License: CC-BY-4.0
 
@@ -59,52 +59,52 @@ Files: ./core/math/convex_hull.cpp
  ./core/math/convex_hull.h
 Comment: Bullet Continuous Collision Detection and Physics Library
 Copyright: 2011, Ole Kniemeyer, MAXON, www.maxon.net
- 2014-present, Godot Engine contributors
+ 2014-present, Skibididot Engine contributors
  2007-2014, Juan Linietsky, Ariel Manzur
 License: Expat and Zlib
 
-Files: ./modules/godot_physics_2d/godot_joints_2d.cpp
+Files: ./modules/Skibididot_physics_2d/Skibididot_joints_2d.cpp
 Comment: Chipmunk2D Joint Constraints
 Copyright: 2007, Scott Lembcke
 License: Expat
 
-Files: ./modules/godot_physics_3d/gjk_epa.cpp
- ./modules/godot_physics_3d/joints/godot_generic_6dof_joint_3d.cpp
- ./modules/godot_physics_3d/joints/godot_generic_6dof_joint_3d.h
- ./modules/godot_physics_3d/joints/godot_hinge_joint_3d.cpp
- ./modules/godot_physics_3d/joints/godot_hinge_joint_3d_sw.h
- ./modules/godot_physics_3d/joints/godot_jacobian_entry_3d_sw.h
- ./modules/godot_physics_3d/joints/godot_pin_joint_3d.cpp
- ./modules/godot_physics_3d/joints/godot_pin_joint_3d.h
- ./modules/godot_physics_3d/joints/godot_slider_joint_3d.cpp
- ./modules/godot_physics_3d/joints/godot_slider_joint_3d.h
- ./modules/godot_physics_3d/godot_soft_body_3d.cpp
- ./modules/godot_physics_3d/godot_soft_body_3d.h
- ./modules/godot_physics_3d/godot_shape_3d.cpp
- ./modules/godot_physics_3d/godot_shape_3d.h
+Files: ./modules/Skibididot_physics_3d/gjk_epa.cpp
+ ./modules/Skibididot_physics_3d/joints/Skibididot_generic_6dof_joint_3d.cpp
+ ./modules/Skibididot_physics_3d/joints/Skibididot_generic_6dof_joint_3d.h
+ ./modules/Skibididot_physics_3d/joints/Skibididot_hinge_joint_3d.cpp
+ ./modules/Skibididot_physics_3d/joints/Skibididot_hinge_joint_3d_sw.h
+ ./modules/Skibididot_physics_3d/joints/Skibididot_jacobian_entry_3d_sw.h
+ ./modules/Skibididot_physics_3d/joints/Skibididot_pin_joint_3d.cpp
+ ./modules/Skibididot_physics_3d/joints/Skibididot_pin_joint_3d.h
+ ./modules/Skibididot_physics_3d/joints/Skibididot_slider_joint_3d.cpp
+ ./modules/Skibididot_physics_3d/joints/Skibididot_slider_joint_3d.h
+ ./modules/Skibididot_physics_3d/Skibididot_soft_body_3d.cpp
+ ./modules/Skibididot_physics_3d/Skibididot_soft_body_3d.h
+ ./modules/Skibididot_physics_3d/Skibididot_shape_3d.cpp
+ ./modules/Skibididot_physics_3d/Skibididot_shape_3d.h
 Comment: Bullet Continuous Collision Detection and Physics Library
 Copyright: 2003-2008, Erwin Coumans
- 2014-present, Godot Engine contributors
+ 2014-present, Skibididot Engine contributors
  2007-2014, Juan Linietsky, Ariel Manzur
 License: Expat and Zlib
 
-Files: ./modules/godot_physics_3d/godot_collision_solver_3d_sat.cpp
+Files: ./modules/Skibididot_physics_3d/Skibididot_collision_solver_3d_sat.cpp
 Comment: Open Dynamics Engine
 Copyright: 2001-2003, Russell L. Smith, Alen Ladavac, Nguyen Binh
 License: BSD-3-clause
 
-Files: ./modules/godot_physics_3d/joints/godot_cone_twist_joint_3d.cpp
- ./modules/godot_physics_3d/joints/godot_cone_twist_joint_3d.h
+Files: ./modules/Skibididot_physics_3d/joints/Skibididot_cone_twist_joint_3d.cpp
+ ./modules/Skibididot_physics_3d/joints/Skibididot_cone_twist_joint_3d.h
 Comment: Bullet Continuous Collision Detection and Physics Library
 Copyright: 2007, Starbreeze Studios
- 2014-present, Godot Engine contributors
+ 2014-present, Skibididot Engine contributors
  2007-2014, Juan Linietsky, Ariel Manzur
 License: Expat and Zlib
 
 Files: ./modules/lightmapper_rd/lm_compute.glsl
 Comment: Joint Non-Local Means (JNLM) denoiser
 Copyright: 2020, Manuel Prandini
- 2014-present, Godot Engine contributors
+ 2014-present, Skibididot Engine contributors
  2007-2014, Juan Linietsky, Ariel Manzur
 License: Expat
 
@@ -112,14 +112,14 @@ Files: ./platform/android/java/editor/src/main/java/com/android/*
  ./platform/android/java/lib/aidl/com/android/*
  ./platform/android/java/lib/res/layout/status_bar_ongoing_event_progress_bar.xml
  ./platform/android/java/lib/src/com/google/android/*
- ./platform/android/java/lib/src/org/godotengine/godot/input/InputManagerCompat.java
- ./platform/android/java/lib/src/org/godotengine/godot/input/InputManagerV16.java
+ ./platform/android/java/lib/src/org/Skibididotengine/Skibididot/input/InputManagerCompat.java
+ ./platform/android/java/lib/src/org/Skibididotengine/Skibididot/input/InputManagerV16.java
 Comment: The Android Open Source Project
 Copyright: 2008-2016, The Android Open Source Project
  2002, Google, Inc.
 License: Apache-2.0
 
-Files: ./platform/android/java/lib/src/org/godotengine/godot/utils/ProcessPhoenix.java
+Files: ./platform/android/java/lib/src/org/Skibididotengine/Skibididot/utils/ProcessPhoenix.java
 Comment: ProcessPhoenix
 Copyright: 2015, Jake Wharton
 License: Apache-2.0
@@ -127,7 +127,7 @@ License: Apache-2.0
 Files: ./scene/animation/easing_equations.h
 Comment: Robert Penner's Easing Functions
 Copyright: 2001, Robert Penner
- 2014-present, Godot Engine contributors
+ 2014-present, Skibididot Engine contributors
  2007-2014, Juan Linietsky, Ariel Manzur
 License: Expat
 
