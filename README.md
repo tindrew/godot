@@ -39,10 +39,7 @@ for compilation instructions for every supported platform.
 ## Community and contributing
 
 Redot is not only an engine but an ever-growing community of users and engine
-developers. Chat with the community via [discord](https://discord.com/invite/redot).
-
-The best way to get in touch with the core engine developers is to join the
-[Godot Contributors Chat](https://chat.godotengine.org).
+developers. Chat with the community and with the core engine developers via [discord](https://discord.com/invite/redot).
 
 To get started contributing to the project, see the [contributing guide](CONTRIBUTING.md).
 This document also includes guidelines for reporting bugs.
