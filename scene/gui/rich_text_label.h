@@ -87,7 +87,6 @@ public:
 		ITEM_SHAKE,
 		ITEM_WAVE,
 		ITEM_TORNADO,
-		ITEM_RAINBOW,
 		ITEM_PULSE,
 		ITEM_BGCOLOR,
 		ITEM_FGCOLOR,
@@ -405,14 +404,6 @@ private:
 		ItemTornado() { type = ITEM_TORNADO; }
 	};
 
-	struct ItemRainbow : public ItemFX {
-		float saturation = 0.8f;
-		float value = 0.8f;
-		float frequency = 1.0f;
-
-		ItemRainbow() { type = ITEM_RAINBOW; }
-	};
-
 	struct ItemPulse : public ItemFX {
 		Color color = Color(1.0, 1.0, 1.0, 0.25);
 		float frequency = 1.0f;
@@ -705,7 +696,6 @@ public:
 	void push_shake(int p_strength, float p_rate, bool p_connected);
 	void push_wave(float p_frequency, float p_amplitude, bool p_connected);
 	void push_tornado(float p_frequency, float p_radius, bool p_connected);
-	void push_rainbow(float p_saturation, float p_value, float p_frequency);
 	void push_pulse(const Color &p_color, float p_frequency, float p_ease);
 	void push_bgcolor(const Color &p_color);
 	void push_fgcolor(const Color &p_color);
