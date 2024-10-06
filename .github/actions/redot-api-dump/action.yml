@@ -1,0 +1,25 @@
+name: Dump Redot API
+description: Dump Redot API for GDExtension
+
+inputs:
+  bin:
+    description: The path to the Redot executable
+    required: true
+
+runs:
+  using: composite
+  steps:
+    # Dump GDExtension interface and API
+    - name: Dump GDExtension interface and API for redot-cpp build
+      shell: sh
+      run: |
+        ${{ inputs.bin }} --headless --dump-gdextension-interface --dump-extension-api
+        mkdir redot-api
+        cp -f gdextension_interface.h redot-api/
+        cp -f extension_api.json redot-api/
+
+    - name: Upload API dump
+      uses: ./.github/actions/upload-artifact
+      with:
+        name: redot-api-dump
+        path: ./redot-api/*

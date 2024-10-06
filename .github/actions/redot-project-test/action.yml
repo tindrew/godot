@@ -1,5 +1,5 @@
-name: Test Godot project
-description: Run the test Godot project.
+name: Test Redot project
+description: Run the test Redot project.
 
 inputs:
   bin:
@@ -13,7 +13,7 @@ runs:
     - name: Download test project
       shell: sh
       run: |
-        wget https://github.com/godotengine/regression-test-project/archive/4.0.zip
+        wget https://github.com/Redot-Engine/regression-test-project/archive/4.0.zip
         unzip 4.0.zip
         mv "regression-test-project-4.0" "test_project"
 

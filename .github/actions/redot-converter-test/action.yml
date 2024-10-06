@@ -1,5 +1,5 @@
-name: Test Godot project converter
-description: Test the Godot project converter.
+name: Test Redot project converter
+description: Test the Redot project converter.
 
 inputs:
   bin:
