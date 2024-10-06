@@ -22,7 +22,7 @@ Redot is completely free and open source under the very permissive [MIT license]
 No strings attached, no royalties, nothing. The users' games are theirs, down
 to the last line of engine code. Redot's development is fully independent and
 community-driven, empowering users to help shape their engine to match their
-expectations. It is supported by the [Godot Foundation](https://redotengine.foundation/)
+expectations.
 not-for-profit.
 
 Before being open sourced in [February 2014](https://github.com/redotengine/redot/commit/0b806ee0fc9097fa7bda7ac0109191c9c5e0a1ac),
