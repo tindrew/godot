@@ -647,8 +647,12 @@ double VariantUtilityFunctions::sigmoid_approx(double x) {
 	return Math::sigmoid_approx(x);
 }
 
-double VariantUtilityFunctions::sigmoid_fast(double x) {
-	return Math::sigmoid_fast(x);
+double VariantUtilityFunctions::sigmoid_affine(double x, double amplitude, double y_translation) {
+	return Math::sigmoid_affine(x, amplitude, y_translation);
+}
+
+double VariantUtilityFunctions::sigmoid_affine_approx(double x, double amplitude, double y_translation) {
+	return Math::sigmoid_affine_approx(x, amplitude, y_translation);
 }
 
 Variant VariantUtilityFunctions::max(const Variant **p_args, int p_argcount, Callable::CallError &r_error) {
@@ -1801,7 +1805,8 @@ void Variant::_register_variant_utility_functions() {
 
 	FUNCBINDR(sigmoid, sarray("x"), Variant::UTILITY_FUNC_TYPE_MATH);
 	FUNCBINDR(sigmoid_approx, sarray("x"), Variant::UTILITY_FUNC_TYPE_MATH);
-	FUNCBINDR(sigmoid_fast, sarray("x"), Variant::UTILITY_FUNC_TYPE_MATH);
+	FUNCBINDR(sigmoid_affine, sarray("x", "amplitude", "y_translation"), Variant::UTILITY_FUNC_TYPE_MATH);
+	FUNCBINDR(sigmoid_affine_approx, sarray("x", "amplitude", "y_translation"), Variant::UTILITY_FUNC_TYPE_MATH);
 
 	// Random
 
