@@ -1242,10 +1242,6 @@ int RichTextLabel::_draw_line(ItemFrame *p_frame, int p_line, const Vector2 &p_o
 								item_tornado->prev_off = Point2(torn_x, torn_y);
 							}
 							fx_offset += item_tornado->prev_off;
-						} else if (item_fx->type == ITEM_RAINBOW) {
-							ItemRainbow *item_rainbow = static_cast<ItemRainbow *>(item_fx);
-
-							font_color = font_color.from_hsv(item_rainbow->frequency * (item_rainbow->elapsed_time + ((p_ofs.x + off_step.x) / 50)), item_rainbow->saturation, item_rainbow->value, font_color.a);
 						} else if (item_fx->type == ITEM_PULSE) {
 							ItemPulse *item_pulse = static_cast<ItemPulse *>(item_fx);
 
@@ -1737,7 +1733,7 @@ void RichTextLabel::_update_fx(RichTextLabel::ItemFrame *p_frame, double p_delta
 	while (it) {
 		ItemFX *ifx = nullptr;
 
-		if (it->type == ITEM_CUSTOMFX || it->type == ITEM_SHAKE || it->type == ITEM_WAVE || it->type == ITEM_TORNADO || it->type == ITEM_RAINBOW || it->type == ITEM_PULSE) {
+		if (it->type == ITEM_CUSTOMFX || it->type == ITEM_SHAKE || it->type == ITEM_WAVE || it->type == ITEM_TORNADO || it->type == ITEM_PULSE) {
 			ifx = static_cast<ItemFX *>(it);
 		}
 
@@ -2680,7 +2676,7 @@ bool RichTextLabel::_find_strikethrough(Item *p_item) {
 void RichTextLabel::_fetch_item_fx_stack(Item *p_item, Vector<ItemFX *> &r_stack) {
 	Item *item = p_item;
 	while (item) {
-		if (item->type == ITEM_CUSTOMFX || item->type == ITEM_SHAKE || item->type == ITEM_WAVE || item->type == ITEM_TORNADO || item->type == ITEM_RAINBOW || item->type == ITEM_PULSE) {
+		if (item->type == ITEM_CUSTOMFX || item->type == ITEM_SHAKE || item->type == ITEM_WAVE || item->type == ITEM_TORNADO || item->type == ITEM_PULSE) {
 			r_stack.push_back(static_cast<ItemFX *>(item));
 		}
 
@@ -3811,20 +3807,6 @@ void RichTextLabel::push_tornado(float p_frequency = 1.0f, float p_radius = 10.0
 	item->frequency = p_frequency;
 	item->radius = p_radius;
 	item->connected = p_connected;
-	_add_item(item, true);
-}
-
-void RichTextLabel::push_rainbow(float p_saturation, float p_value, float p_frequency) {
-	_stop_thread();
-	MutexLock data_lock(data_mutex);
-
-	ERR_FAIL_COND(current->type == ITEM_TABLE);
-	ItemRainbow *item = memnew(ItemRainbow);
-	item->owner = get_instance_id();
-	item->rid = items.make_rid(item);
-	item->frequency = p_frequency;
-	item->saturation = p_saturation;
-	item->value = p_value;
 	_add_item(item, true);
 }
 
@@ -5196,11 +5178,7 @@ void RichTextLabel::append_text(const String &p_bbcode) {
 			pos = brk_end + 1;
 			tag_stack.push_front("tornado");
 			set_process_internal(true);
-		} else if (bbcode_name == "rainbow") {
-			float saturation = 0.8f;
-			OptionMap::Iterator saturation_option = bbcode_options.find("sat");
-			if (saturation_option) {
-				saturation = saturation_option->value.to_float();
+		 
 			}
 
 			float value = 0.8f;
@@ -5213,17 +5191,6 @@ void RichTextLabel::append_text(const String &p_bbcode) {
 			OptionMap::Iterator frequency_option = bbcode_options.find("freq");
 			if (frequency_option) {
 				frequency = frequency_option->value.to_float();
-			}
-
-			push_rainbow(saturation, value, frequency);
-			pos = brk_end + 1;
-			tag_stack.push_front("rainbow");
-			set_process_internal(true);
-		} else if (bbcode_name == "pulse") {
-			Color color = Color(1, 1, 1, 0.25);
-			OptionMap::Iterator color_option = bbcode_options.find("color");
-			if (color_option) {
-				color = Color::from_string(color_option->value, color);
 			}
 
 			float frequency = 1.0;
