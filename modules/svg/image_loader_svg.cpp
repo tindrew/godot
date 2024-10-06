@@ -35,7 +35,7 @@
 
 #include <thorvg.h>
 
-#ifdef __AVX__
+#if defined(__AVX__) || defined(__AVX2__) || defined(__AVX512BW__)
 #ifdef _MSC_VER
 #include <intrin.h>
 #else
@@ -147,7 +147,42 @@ Error ImageLoaderSVG::create_image_from_utf8_buffer(Ref<Image> p_image, const ui
 	// RGBA to BGRA
 	const uint32_t wh = width * height;
 	uint32_t i;
-#ifdef __AVX__
+#if defined(__AVX512BW__)
+	// Some of recent Intel processors and recent AMD processors (from Zen 4) support AVX-512.
+	{
+		uint8_t *dst = image.ptrw();
+		const __m512i mask = _mm512_setr_epi8(
+				2, 1, 0, 3, 6, 5, 4, 7, 10, 9, 8, 11, 14, 13, 12, 15,
+				2, 1, 0, 3, 6, 5, 4, 7, 10, 9, 8, 11, 14, 13, 12, 15,
+				2, 1, 0, 3, 6, 5, 4, 7, 10, 9, 8, 11, 14, 13, 12, 15,
+				2, 1, 0, 3, 6, 5, 4, 7, 10, 9, 8, 11, 14, 13, 12, 15);
+		for (i = 0; i < wh / 16; ++i) {
+			__m512i s16 = _mm512_loadu_epi8(&buffer[i * 16]);
+			__m512i d16 = _mm512_shuffle_epi8(s16, mask);
+			_mm512_storeu_epi8(dst, d16);
+			dst += 64;
+		}
+		i = wh / 16 * 16;
+	}
+#elif defined(__AVX2__)
+	// AVX2 is widely aviable on recent x86-64 processors.
+	{
+		uint8_t *dst = image.ptrw();
+		const __m256i mask = _mm256_setr_epi8(
+				2, 1, 0, 3, 6, 5, 4, 7, 10, 9, 8, 11, 14, 13, 12, 15,
+				2, 1, 0, 3, 6, 5, 4, 7, 10, 9, 8, 11, 14, 13, 12, 15);
+		for (i = 0; i < wh / 8; ++i) {
+			__m256i s8 = _mm256_loadu_epi8(&buffer[i * 8]);
+			__m256i d8 = _mm256_shuffle_epi8(s8, mask);
+			_mm256_storeu_epi8(dst, d8);
+			dst += 32;
+		}
+		i = wh / 8 * 8;
+	}
+#elif defined(__AVX__)
+	// _mm_shuffle_epi8 is available from SSSE3 but VC++ doesn't define __SSSE3__ when "/arch:AVX" is specified so __AVX__ is used instead.
+	// On the other hand, GCC supports fine-grained CFLAGS options such as -mssse3.
+	// Recent x86-64 processors mostly support AVX/AVX2, so outdated processors aren't convered here.
 	{
 		uint8_t *dst = image.ptrw();
 		const __m128i mask = _mm_setr_epi8(2, 1, 0, 3, 6, 5, 4, 7, 10, 9, 8, 11, 14, 13, 12, 15);
@@ -160,6 +195,8 @@ Error ImageLoaderSVG::create_image_from_utf8_buffer(Ref<Image> p_image, const ui
 		i = wh / 4 * 4;
 	}
 #elif defined(__ARM_NEON) || defined(__ARM_NEON__)
+	// vqtbl1q_u8 is available from ARMv8.
+	// ARMv7 NEON doesn't support vqtbl1q_u8 but I suppose no one runs the engine on ARVv7 processors.
 	{
 		uint8_t *dst = image.ptrw();
 		const uint8x16_t mask = { 2, 1, 0, 3, 6, 5, 4, 7, 10, 9, 8, 11, 14, 13, 12, 15 };
