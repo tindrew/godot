@@ -41,6 +41,8 @@
 #else
 #include <x86intrin.h>
 #endif
+#elif defined(__ARM_NEON) || defined(__ARM_NEON__)
+#include <arm_neon.h>
 #endif
 
 HashMap<Color, Color> ImageLoaderSVG::forced_color_map = HashMap<Color, Color>();
@@ -143,29 +145,36 @@ Error ImageLoaderSVG::create_image_from_utf8_buffer(Ref<Image> p_image, const ui
 	image.resize(width * height * sizeof(uint32_t));
 
 	// RGBA to BGRA
+	const uint32_t wh = width * height;
+	uint32_t i;
 #ifdef __AVX__
 	{
 		uint8_t *dst = image.ptrw();
-		const uint32_t wh = width * height;
 		const __m128i mask = _mm_setr_epi8(2, 1, 0, 3, 6, 5, 4, 7, 10, 9, 8, 11, 14, 13, 12, 15);
-		for (uint32_t i = 0; i < wh / 4; ++i) {
+		for (i = 0; i < wh / 4; ++i) {
 			__m128i s4 = _mm_loadu_epi8(&buffer[i * 4]);
 			__m128i d4 = _mm_shuffle_epi8(s4, mask);
 			_mm_storeu_epi8(dst, d4);
 			dst += 16;
 		}
-		for (uint32_t i = wh / 4 * 4; i < wh; ++i) {
-			uint32_t n = buffer[i];
-			const size_t offset = sizeof(uint32_t) * i;
-			image.write[offset + 0] = (n >> 16) & 0xff;
-			image.write[offset + 1] = (n >> 8) & 0xff;
-			image.write[offset + 2] = n & 0xff;
-			image.write[offset + 3] = (n >> 24) & 0xff;
+		i = wh / 4 * 4;
+	}
+#elif defined(__ARM_NEON) || defined(__ARM_NEON__)
+	{
+		uint8_t *dst = image.ptrw();
+		const uint8x16_t mask = { 2, 1, 0, 3, 6, 5, 4, 7, 10, 9, 8, 11, 14, 13, 12, 15 };
+		for (i = 0; i < wh / 4; ++i) {
+			uint8x16_t s4 = vreinterpretq_u8_u32(vld1q_u32(&buffer[i * 4]));
+			uint8x16_t d4 = vqtbl1q_u8(s4, mask);
+			vst1q_u8(dst, d4);
+			dst += 16;
 		}
+		i = wh / 4 * 4;
 	}
 #else
-	const uint32_t wh = width * height;
-	for (uint32_t i = 0; i < wh; ++i) {
+	i = 0;
+#endif
+	for (; i < wh; ++i) {
 		uint32_t n = buffer[i];
 		const size_t offset = sizeof(uint32_t) * i;
 		image.write[offset + 0] = (n >> 16) & 0xff;
@@ -173,7 +182,6 @@ Error ImageLoaderSVG::create_image_from_utf8_buffer(Ref<Image> p_image, const ui
 		image.write[offset + 2] = n & 0xff;
 		image.write[offset + 3] = (n >> 24) & 0xff;
 	}
-#endif
 
 	res = sw_canvas->clear(true);
 	memfree(buffer);
