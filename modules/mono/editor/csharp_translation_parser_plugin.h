@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  register_types.cpp                                                    */
+/*  csharp_translation_parser_plugin.h                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,76 +28,48 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "register_types.h"
+#ifndef CSHARP_TRANSLATION_PARSER_PLUGIN_H
+#define CSHARP_TRANSLATION_PARSER_PLUGIN_H
 
-#include "csharp_script.h"
-
-#ifdef TOOLS_ENABLED
+#include "core/templates/hash_set.h"
 #include "editor/editor_translation_parser.h"
+#include <core/error/error_list.h>
+#include <core/object/object.h>
+#include <core/string/string_name.h>
+#include <core/string/ustring.h>
+#include <core/templates/list.h>
+#include <core/templates/vector.h>
 
-#include "editor/csharp_translation_parser_plugin.h"
-#endif
+class CSharpEditorTranslationParserPlugin : public EditorTranslationParserPlugin {
+	GDCLASS(CSharpEditorTranslationParserPlugin, EditorTranslationParserPlugin);
 
-CSharpLanguage *script_language_cs = nullptr;
-Ref<ResourceFormatLoaderCSharpScript> resource_loader_cs;
-Ref<ResourceFormatSaverCSharpScript> resource_saver_cs;
+	Vector<String> *ids = nullptr;
+	Vector<Vector<String>> *ids_ctx_plural = nullptr;
 
-#ifdef TOOLS_ENABLED
-Ref<CSharpEditorTranslationParserPlugin> csharp_translation_parser_plugin;
-#endif
+	// List of patterns used for extracting translation strings.
+	StringName tr_func = "Tr";
+	StringName trn_func = "TrN";
+	StringName atr_func = "Atr";
+	StringName atrn_func = "AtrN";
+	HashSet<StringName> assignment_patterns;
+	HashSet<StringName> first_arg_patterns;
+	HashSet<StringName> second_arg_patterns;
+	// FileDialog patterns.
+	StringName fd_add_filter = "add_filter";
+	StringName fd_set_filter = "set_filters";
+	StringName fd_filters = "filters";
 
-mono_bind::GodotSharp *_godotsharp = nullptr;
+	void _find_translation_ids(const String &source_code);
+	Vector<Vector<String>> _find_method_args(const String &source_code, const String method_name);
+	void _parse_tr_atr_args(const Vector<String> *args);
+	void _parse_trn_atrn_args(const Vector<String> *args);
+	bool _is_string_literal(const String code);
 
-void initialize_mono_module(ModuleInitializationLevel p_level) {
-	if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE) {
-		GDREGISTER_CLASS(CSharpScript);
+public:
+	virtual Error parse_file(const String &p_path, Vector<String> *r_ids, Vector<Vector<String>> *r_ids_ctx_plural) override;
+	virtual void get_recognized_extensions(List<String> *r_extensions) const override;
 
-		_godotsharp = memnew(mono_bind::GodotSharp);
+	CSharpEditorTranslationParserPlugin();
+};
 
-		script_language_cs = memnew(CSharpLanguage);
-		script_language_cs->set_language_index(ScriptServer::get_language_count());
-		ScriptServer::register_language(script_language_cs);
-
-		resource_loader_cs.instantiate();
-		ResourceLoader::add_resource_format_loader(resource_loader_cs);
-
-		resource_saver_cs.instantiate();
-		ResourceSaver::add_resource_format_saver(resource_saver_cs);
-	}
-
-#ifdef TOOLS_ENABLED
-	if (p_level == MODULE_INITIALIZATION_LEVEL_SERVERS) {
-		csharp_translation_parser_plugin.instantiate();
-		EditorTranslationParser::get_singleton()->add_parser(csharp_translation_parser_plugin, EditorTranslationParser::STANDARD);
-	}
-#endif // TOOLS_ENABLED
-}
-
-void uninitialize_mono_module(ModuleInitializationLevel p_level) {
-	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
-		return;
-	}
-
-	ScriptServer::unregister_language(script_language_cs);
-
-	if (script_language_cs) {
-		memdelete(script_language_cs);
-	}
-
-	ResourceLoader::remove_resource_format_loader(resource_loader_cs);
-	resource_loader_cs.unref();
-
-	ResourceSaver::remove_resource_format_saver(resource_saver_cs);
-	resource_saver_cs.unref();
-
-#ifdef TOOLS_ENABLED
-	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR) {
-		EditorTranslationParser::get_singleton()->remove_parser(csharp_translation_parser_plugin, EditorTranslationParser::STANDARD);
-		csharp_translation_parser_plugin.unref();
-	}
-#endif // TOOLS_ENABLED
-
-	if (_godotsharp) {
-		memdelete(_godotsharp);
-	}
-}
+#endif // CSHARP_TRANSLATION_PARSER_PLUGIN_H
