@@ -1,14 +1,14 @@
 blank_issues_enabled: false
 
 contact_links:
-  - name: Godot proposals
-    url: https://github.com/godotengine/godot-proposals
-    about: Please submit feature proposals on the Godot proposals repository, not here.
+  - name: Redot proposals
+    url: https://github.com/Redot-Engine/redot-proposals
+    about: Please submit feature proposals on the Redot proposals repository, not here.
 
-  - name: Godot documentation repository
-    url: https://github.com/godotengine/godot-docs
-    about: Please report issues with documentation on the Godot documentation repository, not here.
+  - name: Redot documentation repository
+    url: https://github.com/Redot-Engine/redot-docs
+    about: Please report issues with documentation on the Redot documentation repository, not here.
 
-  - name: Godot community channels
-    url: https://godotengine.org/community
+  - name: Redot community channels
+    url: https://redotengine.org/community
     about: Please ask for technical support on one of the other community channels, not here.
