@@ -640,11 +640,11 @@ double VariantUtilityFunctions::pingpong(double value, double length) {
 }
 
 double VariantUtilityFunctions::sigmoid(double x) {
-	return Math::sigmoid(x);
+	return Math::sigmoid_affine(x, 1.0, 0.0);
 }
 
 double VariantUtilityFunctions::sigmoid_approx(double x) {
-	return Math::sigmoid_approx(x);
+	return Math::sigmoid_affine_approx(x, 1.0, 0.0);
 }
 
 double VariantUtilityFunctions::sigmoid_affine(double x, double amplitude, double y_translation) {
