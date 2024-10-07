@@ -68,7 +68,7 @@ public class GodotRenderer implements GLSurfaceView.Renderer {
 
 	@Override
 	public void onRenderThreadExiting() {
-		Log.d(TAG, "Destroying Godot Engine");
+		Log.d(TAG, "Destroying Redot Engine");
 		GodotLib.ondestroy();
 	}
 

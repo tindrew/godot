@@ -315,7 +315,7 @@ Error GDExtensionLibraryLoader::parse_gdextension_file(const String &p_path) {
 		compatible = VERSION_PATCH >= compatibility_minimum[2];
 	}
 	if (!compatible) {
-		ERR_PRINT(vformat("GDExtension only compatible with Godot version %d.%d.%d or later: %s", compatibility_minimum[0], compatibility_minimum[1], compatibility_minimum[2], p_path));
+		ERR_PRINT(vformat("GDExtension only compatible with Redot version %d.%d.%d or later: %s", compatibility_minimum[0], compatibility_minimum[1], compatibility_minimum[2], p_path));
 		return ERR_INVALID_DATA;
 	}
 
@@ -347,7 +347,7 @@ Error GDExtensionLibraryLoader::parse_gdextension_file(const String &p_path) {
 #endif
 
 		if (!compatible) {
-			ERR_PRINT(vformat("GDExtension only compatible with Godot version %s or earlier: %s", compat_string, p_path));
+			ERR_PRINT(vformat("GDExtension only compatible with Redot version %s or earlier: %s", compat_string, p_path));
 			return ERR_INVALID_DATA;
 		}
 	}

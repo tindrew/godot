@@ -198,7 +198,7 @@ namespace Godot
             if (name == "GodotSharp" || name == "GodotSharpEditor")
                 return t;
 
-            Debug.Assert(t.BaseType is not null, "Script types must derive from a native Godot type.");
+            Debug.Assert(t.BaseType is not null, "Script types must derive from a native Redot type.");
 
             return InternalGetClassNativeBase(t.BaseType);
         }

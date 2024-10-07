@@ -44,11 +44,11 @@ public:
 	ProjectConverter3To4(int, int) {}
 
 	bool validate_conversion() {
-		ERR_FAIL_V_MSG(false, "Can't validate conversion for Godot 3.x projects, because RegEx module is disabled.");
+		ERR_FAIL_V_MSG(false, "Can't validate conversion for Redot 3.x projects, because RegEx module is disabled.");
 	}
 
 	bool convert() {
-		ERR_FAIL_V_MSG(false, "Can't run converter for Godot 3.x projects, because RegEx module is disabled.");
+		ERR_FAIL_V_MSG(false, "Can't run converter for Redot 3.x projects, because RegEx module is disabled.");
 	}
 };
 

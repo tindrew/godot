@@ -122,7 +122,7 @@ void OpenXRDebugUtilsExtension::on_instance_created(const XrInstance p_instance)
 			ERR_PRINT("OpenXR: Failed to create debug callback [" + OpenXRAPI::get_singleton()->get_error_string(result) + "]");
 		}
 
-		set_object_name(XR_OBJECT_TYPE_INSTANCE, uint64_t(p_instance), "Main Godot OpenXR Instance");
+		set_object_name(XR_OBJECT_TYPE_INSTANCE, uint64_t(p_instance), "Main Redot OpenXR Instance");
 	}
 }
 

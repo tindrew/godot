@@ -490,7 +490,7 @@ void ProjectDialog::ok_pressed() {
 	if (!is_folder_empty) {
 		ConfirmationDialog *cd = memnew(ConfirmationDialog);
 		cd->set_title(TTR("Warning: This folder is not empty"));
-		cd->set_text(TTR("You are about to create a Godot project in a non-empty folder.\nThe entire contents of this folder will be imported as project resources!\n\nAre you sure you wish to continue?"));
+		cd->set_text(TTR("You are about to create a Redot project in a non-empty folder.\nThe entire contents of this folder will be imported as project resources!\n\nAre you sure you wish to continue?"));
 		cd->get_ok_button()->connect(SceneStringName(pressed), callable_mp(this, &ProjectDialog::_nonempty_confirmation_ok_pressed));
 		get_parent()->add_child(cd);
 		cd->popup_centered();

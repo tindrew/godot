@@ -1,5 +1,5 @@
 """
-Load this file to your GDB session to enable pretty-printing of some Godot C++ types.
+Load this file to your GDB session to enable pretty-printing of some Redot C++ types.
 
 GDB command: `source misc/utility/godot_gdb_pretty_print.py`.
 
@@ -9,7 +9,7 @@ the `setupCommands` of your configuration in `launch.json`:
 "setupCommands": [
 ...
     {
-        "description": "Load custom pretty-printers for Godot types.",
+        "description": "Load custom pretty-printers for Redot types.",
         "text": "source ${workspaceFolder}/misc/utility/godot_gdb_pretty_print.py"
     }
 ]

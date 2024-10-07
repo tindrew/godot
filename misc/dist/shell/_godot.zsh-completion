@@ -26,7 +26,7 @@
 # SOFTWARE.
 
 _arguments \
-  "1::path to scene or 'project.godot' file:_files" \
+  "1::path to scene or 'project.godot' or 'project.redot' file:_files" \
   '(-h --help)'{-h,--help}'[display the full help message]' \
   '--version[display the version string]' \
   '(-v --verbose)'{-v,--verbose}'[use verbose stdout mode]' \

@@ -229,7 +229,7 @@ class Godot(private val context: Context) {
 			val window = activity.window
 			window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
 
-			Log.v(TAG, "Initializing Godot plugin registry")
+			Log.v(TAG, "Initializing Redot plugin registry")
 			val runtimePlugins = mutableSetOf<GodotPlugin>(AndroidRuntimePlugin(this))
 			runtimePlugins.addAll(primaryHost.getHostPlugins(this))
 			GodotPluginRegistry.initializePluginRegistry(this, runtimePlugins)
@@ -417,15 +417,15 @@ class Godot(private val context: Context) {
 					fileAccessHandler,
 					useApkExpansion,
 				)
-				Log.v(TAG, "Godot native layer initialization completed: $nativeLayerInitializeCompleted")
+				Log.v(TAG, "Redot native layer initialization completed: $nativeLayerInitializeCompleted")
 			}
 
 			if (nativeLayerInitializeCompleted && !nativeLayerSetupCompleted) {
 				nativeLayerSetupCompleted = GodotLib.setup(commandLine.toTypedArray(), tts)
 				if (!nativeLayerSetupCompleted) {
-					throw IllegalStateException("Unable to setup the Godot engine! Aborting...")
+					throw IllegalStateException("Unable to setup the Redot engine! Aborting...")
 				} else {
-					Log.v(TAG, "Godot native layer setup completed")
+					Log.v(TAG, "Redot native layer setup completed")
 				}
 			}
 		} finally {

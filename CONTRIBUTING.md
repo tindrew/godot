@@ -16,7 +16,7 @@ which details these points and more, and is a recommended read.
 
 ## Reporting bugs
 
-Report bugs [here](https://github.com/godotengine/godot/issues/new?assignees=&labels=&template=bug_report.yml).
+Report bugs [here](https://github.com/redotengine/rdot/issues/new?assignees=&labels=&template=bug_report.yml).
 Please follow the instructions in the template when you do.
 
 Notably, please include a Minimal Reproduction Project (MRP), which is a small
@@ -187,26 +187,16 @@ for an overview of the translation resources and what they correspond to.
 
 ## Communicating with developers
 
-The Godot Engine community has [many communication
-channels](https://godotengine.org/community), some used more for user-level
-discussions and support, others more for development discussions.
-
 To communicate with developers (e.g. to discuss a feature you want to implement
 or a bug you want to fix), the following channels can be used:
 
-- [Godot Contributors Chat](https://chat.godotengine.org): You will
+- [Redot Contributors Chat](https://discord.gg/redot): You will
   find most core developers there, so it's the go-to platform for direct chat
-  about Godot Engine development. Browse the [Directory](https://chat.godotengine.org/directory/channels)
-  for an overview of public channels focusing on various engine areas which you
-  might be interested in.
-- [Bug tracker](https://github.com/godotengine/godot/issues): If there is an
+  about Godot Engine development.
+- [Bug tracker](https://github.com/redotengine/redot/issues): If there is an
   existing issue about a topic you want to discuss, you can participate directly.
   If not, you can open a new issue. Please mind the guidelines outlined above
   for bug reporting.
-- [Feature proposals](https://github.com/godotengine/godot-proposals/issues):
-  To propose a new feature, we have a dedicated issue tracker for that. Don't
-  hesitate to start by talking about your idea on the Godot Contributors Chat
-  to make sure that it makes sense in Godot's context.
 
 Thanks for your interest in contributing!
 
