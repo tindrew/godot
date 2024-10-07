@@ -46,10 +46,11 @@ fdaa2920eb21fff3320a17e9239e04dfadecdb00
 # Add missing copyright headers and fix formatting
 e4213e66b2dd8f5a87d8cf5015ac83ba3143279d
 
-# Use HTTPS URL for Godot's website in the headers
+# Use HTTPS URL for Redot's website in the headers
+# TODO put the correct hash on the line below
 bd282ff43f23fe845f29a3e25c8efc01bd65ffb0
 
-# Add "Godot Engine contributors" copyright line
+# Add "Redot Engine contributors" copyright line
 df61dc4b2bd54a5a40c515493c76f5a458e5b541
 
 # Enforce template syntax `typename` over `class`

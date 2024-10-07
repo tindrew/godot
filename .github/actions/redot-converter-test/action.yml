@@ -1,9 +1,9 @@
-name: Test Godot project converter
-description: Test the Godot project converter.
+name: Test Redot project converter
+description: Test the Redot project converter.
 
 inputs:
   bin:
-    description: The path to the Godot executable
+    description: The path to the Redot executable
     required: true
 
 runs:
@@ -14,7 +14,7 @@ runs:
       run: |
         mkdir converter_test
         cd converter_test
-        touch project.godot
+        touch project.redot
         ../${{ inputs.bin }} --headless --validate-conversion-3to4
         cd ..
         rm converter_test -rf

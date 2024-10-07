@@ -1,38 +1,38 @@
-name: 🪲 Godot CPP
+name: 🪲 Redot CPP
 on:
   workflow_call:
 
 # Global Settings
 env:
   # Used for the cache key. Add version suffix to force clean build.
-  GODOT_BASE_BRANCH: master
-  # Used for the godot-cpp checkout.
-  GODOT_CPP_BRANCH: 4.3
+  REDOT_BASE_BRANCH: master
+  # Used for the redot-cpp checkout.
+  redot_CPP_BRANCH: 4.3
 
 concurrency:
   group: ci-${{ github.actor }}-${{ github.head_ref || github.run_number }}-${{ github.ref }}-cpp-tests
   cancel-in-progress: true
 
 jobs:
-  godot-cpp-tests:
+  redot-cpp-tests:
     runs-on: ubuntu-20.04
-    name: Build and test Godot CPP
+    name: Build and test Redot CPP
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           sparse-checkout: .github
 
-      - name: Checkout godot-cpp
+      - name: Checkout redot-cpp
         uses: actions/checkout@v4
         with:
           submodules: recursive
-          repository: godotengine/godot-cpp
-          ref: ${{ env.GODOT_CPP_BRANCH }}
-          path: godot-cpp
+          repository: redotengine/redot-cpp
+          ref: ${{ env.redot_CPP_BRANCH }}
+          path: redot-cpp
 
       - name: Setup Python and SCons
-        uses: ./.github/actions/godot-deps
+        uses: ./.github/actions/redot-deps
 
       - name: Setup GCC problem matcher
         uses: ammaraskar/gcc-problem-matcher@master
@@ -40,25 +40,25 @@ jobs:
       - name: Download GDExtension interface and API dump
         uses: ./.github/actions/download-artifact
         with:
-          name: godot-api-dump
-          path: ./godot-cpp/gdextension
+          name: redot-api-dump
+          path: ./redot-cpp/gdextension
 
-      # TODO: Enable caching when godot-cpp has proper cache limiting.
+      # TODO: Enable caching when redot-cpp has proper cache limiting.
 
-      # - name: Restore Godot build cache
-      #   uses: ./.github/actions/godot-cache-restore
+      # - name: Restore Redot build cache
+      #   uses: ./.github/actions/redot-cache-restore
       #   with:
-      #     cache-name: godot-cpp
+      #     cache-name: redot-cpp
       #   continue-on-error: true
 
-      - name: Build godot-cpp test extension
-        env: # Keep synced with godot-build.
+      - name: Build redot-cpp test extension
+        env: # Keep synced with redot-build.
           SCONS_CACHE: ${{ github.workspace }}/.scons-cache/
           SCONS_CACHE_LIMIT: 7168
-        run: scons --directory=./godot-cpp/test target=template_debug dev_build=yes verbose=yes
+        run: scons --directory=./redot-cpp/test target=template_debug dev_build=yes verbose=yes
 
-      # - name: Save Godot build cache
-      #   uses: ./.github/actions/godot-cache-save
+      # - name: Save Redot build cache
+      #   uses: ./.github/actions/redot-cache-save
       #   with:
-      #     cache-name: godot-cpp
+      #     cache-name: redot-cpp
       #   continue-on-error: true
