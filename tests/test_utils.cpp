@@ -2,11 +2,10 @@
 /*  test_utils.cpp                                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -43,7 +42,7 @@ String TestUtils::get_executable_dir() {
 }
 
 String TestUtils::get_temp_path(const String &p_suffix) {
-	const String temp_base = OS::get_singleton()->get_cache_path().path_join("godot_test");
+	const String temp_base = OS::get_singleton()->get_cache_path().path_join("redot_test");
 	DirAccess::make_dir_absolute(temp_base); // Ensure the directory exists.
 	return temp_base.path_join(p_suffix);
 }

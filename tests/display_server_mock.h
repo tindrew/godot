@@ -2,11 +2,10 @@
 /*  display_server_mock.h                                                 */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -101,7 +100,7 @@ public:
 	String get_name() const override { return "mock"; }
 
 	// You can simulate DisplayServer-events by calling this function.
-	// The events will be deliverd to Godot's Input-system.
+	// The events will be deliverd to Redot's Input-system.
 	// Mouse-events (Button & Motion) will additionally update the DisplayServer's mouse position.
 	// For Mouse motion events, the `relative`-property is set based on the distance to the previous mouse position.
 	void simulate_event(Ref<InputEvent> p_event) {

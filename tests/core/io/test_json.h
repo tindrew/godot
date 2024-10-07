@@ -2,11 +2,10 @@
 /*  test_json.h                                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -127,11 +126,11 @@ TEST_CASE("[JSON] Parsing arrays") {
 TEST_CASE("[JSON] Parsing objects (dictionaries)") {
 	JSON json;
 
-	json.parse(R"({"name": "Godot Engine", "is_free": true, "bugs": null, "apples": {"red": 500, "green": 0, "blue": -20}, "empty_object": {}})");
+	json.parse(R"({"name": "Redot Engine", "is_free": true, "bugs": null, "apples": {"red": 500, "green": 0, "blue": -20}, "empty_object": {}})");
 
 	const Dictionary dictionary = json.get_data();
 	CHECK_MESSAGE(
-			dictionary["name"] == "Godot Engine",
+			dictionary["name"] == "Redot Engine",
 			"The parsed JSON should contain the expected values.");
 	CHECK_MESSAGE(
 			dictionary["is_free"],

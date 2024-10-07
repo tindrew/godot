@@ -2,11 +2,10 @@
 /*  test_file_access.h                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -56,7 +55,7 @@ TEST_CASE("[FileAccess] CSV read") {
 	CHECK(row2[0] == "GOOD_EVENING");
 	CHECK(row2[1] == "Good Evening");
 	CHECK(row2[2].is_empty()); // Use case: not yet translated!
-	// https://github.com/godotengine/godot/issues/44269
+	// https://github.com/redotengine/redot/issues/44269
 	CHECK_MESSAGE(row2[2] != "\"", "Should not parse empty string as a single double quote.");
 	CHECK(row2[3] == "\"\""); // Intentionally testing only escaped double quotes.
 

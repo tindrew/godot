@@ -2,11 +2,10 @@
 /*  test_viewport.h                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -1123,7 +1122,7 @@ TEST_CASE("[SceneTree][Viewport] Controls and InputEvent handling") {
 	// Unit tests for Viewport::_gui_input_event (Drag and Drop)
 	SUBCASE("[Viewport][GuiInputEvent] Drag and Drop") {
 		// FIXME: Drag-Preview will likely change. Tests for this part would have to be rewritten anyway.
-		// See https://github.com/godotengine/godot/pull/67531#issuecomment-1385353430 for details.
+		// See https://github.com/redotengine/redot/pull/67531#issuecomment-1385353430 for details.
 		// Note: Testing Drag and Drop with non-embedded windows would require DisplayServerMock additions.
 		int min_grab_movement = 11;
 		SUBCASE("[Viewport][GuiInputEvent][DnD] Drag from one Control to another in the same viewport.") {
