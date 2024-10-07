@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  d3d12_godot_nir_bridge.h                                              */
+/*  d3d12_redot_nir_bridge.h                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -28,8 +27,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef D3D12_GODOT_NIR_BRIDGE_H
-#define D3D12_GODOT_NIR_BRIDGE_H
+#ifndef D3D12_redot_NIR_BRIDGE_H
+#define D3D12_redot_NIR_BRIDGE_H
 
 #include <stdint.h>
 
@@ -38,23 +37,23 @@ extern "C" {
 #endif
 
 // This one leaves room for potentially extremely copious bindings in a set.
-static const uint32_t GODOT_NIR_DESCRIPTOR_SET_MULTIPLIER = 100000000;
+static const uint32_t redot_NIR_DESCRIPTOR_SET_MULTIPLIER = 100000000;
 // This one leaves room for potentially big sized arrays.
-static const uint32_t GODOT_NIR_BINDING_MULTIPLIER = 100000;
+static const uint32_t redot_NIR_BINDING_MULTIPLIER = 100000;
 
-static const uint64_t GODOT_NIR_SC_SENTINEL_MAGIC = 0x45678900; // This must be as big as to be VBR-ed as a 32 bits number.
-static const uint64_t GODOT_NIR_SC_SENTINEL_MAGIC_MASK = 0xffffffffffffff00;
-static const uint64_t GODOT_NIR_SC_SENTINEL_ID_MASK = 0x00000000000000ff;
+static const uint64_t redot_NIR_SC_SENTINEL_MAGIC = 0x45678900; // This must be as big as to be VBR-ed as a 32 bits number.
+static const uint64_t redot_NIR_SC_SENTINEL_MAGIC_MASK = 0xffffffffffffff00;
+static const uint64_t redot_NIR_SC_SENTINEL_ID_MASK = 0x00000000000000ff;
 
-typedef struct GodotNirCallbacks {
+typedef struct RedotNirCallbacks {
 	void *data;
 	void (*report_resource)(uint32_t p_register, uint32_t p_space, uint32_t p_dxil_type, void *p_data);
 	void (*report_sc_bit_offset_fn)(uint32_t p_sc_id, uint64_t p_bit_offset, void *p_data);
 	void (*report_bitcode_bit_offset_fn)(uint64_t p_bit_offset, void *p_data);
-} GodotNirCallbacks;
+} RedotNirCallbacks;
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // D3D12_GODOT_NIR_BRIDGE_H
+#endif // D3D12_redot_NIR_BRIDGE_H

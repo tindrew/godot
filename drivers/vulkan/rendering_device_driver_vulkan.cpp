@@ -2,11 +2,10 @@
 /*  rendering_device_driver_vulkan.cpp                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -566,7 +565,7 @@ Error RenderingDeviceDriverVulkan::_check_device_features() {
 
 	// Check for required features.
 	if (!physical_device_features.imageCubeArray || !physical_device_features.independentBlend) {
-		String error_string = vformat("Your GPU (%s) does not support the following features which are required to use Vulkan-based renderers in Godot:\n\n", context_device.name);
+		String error_string = vformat("Your GPU (%s) does not support the following features which are required to use Vulkan-based renderers in Redot:\n\n", context_device.name);
 		if (!physical_device_features.imageCubeArray) {
 			error_string += "- No support for image cube arrays.\n";
 		}
@@ -679,7 +678,7 @@ Error RenderingDeviceDriverVulkan::_check_device_capabilities() {
 	const RenderingContextDriverVulkan::Functions &functions = context_driver->functions_get();
 	if (functions.GetPhysicalDeviceFeatures2 != nullptr) {
 		// We must check that the corresponding extension is present before assuming a feature as enabled.
-		// See also: https://github.com/godotengine/godot/issues/65409
+		// See also: https://github.com/redotengine/redot/issues/65409
 
 		void *next_features = nullptr;
 		VkPhysicalDeviceVulkan12Features device_features_vk_1_2 = {};
@@ -731,7 +730,7 @@ Error RenderingDeviceDriverVulkan::_check_device_capabilities() {
 
 		if (use_1_2_features) {
 #ifdef MACOS_ENABLED
-			ERR_FAIL_COND_V_MSG(!device_features_vk_1_2.shaderSampledImageArrayNonUniformIndexing, ERR_CANT_CREATE, "Your GPU doesn't support shaderSampledImageArrayNonUniformIndexing which is required to use the Vulkan-based renderers in Godot.");
+			ERR_FAIL_COND_V_MSG(!device_features_vk_1_2.shaderSampledImageArrayNonUniformIndexing, ERR_CANT_CREATE, "Your GPU doesn't support shaderSampledImageArrayNonUniformIndexing which is required to use the Vulkan-based renderers in Redot.");
 #endif
 			if (enabled_device_extension_names.has(VK_KHR_SHADER_FLOAT16_INT8_EXTENSION_NAME)) {
 				shader_capabilities.shader_float16_is_supported = device_features_vk_1_2.shaderFloat16;
@@ -2523,7 +2522,7 @@ Error RenderingDeviceDriverVulkan::command_queue_execute_and_present(CommandQueu
 
 		// Handling VK_SUBOPTIMAL_KHR the same as VK_SUCCESS is completely intentional.
 		//
-		// Godot does not currently support native rotation in Android when creating the swap chain. It intentionally uses
+		// Redot does not currently support native rotation in Android when creating the swap chain. It intentionally uses
 		// VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR instead of the current transform bits available in the surface capabilities.
 		// Choosing the transform that leads to optimal presentation leads to distortion that makes the application unusable,
 		// as the rotation of all the content is not handled at the moment.
@@ -2864,7 +2863,7 @@ Error RenderingDeviceDriverVulkan::swap_chain_resize(CommandQueueID p_cmd_queue,
 	}
 
 	// Prefer identity transform if it's supported, use the current transform otherwise.
-	// This behavior is intended as Godot does not supported native rotation in platforms that use these bits.
+	// This behavior is intended as Redot does not supported native rotation in platforms that use these bits.
 	// Refer to the comment in command_queue_present() for more details.
 	VkSurfaceTransformFlagBitsKHR surface_transform_bits;
 	if (surface_capabilities.supportedTransforms & VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR) {
@@ -3236,7 +3235,7 @@ Vector<uint8_t> RenderingDeviceDriverVulkan::shader_compile_binary_from_spirv(Ve
 		binptr[0] = 'G';
 		binptr[1] = 'S';
 		binptr[2] = 'B';
-		binptr[3] = 'D'; // Godot Shader Binary Data.
+		binptr[3] = 'D'; // Redot Shader Binary Data.
 		offset += 4;
 		encode_uint32(ShaderBinary::VERSION, binptr + offset);
 		offset += sizeof(uint32_t);

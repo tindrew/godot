@@ -1111,7 +1111,7 @@ uniform lowp uint directional_shadow_index;
 #if !defined(ADDITIVE_OMNI)
 float sample_shadow(highp sampler2DShadow shadow, float shadow_pixel_size, vec4 pos) {
 	// Use textureProjLod with LOD set to 0.0 over textureProj, as textureProj not working correctly on ANGLE with Metal backend.
-	// https://github.com/godotengine/godot/issues/93537
+	// https://github.com/redotengine/redot/issues/93537
 	float avg = textureProjLod(shadow, pos, 0.0);
 #ifdef SHADOW_MODE_PCF_13
 	pos /= pos.w;

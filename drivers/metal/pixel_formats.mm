@@ -2,11 +2,10 @@
 /*  pixel_formats.mm                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -1009,7 +1008,7 @@ void PixelFormats::modifyMTLFormatCapabilities(id<MTLDevice> p_device) {
 	addGPUMTLPixFmtCaps(Apple5, BGRA8Unorm_sRGB, All);
 
 	// Blending is actually supported for this format, but format channels cannot be individually write-enabled during blending.
-	// Disabling blending is the least-intrusive way to handle this in a Godot-friendly way.
+	// Disabling blending is the least-intrusive way to handle this in a Redot-friendly way.
 	addGPUMTLPixFmtCaps(Apple5, RGB9E5Float, All);
 	disableMTLPixFmtCaps(RGB9E5Float, Blend);
 
@@ -1252,7 +1251,7 @@ void PixelFormats::modifyMTLFormatCapabilities(id<MTLDevice> p_device) {
 #undef disableAllMTLPixFmtCaps
 #undef addFeatSetMTLVtxFmtCaps
 
-// Populates the DataFormat lookup maps and connects Godot and Metal pixel formats to one-another.
+// Populates the DataFormat lookup maps and connects Redot and Metal pixel formats to one-another.
 void PixelFormats::buildDFFormatMaps() {
 	// Iterate through the DataFormat descriptions, populate the lookup maps and back pointers,
 	// and validate the Metal formats for the platform and OS.
@@ -1260,9 +1259,9 @@ void PixelFormats::buildDFFormatMaps() {
 		DataFormatDesc &dfDesc = _dataFormatDescriptions[fmtIdx];
 		DataFormat dfFmt = dfDesc.dataFormat;
 		if (dfFmt != RD::DATA_FORMAT_MAX) {
-			// Populate the back reference from the Metal formats to the Godot format.
+			// Populate the back reference from the Metal formats to the Redot format.
 			// Validate the corresponding Metal formats for the platform, and clear them
-			// in the Godot format if not supported.
+			// in the Redot format if not supported.
 			if (dfDesc.mtlPixelFormat) {
 				MTLFormatDesc &mtlDesc = getMTLPixelFormatDesc(dfDesc.mtlPixelFormat);
 				if (mtlDesc.dataFormat == RD::DATA_FORMAT_MAX) {

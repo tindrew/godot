@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  godot_vulkan.h                                                        */
+/*  redot_vulkan.h                                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -28,8 +27,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_VULKAN_H
-#define GODOT_VULKAN_H
+#ifndef redot_VULKAN_H
+#define redot_VULKAN_H
 
 #ifdef USE_VOLK
 #include <volk.h>
@@ -39,4 +38,4 @@
 #include <vulkan/vulkan.h>
 #endif
 
-#endif // GODOT_VULKAN_H
+#endif // redot_VULKAN_H

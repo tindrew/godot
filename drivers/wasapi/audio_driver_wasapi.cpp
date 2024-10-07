@@ -2,11 +2,10 @@
 /*  audio_driver_wasapi.cpp                                               */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -389,7 +388,7 @@ Error AudioDriverWASAPI::audio_device_init(AudioDeviceWASAPI *p_device, bool p_i
 			audio_output.audio_client->GetStreamLatency(&latency);
 			// WASAPI REFERENCE_TIME units are 100 nanoseconds per unit
 			// https://docs.microsoft.com/en-us/windows/win32/directshow/reference-time
-			// Convert REFTIME to seconds as godot uses for latency
+			// Convert REFTIME to seconds as redot uses for latency
 			real_latency = (float)latency / (float)REFTIMES_PER_SEC;
 		}
 

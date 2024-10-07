@@ -2,11 +2,10 @@
 /*  rendering_context_driver_d3d12.cpp                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -67,9 +66,9 @@
 
 // Note: symbols are not available in MinGW and old MSVC import libraries.
 // GUID values from https://github.com/microsoft/DirectX-Headers/blob/7a9f4d06911d30eecb56a4956dab29dcca2709ed/include/directx/d3d12.idl#L5877-L5881
-const GUID CLSID_D3D12DeviceFactoryGodot = { 0x114863bf, 0xc386, 0x4aee, { 0xb3, 0x9d, 0x8f, 0x0b, 0xbb, 0x06, 0x29, 0x55 } };
-const GUID CLSID_D3D12DebugGodot = { 0xf2352aeb, 0xdd84, 0x49fe, { 0xb9, 0x7b, 0xa9, 0xdc, 0xfd, 0xcc, 0x1b, 0x4f } };
-const GUID CLSID_D3D12SDKConfigurationGodot = { 0x7cda6aca, 0xa03e, 0x49c8, { 0x94, 0x58, 0x03, 0x34, 0xd2, 0x0e, 0x07, 0xce } };
+const GUID CLSID_D3D12DeviceFactoryRedot = { 0x114863bf, 0xc386, 0x4aee, { 0xb3, 0x9d, 0x8f, 0x0b, 0xbb, 0x06, 0x29, 0x55 } };
+const GUID CLSID_D3D12DebugRedot = { 0xf2352aeb, 0xdd84, 0x49fe, { 0xb9, 0x7b, 0xa9, 0xdc, 0xfd, 0xcc, 0x1b, 0x4f } };
+const GUID CLSID_D3D12SDKConfigurationRedot = { 0x7cda6aca, 0xa03e, 0x49c8, { 0x94, 0x58, 0x03, 0x34, 0xd2, 0x0e, 0x07, 0xce } };
 
 #ifdef PIX_ENABLED
 #if defined(__GNUC__)
@@ -115,13 +114,13 @@ Error RenderingContextDriverD3D12::_init_device_factory() {
 	}
 
 	ID3D12SDKConfiguration *sdk_config = nullptr;
-	if (SUCCEEDED(d3d_D3D12GetInterface(CLSID_D3D12SDKConfigurationGodot, IID_PPV_ARGS(&sdk_config)))) {
+	if (SUCCEEDED(d3d_D3D12GetInterface(CLSID_D3D12SDKConfigurationRedot, IID_PPV_ARGS(&sdk_config)))) {
 		ID3D12SDKConfiguration1 *sdk_config1 = nullptr;
 		if (SUCCEEDED(sdk_config->QueryInterface(&sdk_config1))) {
 			if (SUCCEEDED(sdk_config1->CreateDeviceFactory(agility_sdk_version, agility_sdk_path.ascii().get_data(), IID_PPV_ARGS(device_factory.GetAddressOf())))) {
-				d3d_D3D12GetInterface(CLSID_D3D12DeviceFactoryGodot, IID_PPV_ARGS(device_factory.GetAddressOf()));
+				d3d_D3D12GetInterface(CLSID_D3D12DeviceFactoryRedot, IID_PPV_ARGS(device_factory.GetAddressOf()));
 			} else if (SUCCEEDED(sdk_config1->CreateDeviceFactory(agility_sdk_version, ".\\", IID_PPV_ARGS(device_factory.GetAddressOf())))) {
-				d3d_D3D12GetInterface(CLSID_D3D12DeviceFactoryGodot, IID_PPV_ARGS(device_factory.GetAddressOf()));
+				d3d_D3D12GetInterface(CLSID_D3D12DeviceFactoryRedot, IID_PPV_ARGS(device_factory.GetAddressOf()));
 			}
 			sdk_config1->Release();
 		}
@@ -135,7 +134,7 @@ Error RenderingContextDriverD3D12::_initialize_debug_layers() {
 	HRESULT res;
 
 	if (device_factory) {
-		res = device_factory->GetConfigurationInterface(CLSID_D3D12DebugGodot, IID_PPV_ARGS(&debug_controller));
+		res = device_factory->GetConfigurationInterface(CLSID_D3D12DebugRedot, IID_PPV_ARGS(&debug_controller));
 	} else {
 		PFN_D3D12_GET_DEBUG_INTERFACE d3d_D3D12GetDebugInterface = (PFN_D3D12_GET_DEBUG_INTERFACE)(void *)GetProcAddress(lib_d3d12, "D3D12GetDebugInterface");
 		ERR_FAIL_NULL_V(d3d_D3D12GetDebugInterface, ERR_CANT_CREATE);

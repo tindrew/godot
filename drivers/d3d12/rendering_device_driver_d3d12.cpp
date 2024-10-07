@@ -2,11 +2,10 @@
 /*  rendering_device_driver_d3d12.cpp                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -35,7 +34,7 @@
 #include "servers/rendering/rendering_device.h"
 #include "thirdparty/zlib/zlib.h"
 
-#include "d3d12_godot_nir_bridge.h"
+#include "d3d12_redot_nir_bridge.h"
 #include "dxil_hash.h"
 #include "rendering_context_driver_d3d12.h"
 
@@ -101,8 +100,8 @@ extern "C" {
 
 static const D3D12_RANGE VOID_RANGE = {};
 
-static const uint32_t ROOT_CONSTANT_REGISTER = GODOT_NIR_DESCRIPTOR_SET_MULTIPLIER * (RDD::MAX_UNIFORM_SETS + 1);
-static const uint32_t RUNTIME_DATA_REGISTER = GODOT_NIR_DESCRIPTOR_SET_MULTIPLIER * (RDD::MAX_UNIFORM_SETS + 2);
+static const uint32_t ROOT_CONSTANT_REGISTER = redot_NIR_DESCRIPTOR_SET_MULTIPLIER * (RDD::MAX_UNIFORM_SETS + 1);
+static const uint32_t RUNTIME_DATA_REGISTER = redot_NIR_DESCRIPTOR_SET_MULTIPLIER * (RDD::MAX_UNIFORM_SETS + 2);
 
 /*****************/
 /**** GENERIC ****/
@@ -2909,7 +2908,7 @@ uint32_t RenderingDeviceDriverD3D12::_shader_patch_dxil_specialization_constant(
 #ifdef DEV_ENABLED
 		uint64_t orig_patch_val = tamper_bits(bytecode.ptrw(), offset, patch_val);
 		// Checking against the value the NIR patch should have set.
-		DEV_ASSERT(!p_is_first_patch || ((orig_patch_val >> 1) & GODOT_NIR_SC_SENTINEL_MAGIC_MASK) == GODOT_NIR_SC_SENTINEL_MAGIC);
+		DEV_ASSERT(!p_is_first_patch || ((orig_patch_val >> 1) & redot_NIR_SC_SENTINEL_MAGIC_MASK) == redot_NIR_SC_SENTINEL_MAGIC);
 		uint64_t readback_patch_val = tamper_bits(bytecode.ptrw(), offset, patch_val);
 		DEV_ASSERT(readback_patch_val == patch_val);
 #else
@@ -3127,10 +3126,10 @@ Vector<uint8_t> RenderingDeviceDriverD3D12::shader_compile_binary_from_spirv(Vec
 				Vector<ShaderBinary::SpecializationConstant> &specialization_constants;
 			} shader_data{ stage, binary_data, sets_bindings, specialization_constants };
 
-			GodotNirCallbacks godot_nir_callbacks = {};
-			godot_nir_callbacks.data = &shader_data;
+			RedotNirCallbacks redot_nir_callbacks = {};
+			redot_nir_callbacks.data = &shader_data;
 
-			godot_nir_callbacks.report_resource = [](uint32_t p_register, uint32_t p_space, uint32_t p_dxil_type, void *p_data) {
+			redot_nir_callbacks.report_resource = [](uint32_t p_register, uint32_t p_space, uint32_t p_dxil_type, void *p_data) {
 				ShaderData &shader_data_in = *(ShaderData *)p_data;
 
 				// Types based on Mesa's dxil_container.h.
@@ -3159,8 +3158,8 @@ Vector<uint8_t> RenderingDeviceDriverD3D12::shader_compile_binary_from_spirv(Vec
 				} else {
 					DEV_ASSERT(p_space == 0);
 
-					uint32_t set = p_register / GODOT_NIR_DESCRIPTOR_SET_MULTIPLIER;
-					uint32_t binding = (p_register % GODOT_NIR_DESCRIPTOR_SET_MULTIPLIER) / GODOT_NIR_BINDING_MULTIPLIER;
+					uint32_t set = p_register / redot_NIR_DESCRIPTOR_SET_MULTIPLIER;
+					uint32_t binding = (p_register % redot_NIR_DESCRIPTOR_SET_MULTIPLIER) / redot_NIR_BINDING_MULTIPLIER;
 
 					DEV_ASSERT(set < (uint32_t)shader_data_in.sets_bindings.size());
 					[[maybe_unused]] bool found = false;
@@ -3188,7 +3187,7 @@ Vector<uint8_t> RenderingDeviceDriverD3D12::shader_compile_binary_from_spirv(Vec
 				}
 			};
 
-			godot_nir_callbacks.report_sc_bit_offset_fn = [](uint32_t p_sc_id, uint64_t p_bit_offset, void *p_data) {
+			redot_nir_callbacks.report_sc_bit_offset_fn = [](uint32_t p_sc_id, uint64_t p_bit_offset, void *p_data) {
 				ShaderData &shader_data_in = *(ShaderData *)p_data;
 				[[maybe_unused]] bool found = false;
 				for (int j = 0; j < shader_data_in.specialization_constants.size(); j++) {
@@ -3205,7 +3204,7 @@ Vector<uint8_t> RenderingDeviceDriverD3D12::shader_compile_binary_from_spirv(Vec
 				DEV_ASSERT(found);
 			};
 
-			godot_nir_callbacks.report_bitcode_bit_offset_fn = [](uint64_t p_bit_offset, void *p_data) {
+			redot_nir_callbacks.report_bitcode_bit_offset_fn = [](uint64_t p_bit_offset, void *p_data) {
 				DEV_ASSERT(p_bit_offset % 8 == 0);
 				ShaderData &shader_data_in = *(ShaderData *)p_data;
 				uint32_t offset_idx = SHADER_STAGES_BIT_OFFSET_INDICES[shader_data_in.stage];
@@ -3230,7 +3229,7 @@ Vector<uint8_t> RenderingDeviceDriverD3D12::shader_compile_binary_from_spirv(Vec
 			nir_to_dxil_options.environment = DXIL_ENVIRONMENT_VULKAN;
 			nir_to_dxil_options.shader_model_max = shader_model_d3d_to_dxil(shader_capabilities.shader_model);
 			nir_to_dxil_options.validator_version_max = NO_DXIL_VALIDATION;
-			nir_to_dxil_options.godot_nir_callbacks = &godot_nir_callbacks;
+			nir_to_dxil_options.redot_nir_callbacks = &redot_nir_callbacks;
 
 			dxil_logger logger = {};
 			logger.log = [](void *p_priv, const char *p_msg) {
@@ -3405,7 +3404,7 @@ Vector<uint8_t> RenderingDeviceDriverD3D12::shader_compile_binary_from_spirv(Vec
 					} break;
 				}
 
-				uint32_t dxil_register = set * GODOT_NIR_DESCRIPTOR_SET_MULTIPLIER + binding.binding * GODOT_NIR_BINDING_MULTIPLIER;
+				uint32_t dxil_register = set * redot_NIR_DESCRIPTOR_SET_MULTIPLIER + binding.binding * redot_NIR_BINDING_MULTIPLIER;
 
 				if (binding.res_class != RES_CLASS_INVALID) {
 					insert_range(
@@ -3525,7 +3524,7 @@ Vector<uint8_t> RenderingDeviceDriverD3D12::shader_compile_binary_from_spirv(Vec
 		binptr[0] = 'G';
 		binptr[1] = 'S';
 		binptr[2] = 'B';
-		binptr[3] = 'D'; // Godot shader binary data.
+		binptr[3] = 'D'; // Redot shader binary data.
 		offset += 4;
 		encode_uint32(ShaderBinary::VERSION, binptr + offset);
 		offset += sizeof(uint32_t);
