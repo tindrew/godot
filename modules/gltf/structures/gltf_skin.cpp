@@ -2,11 +2,10 @@
 /*  gltf_skin.cpp                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -54,8 +53,8 @@ void GLTFSkin::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_joint_i_to_bone_i", "joint_i_to_bone_i"), &GLTFSkin::set_joint_i_to_bone_i);
 	ClassDB::bind_method(D_METHOD("get_joint_i_to_name"), &GLTFSkin::get_joint_i_to_name);
 	ClassDB::bind_method(D_METHOD("set_joint_i_to_name", "joint_i_to_name"), &GLTFSkin::set_joint_i_to_name);
-	ClassDB::bind_method(D_METHOD("get_godot_skin"), &GLTFSkin::get_godot_skin);
-	ClassDB::bind_method(D_METHOD("set_godot_skin", "godot_skin"), &GLTFSkin::set_godot_skin);
+	ClassDB::bind_method(D_METHOD("get_redot_skin"), &GLTFSkin::get_redot_skin);
+	ClassDB::bind_method(D_METHOD("set_redot_skin", "redot_skin"), &GLTFSkin::set_redot_skin);
 
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "skin_root"), "set_skin_root", "get_skin_root"); // GLTFNodeIndex
 	ADD_PROPERTY(PropertyInfo(Variant::PACKED_INT32_ARRAY, "joints_original"), "set_joints_original", "get_joints_original"); // Vector<GLTFNodeIndex>
@@ -66,7 +65,7 @@ void GLTFSkin::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "skeleton"), "set_skeleton", "get_skeleton"); // int
 	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "joint_i_to_bone_i", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_INTERNAL), "set_joint_i_to_bone_i", "get_joint_i_to_bone_i"); // RBMap<int,
 	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "joint_i_to_name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_STORAGE | PROPERTY_USAGE_INTERNAL), "set_joint_i_to_name", "get_joint_i_to_name"); // RBMap<int,
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "godot_skin", PROPERTY_HINT_RESOURCE_TYPE, "Skin"), "set_godot_skin", "get_godot_skin"); // Ref<Skin>
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "redot_skin", PROPERTY_HINT_RESOURCE_TYPE, "Skin"), "set_redot_skin", "get_redot_skin"); // Ref<Skin>
 }
 
 GLTFNodeIndex GLTFSkin::get_skin_root() {
@@ -151,12 +150,12 @@ void GLTFSkin::set_joint_i_to_name(Dictionary p_joint_i_to_name) {
 	}
 }
 
-Ref<Skin> GLTFSkin::get_godot_skin() {
-	return godot_skin;
+Ref<Skin> GLTFSkin::get_redot_skin() {
+	return redot_skin;
 }
 
-void GLTFSkin::set_godot_skin(Ref<Skin> p_godot_skin) {
-	godot_skin = p_godot_skin;
+void GLTFSkin::set_redot_skin(Ref<Skin> p_redot_skin) {
+	redot_skin = p_redot_skin;
 }
 
 Error GLTFSkin::from_dictionary(const Dictionary &dict) {
@@ -219,8 +218,8 @@ Error GLTFSkin::from_dictionary(const Dictionary &dict) {
 		StringName value = joint_i_to_name_dict[key];
 		joint_i_to_name[key] = value;
 	}
-	if (dict.has("godot_skin")) {
-		godot_skin = dict["godot_skin"];
+	if (dict.has("redot_skin")) {
+		redot_skin = dict["redot_skin"];
 	}
 	return OK;
 }
@@ -273,6 +272,6 @@ Dictionary GLTFSkin::to_dictionary() {
 	}
 	dict["joint_i_to_name"] = joint_i_to_name_dict;
 
-	dict["godot_skin"] = godot_skin;
+	dict["redot_skin"] = redot_skin;
 	return dict;
 }

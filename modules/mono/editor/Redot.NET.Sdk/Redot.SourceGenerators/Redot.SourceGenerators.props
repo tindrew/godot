@@ -1,0 +1,10 @@
+<Project>
+  <ItemGroup>
+    <!-- $(RedotProjectDir) is defined by Redot.NET.Sdk -->
+    <CompilerVisibleProperty Include="RedotDisabledSourceGenerators" />
+    <CompilerVisibleProperty Include="RedotProjectDir" />
+    <CompilerVisibleProperty Include="RedotProjectDirBase64" />
+    <CompilerVisibleProperty Include="RedotSourceGenerators" />
+    <CompilerVisibleProperty Include="IsRedotToolsProject" />
+  </ItemGroup>
+</Project>

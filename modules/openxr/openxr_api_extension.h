@@ -2,11 +2,10 @@
 /*  openxr_api_extension.h                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -60,7 +59,7 @@ public:
 
 	static bool openxr_is_enabled(bool p_check_run_in_editor = true);
 
-	//TODO workaround as GDExtensionPtr<void> return type results in build error in godot-cpp
+	//TODO workaround as GDExtensionPtr<void> return type results in build error in redot-cpp
 	uint64_t get_instance_proc_addr(String p_name);
 	String get_error_string(uint64_t result);
 	String get_swapchain_format_name(int64_t p_swapchain_format);

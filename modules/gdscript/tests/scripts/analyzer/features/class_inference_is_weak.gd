@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/43503
+# https://github.com/redotengine/redot/issues/43503
 
 var test_var = null
 

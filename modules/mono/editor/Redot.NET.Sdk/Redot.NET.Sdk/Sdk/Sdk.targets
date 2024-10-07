@@ -1,0 +1,27 @@
+<Project>
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" Condition=" '$(RedotSdkImportsMicrosoftNetSdk)' == 'true' " />
+
+  <PropertyGroup>
+    <!--
+    Define constant to determine whether the real_t type in Redot is double precision or not.
+    By default this is false, like the official Redot builds. If someone is using a custom
+    Redot build where real_t is double, they can override the RedotFloat64 property.
+    -->
+    <DefineConstants Condition=" '$(RedotFloat64)' == 'true' ">redot_REAL_T_IS_DOUBLE;$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
+
+  <!-- C# source generators -->
+  <ItemGroup Condition=" '$(DisableImplicitRedotGeneratorReferences)' != 'true' ">
+    <PackageReference Include="Redot.SourceGenerators" Version="$(PackageVersion_Redot_SourceGenerators)" />
+  </ItemGroup>
+
+  <!-- Redot API references -->
+  <ItemGroup Condition=" '$(DisableImplicitRedotSharpReferences)' != 'true' ">
+    <PackageReference Include="RedotSharp" Version="$(PackageVersion_RedotSharp)" />
+    <PackageReference Include="RedotSharpEditor" Version="$(PackageVersion_RedotSharp)" Condition=" '$(Configuration)' == 'Debug' " />
+  </ItemGroup>
+
+  <!-- iOS-specific build targets -->
+  <Import Project="$(MSBuildThisFileDirectory)\iOSNativeAOT.targets" Condition=" '$(RedotTargetPlatform)' == 'ios' " />
+
+</Project>

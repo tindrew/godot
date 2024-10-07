@@ -2,11 +2,10 @@
 /*  image_loader_svg.cpp                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -47,7 +46,7 @@ void ImageLoaderSVG::_replace_color_property(const HashMap<Color, Color> &p_colo
 	// The strings being replaced are typically of the form:
 	//   fill="#5abbef"
 	// But can also be 3-letter codes, include alpha, be "none" or a named color
-	// string ("blue"). So we convert to Godot Color to compare with `p_color_map`.
+	// string ("blue"). So we convert to Redot Color to compare with `p_color_map`.
 
 	const int prefix_len = p_prefix.length();
 	int pos = r_string.find(p_prefix);

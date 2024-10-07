@@ -1,4 +1,4 @@
-# Godot glTF import and export module
+# Redot glTF import and export module
 
 In a nutshell, the glTF module works like this:
 

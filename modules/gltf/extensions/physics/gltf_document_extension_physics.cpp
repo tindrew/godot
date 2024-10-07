@@ -2,11 +2,10 @@
 /*  gltf_document_extension_physics.cpp                                   */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -121,7 +120,7 @@ Error GLTFDocumentExtensionPhysics::parse_node_extensions(Ref<GLTFState> p_state
 				p_gltf_node->set_additional_data(StringName("GLTFPhysicsTriggerShape"), state_shapes[node_shape_index]);
 			} else {
 				// If this node is a trigger but does not have a trigger shape,
-				// then it's a trigger body, what Godot calls an Area3D node.
+				// then it's a trigger body, what Redot calls an Area3D node.
 				Ref<GLTFPhysicsBody> trigger_body;
 				trigger_body.instantiate();
 				trigger_body->set_body_type("trigger");
@@ -193,7 +192,7 @@ CollisionObject3D *_generate_shape_with_body(Ref<GLTFState> p_state, Ref<GLTFNod
 
 CollisionObject3D *_get_ancestor_collision_object(Node *p_scene_parent) {
 	// Note: Despite the name of the method, at the moment this only checks
-	// the direct parent. Only check more later if Godot adds support for it.
+	// the direct parent. Only check more later if Redot adds support for it.
 	if (p_scene_parent) {
 		CollisionObject3D *co = Object::cast_to<CollisionObject3D>(p_scene_parent);
 		if (likely(co)) {
@@ -384,8 +383,8 @@ GLTFMeshIndex _get_or_insert_mesh_in_state(Ref<GLTFState> p_state, Ref<ImporterM
 
 void GLTFDocumentExtensionPhysics::convert_scene_node(Ref<GLTFState> p_state, Ref<GLTFNode> p_gltf_node, Node *p_scene_node) {
 	if (cast_to<CollisionShape3D>(p_scene_node)) {
-		CollisionShape3D *godot_shape = Object::cast_to<CollisionShape3D>(p_scene_node);
-		Ref<GLTFPhysicsShape> gltf_shape = GLTFPhysicsShape::from_node(godot_shape);
+		CollisionShape3D *redot_shape = Object::cast_to<CollisionShape3D>(p_scene_node);
+		Ref<GLTFPhysicsShape> gltf_shape = GLTFPhysicsShape::from_node(redot_shape);
 		ERR_FAIL_COND_MSG(gltf_shape.is_null(), "glTF Physics: Could not convert CollisionShape3D to GLTFPhysicsShape. Does it have a valid Shape3D?");
 		{
 			Ref<ImporterMesh> importer_mesh = gltf_shape->get_importer_mesh();
@@ -405,8 +404,8 @@ void GLTFDocumentExtensionPhysics::convert_scene_node(Ref<GLTFState> p_state, Re
 			p_gltf_node->set_additional_data(StringName("GLTFPhysicsColliderShape"), gltf_shape);
 		}
 	} else if (cast_to<CollisionObject3D>(p_scene_node)) {
-		CollisionObject3D *godot_body = Object::cast_to<CollisionObject3D>(p_scene_node);
-		p_gltf_node->set_additional_data(StringName("GLTFPhysicsBody"), GLTFPhysicsBody::from_node(godot_body));
+		CollisionObject3D *redot_body = Object::cast_to<CollisionObject3D>(p_scene_node);
+		p_gltf_node->set_additional_data(StringName("GLTFPhysicsBody"), GLTFPhysicsBody::from_node(redot_body));
 	}
 }
 

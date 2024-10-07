@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/90086
+# https://github.com/redotengine/redot/issues/90086
 
 class MyObj:
     var obj: WeakRef

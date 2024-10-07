@@ -2,11 +2,10 @@
 /*  mono_gc_handle.cpp                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -38,13 +37,13 @@ void MonoGCHandleData::release() {
 	CRASH_COND(handle.value && GDMono::get_singleton() == nullptr);
 #endif
 
-	if (handle.value && GDMonoCache::godot_api_cache_updated &&
+	if (handle.value && GDMonoCache::redot_api_cache_updated &&
 			GDMono::get_singleton()->is_runtime_initialized()) {
 		free_gchandle(handle);
 		handle.value = nullptr;
 	}
 }
 void MonoGCHandleData::free_gchandle(GCHandleIntPtr p_gchandle) {
-	CRASH_COND(!GDMonoCache::godot_api_cache_updated);
+	CRASH_COND(!GDMonoCache::redot_api_cache_updated);
 	GDMonoCache::managed_callbacks.GCHandleBridge_FreeGCHandle(p_gchandle);
 }

@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  library_godot_websocket.js                                            */
+/*  library_redot_websocket.js                                            */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -28,54 +27,54 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-const GodotWebSocket = {
+const RedotWebSocket = {
 	// Our socket implementation that forwards events to C++.
-	$GodotWebSocket__deps: ['$IDHandler', '$GodotRuntime'],
-	$GodotWebSocket: {
+	$RedotWebSocket__deps: ['$IDHandler', '$RedotRuntime'],
+	$RedotWebSocket: {
 		// Connection opened, report selected protocol
 		_onopen: function (p_id, callback, event) {
 			const ref = IDHandler.get(p_id);
 			if (!ref) {
-				return; // Godot object is gone.
+				return; // Redot object is gone.
 			}
-			const c_str = GodotRuntime.allocString(ref.protocol);
+			const c_str = RedotRuntime.allocString(ref.protocol);
 			callback(c_str);
-			GodotRuntime.free(c_str);
+			RedotRuntime.free(c_str);
 		},
 
 		// Message received, report content and type (UTF8 vs binary)
 		_onmessage: function (p_id, callback, event) {
 			const ref = IDHandler.get(p_id);
 			if (!ref) {
-				return; // Godot object is gone.
+				return; // Redot object is gone.
 			}
 			let buffer;
 			let is_string = 0;
 			if (event.data instanceof ArrayBuffer) {
 				buffer = new Uint8Array(event.data);
 			} else if (event.data instanceof Blob) {
-				GodotRuntime.error('Blob type not supported');
+				RedotRuntime.error('Blob type not supported');
 				return;
 			} else if (typeof event.data === 'string') {
 				is_string = 1;
 				const enc = new TextEncoder('utf-8');
 				buffer = new Uint8Array(enc.encode(event.data));
 			} else {
-				GodotRuntime.error('Unknown message type');
+				RedotRuntime.error('Unknown message type');
 				return;
 			}
 			const len = buffer.length * buffer.BYTES_PER_ELEMENT;
-			const out = GodotRuntime.malloc(len);
+			const out = RedotRuntime.malloc(len);
 			HEAPU8.set(buffer, out);
 			callback(out, len, is_string);
-			GodotRuntime.free(out);
+			RedotRuntime.free(out);
 		},
 
 		// An error happened, 'onclose' will be called after this.
 		_onerror: function (p_id, callback, event) {
 			const ref = IDHandler.get(p_id);
 			if (!ref) {
-				return; // Godot object is gone.
+				return; // Redot object is gone.
 			}
 			callback();
 		},
@@ -84,18 +83,18 @@ const GodotWebSocket = {
 		_onclose: function (p_id, callback, event) {
 			const ref = IDHandler.get(p_id);
 			if (!ref) {
-				return; // Godot object is gone.
+				return; // Redot object is gone.
 			}
-			const c_str = GodotRuntime.allocString(event.reason);
+			const c_str = RedotRuntime.allocString(event.reason);
 			callback(event.code, c_str, event.wasClean ? 1 : 0);
-			GodotRuntime.free(c_str);
+			RedotRuntime.free(c_str);
 		},
 
 		// Send a message
 		send: function (p_id, p_data) {
 			const ref = IDHandler.get(p_id);
 			if (!ref || ref.readyState !== ref.OPEN) {
-				return 1; // Godot object is gone or socket is not in a ready state.
+				return 1; // Redot object is gone or socket is not in a ready state.
 			}
 			ref.send(p_data);
 			return 0;
@@ -105,17 +104,17 @@ const GodotWebSocket = {
 		bufferedAmount: function (p_id) {
 			const ref = IDHandler.get(p_id);
 			if (!ref) {
-				return 0; // Godot object is gone.
+				return 0; // Redot object is gone.
 			}
 			return ref.bufferedAmount;
 		},
 
 		create: function (socket, p_on_open, p_on_message, p_on_error, p_on_close) {
 			const id = IDHandler.add(socket);
-			socket.onopen = GodotWebSocket._onopen.bind(null, id, p_on_open);
-			socket.onmessage = GodotWebSocket._onmessage.bind(null, id, p_on_message);
-			socket.onerror = GodotWebSocket._onerror.bind(null, id, p_on_error);
-			socket.onclose = GodotWebSocket._onclose.bind(null, id, p_on_close);
+			socket.onopen = RedotWebSocket._onopen.bind(null, id, p_on_open);
+			socket.onmessage = RedotWebSocket._onmessage.bind(null, id, p_on_message);
+			socket.onerror = RedotWebSocket._onerror.bind(null, id, p_on_error);
+			socket.onclose = RedotWebSocket._onclose.bind(null, id, p_on_close);
 			return id;
 		},
 
@@ -135,7 +134,7 @@ const GodotWebSocket = {
 			if (!ref) {
 				return;
 			}
-			GodotWebSocket.close(p_id, 3001, 'destroyed');
+			RedotWebSocket.close(p_id, 3001, 'destroyed');
 			IDHandler.remove(p_id);
 			ref.onopen = null;
 			ref.onmessage = null;
@@ -144,15 +143,15 @@ const GodotWebSocket = {
 		},
 	},
 
-	godot_js_websocket_create__proxy: 'sync',
-	godot_js_websocket_create__sig: 'iiiiiiii',
-	godot_js_websocket_create: function (p_ref, p_url, p_proto, p_on_open, p_on_message, p_on_error, p_on_close) {
-		const on_open = GodotRuntime.get_func(p_on_open).bind(null, p_ref);
-		const on_message = GodotRuntime.get_func(p_on_message).bind(null, p_ref);
-		const on_error = GodotRuntime.get_func(p_on_error).bind(null, p_ref);
-		const on_close = GodotRuntime.get_func(p_on_close).bind(null, p_ref);
-		const url = GodotRuntime.parseString(p_url);
-		const protos = GodotRuntime.parseString(p_proto);
+	redot_js_websocket_create__proxy: 'sync',
+	redot_js_websocket_create__sig: 'iiiiiiii',
+	redot_js_websocket_create: function (p_ref, p_url, p_proto, p_on_open, p_on_message, p_on_error, p_on_close) {
+		const on_open = RedotRuntime.get_func(p_on_open).bind(null, p_ref);
+		const on_message = RedotRuntime.get_func(p_on_message).bind(null, p_ref);
+		const on_error = RedotRuntime.get_func(p_on_error).bind(null, p_ref);
+		const on_close = RedotRuntime.get_func(p_on_close).bind(null, p_ref);
+		const url = RedotRuntime.parseString(p_url);
+		const protos = RedotRuntime.parseString(p_proto);
 		let socket = null;
 		try {
 			if (protos) {
@@ -164,44 +163,44 @@ const GodotWebSocket = {
 			return 0;
 		}
 		socket.binaryType = 'arraybuffer';
-		return GodotWebSocket.create(socket, on_open, on_message, on_error, on_close);
+		return RedotWebSocket.create(socket, on_open, on_message, on_error, on_close);
 	},
 
-	godot_js_websocket_send__proxy: 'sync',
-	godot_js_websocket_send__sig: 'iiiii',
-	godot_js_websocket_send: function (p_id, p_buf, p_buf_len, p_raw) {
+	redot_js_websocket_send__proxy: 'sync',
+	redot_js_websocket_send__sig: 'iiiii',
+	redot_js_websocket_send: function (p_id, p_buf, p_buf_len, p_raw) {
 		const bytes_array = new Uint8Array(p_buf_len);
 		let i = 0;
 		for (i = 0; i < p_buf_len; i++) {
-			bytes_array[i] = GodotRuntime.getHeapValue(p_buf + i, 'i8');
+			bytes_array[i] = RedotRuntime.getHeapValue(p_buf + i, 'i8');
 		}
 		let out = bytes_array.buffer;
 		if (!p_raw) {
 			out = new TextDecoder('utf-8').decode(bytes_array);
 		}
-		return GodotWebSocket.send(p_id, out);
+		return RedotWebSocket.send(p_id, out);
 	},
 
-	godot_js_websocket_buffered_amount__proxy: 'sync',
-	godot_js_websocket_buffered_amount__sig: 'ii',
-	godot_js_websocket_buffered_amount: function (p_id) {
-		return GodotWebSocket.bufferedAmount(p_id);
+	redot_js_websocket_buffered_amount__proxy: 'sync',
+	redot_js_websocket_buffered_amount__sig: 'ii',
+	redot_js_websocket_buffered_amount: function (p_id) {
+		return RedotWebSocket.bufferedAmount(p_id);
 	},
 
-	godot_js_websocket_close__proxy: 'sync',
-	godot_js_websocket_close__sig: 'viii',
-	godot_js_websocket_close: function (p_id, p_code, p_reason) {
+	redot_js_websocket_close__proxy: 'sync',
+	redot_js_websocket_close__sig: 'viii',
+	redot_js_websocket_close: function (p_id, p_code, p_reason) {
 		const code = p_code;
-		const reason = GodotRuntime.parseString(p_reason);
-		GodotWebSocket.close(p_id, code, reason);
+		const reason = RedotRuntime.parseString(p_reason);
+		RedotWebSocket.close(p_id, code, reason);
 	},
 
-	godot_js_websocket_destroy__proxy: 'sync',
-	godot_js_websocket_destroy__sig: 'vi',
-	godot_js_websocket_destroy: function (p_id) {
-		GodotWebSocket.destroy(p_id);
+	redot_js_websocket_destroy__proxy: 'sync',
+	redot_js_websocket_destroy__sig: 'vi',
+	redot_js_websocket_destroy: function (p_id) {
+		RedotWebSocket.destroy(p_id);
 	},
 };
 
-autoAddDeps(GodotWebSocket, '$GodotWebSocket');
-mergeInto(LibraryManager.library, GodotWebSocket);
+autoAddDeps(RedotWebSocket, '$RedotWebSocket');
+mergeInto(LibraryManager.library, RedotWebSocket);

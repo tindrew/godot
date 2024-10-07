@@ -2,11 +2,10 @@
 /*  gdscript_extend_parser.h                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -32,7 +31,7 @@
 #define GDSCRIPT_EXTEND_PARSER_H
 
 #include "../gdscript_parser.h"
-#include "godot_lsp.h"
+#include "redot_lsp.h"
 
 #include "core/variant/variant.h"
 
@@ -67,23 +66,23 @@ typedef HashMap<String, const lsp::DocumentSymbol *> ClassMembers;
  * →→var my_value = 42
  * ```
  * `_` is at:
- * * Godot: `column=12`
+ * * Redot: `column=12`
  * 	* using `indent/size=4`
  * 	* Note: counting starts at `1`
  * * LSP: `character=8`
  * 	* Note: counting starts at `0`
  */
-struct GodotPosition {
+struct RedotPosition {
 	int line;
 	int column;
 
-	GodotPosition(int p_line, int p_column) :
+	RedotPosition(int p_line, int p_column) :
 			line(p_line), column(p_column) {}
 
 	lsp::Position to_lsp(const Vector<String> &p_lines) const;
-	static GodotPosition from_lsp(const lsp::Position p_pos, const Vector<String> &p_lines);
+	static RedotPosition from_lsp(const lsp::Position p_pos, const Vector<String> &p_lines);
 
-	bool operator==(const GodotPosition &p_other) const {
+	bool operator==(const RedotPosition &p_other) const {
 		return line == p_other.line && column == p_other.column;
 	}
 
@@ -92,17 +91,17 @@ struct GodotPosition {
 	}
 };
 
-struct GodotRange {
-	GodotPosition start;
-	GodotPosition end;
+struct RedotRange {
+	RedotPosition start;
+	RedotPosition end;
 
-	GodotRange(GodotPosition p_start, GodotPosition p_end) :
+	RedotRange(RedotPosition p_start, RedotPosition p_end) :
 			start(p_start), end(p_end) {}
 
 	lsp::Range to_lsp(const Vector<String> &p_lines) const;
-	static GodotRange from_lsp(const lsp::Range &p_range, const Vector<String> &p_lines);
+	static RedotRange from_lsp(const lsp::Range &p_range, const Vector<String> &p_lines);
 
-	bool operator==(const GodotRange &p_other) const {
+	bool operator==(const RedotRange &p_other) const {
 		return start == p_other.start && end == p_other.end;
 	}
 

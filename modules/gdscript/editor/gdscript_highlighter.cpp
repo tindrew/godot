@@ -2,11 +2,10 @@
 /*  gdscript_highlighter.cpp                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -828,9 +827,9 @@ void GDScriptSyntaxHighlighter::_update_cache() {
 	}
 
 	const String text_edit_color_theme = EDITOR_GET("text_editor/theme/color_theme");
-	const bool godot_2_theme = text_edit_color_theme == "Godot 2";
+	const bool redot_2_theme = text_edit_color_theme == "Redot 2";
 
-	if (godot_2_theme || EditorThemeManager::is_dark_theme()) {
+	if (redot_2_theme || EditorThemeManager::is_dark_theme()) {
 		function_definition_color = Color(0.4, 0.9, 1.0);
 		global_function_color = Color(0.64, 0.64, 0.96);
 		node_path_color = Color(0.72, 0.77, 0.49);
@@ -867,7 +866,7 @@ void GDScriptSyntaxHighlighter::_update_cache() {
 	EDITOR_DEF("text_editor/theme/highlighting/comment_markers/warning_list", "BUG,DEPRECATED,FIXME,HACK,TASK,TBD,TODO,WARNING");
 	EDITOR_DEF("text_editor/theme/highlighting/comment_markers/notice_list", "INFO,NOTE,NOTICE,TEST,TESTING");
 
-	if (text_edit_color_theme == "Default" || godot_2_theme) {
+	if (text_edit_color_theme == "Default" || redot_2_theme) {
 		EditorSettings::get_singleton()->set_initial_value(
 				"text_editor/theme/highlighting/gdscript/function_definition_color",
 				function_definition_color,

@@ -1,0 +1,117 @@
+<Project>
+  <Import Project="$(MSBuildThisFileDirectory)\SdkPackageVersions.props" />
+
+  <PropertyGroup>
+    <UsingRedotNETSdk>true</UsingRedotNETSdk>
+
+    <!-- Determines if we should import Microsoft.NET.Sdk, if it wasn't already imported. -->
+    <RedotSdkImportsMicrosoftNetSdk Condition=" '$(UsingMicrosoftNETSdk)' != 'true' ">true</RedotSdkImportsMicrosoftNetSdk>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Configurations>Debug;ExportDebug;ExportRelease</Configurations>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+
+    <RedotProjectDir Condition=" '$(RedotProjectDir)' == '' ">$(MSBuildProjectDirectory)</RedotProjectDir>
+    <RedotProjectDir>$([MSBuild]::EnsureTrailingSlash('$(RedotProjectDir)'))</RedotProjectDir>
+    <RedotProjectDirBase64 Condition=" $([MSBuild]::VersionGreaterThanOrEquals($(MSBuildAssemblyVersion), '17.3')) ">$([MSBuild]::ConvertToBase64('$(RedotProjectDir)'))</RedotProjectDirBase64>
+
+    <!-- Custom output paths for Redot projects. In brief, 'bin\' and 'obj\' are moved to '$(RedotProjectDir)\.redot\mono\temp\'. -->
+    <BaseOutputPath>$(RedotProjectDir).redot\mono\temp\bin\</BaseOutputPath>
+    <OutputPath>$(RedotProjectDir).redot\mono\temp\bin\$(Configuration)\</OutputPath>
+    <!--
+    Use custom IntermediateOutputPath and BaseIntermediateOutputPath only if it wasn't already set.
+    Otherwise the old values may have already been changed by MSBuild which can cause problems with NuGet.
+    -->
+    <IntermediateOutputPath Condition=" '$(IntermediateOutputPath)' == '' ">$(RedotProjectDir).redot\mono\temp\obj\$(Configuration)\</IntermediateOutputPath>
+    <BaseIntermediateOutputPath Condition=" '$(BaseIntermediateOutputPath)' == '' ">$(RedotProjectDir).redot\mono\temp\obj\</BaseIntermediateOutputPath>
+
+    <!-- Do not append the target framework name to the output path. -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <Target Condition=" $([MSBuild]::VersionLessThan($(MSBuildAssemblyVersion), '17.3')) " Name="RedotProjectDir" BeforeTargets="Build">
+    <Error Text="Cannot build from path containing '%23', move your project or update dotnet to the latest version." Condition="$(RedotProjectDir.Contains('%23'))" /> <!-- # -->
+    <Error Text="Cannot build from path containing '%3B', move your project or update dotnet to the latest version." Condition="$(RedotProjectDir.Contains('%3B'))" /> <!-- ; -->
+    <Error Text="Cannot build from path containing newlines, move your project or update dotnet to the latest version." Condition="$(RedotProjectDir.Contains('%0A'))" /> <!-- \n -->
+    <Error Text="Cannot build from path containing newlines, move your project or update dotnet to the latest version." Condition="$(RedotProjectDir.Contains('%0D'))" /> <!-- \r -->
+  </Target>
+
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" Condition=" '$(RedotSdkImportsMicrosoftNetSdk)' == 'true' " />
+
+  <PropertyGroup>
+    <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+  </PropertyGroup>
+
+  <!--
+  The Microsoft.NET.Sdk only understands of the Debug and Release configurations.
+  We need to set the following properties manually for ExportDebug and ExportRelease.
+  -->
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' or '$(Configuration)' == 'ExportDebug' ">
+    <DebugSymbols Condition=" '$(DebugSymbols)' == '' ">true</DebugSymbols>
+    <Optimize Condition=" '$(Optimize)' == '' ">false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'ExportRelease' ">
+    <Optimize Condition=" '$(Optimize)' == '' ">true</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RedotApiConfiguration Condition=" '$(Configuration)' != 'ExportRelease' ">Debug</RedotApiConfiguration>
+    <RedotApiConfiguration Condition=" '$(Configuration)' == 'ExportRelease' ">Release</RedotApiConfiguration>
+  </PropertyGroup>
+
+  <!-- Auto-detect the target Redot platform if it was not specified. -->
+  <PropertyGroup Condition=" '$(RedotTargetPlatform)' == '' ">
+    <RedotTargetPlatform Condition=" $(RuntimeIdentifier.StartsWith('ios')) ">ios</RedotTargetPlatform>
+    <RedotTargetPlatform Condition=" '$(RedotTargetPlatform)' == '' and $(RuntimeIdentifier.StartsWith('android')) ">android</RedotTargetPlatform>
+    <RedotTargetPlatform Condition=" '$(RedotTargetPlatform)' == '' and $(RuntimeIdentifier.StartsWith('browser')) ">web</RedotTargetPlatform>
+
+    <RedotTargetPlatform Condition=" '$(RedotTargetPlatform)' == '' and $(RuntimeIdentifier.StartsWith('linux')) ">linuxbsd</RedotTargetPlatform>
+    <RedotTargetPlatform Condition=" '$(RedotTargetPlatform)' == '' and $(RuntimeIdentifier.StartsWith('freebsd')) ">linuxbsd</RedotTargetPlatform>
+    <RedotTargetPlatform Condition=" '$(RedotTargetPlatform)' == '' and $(RuntimeIdentifier.StartsWith('osx')) ">macos</RedotTargetPlatform>
+    <RedotTargetPlatform Condition=" '$(RedotTargetPlatform)' == '' and $(RuntimeIdentifier.StartsWith('win')) ">windows</RedotTargetPlatform>
+  </PropertyGroup>
+
+  <!-- Auto-detect the target Redot platform if it was not specified and there's no runtime identifier information. -->
+  <PropertyGroup Condition=" '$(RedotTargetPlatform)' == '' ">
+    <RedotTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(Linux))' ">linuxbsd</RedotTargetPlatform>
+    <RedotTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(FreeBSD))' ">linuxbsd</RedotTargetPlatform>
+    <RedotTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(OSX))' ">macos</RedotTargetPlatform>
+    <RedotTargetPlatform Condition=" '$([MSBuild]::IsOsPlatform(Windows))' ">windows</RedotTargetPlatform>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RedotFloat64 Condition=" '$(RedotFloat64)' == '' ">false</RedotFloat64>
+  </PropertyGroup>
+
+  <!-- Redot DefineConstants. -->
+  <PropertyGroup>
+    <!-- Define constants to identify Redot builds. -->
+    <RedotDefineConstants>redot</RedotDefineConstants>
+
+    <!--
+    Define constant to determine the target Redot platform. This includes the
+    recognized platform names and the platform category (PC, MOBILE or WEB).
+    -->
+    <RedotPlatformConstants Condition=" '$(RedotTargetPlatform)' == 'windows' ">redot_WINDOWS;redot_PC</RedotPlatformConstants>
+    <RedotPlatformConstants Condition=" '$(RedotTargetPlatform)' == 'linuxbsd' ">redot_LINUXBSD;redot_PC</RedotPlatformConstants>
+    <RedotPlatformConstants Condition=" '$(RedotTargetPlatform)' == 'macos' ">redot_OSX;redot_MACOS;redot_PC</RedotPlatformConstants>
+    <RedotPlatformConstants Condition=" '$(RedotTargetPlatform)' == 'android' ">redot_ANDROID;redot_MOBILE</RedotPlatformConstants>
+    <RedotPlatformConstants Condition=" '$(RedotTargetPlatform)' == 'ios' ">redot_IPHONE;redot_IOS;redot_MOBILE</RedotPlatformConstants>
+    <RedotPlatformConstants Condition=" '$(RedotTargetPlatform)' == 'web' ">redot_JAVASCRIPT;redot_HTML5;redot_WASM;redot_WEB</RedotPlatformConstants>
+
+    <RedotDefineConstants>$(RedotDefineConstants);$(RedotPlatformConstants);$(RedotVersionConstants)</RedotDefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- ExportDebug also defines DEBUG like Debug does. -->
+    <DefineConstants Condition=" '$(Configuration)' == 'ExportDebug' ">$(DefineConstants);DEBUG</DefineConstants>
+    <!-- Debug defines TOOLS to differentiate between Debug and ExportDebug configurations. -->
+    <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">$(DefineConstants);TOOLS</DefineConstants>
+
+    <DefineConstants>$(RedotDefineConstants);$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)\Android.props" Condition=" '$(RedotTargetPlatform)' == 'android' " />
+  <Import Project="$(MSBuildThisFileDirectory)\iOSNativeAOT.props" Condition=" '$(RedotTargetPlatform)' == 'ios' " />
+</Project>

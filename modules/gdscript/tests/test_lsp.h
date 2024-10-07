@@ -2,11 +2,10 @@
 /*  test_lsp.h                                                            */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -38,7 +37,7 @@
 #include "../language_server/gdscript_extend_parser.h"
 #include "../language_server/gdscript_language_protocol.h"
 #include "../language_server/gdscript_workspace.h"
-#include "../language_server/godot_lsp.h"
+#include "../language_server/redot_lsp.h"
 
 #include "core/io/dir_access.h"
 #include "core/io/file_access_pack.h"
@@ -65,8 +64,8 @@ struct doctest::StringMaker<lsp::Range> {
 };
 
 template <>
-struct doctest::StringMaker<GodotPosition> {
-	static doctest::String convert(const GodotPosition &p_val) {
+struct doctest::StringMaker<RedotPosition> {
+	static doctest::String convert(const RedotPosition &p_val) {
 		return p_val.to_string().utf8().get_data();
 	}
 };
@@ -314,8 +313,8 @@ inline lsp::Position lsp_pos(int line, int character) {
 	return p;
 }
 
-void test_position_roundtrip(lsp::Position p_lsp, GodotPosition p_gd, const PackedStringArray &p_lines) {
-	GodotPosition actual_gd = GodotPosition::from_lsp(p_lsp, p_lines);
+void test_position_roundtrip(lsp::Position p_lsp, RedotPosition p_gd, const PackedStringArray &p_lines) {
+	RedotPosition actual_gd = RedotPosition::from_lsp(p_lsp, p_lines);
 	CHECK_EQ(p_gd, actual_gd);
 	lsp::Position actual_lsp = p_gd.to_lsp(p_lines);
 	CHECK_EQ(p_lsp, actual_lsp);
@@ -329,9 +328,9 @@ void test_position_roundtrip(lsp::Position p_lsp, GodotPosition p_gd, const Pack
 //      -> Character on `r` -> cursor between `a`&`r`s for tests:
 // * Line & Char:
 //   * LSP: both 0-based
-//   * Godot: both 1-based
+//   * Redot: both 1-based
 TEST_SUITE("[Modules][GDScript][LSP]") {
-	TEST_CASE("Can convert positions to and from Godot") {
+	TEST_CASE("Can convert positions to and from Redot") {
 		String code = R"(extends Node
 
 var member := 42
@@ -343,46 +342,46 @@ func f():
 
 		SUBCASE("line after end") {
 			lsp::Position lsp = lsp_pos(7, 0);
-			GodotPosition gd(8, 1);
+			RedotPosition gd(8, 1);
 			test_position_roundtrip(lsp, gd, lines);
 		}
 		SUBCASE("first char in first line") {
 			lsp::Position lsp = lsp_pos(0, 0);
-			GodotPosition gd(1, 1);
+			RedotPosition gd(1, 1);
 			test_position_roundtrip(lsp, gd, lines);
 		}
 
 		SUBCASE("with tabs") {
 			// On `v` in `value` in `var value := ...`.
 			lsp::Position lsp = lsp_pos(5, 6);
-			GodotPosition gd(6, 13);
+			RedotPosition gd(6, 13);
 			test_position_roundtrip(lsp, gd, lines);
 		}
 
 		SUBCASE("doesn't fail with column outside of character length") {
 			lsp::Position lsp = lsp_pos(2, 100);
-			GodotPosition::from_lsp(lsp, lines);
+			RedotPosition::from_lsp(lsp, lines);
 
-			GodotPosition gd(3, 100);
+			RedotPosition gd(3, 100);
 			gd.to_lsp(lines);
 		}
 
 		SUBCASE("doesn't fail with line outside of line length") {
 			lsp::Position lsp = lsp_pos(200, 100);
-			GodotPosition::from_lsp(lsp, lines);
+			RedotPosition::from_lsp(lsp, lines);
 
-			GodotPosition gd(300, 100);
+			RedotPosition gd(300, 100);
 			gd.to_lsp(lines);
 		}
 
 		SUBCASE("special case: negative line for root class") {
-			GodotPosition gd(-1, 0);
+			RedotPosition gd(-1, 0);
 			lsp::Position expected = lsp_pos(0, 0);
 			lsp::Position actual = gd.to_lsp(lines);
 			CHECK_EQ(actual, expected);
 		}
 		SUBCASE("special case: lines.length() + 1 for root class") {
-			GodotPosition gd(lines.size() + 1, 0);
+			RedotPosition gd(lines.size() + 1, 0);
 			lsp::Position expected = lsp_pos(lines.size(), 0);
 			lsp::Position actual = gd.to_lsp(lines);
 			CHECK_EQ(actual, expected);

@@ -2,11 +2,10 @@
 /*  gltf_physics_shape.cpp                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -160,14 +159,14 @@ Ref<ImporterMesh> _convert_hull_points_to_mesh(const Vector<Vector3> &p_hull_poi
 	return importer_mesh;
 }
 
-Ref<GLTFPhysicsShape> GLTFPhysicsShape::from_node(const CollisionShape3D *p_godot_shape_node) {
+Ref<GLTFPhysicsShape> GLTFPhysicsShape::from_node(const CollisionShape3D *p_redot_shape_node) {
 	Ref<GLTFPhysicsShape> gltf_shape;
-	ERR_FAIL_NULL_V_MSG(p_godot_shape_node, gltf_shape, "Tried to create a GLTFPhysicsShape from a CollisionShape3D node, but the given node was null.");
-	Ref<Shape3D> shape_resource = p_godot_shape_node->get_shape();
+	ERR_FAIL_NULL_V_MSG(p_redot_shape_node, gltf_shape, "Tried to create a GLTFPhysicsShape from a CollisionShape3D node, but the given node was null.");
+	Ref<Shape3D> shape_resource = p_redot_shape_node->get_shape();
 	ERR_FAIL_COND_V_MSG(shape_resource.is_null(), gltf_shape, "Tried to create a GLTFPhysicsShape from a CollisionShape3D node, but the given node had a null shape.");
 	gltf_shape = from_resource(shape_resource);
 	// Check if the shape is part of a trigger.
-	Node *parent = p_godot_shape_node->get_parent();
+	Node *parent = p_redot_shape_node->get_parent();
 	if (cast_to<const Area3D>(parent)) {
 		gltf_shape->set_is_trigger(true);
 	}
@@ -175,10 +174,10 @@ Ref<GLTFPhysicsShape> GLTFPhysicsShape::from_node(const CollisionShape3D *p_godo
 }
 
 CollisionShape3D *GLTFPhysicsShape::to_node(bool p_cache_shapes) {
-	CollisionShape3D *godot_shape_node = memnew(CollisionShape3D);
+	CollisionShape3D *redot_shape_node = memnew(CollisionShape3D);
 	to_resource(p_cache_shapes); // Sets `_shape_cache`.
-	godot_shape_node->set_shape(_shape_cache);
-	return godot_shape_node;
+	redot_shape_node->set_shape(_shape_cache);
+	return redot_shape_node;
 }
 
 Ref<GLTFPhysicsShape> GLTFPhysicsShape::from_resource(const Ref<Shape3D> &p_shape_resource) {

@@ -2,11 +2,10 @@
 /*  gltf_camera.cpp                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -62,9 +61,9 @@ Ref<GLTFCamera> GLTFCamera::from_node(const Camera3D *p_camera) {
 	c.instantiate();
 	ERR_FAIL_NULL_V_MSG(p_camera, c, "Tried to create a GLTFCamera from a Camera3D node, but the given node was null.");
 	c->set_perspective(p_camera->get_projection() == Camera3D::ProjectionType::PROJECTION_PERSPECTIVE);
-	// glTF spec (yfov) is in radians, Godot's camera (fov) is in degrees.
+	// glTF spec (yfov) is in radians, Redot's camera (fov) is in degrees.
 	c->set_fov(Math::deg_to_rad(p_camera->get_fov()));
-	// glTF spec (xmag and ymag) is a radius in meters, Godot's camera (size) is a diameter in meters.
+	// glTF spec (xmag and ymag) is a radius in meters, Redot's camera (size) is a diameter in meters.
 	c->set_size_mag(p_camera->get_size() * 0.5f);
 	c->set_depth_far(p_camera->get_far());
 	c->set_depth_near(p_camera->get_near());
@@ -74,9 +73,9 @@ Ref<GLTFCamera> GLTFCamera::from_node(const Camera3D *p_camera) {
 Camera3D *GLTFCamera::to_node() const {
 	Camera3D *camera = memnew(Camera3D);
 	camera->set_projection(perspective ? Camera3D::PROJECTION_PERSPECTIVE : Camera3D::PROJECTION_ORTHOGONAL);
-	// glTF spec (yfov) is in radians, Godot's camera (fov) is in degrees.
+	// glTF spec (yfov) is in radians, Redot's camera (fov) is in degrees.
 	camera->set_fov(Math::rad_to_deg(fov));
-	// glTF spec (xmag and ymag) is a radius in meters, Godot's camera (size) is a diameter in meters.
+	// glTF spec (xmag and ymag) is a radius in meters, Redot's camera (size) is a diameter in meters.
 	camera->set_size(size_mag * 2.0f);
 	camera->set_near(depth_near);
 	camera->set_far(depth_far);

@@ -2,11 +2,10 @@
 /*  text_server_adv.h                                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -41,45 +40,45 @@
 #ifdef GDEXTENSION
 // Headers for building as GDExtension plug-in.
 
-#include <godot_cpp/godot.hpp>
+#include <redot_cpp/redot.hpp>
 
-#include <godot_cpp/core/class_db.hpp>
-#include <godot_cpp/core/ext_wrappers.gen.inc>
-#include <godot_cpp/core/mutex_lock.hpp>
+#include <redot_cpp/core/class_db.hpp>
+#include <redot_cpp/core/ext_wrappers.gen.inc>
+#include <redot_cpp/core/mutex_lock.hpp>
 
-#include <godot_cpp/variant/array.hpp>
-#include <godot_cpp/variant/dictionary.hpp>
-#include <godot_cpp/variant/packed_int32_array.hpp>
-#include <godot_cpp/variant/packed_string_array.hpp>
-#include <godot_cpp/variant/packed_vector2_array.hpp>
-#include <godot_cpp/variant/rect2.hpp>
-#include <godot_cpp/variant/rid.hpp>
-#include <godot_cpp/variant/string.hpp>
-#include <godot_cpp/variant/typed_array.hpp>
-#include <godot_cpp/variant/vector2.hpp>
-#include <godot_cpp/variant/vector2i.hpp>
+#include <redot_cpp/variant/array.hpp>
+#include <redot_cpp/variant/dictionary.hpp>
+#include <redot_cpp/variant/packed_int32_array.hpp>
+#include <redot_cpp/variant/packed_string_array.hpp>
+#include <redot_cpp/variant/packed_vector2_array.hpp>
+#include <redot_cpp/variant/rect2.hpp>
+#include <redot_cpp/variant/rid.hpp>
+#include <redot_cpp/variant/string.hpp>
+#include <redot_cpp/variant/typed_array.hpp>
+#include <redot_cpp/variant/vector2.hpp>
+#include <redot_cpp/variant/vector2i.hpp>
 
-#include <godot_cpp/classes/text_server.hpp>
-#include <godot_cpp/classes/text_server_extension.hpp>
-#include <godot_cpp/classes/text_server_manager.hpp>
+#include <redot_cpp/classes/text_server.hpp>
+#include <redot_cpp/classes/text_server_extension.hpp>
+#include <redot_cpp/classes/text_server_manager.hpp>
 
-#include <godot_cpp/classes/caret_info.hpp>
-#include <godot_cpp/classes/global_constants_binds.hpp>
-#include <godot_cpp/classes/glyph.hpp>
-#include <godot_cpp/classes/image.hpp>
-#include <godot_cpp/classes/image_texture.hpp>
-#include <godot_cpp/classes/ref.hpp>
-#include <godot_cpp/classes/worker_thread_pool.hpp>
+#include <redot_cpp/classes/caret_info.hpp>
+#include <redot_cpp/classes/global_constants_binds.hpp>
+#include <redot_cpp/classes/glyph.hpp>
+#include <redot_cpp/classes/image.hpp>
+#include <redot_cpp/classes/image_texture.hpp>
+#include <redot_cpp/classes/ref.hpp>
+#include <redot_cpp/classes/worker_thread_pool.hpp>
 
-#include <godot_cpp/templates/hash_map.hpp>
-#include <godot_cpp/templates/hash_set.hpp>
-#include <godot_cpp/templates/rid_owner.hpp>
-#include <godot_cpp/templates/safe_refcount.hpp>
-#include <godot_cpp/templates/vector.hpp>
+#include <redot_cpp/templates/hash_map.hpp>
+#include <redot_cpp/templates/hash_set.hpp>
+#include <redot_cpp/templates/rid_owner.hpp>
+#include <redot_cpp/templates/safe_refcount.hpp>
+#include <redot_cpp/templates/vector.hpp>
 
-using namespace godot;
+using namespace redot;
 
-#elif defined(GODOT_MODULE)
+#elif defined(redot_MODULE)
 // Headers for building as built-in module.
 
 #include "core/extension/ext_wrappers.gen.inc"

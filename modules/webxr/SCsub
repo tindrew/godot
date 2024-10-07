@@ -5,7 +5,7 @@ Import("env")
 Import("env_modules")
 
 if env["platform"] == "web":
-    env.AddJSLibraries(["native/library_godot_webxr.js"])
+    env.AddJSLibraries(["native/library_redot_webxr.js"])
     env.AddJSExterns(["native/webxr.externs.js"])
 
 env_webxr = env_modules.Clone()

@@ -2,11 +2,10 @@
 /*  lightmapper_rd.cpp                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -714,7 +713,7 @@ void LightmapperRD::_raster_geometry(RenderingDevice *rd, Size2i atlas_size, int
 
 		// Half pixel offset is required so the rasterizer doesn't output face edges directly aligned into pixels.
 		// This fixes artifacts where the pixel would be traced from the edge of a face, causing half the rays to
-		// be outside of the boundaries of the geometry. See <https://github.com/godotengine/godot/issues/69126>.
+		// be outside of the boundaries of the geometry. See <https://github.com/redotengine/redot/issues/69126>.
 		raster_push_constant.uv_offset[0] = -0.5f / float(atlas_size.x);
 		raster_push_constant.uv_offset[1] = -0.5f / float(atlas_size.y);
 

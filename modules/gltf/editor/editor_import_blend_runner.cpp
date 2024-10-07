@@ -2,11 +2,10 @@
 /*  editor_import_blend_runner.cpp                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -58,7 +57,7 @@ def export_gltf(opts):
   if export_err:
     raise export_err
   # Important to return a value to prevent the error 'cannot marshal None unless allow_none is enabled'.
-  return 'BLENDER_GODOT_EXPORT_SUCCESSFUL'
+  return 'BLENDER_redot_EXPORT_SUCCESSFUL'
 if bpy.app.version < (3, 0, 0):
   print('Blender 3.0 or higher is required.', file=sys.stderr)
 threading.Thread(target=xmlrpc_server).start()
@@ -297,13 +296,13 @@ Error EditorImportBlendRunner::do_import_rpc(const Dictionary &p_options) {
 
 	if (client->get_response_code() != HTTPClient::RESPONSE_OK) {
 		ERR_FAIL_V_MSG(ERR_QUERY_FAILED, vformat("Error received from Blender - status code: %s, error: %s", client->get_response_code(), response_text));
-	} else if (response_text.find("BLENDER_GODOT_EXPORT_SUCCESSFUL") < 0) {
-		// Previous versions of Godot used a Python script where the RPC function did not return
+	} else if (response_text.find("BLENDER_redot_EXPORT_SUCCESSFUL") < 0) {
+		// Previous versions of Redot used a Python script where the RPC function did not return
 		// a value, causing the error 'cannot marshal None unless allow_none is enabled'.
-		// If an older version of Godot is running and has started Blender with this script,
+		// If an older version of Redot is running and has started Blender with this script,
 		// we will receive the error, but there's a good chance that the import was successful.
 		// We are discarding this error to maintain backward compatibility and prevent situations
-		// where the user needs to close the older version of Godot or kill Blender.
+		// where the user needs to close the older version of Redot or kill Blender.
 		if (response_text.find("cannot marshal None unless allow_none is enabled") < 0) {
 			String error_message;
 			if (_extract_error_message_xml(response, error_message)) {

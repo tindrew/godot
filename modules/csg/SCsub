@@ -6,7 +6,7 @@ Import("env_modules")
 
 env_csg = env_modules.Clone()
 
-# Godot source files
+# Redot source files
 env_csg.add_source_files(env.modules_sources, "*.cpp")
 if env.editor_build:
     env_csg.add_source_files(env.modules_sources, "editor/*.cpp")

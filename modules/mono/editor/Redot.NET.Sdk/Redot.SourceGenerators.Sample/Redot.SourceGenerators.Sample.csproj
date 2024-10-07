@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>11</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- $(RedotProjectDir) would normally be defined by the Redot.NET.Sdk -->
+    <RedotProjectDir>$(MSBuildProjectDirectory)</RedotProjectDir>
+    <RedotProjectDirBase64 Condition=" $([MSBuild]::VersionGreaterThanOrEquals($(MSBuildAssemblyVersion), '17.3')) ">$([MSBuild]::ConvertToBase64('$(RedotProjectDir)'))</RedotProjectDirBase64>
+    <!-- For compiling GetRedotPropertyDefaultValues. -->
+    <DefineConstants>$(DefineConstants);TOOLS</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- The emitted files are not part of the compilation nor design.
+    They're only for peeking at the generated sources. Sometimes the
+    emitted files get corrupted, but that won't break anything. -->
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\glue\RedotSharp\RedotSharp\RedotSharp.csproj">
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Redot.SourceGenerators\Redot.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+  <!-- This file is imported automatically when using PackageReference to
+  reference Redot.SourceGenerators, but not when using ProjectReference -->
+  <Import Project="..\Redot.SourceGenerators\Redot.SourceGenerators.props" />
+
+</Project>

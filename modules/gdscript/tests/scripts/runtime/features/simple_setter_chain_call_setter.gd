@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/85952
+# https://github.com/redotengine/redot/issues/85952
 
 var vec: Vector2 = Vector2.ZERO:
 	set(new_vec):

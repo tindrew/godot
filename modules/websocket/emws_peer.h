@@ -2,11 +2,10 @@
 /*  emws_peer.h                                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -48,11 +47,11 @@ typedef void (*WSOnMessage)(void *p_ref, const uint8_t *p_buf, int p_buf_len, in
 typedef void (*WSOnClose)(void *p_ref, int p_code, const char *p_reason, int p_is_clean);
 typedef void (*WSOnError)(void *p_ref);
 
-extern int godot_js_websocket_create(void *p_ref, const char *p_url, const char *p_proto, WSOnOpen p_on_open, WSOnMessage p_on_message, WSOnError p_on_error, WSOnClose p_on_close);
-extern int godot_js_websocket_send(int p_id, const uint8_t *p_buf, int p_buf_len, int p_raw);
-extern int godot_js_websocket_buffered_amount(int p_id);
-extern void godot_js_websocket_close(int p_id, int p_code, const char *p_reason);
-extern void godot_js_websocket_destroy(int p_id);
+extern int redot_js_websocket_create(void *p_ref, const char *p_url, const char *p_proto, WSOnOpen p_on_open, WSOnMessage p_on_message, WSOnError p_on_error, WSOnClose p_on_close);
+extern int redot_js_websocket_send(int p_id, const uint8_t *p_buf, int p_buf_len, int p_raw);
+extern int redot_js_websocket_buffered_amount(int p_id);
+extern void redot_js_websocket_close(int p_id, int p_code, const char *p_reason);
+extern void redot_js_websocket_destroy(int p_id);
 }
 
 class EMWSPeer : public WebSocketPeer {

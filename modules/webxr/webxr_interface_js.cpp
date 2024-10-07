@@ -2,11 +2,10 @@
 /*  webxr_interface_js.cpp                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -32,7 +31,7 @@
 
 #ifdef WEB_ENABLED
 
-#include "godot_webxr.h"
+#include "redot_webxr.h"
 
 #include "core/input/input.h"
 #include "core/os/os.h"
@@ -118,7 +117,7 @@ extern "C" EMSCRIPTEN_KEEPALIVE void _emwebxr_on_simple_event(char *p_signal_nam
 }
 
 void WebXRInterfaceJS::is_session_supported(const String &p_session_mode) {
-	godot_webxr_is_session_supported(p_session_mode.utf8().get_data(), &_emwebxr_on_session_supported);
+	redot_webxr_is_session_supported(p_session_mode.utf8().get_data(), &_emwebxr_on_session_supported);
 }
 
 void WebXRInterfaceJS::set_session_mode(String p_session_mode) {
@@ -180,7 +179,7 @@ WebXRInterface::TargetRayMode WebXRInterfaceJS::get_input_source_target_ray_mode
 }
 
 String WebXRInterfaceJS::get_visibility_state() const {
-	char *c_str = godot_webxr_get_visibility_state();
+	char *c_str = redot_webxr_get_visibility_state();
 	if (c_str) {
 		String visibility_state = String(c_str);
 		free(c_str);
@@ -194,7 +193,7 @@ PackedVector3Array WebXRInterfaceJS::get_play_area() const {
 	PackedVector3Array ret;
 
 	float *points;
-	int point_count = godot_webxr_get_bounds_geometry(&points);
+	int point_count = redot_webxr_get_bounds_geometry(&points);
 	if (point_count > 0) {
 		ret.resize(point_count);
 		for (int i = 0; i < point_count; i++) {
@@ -208,18 +207,18 @@ PackedVector3Array WebXRInterfaceJS::get_play_area() const {
 }
 
 float WebXRInterfaceJS::get_display_refresh_rate() const {
-	return godot_webxr_get_frame_rate();
+	return redot_webxr_get_frame_rate();
 }
 
 void WebXRInterfaceJS::set_display_refresh_rate(float p_refresh_rate) {
-	godot_webxr_update_target_frame_rate(p_refresh_rate);
+	redot_webxr_update_target_frame_rate(p_refresh_rate);
 }
 
 Array WebXRInterfaceJS::get_available_display_refresh_rates() const {
 	Array ret;
 
 	float *rates;
-	int rate_count = godot_webxr_get_supported_frame_rates(&rates);
+	int rate_count = redot_webxr_get_supported_frame_rates(&rates);
 	if (rate_count > 0) {
 		ret.resize(rate_count);
 		for (int i = 0; i < rate_count; i++) {
@@ -278,7 +277,7 @@ uint32_t WebXRInterfaceJS::get_capabilities() const {
 };
 
 uint32_t WebXRInterfaceJS::get_view_count() {
-	return godot_webxr_get_view_count();
+	return redot_webxr_get_view_count();
 };
 
 bool WebXRInterfaceJS::is_initialized() const {
@@ -290,7 +289,7 @@ bool WebXRInterfaceJS::initialize() {
 	ERR_FAIL_NULL_V(xr_server, false);
 
 	if (!initialized) {
-		if (!godot_webxr_is_supported()) {
+		if (!redot_webxr_is_supported()) {
 			return false;
 		}
 
@@ -320,7 +319,7 @@ bool WebXRInterfaceJS::initialize() {
 
 		initialized = true;
 
-		godot_webxr_initialize(
+		redot_webxr_initialize(
 				session_mode.utf8().get_data(),
 				required_features.utf8().get_data(),
 				optional_features.utf8().get_data(),
@@ -359,7 +358,7 @@ void WebXRInterfaceJS::uninitialize() {
 			}
 		}
 
-		godot_webxr_uninitialize();
+		redot_webxr_uninitialize();
 
 		GLES3::TextureStorage *texture_storage = GLES3::TextureStorage::get_singleton();
 		if (texture_storage != nullptr) {
@@ -415,7 +414,7 @@ Size2 WebXRInterfaceJS::get_render_target_size() {
 	}
 
 	int js_size[2];
-	bool has_size = godot_webxr_get_render_target_size(js_size);
+	bool has_size = redot_webxr_get_render_target_size(js_size);
 
 	if (!initialized || !has_size) {
 		// As a temporary default (until WebXR is fully initialized), use the
@@ -453,7 +452,7 @@ Transform3D WebXRInterfaceJS::get_transform_for_view(uint32_t p_view, const Tran
 	ERR_FAIL_COND_V(!initialized, p_cam_transform);
 
 	float js_matrix[16];
-	bool has_transform = godot_webxr_get_transform_for_view(p_view, js_matrix);
+	bool has_transform = redot_webxr_get_transform_for_view(p_view, js_matrix);
 	if (!has_transform) {
 		return p_cam_transform;
 	}
@@ -472,7 +471,7 @@ Projection WebXRInterfaceJS::get_projection_for_view(uint32_t p_view, double p_a
 	ERR_FAIL_COND_V(!initialized, view);
 
 	float js_matrix[16];
-	bool has_projection = godot_webxr_get_projection_for_view(p_view, js_matrix);
+	bool has_projection = redot_webxr_get_projection_for_view(p_view, js_matrix);
 	if (!has_projection) {
 		return view;
 	}
@@ -484,7 +483,7 @@ Projection WebXRInterfaceJS::get_projection_for_view(uint32_t p_view, double p_a
 		}
 	}
 
-	// Copied from godot_oculus_mobile's ovr_mobile_session.cpp
+	// Copied from redot_oculus_mobile's ovr_mobile_session.cpp
 	view.columns[2][2] = -(p_z_far + p_z_near) / (p_z_far - p_z_near);
 	view.columns[3][2] = -(2.0f * p_z_far * p_z_near) / (p_z_far - p_z_near);
 
@@ -530,7 +529,7 @@ Vector<BlitToScreen> WebXRInterfaceJS::post_draw_viewport(RID p_render_target, c
 };
 
 RID WebXRInterfaceJS::_get_color_texture() {
-	unsigned int texture_id = godot_webxr_get_color_texture();
+	unsigned int texture_id = redot_webxr_get_color_texture();
 	if (texture_id == 0) {
 		return RID();
 	}
@@ -539,7 +538,7 @@ RID WebXRInterfaceJS::_get_color_texture() {
 }
 
 RID WebXRInterfaceJS::_get_depth_texture() {
-	unsigned int texture_id = godot_webxr_get_depth_texture();
+	unsigned int texture_id = redot_webxr_get_depth_texture();
 	if (texture_id == 0) {
 		return RID();
 	}
@@ -558,7 +557,7 @@ RID WebXRInterfaceJS::_get_texture(unsigned int p_texture_id) {
 		return RID();
 	}
 
-	uint32_t view_count = godot_webxr_get_view_count();
+	uint32_t view_count = redot_webxr_get_view_count();
 	Size2 texture_size = get_render_target_size();
 
 	RID texture = texture_storage->texture_create_from_native_handle(
@@ -584,7 +583,7 @@ RID WebXRInterfaceJS::get_depth_texture() {
 }
 
 RID WebXRInterfaceJS::get_velocity_texture() {
-	unsigned int texture_id = godot_webxr_get_velocity_texture();
+	unsigned int texture_id = redot_webxr_get_velocity_texture();
 	if (texture_id == 0) {
 		return RID();
 	}
@@ -596,7 +595,7 @@ void WebXRInterfaceJS::process() {
 	if (initialized) {
 		// Get the "head" position.
 		float js_matrix[16];
-		if (godot_webxr_get_transform_for_view(-1, js_matrix)) {
+		if (redot_webxr_get_transform_for_view(-1, js_matrix)) {
 			head_transform = _js_matrix_to_transform(js_matrix);
 		}
 		if (head_tracker.is_valid()) {
@@ -630,7 +629,7 @@ void WebXRInterfaceJS::_update_input_source(int p_input_source_id) {
 	float hand_joints[WEBXR_HAND_JOINT_MAX * 16];
 	float hand_radii[WEBXR_HAND_JOINT_MAX];
 
-	input_source.active = godot_webxr_update_input_source(
+	input_source.active = redot_webxr_update_input_source(
 			p_input_source_id,
 			target_pose,
 			&tmp_target_ray_mode,
@@ -746,7 +745,7 @@ void WebXRInterfaceJS::_update_input_source(int p_input_source_id) {
 	if (p_input_source_id < 2) {
 		Ref<XRHandTracker> hand_tracker = hand_trackers[p_input_source_id];
 		if (has_hand_data) {
-			// Transform orientations to match Godot Humanoid skeleton.
+			// Transform orientations to match Redot Humanoid skeleton.
 			const Basis bone_adjustment(
 					Vector3(-1.0, 0.0, 0.0),
 					Vector3(0.0, 0.0, -1.0),
@@ -759,8 +758,8 @@ void WebXRInterfaceJS::_update_input_source(int p_input_source_id) {
 
 				// These flags always apply, since WebXR doesn't give us enough insight to be more fine grained.
 				BitField<XRHandTracker::HandJointFlags> joint_flags(XRHandTracker::HAND_JOINT_FLAG_POSITION_VALID | XRHandTracker::HAND_JOINT_FLAG_ORIENTATION_VALID | XRHandTracker::HAND_JOINT_FLAG_POSITION_TRACKED | XRHandTracker::HAND_JOINT_FLAG_ORIENTATION_TRACKED);
-				for (int godot_joint = 0; godot_joint < XRHandTracker::HAND_JOINT_MAX; godot_joint++) {
-					hand_tracker->set_hand_joint_flags((XRHandTracker::HandJoint)godot_joint, joint_flags);
+				for (int redot_joint = 0; redot_joint < XRHandTracker::HAND_JOINT_MAX; redot_joint++) {
+					hand_tracker->set_hand_joint_flags((XRHandTracker::HandJoint)redot_joint, joint_flags);
 				}
 
 				hand_trackers[p_input_source_id] = hand_tracker;
@@ -769,13 +768,13 @@ void WebXRInterfaceJS::_update_input_source(int p_input_source_id) {
 
 			hand_tracker->set_has_tracking_data(true);
 			for (int webxr_joint = 0; webxr_joint < WEBXR_HAND_JOINT_MAX; webxr_joint++) {
-				XRHandTracker::HandJoint godot_joint = (XRHandTracker::HandJoint)(webxr_joint + 1);
+				XRHandTracker::HandJoint redot_joint = (XRHandTracker::HandJoint)(webxr_joint + 1);
 
 				Transform3D joint_transform = _js_matrix_to_transform(hand_joints + (16 * webxr_joint));
 				joint_transform.basis *= bone_adjustment;
-				hand_tracker->set_hand_joint_transform(godot_joint, joint_transform);
+				hand_tracker->set_hand_joint_transform(redot_joint, joint_transform);
 
-				hand_tracker->set_hand_joint_radius(godot_joint, hand_radii[webxr_joint]);
+				hand_tracker->set_hand_joint_radius(redot_joint, hand_radii[webxr_joint]);
 			}
 
 			// WebXR doesn't have a palm joint, so we calculate it by finding the middle of the middle finger metacarpal bone.

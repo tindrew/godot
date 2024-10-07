@@ -1,4 +1,4 @@
-// meta-description: Base template for Node with default Godot cycle methods
+// meta-description: Base template for Node with default Redot cycle methods
 
 using _BINDINGS_NAMESPACE_;
 using System;

@@ -2,11 +2,10 @@
 /*  semver.cpp                                                            */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -30,7 +29,7 @@
 
 #include "semver.h"
 
-bool godotsharp::SemVer::parse_digit_only_field(const String &p_field, uint64_t &r_result) {
+bool redotsharp::SemVer::parse_digit_only_field(const String &p_field, uint64_t &r_result) {
 	if (p_field.is_empty()) {
 		return false;
 	}
@@ -53,7 +52,7 @@ bool godotsharp::SemVer::parse_digit_only_field(const String &p_field, uint64_t 
 	return true;
 }
 
-int godotsharp::SemVer::cmp(const godotsharp::SemVer &p_a, const godotsharp::SemVer &p_b) {
+int redotsharp::SemVer::cmp(const redotsharp::SemVer &p_a, const redotsharp::SemVer &p_b) {
 	if (p_a.major != p_b.major) {
 		return p_a.major > p_b.major ? 1 : -1;
 	}
@@ -127,7 +126,7 @@ int godotsharp::SemVer::cmp(const godotsharp::SemVer &p_a, const godotsharp::Sem
 	return 0;
 }
 
-bool godotsharp::SemVerParser::parse(const String &p_ver_text, godotsharp::SemVer &r_semver) {
+bool redotsharp::SemVerParser::parse(const String &p_ver_text, redotsharp::SemVer &r_semver) {
 	if (!regex.is_valid() && regex.get_pattern().is_empty()) {
 		regex.compile("^(?P<major>0|[1-9]\\d*)\\.(?P<minor>0|[1-9]\\d*)\\.(?P<patch>0|[1-9]\\d*)(?:-(?P<prerelease>(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$");
 		ERR_FAIL_COND_V(!regex.is_valid(), false);

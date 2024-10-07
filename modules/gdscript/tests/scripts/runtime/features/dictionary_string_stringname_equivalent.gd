@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/62957
+# https://github.com/redotengine/redot/issues/62957
 
 func test():
 	var string_dict = {}

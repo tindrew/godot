@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/70964
+# https://github.com/redotengine/redot/issues/70964
 
 func test():
 	test_construct(0, false)

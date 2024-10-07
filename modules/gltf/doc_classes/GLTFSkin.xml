@@ -43,7 +43,7 @@
 		</method>
 	</methods>
 	<members>
-		<member name="godot_skin" type="Skin" setter="set_godot_skin" getter="get_godot_skin">
+		<member name="redot_skin" type="Skin" setter="set_redot_skin" getter="get_redot_skin">
 		</member>
 		<member name="joints" type="PackedInt32Array" setter="set_joints" getter="get_joints" default="PackedInt32Array()">
 		</member>

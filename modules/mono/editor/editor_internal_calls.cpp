@@ -2,11 +2,10 @@
 /*  editor_internal_calls.cpp                                             */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -31,7 +30,7 @@
 #include "editor_internal_calls.h"
 
 #include "../csharp_script.h"
-#include "../godotsharp_dirs.h"
+#include "../redotsharp_dirs.h"
 #include "../interop_types.h"
 #include "../utils/macos_utils.h"
 #include "../utils/path_utils.h"
@@ -59,57 +58,57 @@
 extern "C" {
 #endif
 
-void godot_icall_GodotSharpDirs_ResMetadataDir(godot_string *r_dest) {
-	memnew_placement(r_dest, String(GodotSharpDirs::get_res_metadata_dir()));
+void redot_icall_RedotSharpDirs_ResMetadataDir(redot_string *r_dest) {
+	memnew_placement(r_dest, String(RedotSharpDirs::get_res_metadata_dir()));
 }
 
-void godot_icall_GodotSharpDirs_MonoUserDir(godot_string *r_dest) {
-	memnew_placement(r_dest, String(GodotSharpDirs::get_mono_user_dir()));
+void redot_icall_RedotSharpDirs_MonoUserDir(redot_string *r_dest) {
+	memnew_placement(r_dest, String(RedotSharpDirs::get_mono_user_dir()));
 }
 
-void godot_icall_GodotSharpDirs_BuildLogsDirs(godot_string *r_dest) {
+void redot_icall_RedotSharpDirs_BuildLogsDirs(redot_string *r_dest) {
 #ifdef TOOLS_ENABLED
-	memnew_placement(r_dest, String(GodotSharpDirs::get_build_logs_dir()));
+	memnew_placement(r_dest, String(RedotSharpDirs::get_build_logs_dir()));
 #else
 	return nullptr;
 #endif
 }
 
-void godot_icall_GodotSharpDirs_DataEditorToolsDir(godot_string *r_dest) {
+void redot_icall_RedotSharpDirs_DataEditorToolsDir(redot_string *r_dest) {
 #ifdef TOOLS_ENABLED
-	memnew_placement(r_dest, String(GodotSharpDirs::get_data_editor_tools_dir()));
+	memnew_placement(r_dest, String(RedotSharpDirs::get_data_editor_tools_dir()));
 #else
 	return nullptr;
 #endif
 }
 
-void godot_icall_GodotSharpDirs_CSharpProjectName(godot_string *r_dest) {
+void redot_icall_RedotSharpDirs_CSharpProjectName(redot_string *r_dest) {
 	memnew_placement(r_dest, String(path::get_csharp_project_name()));
 }
 
-void godot_icall_EditorProgress_Create(const godot_string *p_task, const godot_string *p_label, int32_t p_amount, bool p_can_cancel) {
+void redot_icall_EditorProgress_Create(const redot_string *p_task, const redot_string *p_label, int32_t p_amount, bool p_can_cancel) {
 	String task = *reinterpret_cast<const String *>(p_task);
 	String label = *reinterpret_cast<const String *>(p_label);
 	EditorNode::progress_add_task(task, label, p_amount, (bool)p_can_cancel);
 }
 
-void godot_icall_EditorProgress_Dispose(const godot_string *p_task) {
+void redot_icall_EditorProgress_Dispose(const redot_string *p_task) {
 	String task = *reinterpret_cast<const String *>(p_task);
 	EditorNode::progress_end_task(task);
 }
 
-bool godot_icall_EditorProgress_Step(const godot_string *p_task, const godot_string *p_state, int32_t p_step, bool p_force_refresh) {
+bool redot_icall_EditorProgress_Step(const redot_string *p_task, const redot_string *p_state, int32_t p_step, bool p_force_refresh) {
 	String task = *reinterpret_cast<const String *>(p_task);
 	String state = *reinterpret_cast<const String *>(p_state);
 	return EditorNode::progress_task_step(task, state, p_step, (bool)p_force_refresh);
 }
 
-void godot_icall_Internal_FullExportTemplatesDir(godot_string *r_dest) {
+void redot_icall_Internal_FullExportTemplatesDir(redot_string *r_dest) {
 	String full_templates_dir = EditorPaths::get_singleton()->get_export_templates_dir().path_join(VERSION_FULL_CONFIG);
 	memnew_placement(r_dest, String(full_templates_dir));
 }
 
-bool godot_icall_Internal_IsMacOSAppBundleInstalled(const godot_string *p_bundle_id) {
+bool redot_icall_Internal_IsMacOSAppBundleInstalled(const redot_string *p_bundle_id) {
 #ifdef MACOS_ENABLED
 	String bundle_id = *reinterpret_cast<const String *>(p_bundle_id);
 	return (bool)macos_is_app_bundle_installed(bundle_id);
@@ -119,18 +118,18 @@ bool godot_icall_Internal_IsMacOSAppBundleInstalled(const godot_string *p_bundle
 #endif
 }
 
-bool godot_icall_Internal_LipOCreateFile(const godot_string *p_output_path, const godot_packed_array *p_files) {
+bool redot_icall_Internal_LipOCreateFile(const redot_string *p_output_path, const redot_packed_array *p_files) {
 	String output_path = *reinterpret_cast<const String *>(p_output_path);
 	PackedStringArray files = *reinterpret_cast<const PackedStringArray *>(p_files);
 	LipO lip;
 	return lip.create_file(output_path, files);
 }
 
-bool godot_icall_Internal_GodotIs32Bits() {
+bool redot_icall_Internal_RedotIs32Bits() {
 	return sizeof(void *) == 4;
 }
 
-bool godot_icall_Internal_GodotIsRealTDouble() {
+bool redot_icall_Internal_RedotIsRealTDouble() {
 #ifdef REAL_T_IS_DOUBLE
 	return (bool)true;
 #else
@@ -138,11 +137,11 @@ bool godot_icall_Internal_GodotIsRealTDouble() {
 #endif
 }
 
-void godot_icall_Internal_GodotMainIteration() {
+void redot_icall_Internal_RedotMainIteration() {
 	Main::iteration();
 }
 
-bool godot_icall_Internal_IsAssembliesReloadingNeeded() {
+bool redot_icall_Internal_IsAssembliesReloadingNeeded() {
 #ifdef GD_MONO_HOT_RELOAD
 	return (bool)CSharpLanguage::get_singleton()->is_assembly_reloading_needed();
 #else
@@ -150,98 +149,98 @@ bool godot_icall_Internal_IsAssembliesReloadingNeeded() {
 #endif
 }
 
-void godot_icall_Internal_ReloadAssemblies(bool p_soft_reload) {
+void redot_icall_Internal_ReloadAssemblies(bool p_soft_reload) {
 #ifdef GD_MONO_HOT_RELOAD
-	callable_mp(mono_bind::GodotSharp::get_singleton(), &mono_bind::GodotSharp::reload_assemblies).call_deferred(p_soft_reload);
+	callable_mp(mono_bind::RedotSharp::get_singleton(), &mono_bind::RedotSharp::reload_assemblies).call_deferred(p_soft_reload);
 #endif
 }
 
-void godot_icall_Internal_EditorDebuggerNodeReloadScripts() {
+void redot_icall_Internal_EditorDebuggerNodeReloadScripts() {
 	EditorDebuggerNode::get_singleton()->reload_all_scripts();
 }
 
-bool godot_icall_Internal_ScriptEditorEdit(Resource *p_resource, int32_t p_line, int32_t p_col, bool p_grab_focus) {
+bool redot_icall_Internal_ScriptEditorEdit(Resource *p_resource, int32_t p_line, int32_t p_col, bool p_grab_focus) {
 	Ref<Resource> resource = p_resource;
 	return (bool)ScriptEditor::get_singleton()->edit(resource, p_line, p_col, (bool)p_grab_focus);
 }
 
-void godot_icall_Internal_EditorNodeShowScriptScreen() {
+void redot_icall_Internal_EditorNodeShowScriptScreen() {
 	EditorNode::get_editor_main_screen()->select(EditorMainScreen::EDITOR_SCRIPT);
 }
 
-void godot_icall_Internal_EditorRunPlay() {
+void redot_icall_Internal_EditorRunPlay() {
 	EditorRunBar::get_singleton()->play_main_scene();
 }
 
-void godot_icall_Internal_EditorRunStop() {
+void redot_icall_Internal_EditorRunStop() {
 	EditorRunBar::get_singleton()->stop_playing();
 }
 
-void godot_icall_Internal_EditorPlugin_AddControlToEditorRunBar(Control *p_control) {
+void redot_icall_Internal_EditorPlugin_AddControlToEditorRunBar(Control *p_control) {
 	EditorRunBar::get_singleton()->get_buttons_container()->add_child(p_control);
 }
 
-void godot_icall_Internal_ScriptEditorDebugger_ReloadScripts() {
+void redot_icall_Internal_ScriptEditorDebugger_ReloadScripts() {
 	EditorDebuggerNode *ed = EditorDebuggerNode::get_singleton();
 	if (ed) {
 		ed->reload_all_scripts();
 	}
 }
 
-void godot_icall_Internal_CodeCompletionRequest(int32_t p_kind, const godot_string *p_script_file, godot_packed_array *r_ret) {
+void redot_icall_Internal_CodeCompletionRequest(int32_t p_kind, const redot_string *p_script_file, redot_packed_array *r_ret) {
 	String script_file = *reinterpret_cast<const String *>(p_script_file);
 	PackedStringArray suggestions = gdmono::get_code_completion((gdmono::CompletionKind)p_kind, script_file);
 	memnew_placement(r_ret, PackedStringArray(suggestions));
 }
 
-float godot_icall_Globals_EditorScale() {
+float redot_icall_Globals_EditorScale() {
 	return EDSCALE;
 }
 
-void godot_icall_Globals_GlobalDef(const godot_string *p_setting, const godot_variant *p_default_value, bool p_restart_if_changed, godot_variant *r_result) {
+void redot_icall_Globals_GlobalDef(const redot_string *p_setting, const redot_variant *p_default_value, bool p_restart_if_changed, redot_variant *r_result) {
 	String setting = *reinterpret_cast<const String *>(p_setting);
 	Variant default_value = *reinterpret_cast<const Variant *>(p_default_value);
 	Variant result = _GLOBAL_DEF(setting, default_value, (bool)p_restart_if_changed);
 	memnew_placement(r_result, Variant(result));
 }
 
-void godot_icall_Globals_EditorDef(const godot_string *p_setting, const godot_variant *p_default_value, bool p_restart_if_changed, godot_variant *r_result) {
+void redot_icall_Globals_EditorDef(const redot_string *p_setting, const redot_variant *p_default_value, bool p_restart_if_changed, redot_variant *r_result) {
 	String setting = *reinterpret_cast<const String *>(p_setting);
 	Variant default_value = *reinterpret_cast<const Variant *>(p_default_value);
 	Variant result = _EDITOR_DEF(setting, default_value, (bool)p_restart_if_changed);
 	memnew_placement(r_result, Variant(result));
 }
 
-void godot_icall_Globals_EditorDefShortcut(const godot_string *p_setting, const godot_string *p_name, Key p_keycode, bool p_physical, godot_variant *r_result) {
+void redot_icall_Globals_EditorDefShortcut(const redot_string *p_setting, const redot_string *p_name, Key p_keycode, bool p_physical, redot_variant *r_result) {
 	String setting = *reinterpret_cast<const String *>(p_setting);
 	String name = *reinterpret_cast<const String *>(p_name);
 	Ref<Shortcut> result = ED_SHORTCUT(setting, name, p_keycode, p_physical);
 	memnew_placement(r_result, Variant(result));
 }
 
-void godot_icall_Globals_EditorGetShortcut(const godot_string *p_setting, Ref<Shortcut> *r_result) {
+void redot_icall_Globals_EditorGetShortcut(const redot_string *p_setting, Ref<Shortcut> *r_result) {
 	String setting = *reinterpret_cast<const String *>(p_setting);
 	Ref<Shortcut> result = ED_GET_SHORTCUT(setting);
 	memnew_placement(r_result, Variant(result));
 }
 
-void godot_icall_Globals_EditorShortcutOverride(const godot_string *p_setting, const godot_string *p_feature, Key p_keycode, bool p_physical) {
+void redot_icall_Globals_EditorShortcutOverride(const redot_string *p_setting, const redot_string *p_feature, Key p_keycode, bool p_physical) {
 	String setting = *reinterpret_cast<const String *>(p_setting);
 	String feature = *reinterpret_cast<const String *>(p_feature);
 	ED_SHORTCUT_OVERRIDE(setting, feature, p_keycode, p_physical);
 }
 
-void godot_icall_Globals_TTR(const godot_string *p_text, godot_string *r_dest) {
+void redot_icall_Globals_TTR(const redot_string *p_text, redot_string *r_dest) {
 	String text = *reinterpret_cast<const String *>(p_text);
 	memnew_placement(r_dest, String(TTR(text)));
 }
 
-void godot_icall_Utils_OS_GetPlatformName(godot_string *r_dest) {
+void redot_icall_Utils_OS_GetPlatformName(redot_string *r_dest) {
 	String os_name = OS::get_singleton()->get_name();
 	memnew_placement(r_dest, String(os_name));
 }
 
-bool godot_icall_Utils_OS_UnixFileHasExecutableAccess(const godot_string *p_file_path) {
+bool redot_icall_Utils_OS_UnixFileHasExecutableAccess(const redot_string *p_file_path) {
 #ifdef UNIX_ENABLED
 	String file_path = *reinterpret_cast<const String *>(p_file_path);
 	return access(file_path.utf8().get_data(), X_OK) == 0;
@@ -255,44 +254,44 @@ bool godot_icall_Utils_OS_UnixFileHasExecutableAccess(const godot_string *p_file
 #endif
 
 // The order in this array must match the declaration order of
-// the methods in 'GodotTools/Internals/Internal.cs'.
+// the methods in 'RedotTools/Internals/Internal.cs'.
 static const void *unmanaged_callbacks[]{
-	(void *)godot_icall_GodotSharpDirs_ResMetadataDir,
-	(void *)godot_icall_GodotSharpDirs_MonoUserDir,
-	(void *)godot_icall_GodotSharpDirs_BuildLogsDirs,
-	(void *)godot_icall_GodotSharpDirs_DataEditorToolsDir,
-	(void *)godot_icall_GodotSharpDirs_CSharpProjectName,
-	(void *)godot_icall_EditorProgress_Create,
-	(void *)godot_icall_EditorProgress_Dispose,
-	(void *)godot_icall_EditorProgress_Step,
-	(void *)godot_icall_Internal_FullExportTemplatesDir,
-	(void *)godot_icall_Internal_IsMacOSAppBundleInstalled,
-	(void *)godot_icall_Internal_LipOCreateFile,
-	(void *)godot_icall_Internal_GodotIs32Bits,
-	(void *)godot_icall_Internal_GodotIsRealTDouble,
-	(void *)godot_icall_Internal_GodotMainIteration,
-	(void *)godot_icall_Internal_IsAssembliesReloadingNeeded,
-	(void *)godot_icall_Internal_ReloadAssemblies,
-	(void *)godot_icall_Internal_EditorDebuggerNodeReloadScripts,
-	(void *)godot_icall_Internal_ScriptEditorEdit,
-	(void *)godot_icall_Internal_EditorNodeShowScriptScreen,
-	(void *)godot_icall_Internal_EditorRunPlay,
-	(void *)godot_icall_Internal_EditorRunStop,
-	(void *)godot_icall_Internal_EditorPlugin_AddControlToEditorRunBar,
-	(void *)godot_icall_Internal_ScriptEditorDebugger_ReloadScripts,
-	(void *)godot_icall_Internal_CodeCompletionRequest,
-	(void *)godot_icall_Globals_EditorScale,
-	(void *)godot_icall_Globals_GlobalDef,
-	(void *)godot_icall_Globals_EditorDef,
-	(void *)godot_icall_Globals_EditorDefShortcut,
-	(void *)godot_icall_Globals_EditorGetShortcut,
-	(void *)godot_icall_Globals_EditorShortcutOverride,
-	(void *)godot_icall_Globals_TTR,
-	(void *)godot_icall_Utils_OS_GetPlatformName,
-	(void *)godot_icall_Utils_OS_UnixFileHasExecutableAccess,
+	(void *)redot_icall_RedotSharpDirs_ResMetadataDir,
+	(void *)redot_icall_RedotSharpDirs_MonoUserDir,
+	(void *)redot_icall_RedotSharpDirs_BuildLogsDirs,
+	(void *)redot_icall_RedotSharpDirs_DataEditorToolsDir,
+	(void *)redot_icall_RedotSharpDirs_CSharpProjectName,
+	(void *)redot_icall_EditorProgress_Create,
+	(void *)redot_icall_EditorProgress_Dispose,
+	(void *)redot_icall_EditorProgress_Step,
+	(void *)redot_icall_Internal_FullExportTemplatesDir,
+	(void *)redot_icall_Internal_IsMacOSAppBundleInstalled,
+	(void *)redot_icall_Internal_LipOCreateFile,
+	(void *)redot_icall_Internal_RedotIs32Bits,
+	(void *)redot_icall_Internal_RedotIsRealTDouble,
+	(void *)redot_icall_Internal_RedotMainIteration,
+	(void *)redot_icall_Internal_IsAssembliesReloadingNeeded,
+	(void *)redot_icall_Internal_ReloadAssemblies,
+	(void *)redot_icall_Internal_EditorDebuggerNodeReloadScripts,
+	(void *)redot_icall_Internal_ScriptEditorEdit,
+	(void *)redot_icall_Internal_EditorNodeShowScriptScreen,
+	(void *)redot_icall_Internal_EditorRunPlay,
+	(void *)redot_icall_Internal_EditorRunStop,
+	(void *)redot_icall_Internal_EditorPlugin_AddControlToEditorRunBar,
+	(void *)redot_icall_Internal_ScriptEditorDebugger_ReloadScripts,
+	(void *)redot_icall_Internal_CodeCompletionRequest,
+	(void *)redot_icall_Globals_EditorScale,
+	(void *)redot_icall_Globals_GlobalDef,
+	(void *)redot_icall_Globals_EditorDef,
+	(void *)redot_icall_Globals_EditorDefShortcut,
+	(void *)redot_icall_Globals_EditorGetShortcut,
+	(void *)redot_icall_Globals_EditorShortcutOverride,
+	(void *)redot_icall_Globals_TTR,
+	(void *)redot_icall_Utils_OS_GetPlatformName,
+	(void *)redot_icall_Utils_OS_UnixFileHasExecutableAccess,
 };
 
-const void **godotsharp::get_editor_interop_funcs(int32_t &r_size) {
+const void **redotsharp::get_editor_interop_funcs(int32_t &r_size) {
 	r_size = sizeof(unmanaged_callbacks);
 	return unmanaged_callbacks;
 }

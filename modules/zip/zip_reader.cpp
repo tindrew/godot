@@ -2,11 +2,10 @@
 /*  zip_reader.cpp                                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -73,7 +72,7 @@ PackedStringArray ZIPReader::get_files() {
 		unz_file_info64 file_info;
 		String filepath;
 
-		err = godot_unzip_get_current_file_info(uzf, file_info, filepath);
+		err = redot_unzip_get_current_file_info(uzf, file_info, filepath);
 		if (err == UNZ_OK) {
 			s.push_back(filepath);
 		}
@@ -94,7 +93,7 @@ PackedByteArray ZIPReader::read_file(const String &p_path, bool p_case_sensitive
 	int err = UNZ_OK;
 
 	// Locate and open the file.
-	err = godot_unzip_locate_file(uzf, p_path, p_case_sensitive);
+	err = redot_unzip_locate_file(uzf, p_path, p_case_sensitive);
 	ERR_FAIL_COND_V_MSG(err != UNZ_OK, PackedByteArray(), "File does not exist in zip archive: " + p_path);
 	err = unzOpenCurrentFile(uzf);
 	ERR_FAIL_COND_V_MSG(err != UNZ_OK, PackedByteArray(), "Could not open file within zip archive.");

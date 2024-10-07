@@ -1,5 +1,5 @@
-# https://github.com/godotengine/godot/issues/64171
-# https://github.com/godotengine/godot/issues/60145
+# https://github.com/redotengine/redot/issues/64171
+# https://github.com/redotengine/redot/issues/60145
 
 var s = "abc"
 var sn = &"abc"

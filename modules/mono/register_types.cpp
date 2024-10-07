@@ -2,11 +2,10 @@
 /*  register_types.cpp                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -38,7 +37,7 @@ CSharpLanguage *script_language_cs = nullptr;
 Ref<ResourceFormatLoaderCSharpScript> resource_loader_cs;
 Ref<ResourceFormatSaverCSharpScript> resource_saver_cs;
 
-mono_bind::GodotSharp *_godotsharp = nullptr;
+mono_bind::RedotSharp *_redotsharp = nullptr;
 
 void initialize_mono_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
@@ -47,7 +46,7 @@ void initialize_mono_module(ModuleInitializationLevel p_level) {
 
 	GDREGISTER_CLASS(CSharpScript);
 
-	_godotsharp = memnew(mono_bind::GodotSharp);
+	_redotsharp = memnew(mono_bind::RedotSharp);
 
 	script_language_cs = memnew(CSharpLanguage);
 	script_language_cs->set_language_index(ScriptServer::get_language_count());
@@ -77,7 +76,7 @@ void uninitialize_mono_module(ModuleInitializationLevel p_level) {
 	ResourceSaver::remove_resource_format_saver(resource_saver_cs);
 	resource_saver_cs.unref();
 
-	if (_godotsharp) {
-		memdelete(_godotsharp);
+	if (_redotsharp) {
+		memdelete(_redotsharp);
 	}
 }

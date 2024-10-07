@@ -3,4 +3,4 @@ const MyEnum = External.MyEnum
 
 func test():
 	print(MyEnum.WAITING == 0)
-	print(MyEnum.GODOT == 1)
+	print(MyEnum.redot == 1)

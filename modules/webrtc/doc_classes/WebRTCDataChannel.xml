@@ -90,10 +90,10 @@
 	</members>
 	<constants>
 		<constant name="WRITE_MODE_TEXT" value="0" enum="WriteMode">
-			Tells the channel to send data over this channel as text. An external peer (non-Godot) would receive this as a string.
+			Tells the channel to send data over this channel as text. An external peer (non-Redot) would receive this as a string.
 		</constant>
 		<constant name="WRITE_MODE_BINARY" value="1" enum="WriteMode">
-			Tells the channel to send data over this channel as binary. An external peer (non-Godot) would receive this as array buffer or blob.
+			Tells the channel to send data over this channel as binary. An external peer (non-Redot) would receive this as array buffer or blob.
 		</constant>
 		<constant name="STATE_CONNECTING" value="0" enum="ChannelState">
 			The channel was created, but it's still trying to connect.

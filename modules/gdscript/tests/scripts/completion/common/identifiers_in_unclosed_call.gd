@@ -1,4 +1,4 @@
-# godotengine/godot#92226
+# redotengine/redot#92226
 extends "res://completion/class_a.notest.gd"
 
 signal test_signal_1(a)

@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/56702
+# https://github.com/redotengine/redot/issues/56702
 
 func test():
 	# somewhat obscure feature: referencing parameters in defaults, but only earlier ones!

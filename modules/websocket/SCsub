@@ -10,7 +10,7 @@ thirdparty_obj = []
 
 if env["platform"] == "web":
     # Our JavaScript/C++ interface.
-    env.AddJSLibraries(["library_godot_websocket.js"])
+    env.AddJSLibraries(["library_redot_websocket.js"])
 
 elif env["builtin_wslay"]:
     # Thirdparty source files
@@ -37,7 +37,7 @@ elif env["builtin_wslay"]:
     env.modules_sources += thirdparty_obj
 
 
-# Godot source files
+# Redot source files
 
 module_obj = []
 

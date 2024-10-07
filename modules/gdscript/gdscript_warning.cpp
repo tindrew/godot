@@ -2,11 +2,10 @@
 /*  gdscript_warning.cpp                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -136,7 +135,7 @@ String GDScriptWarning::get_message() const {
 		case DEPRECATED_KEYWORD:
 			CHECK_SYMBOLS(2);
 			return vformat(R"(The "%s" keyword is deprecated and will be removed in a future release, please replace its uses by "%s".)", symbols[0], symbols[1]);
-		case RENAMED_IN_GODOT_4_HINT:
+		case RENAMED_IN_redot_4_HINT:
 			break; // Renamed identifier hint is taken care of by the GDScriptAnalyzer. No message needed here.
 		case CONFUSABLE_IDENTIFIER:
 			CHECK_SYMBOLS(1);
@@ -183,7 +182,7 @@ int GDScriptWarning::get_default_value(Code p_code) {
 
 PropertyInfo GDScriptWarning::get_property_info(Code p_code) {
 	// Making this a separate function in case a warning needs different PropertyInfo in the future.
-	if (p_code == Code::RENAMED_IN_GODOT_4_HINT) {
+	if (p_code == Code::RENAMED_IN_redot_4_HINT) {
 		return PropertyInfo(Variant::BOOL, get_settings_path_from_code(p_code));
 	}
 	return PropertyInfo(Variant::INT, get_settings_path_from_code(p_code), PROPERTY_HINT_ENUM, "Ignore,Warn,Error");
@@ -233,7 +232,7 @@ String GDScriptWarning::get_name_from_code(Code p_code) {
 		"ENUM_VARIABLE_WITHOUT_DEFAULT",
 		"EMPTY_FILE",
 		"DEPRECATED_KEYWORD",
-		"RENAMED_IN_GODOT_4_HINT",
+		"RENAMED_IN_redot_4_HINT",
 		"CONFUSABLE_IDENTIFIER",
 		"CONFUSABLE_LOCAL_DECLARATION",
 		"CONFUSABLE_LOCAL_USAGE",

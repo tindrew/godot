@@ -2,11 +2,10 @@
 /*  image_saver_tinyexr.cpp                                               */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -160,7 +159,7 @@ Vector<uint8_t> save_exr_buffer(const Ref<Image> &p_img, bool p_grayscale) {
 
 	const int max_channels = 4;
 
-	// Godot does not support more than 4 channels,
+	// Redot does not support more than 4 channels,
 	// so we can preallocate header infos on the stack and use only the subset we need
 	PackedByteArray channels[max_channels];
 	unsigned char *channels_ptrs[max_channels];

@@ -1,2 +1,2 @@
 func test():
-	print({"hello": "world"} + {"godot": "engine"})
+	print({"hello": "world"} + {"redot": "engine"})

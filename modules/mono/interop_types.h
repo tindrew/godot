@@ -2,11 +2,10 @@
 /*  interop_types.h                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -42,164 +41,164 @@ extern "C" {
 
 // This is taken from the old GDNative, which was removed.
 
-#define GODOT_VARIANT_SIZE (sizeof(real_t) * 4 + sizeof(int64_t))
+#define redot_VARIANT_SIZE (sizeof(real_t) * 4 + sizeof(int64_t))
 
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_VARIANT_SIZE];
-} godot_variant;
+	uint8_t _dont_touch_that[redot_VARIANT_SIZE];
+} redot_variant;
 
-#define GODOT_ARRAY_SIZE sizeof(void *)
-
-typedef struct {
-	uint8_t _dont_touch_that[GODOT_ARRAY_SIZE];
-} godot_array;
-
-#define GODOT_DICTIONARY_SIZE sizeof(void *)
+#define redot_ARRAY_SIZE sizeof(void *)
 
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_DICTIONARY_SIZE];
-} godot_dictionary;
+	uint8_t _dont_touch_that[redot_ARRAY_SIZE];
+} redot_array;
 
-#define GODOT_STRING_SIZE sizeof(void *)
-
-typedef struct {
-	uint8_t _dont_touch_that[GODOT_STRING_SIZE];
-} godot_string;
-
-#define GODOT_STRING_NAME_SIZE sizeof(void *)
+#define redot_DICTIONARY_SIZE sizeof(void *)
 
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_STRING_NAME_SIZE];
-} godot_string_name;
+	uint8_t _dont_touch_that[redot_DICTIONARY_SIZE];
+} redot_dictionary;
 
-#define GODOT_PACKED_ARRAY_SIZE (2 * sizeof(void *))
-
-typedef struct {
-	uint8_t _dont_touch_that[GODOT_PACKED_ARRAY_SIZE];
-} godot_packed_array;
-
-#define GODOT_VECTOR2_SIZE (sizeof(real_t) * 2)
+#define redot_STRING_SIZE sizeof(void *)
 
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_VECTOR2_SIZE];
-} godot_vector2;
+	uint8_t _dont_touch_that[redot_STRING_SIZE];
+} redot_string;
 
-#define GODOT_VECTOR2I_SIZE (sizeof(int32_t) * 2)
-
-typedef struct {
-	uint8_t _dont_touch_that[GODOT_VECTOR2I_SIZE];
-} godot_vector2i;
-
-#define GODOT_RECT2_SIZE (sizeof(real_t) * 4)
-
-typedef struct godot_rect2 {
-	uint8_t _dont_touch_that[GODOT_RECT2_SIZE];
-} godot_rect2;
-
-#define GODOT_RECT2I_SIZE (sizeof(int32_t) * 4)
-
-typedef struct godot_rect2i {
-	uint8_t _dont_touch_that[GODOT_RECT2I_SIZE];
-} godot_rect2i;
-
-#define GODOT_VECTOR3_SIZE (sizeof(real_t) * 3)
+#define redot_STRING_NAME_SIZE sizeof(void *)
 
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_VECTOR3_SIZE];
-} godot_vector3;
+	uint8_t _dont_touch_that[redot_STRING_NAME_SIZE];
+} redot_string_name;
 
-#define GODOT_VECTOR3I_SIZE (sizeof(int32_t) * 3)
-
-typedef struct {
-	uint8_t _dont_touch_that[GODOT_VECTOR3I_SIZE];
-} godot_vector3i;
-
-#define GODOT_TRANSFORM2D_SIZE (sizeof(real_t) * 6)
+#define redot_PACKED_ARRAY_SIZE (2 * sizeof(void *))
 
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_TRANSFORM2D_SIZE];
-} godot_transform2d;
+	uint8_t _dont_touch_that[redot_PACKED_ARRAY_SIZE];
+} redot_packed_array;
 
-#define GODOT_VECTOR4_SIZE (sizeof(real_t) * 4)
-
-typedef struct {
-	uint8_t _dont_touch_that[GODOT_VECTOR4_SIZE];
-} godot_vector4;
-
-#define GODOT_VECTOR4I_SIZE (sizeof(int32_t) * 4)
+#define redot_VECTOR2_SIZE (sizeof(real_t) * 2)
 
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_VECTOR4I_SIZE];
-} godot_vector4i;
+	uint8_t _dont_touch_that[redot_VECTOR2_SIZE];
+} redot_vector2;
 
-#define GODOT_PLANE_SIZE (sizeof(real_t) * 4)
-
-typedef struct {
-	uint8_t _dont_touch_that[GODOT_PLANE_SIZE];
-} godot_plane;
-
-#define GODOT_QUATERNION_SIZE (sizeof(real_t) * 4)
+#define redot_VECTOR2I_SIZE (sizeof(int32_t) * 2)
 
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_QUATERNION_SIZE];
-} godot_quaternion;
+	uint8_t _dont_touch_that[redot_VECTOR2I_SIZE];
+} redot_vector2i;
 
-#define GODOT_AABB_SIZE (sizeof(real_t) * 6)
+#define redot_RECT2_SIZE (sizeof(real_t) * 4)
 
-typedef struct {
-	uint8_t _dont_touch_that[GODOT_AABB_SIZE];
-} godot_aabb;
+typedef struct redot_rect2 {
+	uint8_t _dont_touch_that[redot_RECT2_SIZE];
+} redot_rect2;
 
-#define GODOT_BASIS_SIZE (sizeof(real_t) * 9)
+#define redot_RECT2I_SIZE (sizeof(int32_t) * 4)
 
-typedef struct {
-	uint8_t _dont_touch_that[GODOT_BASIS_SIZE];
-} godot_basis;
+typedef struct redot_rect2i {
+	uint8_t _dont_touch_that[redot_RECT2I_SIZE];
+} redot_rect2i;
 
-#define GODOT_TRANSFORM3D_SIZE (sizeof(real_t) * 12)
-
-typedef struct {
-	uint8_t _dont_touch_that[GODOT_TRANSFORM3D_SIZE];
-} godot_transform3d;
-
-#define GODOT_PROJECTION_SIZE (sizeof(real_t) * 4 * 4)
+#define redot_VECTOR3_SIZE (sizeof(real_t) * 3)
 
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_PROJECTION_SIZE];
-} godot_projection;
+	uint8_t _dont_touch_that[redot_VECTOR3_SIZE];
+} redot_vector3;
+
+#define redot_VECTOR3I_SIZE (sizeof(int32_t) * 3)
+
+typedef struct {
+	uint8_t _dont_touch_that[redot_VECTOR3I_SIZE];
+} redot_vector3i;
+
+#define redot_TRANSFORM2D_SIZE (sizeof(real_t) * 6)
+
+typedef struct {
+	uint8_t _dont_touch_that[redot_TRANSFORM2D_SIZE];
+} redot_transform2d;
+
+#define redot_VECTOR4_SIZE (sizeof(real_t) * 4)
+
+typedef struct {
+	uint8_t _dont_touch_that[redot_VECTOR4_SIZE];
+} redot_vector4;
+
+#define redot_VECTOR4I_SIZE (sizeof(int32_t) * 4)
+
+typedef struct {
+	uint8_t _dont_touch_that[redot_VECTOR4I_SIZE];
+} redot_vector4i;
+
+#define redot_PLANE_SIZE (sizeof(real_t) * 4)
+
+typedef struct {
+	uint8_t _dont_touch_that[redot_PLANE_SIZE];
+} redot_plane;
+
+#define redot_QUATERNION_SIZE (sizeof(real_t) * 4)
+
+typedef struct {
+	uint8_t _dont_touch_that[redot_QUATERNION_SIZE];
+} redot_quaternion;
+
+#define redot_AABB_SIZE (sizeof(real_t) * 6)
+
+typedef struct {
+	uint8_t _dont_touch_that[redot_AABB_SIZE];
+} redot_aabb;
+
+#define redot_BASIS_SIZE (sizeof(real_t) * 9)
+
+typedef struct {
+	uint8_t _dont_touch_that[redot_BASIS_SIZE];
+} redot_basis;
+
+#define redot_TRANSFORM3D_SIZE (sizeof(real_t) * 12)
+
+typedef struct {
+	uint8_t _dont_touch_that[redot_TRANSFORM3D_SIZE];
+} redot_transform3d;
+
+#define redot_PROJECTION_SIZE (sizeof(real_t) * 4 * 4)
+
+typedef struct {
+	uint8_t _dont_touch_that[redot_PROJECTION_SIZE];
+} redot_projection;
 
 // Colors should always use 32-bit floats, so don't use real_t here.
-#define GODOT_COLOR_SIZE (sizeof(float) * 4)
+#define redot_COLOR_SIZE (sizeof(float) * 4)
 
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_COLOR_SIZE];
-} godot_color;
+	uint8_t _dont_touch_that[redot_COLOR_SIZE];
+} redot_color;
 
-#define GODOT_NODE_PATH_SIZE sizeof(void *)
-
-typedef struct {
-	uint8_t _dont_touch_that[GODOT_NODE_PATH_SIZE];
-} godot_node_path;
-
-#define GODOT_RID_SIZE sizeof(uint64_t)
+#define redot_NODE_PATH_SIZE sizeof(void *)
 
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_RID_SIZE];
-} godot_rid;
+	uint8_t _dont_touch_that[redot_NODE_PATH_SIZE];
+} redot_node_path;
+
+#define redot_RID_SIZE sizeof(uint64_t)
+
+typedef struct {
+	uint8_t _dont_touch_that[redot_RID_SIZE];
+} redot_rid;
 
 // Alignment hardcoded in `core/variant/callable.h`.
-#define GODOT_CALLABLE_SIZE (16)
+#define redot_CALLABLE_SIZE (16)
 
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_CALLABLE_SIZE];
-} godot_callable;
+	uint8_t _dont_touch_that[redot_CALLABLE_SIZE];
+} redot_callable;
 
 // Alignment hardcoded in `core/variant/callable.h`.
-#define GODOT_SIGNAL_SIZE (16)
+#define redot_SIGNAL_SIZE (16)
 
 typedef struct {
-	uint8_t _dont_touch_that[GODOT_SIGNAL_SIZE];
-} godot_signal;
+	uint8_t _dont_touch_that[redot_SIGNAL_SIZE];
+} redot_signal;
 
 #ifdef __cplusplus
 }

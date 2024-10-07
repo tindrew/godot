@@ -2,11 +2,10 @@
 /*  webrtc_peer_connection_js.h                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -43,14 +42,14 @@ typedef void (*RTCOnIceCandidate)(void *p_obj, const char *p_mid, int p_mline_id
 typedef void (*RTCOnDataChannel)(void *p_obj, int p_id);
 typedef void (*RTCOnSession)(void *p_obj, const char *p_type, const char *p_sdp);
 typedef void (*RTCOnError)(void *p_obj);
-extern int godot_js_rtc_pc_create(const char *p_config, void *p_obj, RTCOnIceConnectionStateChange p_on_connection_state_change, RTCOnIceGatheringStateChange p_on_gathering_state_change, RTCOnSignalingStateChange p_on_signaling_state_change, RTCOnIceCandidate p_on_candidate, RTCOnDataChannel p_on_datachannel);
-extern void godot_js_rtc_pc_close(int p_id);
-extern void godot_js_rtc_pc_destroy(int p_id);
-extern void godot_js_rtc_pc_offer_create(int p_id, void *p_obj, RTCOnSession p_on_session, RTCOnError p_on_error);
-extern void godot_js_rtc_pc_local_description_set(int p_id, const char *p_type, const char *p_sdp, void *p_obj, RTCOnError p_on_error);
-extern void godot_js_rtc_pc_remote_description_set(int p_id, const char *p_type, const char *p_sdp, void *p_obj, RTCOnSession p_on_session, RTCOnError p_on_error);
-extern void godot_js_rtc_pc_ice_candidate_add(int p_id, const char *p_mid_name, int p_mline_idx, const char *p_sdo);
-extern int godot_js_rtc_pc_datachannel_create(int p_id, const char *p_label, const char *p_config);
+extern int redot_js_rtc_pc_create(const char *p_config, void *p_obj, RTCOnIceConnectionStateChange p_on_connection_state_change, RTCOnIceGatheringStateChange p_on_gathering_state_change, RTCOnSignalingStateChange p_on_signaling_state_change, RTCOnIceCandidate p_on_candidate, RTCOnDataChannel p_on_datachannel);
+extern void redot_js_rtc_pc_close(int p_id);
+extern void redot_js_rtc_pc_destroy(int p_id);
+extern void redot_js_rtc_pc_offer_create(int p_id, void *p_obj, RTCOnSession p_on_session, RTCOnError p_on_error);
+extern void redot_js_rtc_pc_local_description_set(int p_id, const char *p_type, const char *p_sdp, void *p_obj, RTCOnError p_on_error);
+extern void redot_js_rtc_pc_remote_description_set(int p_id, const char *p_type, const char *p_sdp, void *p_obj, RTCOnSession p_on_session, RTCOnError p_on_error);
+extern void redot_js_rtc_pc_ice_candidate_add(int p_id, const char *p_mid_name, int p_mline_idx, const char *p_sdo);
+extern int redot_js_rtc_pc_datachannel_create(int p_id, const char *p_label, const char *p_config);
 }
 
 class WebRTCPeerConnectionJS : public WebRTCPeerConnection {

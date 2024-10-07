@@ -2,11 +2,10 @@
 /*  bindings_generator.h                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -168,14 +167,14 @@ class BindingsGenerator {
 		bool is_static = false;
 
 		/**
-		 * Virtual methods ("virtual" as defined by the Godot API) are methods that by default do nothing,
+		 * Virtual methods ("virtual" as defined by the Redot API) are methods that by default do nothing,
 		 * but can be overridden by the user to add custom functionality.
 		 * e.g.: _ready, _process, etc.
 		 */
 		bool is_virtual = false;
 
 		/**
-		 * Determines if the call should fallback to Godot's object.Call(string, params) in C#.
+		 * Determines if the call should fallback to Redot's object.Call(string, params) in C#.
 		 */
 		bool requires_object_call = false;
 
@@ -276,7 +275,7 @@ class BindingsGenerator {
 
 		/**
 		 * Determines whether the native return value of this type must be disposed
-		 * by the generated internal call (think of `godot_string`, whose destructor
+		 * by the generated internal call (think of `redot_string`, whose destructor
 		 * must be called). Some structs that are disposable may still disable this
 		 * flag if the ownership is transferred.
 		 */
@@ -433,7 +432,7 @@ class BindingsGenerator {
 
 		/**
 		 * Formatting elements:
-		 * %0: input expression of type `in godot_variant`
+		 * %0: input expression of type `in redot_variant`
 		 * %1: [cs_type] of this type
 		 * %2: [name] of this type
 		 */
@@ -822,9 +821,9 @@ class BindingsGenerator {
 
 	const String _get_generic_type_parameters(const TypeInterface &p_itype, const List<TypeReference> &p_generic_type_parameters);
 
-	StringName _get_type_name_from_meta(Variant::Type p_type, GodotTypeInfo::Metadata p_meta);
-	StringName _get_int_type_name_from_meta(GodotTypeInfo::Metadata p_meta);
-	StringName _get_float_type_name_from_meta(GodotTypeInfo::Metadata p_meta);
+	StringName _get_type_name_from_meta(Variant::Type p_type, RedotTypeInfo::Metadata p_meta);
+	StringName _get_int_type_name_from_meta(RedotTypeInfo::Metadata p_meta);
+	StringName _get_float_type_name_from_meta(RedotTypeInfo::Metadata p_meta);
 
 	bool _arg_default_value_from_variant(const Variant &p_val, ArgumentInterface &r_iarg);
 	bool _arg_default_value_is_assignable_to_type(const Variant &p_val, const TypeInterface &p_arg_type);

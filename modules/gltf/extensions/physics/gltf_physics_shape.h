@@ -2,11 +2,10 @@
 /*  gltf_physics_shape.h                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -37,7 +36,7 @@
 
 class ImporterMesh;
 
-// GLTFPhysicsShape is an intermediary between Godot's collision shape nodes
+// GLTFPhysicsShape is an intermediary between Redot's collision shape nodes
 // and the OMI_physics_shape extension.
 // https://github.com/omigroup/gltf-extensions/tree/main/extensions/2.0/OMI_physics_shape
 
@@ -55,7 +54,7 @@ private:
 	bool is_trigger = false;
 	GLTFMeshIndex mesh_index = -1;
 	Ref<ImporterMesh> importer_mesh = nullptr;
-	// Internal only, for caching Godot shape resources. Used in `to_resource` and `to_node`.
+	// Internal only, for caching Redot shape resources. Used in `to_resource` and `to_node`.
 	Ref<Shape3D> _shape_cache = nullptr;
 
 public:

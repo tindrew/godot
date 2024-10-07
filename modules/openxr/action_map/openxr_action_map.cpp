@@ -2,11 +2,10 @@
 /*  openxr_action_map.cpp                                                 */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -167,8 +166,8 @@ void OpenXRActionMap::create_default_action_sets() {
 	//   we still want it to be part of our action map as we may deploy the same game to platforms that do and don't support it.
 	// - the same applies for interaction profiles that are only supported if the relevant extension is supported.
 
-	// Create our Godot action set.
-	Ref<OpenXRActionSet> action_set = OpenXRActionSet::new_action_set("godot", "Godot action set");
+	// Create our Redot action set.
+	Ref<OpenXRActionSet> action_set = OpenXRActionSet::new_action_set("redot", "Redot action set");
 	add_action_set(action_set);
 
 	// Create our actions.

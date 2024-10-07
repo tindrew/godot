@@ -2,11 +2,10 @@
 /*  thorvg_svg_in_ot.h                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -34,13 +33,13 @@
 #ifdef GDEXTENSION
 // Headers for building as GDExtension plug-in.
 
-#include <godot_cpp/core/mutex_lock.hpp>
-#include <godot_cpp/godot.hpp>
-#include <godot_cpp/templates/hash_map.hpp>
+#include <redot_cpp/core/mutex_lock.hpp>
+#include <redot_cpp/redot.hpp>
+#include <redot_cpp/templates/hash_map.hpp>
 
-using namespace godot;
+using namespace redot;
 
-#elif defined(GODOT_MODULE)
+#elif defined(redot_MODULE)
 // Headers for building as built-in module.
 
 #include "core/os/mutex.h"

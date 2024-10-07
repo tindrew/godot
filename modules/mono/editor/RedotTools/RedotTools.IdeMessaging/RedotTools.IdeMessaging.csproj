@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{92600954-25F0-4291-8E11-1FEE9FC4BE20}</ProjectGuid>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>9</LangVersion>
+    <Nullable>enable</Nullable>
+    <PackageId>RedotTools.IdeMessaging</PackageId>
+    <Version>1.1.2</Version>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <Authors>Redot Engine contributors</Authors>
+    <Company />
+    <PackageTags>redot</PackageTags>
+    <RepositoryUrl>https://github.com/redotengine/redot/tree/master/modules/mono/editor/RedotTools/RedotTools.IdeMessaging</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright (c) Redot Engine contributors</Copyright>
+    <Description>
+This library enables communication with the Redot Engine editor (the version with .NET support).
+It's intended for use in IDEs/editors plugins for a better experience working with Redot C# projects.
+
+A client using this library is only compatible with servers of the same major version and of a lower or equal minor version.
+    </Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+</Project>

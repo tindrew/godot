@@ -2,11 +2,10 @@
 /*  register_types.cpp                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -30,8 +29,8 @@
 
 #include "register_types.h"
 
-#include "2d/godot_navigation_server_2d.h"
-#include "3d/godot_navigation_server_3d.h"
+#include "2d/redot_navigation_server_2d.h"
+#include "3d/redot_navigation_server_3d.h"
 
 #ifndef DISABLE_DEPRECATED
 #ifndef _3D_DISABLED
@@ -54,11 +53,11 @@ NavigationMeshGenerator *_nav_mesh_generator = nullptr;
 #endif // DISABLE_DEPRECATED
 
 NavigationServer3D *new_navigation_server_3d() {
-	return memnew(GodotNavigationServer3D);
+	return memnew(RedotNavigationServer3D);
 }
 
 NavigationServer2D *new_navigation_server_2d() {
-	return memnew(GodotNavigationServer2D);
+	return memnew(RedotNavigationServer2D);
 }
 
 void initialize_navigation_module(ModuleInitializationLevel p_level) {

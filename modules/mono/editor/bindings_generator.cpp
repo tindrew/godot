@@ -2,11 +2,10 @@
 /*  bindings_generator.cpp                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -32,7 +31,7 @@
 
 #if defined(DEBUG_METHODS_ENABLED) && defined(TOOLS_ENABLED)
 
-#include "../godotsharp_defs.h"
+#include "../redotsharp_defs.h"
 #include "../utils/naming_utils.h"
 #include "../utils/path_utils.h"
 #include "../utils/string_utils.h"
@@ -88,16 +87,16 @@ StringBuilder &operator<<(StringBuilder &r_sb, const char *p_cstring) {
 #define CS_METHOD_CALL "Call"
 #define CS_PROPERTY_SINGLETON "Singleton"
 #define CS_SINGLETON_INSTANCE_SUFFIX "Instance"
-#define CS_METHOD_INVOKE_GODOT_CLASS_METHOD "InvokeGodotClassMethod"
-#define CS_METHOD_HAS_GODOT_CLASS_METHOD "HasGodotClassMethod"
-#define CS_METHOD_HAS_GODOT_CLASS_SIGNAL "HasGodotClassSignal"
+#define CS_METHOD_INVOKE_redot_CLASS_METHOD "InvokeRedotClassMethod"
+#define CS_METHOD_HAS_redot_CLASS_METHOD "HasRedotClassMethod"
+#define CS_METHOD_HAS_redot_CLASS_SIGNAL "HasRedotClassSignal"
 
 #define CS_STATIC_FIELD_NATIVE_CTOR "NativeCtor"
 #define CS_STATIC_FIELD_METHOD_BIND_PREFIX "MethodBind"
 #define CS_STATIC_FIELD_METHOD_PROXY_NAME_PREFIX "MethodProxyName_"
 #define CS_STATIC_FIELD_SIGNAL_PROXY_NAME_PREFIX "SignalProxyName_"
 
-#define ICALL_PREFIX "godot_icall_"
+#define ICALL_PREFIX "redot_icall_"
 #define ICALL_CLASSDB_GET_METHOD "ClassDB_get_method"
 #define ICALL_CLASSDB_GET_METHOD_WITH_COMPATIBILITY "ClassDB_get_method_with_compatibility"
 #define ICALL_CLASSDB_GET_CONSTRUCTOR "ClassDB_get_constructor"
@@ -112,8 +111,8 @@ StringBuilder &operator<<(StringBuilder &r_sb, const char *p_cstring) {
 #define C_METHOD_ENGINE_GET_SINGLETON C_NS_MONOUTILS ".EngineGetSingleton"
 
 #define C_NS_MONOMARSHAL "Marshaling"
-#define C_METHOD_MONOSTR_TO_GODOT C_NS_MONOMARSHAL ".ConvertStringToNative"
-#define C_METHOD_MONOSTR_FROM_GODOT C_NS_MONOMARSHAL ".ConvertStringToManaged"
+#define C_METHOD_MONOSTR_TO_redot C_NS_MONOMARSHAL ".ConvertStringToNative"
+#define C_METHOD_MONOSTR_FROM_redot C_NS_MONOMARSHAL ".ConvertStringToManaged"
 #define C_METHOD_MONOARRAY_TO(m_type) C_NS_MONOMARSHAL ".ConvertSystemArrayToNative" #m_type
 #define C_METHOD_MONOARRAY_FROM(m_type) C_NS_MONOMARSHAL ".ConvertNative" #m_type "ToSystemArray"
 #define C_METHOD_MANAGED_TO_CALLABLE C_NS_MONOMARSHAL ".ConvertCallableToNative"
@@ -308,7 +307,7 @@ String BindingsGenerator::bbcode_to_text(const String &p_bbcode, const TypeInter
 #endif
 				);
 			} else if (tag == "Variant") {
-				output.append("'Godot.Variant'");
+				output.append("'Redot.Variant'");
 			} else if (tag == "String") {
 				output.append("string");
 			} else if (tag == "Nil") {
@@ -624,7 +623,7 @@ String BindingsGenerator::bbcode_to_xml(const String &p_bbcode, const TypeInterf
 #endif
 								  "\"/>");
 			} else if (tag == "Variant") {
-				xml_output.append("<see cref=\"Godot.Variant\"/>");
+				xml_output.append("<see cref=\"Redot.Variant\"/>");
 			} else if (tag == "String") {
 				xml_output.append("<see cref=\"string\"/>");
 			} else if (tag == "Nil") {
@@ -818,7 +817,7 @@ void BindingsGenerator::_append_text_method(StringBuilder &p_output, const TypeI
 	} else if (!p_target_itype || !p_target_itype->is_object_type) {
 		if (OS::get_singleton()->is_stdout_verbose()) {
 			if (p_target_itype) {
-				OS::get_singleton()->print("Cannot resolve method reference for non-GodotObject type in documentation: %s\n", p_link_target.utf8().get_data());
+				OS::get_singleton()->print("Cannot resolve method reference for non-RedotObject type in documentation: %s\n", p_link_target.utf8().get_data());
 			} else {
 				OS::get_singleton()->print("Cannot resolve type from method reference in documentation: %s\n", p_link_target.utf8().get_data());
 			}
@@ -883,7 +882,7 @@ void BindingsGenerator::_append_text_member(StringBuilder &p_output, const TypeI
 	} else if (!p_target_itype || !p_target_itype->is_object_type) {
 		if (OS::get_singleton()->is_stdout_verbose()) {
 			if (p_target_itype) {
-				OS::get_singleton()->print("Cannot resolve member reference for non-GodotObject type in documentation: %s\n", p_link_target.utf8().get_data());
+				OS::get_singleton()->print("Cannot resolve member reference for non-RedotObject type in documentation: %s\n", p_link_target.utf8().get_data());
 			} else {
 				OS::get_singleton()->print("Cannot resolve type from member reference in documentation: %s\n", p_link_target.utf8().get_data());
 			}
@@ -922,7 +921,7 @@ void BindingsGenerator::_append_text_signal(StringBuilder &p_output, const TypeI
 	if (!p_target_itype || !p_target_itype->is_object_type) {
 		if (OS::get_singleton()->is_stdout_verbose()) {
 			if (p_target_itype) {
-				OS::get_singleton()->print("Cannot resolve signal reference for non-GodotObject type in documentation: %s\n", p_link_target.utf8().get_data());
+				OS::get_singleton()->print("Cannot resolve signal reference for non-RedotObject type in documentation: %s\n", p_link_target.utf8().get_data());
 			} else {
 				OS::get_singleton()->print("Cannot resolve type from signal reference in documentation: %s\n", p_link_target.utf8().get_data());
 			}
@@ -985,7 +984,7 @@ void BindingsGenerator::_append_text_constant(StringBuilder &p_output, const Typ
 
 		if (OS::get_singleton()->is_stdout_verbose()) {
 			if (p_target_itype) {
-				OS::get_singleton()->print("Cannot resolve constant reference for non-GodotObject type in documentation: %s\n", p_link_target.utf8().get_data());
+				OS::get_singleton()->print("Cannot resolve constant reference for non-RedotObject type in documentation: %s\n", p_link_target.utf8().get_data());
 			} else {
 				OS::get_singleton()->print("Cannot resolve type from constant reference in documentation: %s\n", p_link_target.utf8().get_data());
 			}
@@ -1097,7 +1096,7 @@ void BindingsGenerator::_append_xml_method(StringBuilder &p_xml_output, const Ty
 	} else if (!p_target_itype || !p_target_itype->is_object_type) {
 		if (OS::get_singleton()->is_stdout_verbose()) {
 			if (p_target_itype) {
-				OS::get_singleton()->print("Cannot resolve method reference for non-GodotObject type in documentation: %s\n", p_link_target.utf8().get_data());
+				OS::get_singleton()->print("Cannot resolve method reference for non-RedotObject type in documentation: %s\n", p_link_target.utf8().get_data());
 			} else {
 				OS::get_singleton()->print("Cannot resolve type from method reference in documentation: %s\n", p_link_target.utf8().get_data());
 			}
@@ -1164,7 +1163,7 @@ void BindingsGenerator::_append_xml_member(StringBuilder &p_xml_output, const Ty
 	} else if (!p_target_itype || !p_target_itype->is_object_type) {
 		if (OS::get_singleton()->is_stdout_verbose()) {
 			if (p_target_itype) {
-				OS::get_singleton()->print("Cannot resolve member reference for non-GodotObject type in documentation: %s\n", p_link_target.utf8().get_data());
+				OS::get_singleton()->print("Cannot resolve member reference for non-RedotObject type in documentation: %s\n", p_link_target.utf8().get_data());
 			} else {
 				OS::get_singleton()->print("Cannot resolve type from member reference in documentation: %s\n", p_link_target.utf8().get_data());
 			}
@@ -1203,7 +1202,7 @@ void BindingsGenerator::_append_xml_signal(StringBuilder &p_xml_output, const Ty
 	if (!p_target_itype || !p_target_itype->is_object_type) {
 		if (OS::get_singleton()->is_stdout_verbose()) {
 			if (p_target_itype) {
-				OS::get_singleton()->print("Cannot resolve signal reference for non-GodotObject type in documentation: %s\n", p_link_target.utf8().get_data());
+				OS::get_singleton()->print("Cannot resolve signal reference for non-RedotObject type in documentation: %s\n", p_link_target.utf8().get_data());
 			} else {
 				OS::get_singleton()->print("Cannot resolve type from signal reference in documentation: %s\n", p_link_target.utf8().get_data());
 			}
@@ -1266,7 +1265,7 @@ void BindingsGenerator::_append_xml_constant(StringBuilder &p_xml_output, const 
 
 		if (OS::get_singleton()->is_stdout_verbose()) {
 			if (p_target_itype) {
-				OS::get_singleton()->print("Cannot resolve constant reference for non-GodotObject type in documentation: %s\n", p_link_target.utf8().get_data());
+				OS::get_singleton()->print("Cannot resolve constant reference for non-RedotObject type in documentation: %s\n", p_link_target.utf8().get_data());
 			} else {
 				OS::get_singleton()->print("Cannot resolve type from constant reference in documentation: %s\n", p_link_target.utf8().get_data());
 			}
@@ -1368,7 +1367,7 @@ void BindingsGenerator::_append_xml_param(StringBuilder &p_xml_output, const Str
 	} else {
 		// Documentation in C# is added to an event, not the delegate itself;
 		// as such, we treat these parameters as codeblocks instead.
-		// See: https://github.com/godotengine/godot/pull/65529
+		// See: https://github.com/redotengine/redot/pull/65529
 		_append_xml_undeclared(p_xml_output, link_target);
 	}
 }
@@ -1473,7 +1472,7 @@ Error BindingsGenerator::_populate_method_icalls_table(const TypeInterface &p_it
 			im_unique_sig += get_arg_unique_sig(*arg_type);
 		}
 
-		// godot_icall_{argc}_{icallcount}
+		// redot_icall_{argc}_{icallcount}
 		String icall_method = ICALL_PREFIX;
 		icall_method += itos(imethod.arguments.size());
 		icall_method += "_";
@@ -1687,10 +1686,10 @@ Error BindingsGenerator::generate_cs_core_project(const String &p_proj_dir) {
 
 	da->change_dir(p_proj_dir);
 	da->make_dir("Generated");
-	da->make_dir("Generated/GodotObjects");
+	da->make_dir("Generated/RedotObjects");
 
 	String base_gen_dir = path::join(p_proj_dir, "Generated");
-	String godot_objects_gen_dir = path::join(base_gen_dir, "GodotObjects");
+	String redot_objects_gen_dir = path::join(base_gen_dir, "RedotObjects");
 
 	Vector<String> compile_items;
 
@@ -1727,7 +1726,7 @@ Error BindingsGenerator::generate_cs_core_project(const String &p_proj_dir) {
 			continue;
 		}
 
-		String output_file = path::join(godot_objects_gen_dir, itype.proxy_name + ".cs");
+		String output_file = path::join(redot_objects_gen_dir, itype.proxy_name + ".cs");
 		Error err = _generate_cs_type(itype, output_file);
 
 		if (err == ERR_SKIP) {
@@ -1752,9 +1751,9 @@ Error BindingsGenerator::generate_cs_core_project(const String &p_proj_dir) {
 										 "\n");
 		cs_built_in_ctors_content.append("internal static class " BINDINGS_CLASS_CONSTRUCTOR "\n{");
 
-		cs_built_in_ctors_content.append(MEMBER_BEGIN "internal static readonly Dictionary<string, Func<IntPtr, GodotObject>> " BINDINGS_CLASS_CONSTRUCTOR_DICTIONARY ";\n");
+		cs_built_in_ctors_content.append(MEMBER_BEGIN "internal static readonly Dictionary<string, Func<IntPtr, RedotObject>> " BINDINGS_CLASS_CONSTRUCTOR_DICTIONARY ";\n");
 
-		cs_built_in_ctors_content.append(MEMBER_BEGIN "public static GodotObject Invoke(string nativeTypeNameStr, IntPtr nativeObjectPtr)\n");
+		cs_built_in_ctors_content.append(MEMBER_BEGIN "public static RedotObject Invoke(string nativeTypeNameStr, IntPtr nativeObjectPtr)\n");
 		cs_built_in_ctors_content.append(INDENT1 OPEN_BLOCK);
 		cs_built_in_ctors_content.append(INDENT2 "if (!" BINDINGS_CLASS_CONSTRUCTOR_DICTIONARY ".TryGetValue(nativeTypeNameStr, out var constructor))\n");
 		cs_built_in_ctors_content.append(INDENT3 "throw new InvalidOperationException(\"Wrapper class not found for type: \" + nativeTypeNameStr);\n");
@@ -1812,7 +1811,7 @@ Error BindingsGenerator::generate_cs_core_project(const String &p_proj_dir) {
 	cs_icalls_content.append("using System;\n"
 							 "using System.Diagnostics.CodeAnalysis;\n"
 							 "using System.Runtime.InteropServices;\n"
-							 "using Godot.NativeInterop;\n"
+							 "using Redot.NativeInterop;\n"
 							 "\n");
 	cs_icalls_content.append("[SuppressMessage(\"ReSharper\", \"InconsistentNaming\")]\n");
 	cs_icalls_content.append("[SuppressMessage(\"ReSharper\", \"RedundantUnsafeContext\")]\n");
@@ -1820,7 +1819,7 @@ Error BindingsGenerator::generate_cs_core_project(const String &p_proj_dir) {
 	cs_icalls_content.append("[System.Runtime.CompilerServices.SkipLocalsInit]\n");
 	cs_icalls_content.append("internal static class " BINDINGS_CLASS_NATIVECALLS "\n{");
 
-	cs_icalls_content.append(MEMBER_BEGIN "internal static ulong godot_api_hash = ");
+	cs_icalls_content.append(MEMBER_BEGIN "internal static ulong redot_api_hash = ");
 	cs_icalls_content.append(String::num_uint64(ClassDB::get_api_hash(ClassDB::API_CORE)) + ";\n");
 
 	cs_icalls_content.append(MEMBER_BEGIN "private const int VarArgsSpanThreshold = 10;\n");
@@ -1883,10 +1882,10 @@ Error BindingsGenerator::generate_cs_editor_project(const String &p_proj_dir) {
 
 	da->change_dir(p_proj_dir);
 	da->make_dir("Generated");
-	da->make_dir("Generated/GodotObjects");
+	da->make_dir("Generated/RedotObjects");
 
 	String base_gen_dir = path::join(p_proj_dir, "Generated");
-	String godot_objects_gen_dir = path::join(base_gen_dir, "GodotObjects");
+	String redot_objects_gen_dir = path::join(base_gen_dir, "RedotObjects");
 
 	Vector<String> compile_items;
 
@@ -1897,7 +1896,7 @@ Error BindingsGenerator::generate_cs_editor_project(const String &p_proj_dir) {
 			continue;
 		}
 
-		String output_file = path::join(godot_objects_gen_dir, itype.proxy_name + ".cs");
+		String output_file = path::join(redot_objects_gen_dir, itype.proxy_name + ".cs");
 		Error err = _generate_cs_type(itype, output_file);
 
 		if (err == ERR_SKIP) {
@@ -1970,7 +1969,7 @@ Error BindingsGenerator::generate_cs_editor_project(const String &p_proj_dir) {
 	cs_icalls_content.append("using System;\n"
 							 "using System.Diagnostics.CodeAnalysis;\n"
 							 "using System.Runtime.InteropServices;\n"
-							 "using Godot.NativeInterop;\n"
+							 "using Redot.NativeInterop;\n"
 							 "\n");
 	cs_icalls_content.append("[SuppressMessage(\"ReSharper\", \"InconsistentNaming\")]\n");
 	cs_icalls_content.append("[SuppressMessage(\"ReSharper\", \"RedundantUnsafeContext\")]\n");
@@ -1978,7 +1977,7 @@ Error BindingsGenerator::generate_cs_editor_project(const String &p_proj_dir) {
 	cs_icalls_content.append("[System.Runtime.CompilerServices.SkipLocalsInit]\n");
 	cs_icalls_content.append("internal static class " BINDINGS_CLASS_NATIVECALLS_EDITOR "\n" OPEN_BLOCK);
 
-	cs_icalls_content.append(INDENT1 "internal static ulong godot_api_hash = ");
+	cs_icalls_content.append(INDENT1 "internal static ulong redot_api_hash = ");
 	cs_icalls_content.append(String::num_uint64(ClassDB::get_api_hash(ClassDB::API_EDITOR)) + ";\n");
 
 	cs_icalls_content.append(MEMBER_BEGIN "private const int VarArgsSpanThreshold = 10;\n");
@@ -2045,7 +2044,7 @@ Error BindingsGenerator::generate_cs_api(const String &p_output_dir) {
 
 	Error proj_err;
 
-	// Generate GodotSharp source files
+	// Generate RedotSharp source files
 
 	String core_proj_dir = output_dir.path_join(CORE_API_ASSEMBLY_NAME);
 
@@ -2055,7 +2054,7 @@ Error BindingsGenerator::generate_cs_api(const String &p_output_dir) {
 		return proj_err;
 	}
 
-	// Generate GodotSharpEditor source files
+	// Generate RedotSharpEditor source files
 
 	String editor_proj_dir = output_dir.path_join(EDITOR_API_ASSEMBLY_NAME);
 
@@ -2065,7 +2064,7 @@ Error BindingsGenerator::generate_cs_api(const String &p_output_dir) {
 		return proj_err;
 	}
 
-	_log("The Godot API sources were successfully generated\n");
+	_log("The Redot API sources were successfully generated\n");
 
 	return OK;
 }
@@ -2083,7 +2082,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 	bool is_derived_type = itype.base_name != StringName();
 
 	if (!is_derived_type) {
-		// Some GodotObject assertions
+		// Some RedotObject assertions
 		CRASH_COND(itype.cname != name_cache.type_Object);
 		CRASH_COND(!itype.is_instantiable);
 		CRASH_COND(itype.api_type != ClassDB::API_CORE);
@@ -2100,7 +2099,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 	output.append("using System;\n"); // IntPtr
 	output.append("using System.ComponentModel;\n"); // EditorBrowsable
 	output.append("using System.Diagnostics;\n"); // DebuggerBrowsable
-	output.append("using Godot.NativeInterop;\n");
+	output.append("using Redot.NativeInterop;\n");
 
 	output.append("\n#nullable disable\n");
 
@@ -2129,11 +2128,11 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 		output.append("\")]\n");
 	}
 
-	// We generate a `GodotClassName` attribute if the engine class name is not the same as the
+	// We generate a `RedotClassName` attribute if the engine class name is not the same as the
 	// generated C# class name. This allows introspection code to find the name associated with
 	// the class. If the attribute is not present, the C# class name can be used instead.
 	if (itype.name != itype.proxy_name) {
-		output << "[GodotClassName(\"" << itype.name << "\")]\n";
+		output << "[RedotClassName(\"" << itype.name << "\")]\n";
 	}
 
 	output.append("public ");
@@ -2279,7 +2278,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 			StringName instance_name = itype.name + CS_SINGLETON_INSTANCE_SUFFIX;
 			instance_type_name = obj_types.has(instance_name)
 					? obj_types[instance_name].proxy_name
-					: "GodotObject";
+					: "RedotObject";
 		} else {
 			instance_type_name = itype.proxy_name;
 		}
@@ -2292,8 +2291,8 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 	}
 
 	if (!itype.is_singleton) {
-		// IMPORTANT: We also generate the static fields for GodotObject instead of declaring
-		// them manually in the `GodotObject.base.cs` partial class declaration, because they're
+		// IMPORTANT: We also generate the static fields for RedotObject instead of declaring
+		// them manually in the `RedotObject.base.cs` partial class declaration, because they're
 		// required by other static fields in this generated partial class declaration.
 		// Static fields are initialized in order of declaration, but when they're in different
 		// partial class declarations then it becomes harder to tell (Rider warns about this).
@@ -2302,7 +2301,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 			// Add native constructor static field
 
 			output << MEMBER_BEGIN << "[DebuggerBrowsable(DebuggerBrowsableState.Never)]\n"
-				   << INDENT1 "private static readonly unsafe delegate* unmanaged<godot_bool, IntPtr> "
+				   << INDENT1 "private static readonly unsafe delegate* unmanaged<redot_bool, IntPtr> "
 				   << CS_STATIC_FIELD_NATIVE_CTOR " = " ICALL_CLASSDB_GET_CONSTRUCTOR
 				   << "(" BINDINGS_NATIVE_NAME_FIELD ");\n";
 		}
@@ -2388,13 +2387,13 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 				   << " = \"" << isignal.proxy_name << "\";\n";
 		}
 
-		// TODO: Only generate HasGodotClassMethod and InvokeGodotClassMethod if there's any method
+		// TODO: Only generate HasRedotClassMethod and InvokeRedotClassMethod if there's any method
 
-		// Generate InvokeGodotClassMethod
+		// Generate InvokeRedotClassMethod
 
 		output << MEMBER_BEGIN "/// <summary>\n"
 			   << INDENT1 "/// Invokes the method with the given name, using the given arguments.\n"
-			   << INDENT1 "/// This method is used by Godot to invoke methods from the engine side.\n"
+			   << INDENT1 "/// This method is used by Redot to invoke methods from the engine side.\n"
 			   << INDENT1 "/// Do not call or override this method.\n"
 			   << INDENT1 "/// </summary>\n"
 			   << INDENT1 "/// <param name=\"method\">Name of the method to invoke.</param>\n"
@@ -2405,8 +2404,8 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 		output << "#pragma warning disable CS0618 // Member is obsolete\n";
 
 		output << INDENT1 "protected internal " << (is_derived_type ? "override" : "virtual")
-			   << " bool " CS_METHOD_INVOKE_GODOT_CLASS_METHOD "(in godot_string_name method, "
-			   << "NativeVariantPtrArgs args, out godot_variant ret)\n"
+			   << " bool " CS_METHOD_INVOKE_redot_CLASS_METHOD "(in redot_string_name method, "
+			   << "NativeVariantPtrArgs args, out redot_variant ret)\n"
 			   << INDENT1 "{\n";
 
 		for (const MethodInterface &imethod : itype.methods) {
@@ -2414,7 +2413,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 				continue;
 			}
 
-			// We also call HasGodotClassMethod to ensure the method is overridden and avoid calling
+			// We also call HasRedotClassMethod to ensure the method is overridden and avoid calling
 			// the stub implementation. This solution adds some extra overhead to calls, but it's
 			// much simpler than other solutions. This won't be a problem once we move to function
 			// pointers of generated wrappers for each method, as lookup will only happen once.
@@ -2423,7 +2422,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 			output << INDENT2 "if ((method == " << CS_STATIC_FIELD_METHOD_PROXY_NAME_PREFIX << imethod.name
 				   << " || method == MethodName." << imethod.proxy_name
 				   << ") && args.Count == " << itos(imethod.arguments.size())
-				   << " && " << CS_METHOD_HAS_GODOT_CLASS_METHOD << "((godot_string_name)"
+				   << " && " << CS_METHOD_HAS_redot_CLASS_METHOD << "((redot_string_name)"
 				   << CS_STATIC_FIELD_METHOD_PROXY_NAME_PREFIX << imethod.name << ".NativeValue))\n"
 				   << INDENT2 "{\n";
 
@@ -2475,7 +2474,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 		}
 
 		if (is_derived_type) {
-			output << INDENT2 "return base." CS_METHOD_INVOKE_GODOT_CLASS_METHOD "(method, args, out ret);\n";
+			output << INDENT2 "return base." CS_METHOD_INVOKE_redot_CLASS_METHOD "(method, args, out ret);\n";
 		} else {
 			output << INDENT2 "ret = default;\n"
 				   << INDENT2 "return false;\n";
@@ -2485,17 +2484,17 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 
 		output << "#pragma warning restore CS0618\n";
 
-		// Generate HasGodotClassMethod
+		// Generate HasRedotClassMethod
 
 		output << MEMBER_BEGIN "/// <summary>\n"
 			   << INDENT1 "/// Check if the type contains a method with the given name.\n"
-			   << INDENT1 "/// This method is used by Godot to check if a method exists before invoking it.\n"
+			   << INDENT1 "/// This method is used by Redot to check if a method exists before invoking it.\n"
 			   << INDENT1 "/// Do not call or override this method.\n"
 			   << INDENT1 "/// </summary>\n"
 			   << INDENT1 "/// <param name=\"method\">Name of the method to check for.</param>\n";
 
 		output << MEMBER_BEGIN "protected internal " << (is_derived_type ? "override" : "virtual")
-			   << " bool " CS_METHOD_HAS_GODOT_CLASS_METHOD "(in godot_string_name method)\n"
+			   << " bool " CS_METHOD_HAS_redot_CLASS_METHOD "(in redot_string_name method)\n"
 			   << INDENT1 "{\n";
 
 		for (const MethodInterface &imethod : itype.methods) {
@@ -2503,13 +2502,13 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 				continue;
 			}
 
-			// We check for native names (snake_case). If we detect one, we call HasGodotClassMethod
+			// We check for native names (snake_case). If we detect one, we call HasRedotClassMethod
 			// again, but this time with the respective proxy name (PascalCase). It's the job of
 			// user derived classes to override the method and check for those. Our C# source
 			// generators take care of generating those override methods.
 			output << INDENT2 "if (method == MethodName." << imethod.proxy_name
 				   << ")\n" INDENT2 "{\n"
-				   << INDENT3 "if (" CS_METHOD_HAS_GODOT_CLASS_METHOD "("
+				   << INDENT3 "if (" CS_METHOD_HAS_redot_CLASS_METHOD "("
 				   << CS_STATIC_FIELD_METHOD_PROXY_NAME_PREFIX << imethod.name
 				   << ".NativeValue.DangerousSelfRef))\n" INDENT3 "{\n"
 				   << INDENT4 "return true;\n"
@@ -2517,34 +2516,34 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 		}
 
 		if (is_derived_type) {
-			output << INDENT2 "return base." CS_METHOD_HAS_GODOT_CLASS_METHOD "(method);\n";
+			output << INDENT2 "return base." CS_METHOD_HAS_redot_CLASS_METHOD "(method);\n";
 		} else {
 			output << INDENT2 "return false;\n";
 		}
 
 		output << INDENT1 "}\n";
 
-		// Generate HasGodotClassSignal
+		// Generate HasRedotClassSignal
 
 		output << MEMBER_BEGIN "/// <summary>\n"
 			   << INDENT1 "/// Check if the type contains a signal with the given name.\n"
-			   << INDENT1 "/// This method is used by Godot to check if a signal exists before raising it.\n"
+			   << INDENT1 "/// This method is used by Redot to check if a signal exists before raising it.\n"
 			   << INDENT1 "/// Do not call or override this method.\n"
 			   << INDENT1 "/// </summary>\n"
 			   << INDENT1 "/// <param name=\"signal\">Name of the signal to check for.</param>\n";
 
 		output << MEMBER_BEGIN "protected internal " << (is_derived_type ? "override" : "virtual")
-			   << " bool " CS_METHOD_HAS_GODOT_CLASS_SIGNAL "(in godot_string_name signal)\n"
+			   << " bool " CS_METHOD_HAS_redot_CLASS_SIGNAL "(in redot_string_name signal)\n"
 			   << INDENT1 "{\n";
 
 		for (const SignalInterface &isignal : itype.signals_) {
-			// We check for native names (snake_case). If we detect one, we call HasGodotClassSignal
+			// We check for native names (snake_case). If we detect one, we call HasRedotClassSignal
 			// again, but this time with the respective proxy name (PascalCase). It's the job of
 			// user derived classes to override the method and check for those. Our C# source
 			// generators take care of generating those override methods.
 			output << INDENT2 "if (signal == SignalName." << isignal.proxy_name
 				   << ")\n" INDENT2 "{\n"
-				   << INDENT3 "if (" CS_METHOD_HAS_GODOT_CLASS_SIGNAL "("
+				   << INDENT3 "if (" CS_METHOD_HAS_redot_CLASS_SIGNAL "("
 				   << CS_STATIC_FIELD_SIGNAL_PROXY_NAME_PREFIX << isignal.name
 				   << ".NativeValue.DangerousSelfRef))\n" INDENT3 "{\n"
 				   << INDENT4 "return true;\n"
@@ -2552,7 +2551,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 		}
 
 		if (is_derived_type) {
-			output << INDENT2 "return base." CS_METHOD_HAS_GODOT_CLASS_SIGNAL "(signal);\n";
+			output << INDENT2 "return base." CS_METHOD_HAS_redot_CLASS_SIGNAL "(signal);\n";
 		} else {
 			output << INDENT2 "return false;\n";
 		}
@@ -2929,7 +2928,7 @@ Error BindingsGenerator::_generate_cs_method(const BindingsGenerator::TypeInterf
 
 	// Collect caller name for MethodBind
 	if (p_imethod.is_vararg) {
-		icall_params += ", (godot_string_name)MethodName." + p_imethod.proxy_name + ".NativeValue";
+		icall_params += ", (redot_string_name)MethodName." + p_imethod.proxy_name + ".NativeValue";
 	}
 
 	// Generate method
@@ -2939,9 +2938,9 @@ Error BindingsGenerator::_generate_cs_method(const BindingsGenerator::TypeInterf
 					 << INDENT1 "private static readonly IntPtr " << method_bind_field << " = ";
 
 			if (p_itype.is_singleton) {
-				// Singletons are static classes. They don't derive GodotObject,
+				// Singletons are static classes. They don't derive RedotObject,
 				// so we need to specify the type to call the static method.
-				p_output << "GodotObject.";
+				p_output << "RedotObject.";
 			}
 
 			p_output << ICALL_CLASSDB_GET_METHOD_WITH_COMPATIBILITY "(" BINDINGS_NATIVE_NAME_FIELD ", MethodName."
@@ -3000,7 +2999,7 @@ Error BindingsGenerator::_generate_cs_method(const BindingsGenerator::TypeInterf
 		p_output.append(arguments_sig + ")\n" OPEN_BLOCK_L1);
 
 		if (p_imethod.is_virtual) {
-			// Godot virtual method must be overridden, therefore we return a default value by default.
+			// Redot virtual method must be overridden, therefore we return a default value by default.
 
 			if (return_type->cname == name_cache.type_void) {
 				p_output.append(CLOSE_BLOCK_L1);
@@ -3012,7 +3011,7 @@ Error BindingsGenerator::_generate_cs_method(const BindingsGenerator::TypeInterf
 		}
 
 		if (p_imethod.requires_object_call) {
-			// Fallback to Godot's object.Call(string, params)
+			// Fallback to Redot's object.Call(string, params)
 
 			p_output.append(INDENT2 CS_METHOD_CALL "(\"");
 			p_output.append(p_imethod.name);
@@ -3122,7 +3121,7 @@ Error BindingsGenerator::_generate_cs_signal(const BindingsGenerator::TypeInterf
 
 			// Generate Callable trampoline for the delegate
 			p_output << MEMBER_BEGIN "private static void " << p_isignal.proxy_name << "Trampoline"
-					 << "(object delegateObj, NativeVariantPtrArgs args, out godot_variant ret)\n"
+					 << "(object delegateObj, NativeVariantPtrArgs args, out redot_variant ret)\n"
 					 << INDENT1 "{\n"
 					 << INDENT2 "Callable.ThrowIfArgCountMismatch(args, " << itos(p_isignal.arguments.size()) << ");\n"
 					 << INDENT2 "((" << delegate_name << ")delegateObj)(";
@@ -3301,7 +3300,7 @@ Error BindingsGenerator::_generate_cs_native_calls(const InternalCall &p_icall, 
 				String c_in_vararg = arg_type->c_in_vararg;
 
 				if (arg_type->is_object_type) {
-					c_in_vararg = "%5using godot_variant %1_in = VariantUtils.CreateFromGodotObjectPtr(%1);\n";
+					c_in_vararg = "%5using redot_variant %1_in = VariantUtils.CreateFromRedotObjectPtr(%1);\n";
 				}
 
 				ERR_FAIL_COND_V_MSG(c_in_vararg.is_empty(), ERR_BUG,
@@ -3331,7 +3330,7 @@ Error BindingsGenerator::_generate_cs_native_calls(const InternalCall &p_icall, 
 
 	// Collect caller name for MethodBind
 	if (p_icall.is_vararg) {
-		c_func_sig << ", godot_string_name caller";
+		c_func_sig << ", redot_string_name caller";
 	}
 
 	String icall_method = p_icall.name;
@@ -3350,7 +3349,7 @@ Error BindingsGenerator::_generate_cs_native_calls(const InternalCall &p_icall, 
 		String initialization;
 
 		if (return_type->is_object_type) {
-			ptrcall_return_type = return_type->is_ref_counted ? "godot_ref" : return_type->c_type;
+			ptrcall_return_type = return_type->is_ref_counted ? "redot_ref" : return_type->c_type;
 			initialization = " = default";
 		} else {
 			ptrcall_return_type = return_type->c_type;
@@ -3388,21 +3387,21 @@ Error BindingsGenerator::_generate_cs_native_calls(const InternalCall &p_icall, 
 				if (return_type->cname != name_cache.type_Variant) {
 					// Usually the return value takes ownership, but in this case the variant is only used
 					// for conversion to another return type. As such, the local variable takes ownership.
-					r_output << "using godot_variant " << C_LOCAL_VARARG_RET " = ";
+					r_output << "using redot_variant " << C_LOCAL_VARARG_RET " = ";
 				} else {
 					// Variant's [c_out] takes ownership of the variant value
-					r_output << "godot_variant " << C_LOCAL_RET " = ";
+					r_output << "redot_variant " << C_LOCAL_RET " = ";
 				}
 			}
 
-			r_output << C_CLASS_NATIVE_FUNCS ".godotsharp_method_bind_call("
+			r_output << C_CLASS_NATIVE_FUNCS ".redotsharp_method_bind_call("
 					 << CS_PARAM_METHODBIND ", " << (p_icall.is_static ? "IntPtr.Zero" : CS_PARAM_INSTANCE)
-					 << ", " << (p_icall.get_arguments_count() ? "(godot_variant**)" C_LOCAL_PTRCALL_ARGS : "null")
-					 << ", total_length, out godot_variant_call_error vcall_error);\n";
+					 << ", " << (p_icall.get_arguments_count() ? "(redot_variant**)" C_LOCAL_PTRCALL_ARGS : "null")
+					 << ", total_length, out redot_variant_call_error vcall_error);\n";
 
 			r_output << base_indent << "ExceptionUtils.DebugCheckCallError(caller"
 					 << ", " << (p_icall.is_static ? "IntPtr.Zero" : CS_PARAM_INSTANCE)
-					 << ", " << (p_icall.get_arguments_count() ? "(godot_variant**)" C_LOCAL_PTRCALL_ARGS : "null")
+					 << ", " << (p_icall.get_arguments_count() ? "(redot_variant**)" C_LOCAL_PTRCALL_ARGS : "null")
 					 << ", total_length, vcall_error);\n";
 
 			if (!ret_void) {
@@ -3418,7 +3417,7 @@ Error BindingsGenerator::_generate_cs_native_calls(const InternalCall &p_icall, 
 			}
 		} else {
 			// MethodBind PtrCall
-			r_output << base_indent << C_CLASS_NATIVE_FUNCS ".godotsharp_method_bind_ptrcall("
+			r_output << base_indent << C_CLASS_NATIVE_FUNCS ".redotsharp_method_bind_ptrcall("
 					 << CS_PARAM_METHODBIND ", " << (p_icall.is_static ? "IntPtr.Zero" : CS_PARAM_INSTANCE)
 					 << ", " << (p_icall.get_arguments_count() ? C_LOCAL_PTRCALL_ARGS : "null")
 					 << ", " << (!ret_void ? "&" C_LOCAL_RET ");\n" : "null);\n");
@@ -3446,15 +3445,15 @@ Error BindingsGenerator::_generate_cs_native_calls(const InternalCall &p_icall, 
 			r_output << INDENT2 "int vararg_length = " << vararg_arg << ".Length;\n"
 					 << INDENT2 "int total_length = " << real_argc_str << " + vararg_length;\n";
 
-			r_output << INDENT2 "Span<godot_variant.movable> varargs_span = vararg_length <= VarArgsSpanThreshold ?\n"
-					 << INDENT3 "stackalloc godot_variant.movable[VarArgsSpanThreshold] :\n"
-					 << INDENT3 "new godot_variant.movable[vararg_length];\n";
+			r_output << INDENT2 "Span<redot_variant.movable> varargs_span = vararg_length <= VarArgsSpanThreshold ?\n"
+					 << INDENT3 "stackalloc redot_variant.movable[VarArgsSpanThreshold] :\n"
+					 << INDENT3 "new redot_variant.movable[vararg_length];\n";
 
 			r_output << INDENT2 "Span<IntPtr> " C_LOCAL_PTRCALL_ARGS "_span = total_length <= VarArgsSpanThreshold ?\n"
 					 << INDENT3 "stackalloc IntPtr[VarArgsSpanThreshold] :\n"
 					 << INDENT3 "new IntPtr[total_length];\n";
 
-			r_output << INDENT2 "fixed (godot_variant.movable* varargs = &MemoryMarshal.GetReference(varargs_span))\n"
+			r_output << INDENT2 "fixed (redot_variant.movable* varargs = &MemoryMarshal.GetReference(varargs_span))\n"
 					 << INDENT2 "fixed (IntPtr* " C_LOCAL_PTRCALL_ARGS " = "
 								"&MemoryMarshal.GetReference(" C_LOCAL_PTRCALL_ARGS "_span))\n"
 					 << OPEN_BLOCK_L2;
@@ -3575,7 +3574,7 @@ const String BindingsGenerator::_get_generic_type_parameters(const TypeInterface
 	return params;
 }
 
-StringName BindingsGenerator::_get_type_name_from_meta(Variant::Type p_type, GodotTypeInfo::Metadata p_meta) {
+StringName BindingsGenerator::_get_type_name_from_meta(Variant::Type p_type, RedotTypeInfo::Metadata p_meta) {
 	if (p_type == Variant::INT) {
 		return _get_int_type_name_from_meta(p_meta);
 	} else if (p_type == Variant::FLOAT) {
@@ -3585,36 +3584,36 @@ StringName BindingsGenerator::_get_type_name_from_meta(Variant::Type p_type, God
 	}
 }
 
-StringName BindingsGenerator::_get_int_type_name_from_meta(GodotTypeInfo::Metadata p_meta) {
+StringName BindingsGenerator::_get_int_type_name_from_meta(RedotTypeInfo::Metadata p_meta) {
 	switch (p_meta) {
-		case GodotTypeInfo::METADATA_INT_IS_INT8:
+		case RedotTypeInfo::METADATA_INT_IS_INT8:
 			return "sbyte";
 			break;
-		case GodotTypeInfo::METADATA_INT_IS_INT16:
+		case RedotTypeInfo::METADATA_INT_IS_INT16:
 			return "short";
 			break;
-		case GodotTypeInfo::METADATA_INT_IS_INT32:
+		case RedotTypeInfo::METADATA_INT_IS_INT32:
 			return "int";
 			break;
-		case GodotTypeInfo::METADATA_INT_IS_INT64:
+		case RedotTypeInfo::METADATA_INT_IS_INT64:
 			return "long";
 			break;
-		case GodotTypeInfo::METADATA_INT_IS_UINT8:
+		case RedotTypeInfo::METADATA_INT_IS_UINT8:
 			return "byte";
 			break;
-		case GodotTypeInfo::METADATA_INT_IS_UINT16:
+		case RedotTypeInfo::METADATA_INT_IS_UINT16:
 			return "ushort";
 			break;
-		case GodotTypeInfo::METADATA_INT_IS_UINT32:
+		case RedotTypeInfo::METADATA_INT_IS_UINT32:
 			return "uint";
 			break;
-		case GodotTypeInfo::METADATA_INT_IS_UINT64:
+		case RedotTypeInfo::METADATA_INT_IS_UINT64:
 			return "ulong";
 			break;
-		case GodotTypeInfo::METADATA_INT_IS_CHAR16:
+		case RedotTypeInfo::METADATA_INT_IS_CHAR16:
 			return "char";
 			break;
-		case GodotTypeInfo::METADATA_INT_IS_CHAR32:
+		case RedotTypeInfo::METADATA_INT_IS_CHAR32:
 			// To prevent breaking compatibility, C# bindings need to keep using `long`.
 			return "long";
 		default:
@@ -3623,12 +3622,12 @@ StringName BindingsGenerator::_get_int_type_name_from_meta(GodotTypeInfo::Metada
 	}
 }
 
-StringName BindingsGenerator::_get_float_type_name_from_meta(GodotTypeInfo::Metadata p_meta) {
+StringName BindingsGenerator::_get_float_type_name_from_meta(RedotTypeInfo::Metadata p_meta) {
 	switch (p_meta) {
-		case GodotTypeInfo::METADATA_REAL_IS_FLOAT:
+		case RedotTypeInfo::METADATA_REAL_IS_FLOAT:
 			return "float";
 			break;
-		case GodotTypeInfo::METADATA_REAL_IS_DOUBLE:
+		case RedotTypeInfo::METADATA_REAL_IS_DOUBLE:
 			return "double";
 			break;
 		default:
@@ -3802,14 +3801,14 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
 
 		itype.cs_type = itype.proxy_name;
 
-		itype.cs_in_expr = "GodotObject." CS_STATIC_METHOD_GETINSTANCE "(%0)";
+		itype.cs_in_expr = "RedotObject." CS_STATIC_METHOD_GETINSTANCE "(%0)";
 
 		itype.cs_out = "%5return (%2)%0(%1);";
 
 		itype.c_arg_in = "&%s";
 		itype.c_type = "IntPtr";
 		itype.c_type_in = itype.c_type;
-		itype.c_type_out = "GodotObject";
+		itype.c_type_out = "RedotObject";
 
 		// Populate properties
 
@@ -3949,7 +3948,7 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
 
 				// A virtual method without the virtual flag. This is a special case.
 
-				// There is no method bind, so let's fallback to Godot's object.Call(string, params)
+				// There is no method bind, so let's fallback to Redot's object.Call(string, params)
 				imethod.requires_object_call = true;
 
 				// The method Object.free is registered as a virtual method, but without the virtual flag.
@@ -3990,7 +3989,7 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
 			} else if (return_info.type == Variant::NIL) {
 				imethod.return_type.cname = name_cache.type_void;
 			} else {
-				imethod.return_type.cname = _get_type_name_from_meta(return_info.type, m ? m->get_argument_meta(-1) : (GodotTypeInfo::Metadata)method_info.return_val_metadata);
+				imethod.return_type.cname = _get_type_name_from_meta(return_info.type, m ? m->get_argument_meta(-1) : (RedotTypeInfo::Metadata)method_info.return_val_metadata);
 			}
 
 			int idx = 0;
@@ -4020,7 +4019,7 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
 				} else if (arginfo.type == Variant::NIL) {
 					iarg.type.cname = name_cache.type_Variant;
 				} else {
-					iarg.type.cname = _get_type_name_from_meta(arginfo.type, m ? m->get_argument_meta(idx) : (GodotTypeInfo::Metadata)method_info.get_argument_meta(idx));
+					iarg.type.cname = _get_type_name_from_meta(arginfo.type, m ? m->get_argument_meta(idx) : (RedotTypeInfo::Metadata)method_info.get_argument_meta(idx));
 				}
 
 				iarg.name = escape_csharp_keyword(snake_to_camel_case(iarg.name));
@@ -4152,7 +4151,7 @@ bool BindingsGenerator::_populate_object_type_interfaces() {
 				} else if (arginfo.type == Variant::NIL) {
 					iarg.type.cname = name_cache.type_Variant;
 				} else {
-					iarg.type.cname = _get_type_name_from_meta(arginfo.type, (GodotTypeInfo::Metadata)method_info.get_argument_meta(idx));
+					iarg.type.cname = _get_type_name_from_meta(arginfo.type, (RedotTypeInfo::Metadata)method_info.get_argument_meta(idx));
 				}
 
 				iarg.name = escape_csharp_keyword(snake_to_camel_case(iarg.name));
@@ -4545,13 +4544,13 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 
 	// bool
 	itype = TypeInterface::create_value_type(String("bool"));
-	itype.cs_in_expr = "%0.ToGodotBool()";
+	itype.cs_in_expr = "%0.ToRedotBool()";
 	itype.cs_out = "%5return %0(%1).ToBool();";
-	itype.c_type = "godot_bool";
+	itype.c_type = "redot_bool";
 	itype.c_type_in = itype.c_type;
 	itype.c_type_out = itype.c_type;
 	itype.c_arg_in = "&%s";
-	itype.c_in_vararg = "%5using godot_variant %1_in = VariantUtils.CreateFromBool(%1);\n";
+	itype.c_in_vararg = "%5using redot_variant %1_in = VariantUtils.CreateFromBool(%1);\n";
 	builtin_types.insert(itype.cname, itype);
 
 	// Integer types
@@ -4571,7 +4570,7 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 		}                                                                                      \
 		itype.c_type_in = itype.name;                                                          \
 		itype.c_type_out = itype.name;                                                         \
-		itype.c_in_vararg = "%5using godot_variant %1_in = VariantUtils.CreateFromInt(%1);\n"; \
+		itype.c_in_vararg = "%5using redot_variant %1_in = VariantUtils.CreateFromInt(%1);\n"; \
 		builtin_types.insert(itype.cname, itype);                                              \
 	}
 
@@ -4606,7 +4605,7 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 		}
 		itype.c_type_in = itype.proxy_name;
 		itype.c_type_out = itype.proxy_name;
-		itype.c_in_vararg = "%5using godot_variant %1_in = VariantUtils.CreateFromFloat(%1);\n";
+		itype.c_in_vararg = "%5using redot_variant %1_in = VariantUtils.CreateFromFloat(%1);\n";
 		builtin_types.insert(itype.cname, itype);
 
 		// double
@@ -4619,7 +4618,7 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 		itype.c_arg_in = "&%s";
 		itype.c_type_in = itype.proxy_name;
 		itype.c_type_out = itype.proxy_name;
-		itype.c_in_vararg = "%5using godot_variant %1_in = VariantUtils.CreateFromFloat(%1);\n";
+		itype.c_in_vararg = "%5using redot_variant %1_in = VariantUtils.CreateFromFloat(%1);\n";
 		builtin_types.insert(itype.cname, itype);
 	}
 
@@ -4629,14 +4628,14 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 	itype.cname = itype.name;
 	itype.proxy_name = "string";
 	itype.cs_type = itype.proxy_name;
-	itype.c_in = "%5using %0 %1_in = " C_METHOD_MONOSTR_TO_GODOT "(%1);\n";
-	itype.c_out = "%5return " C_METHOD_MONOSTR_FROM_GODOT "(%1);\n";
+	itype.c_in = "%5using %0 %1_in = " C_METHOD_MONOSTR_TO_redot "(%1);\n";
+	itype.c_out = "%5return " C_METHOD_MONOSTR_FROM_redot "(%1);\n";
 	itype.c_arg_in = "&%s_in";
-	itype.c_type = "godot_string";
+	itype.c_type = "redot_string";
 	itype.c_type_in = itype.cs_type;
 	itype.c_type_out = itype.cs_type;
 	itype.c_type_is_disposable_struct = true;
-	itype.c_in_vararg = "%5using godot_variant %1_in = VariantUtils.CreateFromString(%1);\n";
+	itype.c_in_vararg = "%5using redot_variant %1_in = VariantUtils.CreateFromString(%1);\n";
 	builtin_types.insert(itype.cname, itype);
 
 	// StringName
@@ -4649,10 +4648,10 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 	// Cannot pass null StringName to ptrcall
 	itype.c_out = "%5return %0.CreateTakingOwnershipOfDisposableValue(%1);\n";
 	itype.c_arg_in = "&%s";
-	itype.c_type = "godot_string_name";
+	itype.c_type = "redot_string_name";
 	itype.c_type_in = itype.c_type;
 	itype.c_type_out = itype.cs_type;
-	itype.c_in_vararg = "%5using godot_variant %1_in = VariantUtils.CreateFromStringName(%1);\n";
+	itype.c_in_vararg = "%5using redot_variant %1_in = VariantUtils.CreateFromStringName(%1);\n";
 	itype.c_type_is_disposable_struct = false; // [c_out] takes ownership
 	itype.c_ret_needs_default_initialization = true;
 	builtin_types.insert(itype.cname, itype);
@@ -4667,7 +4666,7 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 	// Cannot pass null NodePath to ptrcall
 	itype.c_out = "%5return %0.CreateTakingOwnershipOfDisposableValue(%1);\n";
 	itype.c_arg_in = "&%s";
-	itype.c_type = "godot_node_path";
+	itype.c_type = "redot_node_path";
 	itype.c_type_in = itype.c_type;
 	itype.c_type_out = itype.cs_type;
 	itype.c_type_is_disposable_struct = false; // [c_out] takes ownership
@@ -4695,7 +4694,7 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 	itype.c_in = "%5%0 %1_in = (%0)%1.NativeVar;\n";
 	itype.c_out = "%5return Variant.CreateTakingOwnershipOfDisposableValue(%1);\n";
 	itype.c_arg_in = "&%s_in";
-	itype.c_type = "godot_variant";
+	itype.c_type = "redot_variant";
 	itype.c_type_in = itype.cs_type;
 	itype.c_type_out = itype.cs_type;
 	itype.c_type_is_disposable_struct = false; // [c_out] takes ownership
@@ -4708,7 +4707,7 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 	itype.c_in = "%5using %0 %1_in = " C_METHOD_MANAGED_TO_CALLABLE "(in %1);\n";
 	itype.c_out = "%5return " C_METHOD_MANAGED_FROM_CALLABLE "(in %1);\n";
 	itype.c_arg_in = "&%s_in";
-	itype.c_type = "godot_callable";
+	itype.c_type = "redot_callable";
 	itype.c_type_in = "in " + itype.cs_type;
 	itype.c_type_out = itype.cs_type;
 	itype.c_type_is_disposable_struct = true;
@@ -4724,7 +4723,7 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 	itype.c_in = "%5using %0 %1_in = " C_METHOD_MANAGED_TO_SIGNAL "(in %1);\n";
 	itype.c_out = "%5return " C_METHOD_MANAGED_FROM_SIGNAL "(in %1);\n";
 	itype.c_arg_in = "&%s_in";
-	itype.c_type = "godot_signal";
+	itype.c_type = "redot_signal";
 	itype.c_type_in = "in " + itype.cs_type;
 	itype.c_type_out = itype.cs_type;
 	itype.c_type_is_disposable_struct = true;
@@ -4762,19 +4761,19 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 
 #define INSERT_ARRAY(m_type, m_managed_type, m_proxy_t) INSERT_ARRAY_FULL(m_type, m_type, m_managed_type, m_proxy_t)
 
-	INSERT_ARRAY(PackedInt32Array, godot_packed_int32_array, int);
-	INSERT_ARRAY(PackedInt64Array, godot_packed_int64_array, long);
-	INSERT_ARRAY_FULL(PackedByteArray, PackedByteArray, godot_packed_byte_array, byte);
+	INSERT_ARRAY(PackedInt32Array, redot_packed_int32_array, int);
+	INSERT_ARRAY(PackedInt64Array, redot_packed_int64_array, long);
+	INSERT_ARRAY_FULL(PackedByteArray, PackedByteArray, redot_packed_byte_array, byte);
 
-	INSERT_ARRAY(PackedFloat32Array, godot_packed_float32_array, float);
-	INSERT_ARRAY(PackedFloat64Array, godot_packed_float64_array, double);
+	INSERT_ARRAY(PackedFloat32Array, redot_packed_float32_array, float);
+	INSERT_ARRAY(PackedFloat64Array, redot_packed_float64_array, double);
 
-	INSERT_ARRAY(PackedStringArray, godot_packed_string_array, string);
+	INSERT_ARRAY(PackedStringArray, redot_packed_string_array, string);
 
-	INSERT_ARRAY(PackedColorArray, godot_packed_color_array, Color);
-	INSERT_ARRAY(PackedVector2Array, godot_packed_vector2_array, Vector2);
-	INSERT_ARRAY(PackedVector3Array, godot_packed_vector3_array, Vector3);
-	INSERT_ARRAY(PackedVector4Array, godot_packed_vector4_array, Vector4);
+	INSERT_ARRAY(PackedColorArray, redot_packed_color_array, Color);
+	INSERT_ARRAY(PackedVector2Array, redot_packed_vector2_array, Vector2);
+	INSERT_ARRAY(PackedVector3Array, redot_packed_vector3_array, Vector3);
+	INSERT_ARRAY(PackedVector4Array, redot_packed_vector4_array, Vector4);
 
 #undef INSERT_ARRAY
 
@@ -4788,7 +4787,7 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 	itype.cs_in_expr = "(%1)(%0 ?? new()).NativeValue";
 	itype.c_out = "%5return %0.CreateTakingOwnershipOfDisposableValue(%1);\n";
 	itype.c_arg_in = "&%s";
-	itype.c_type = "godot_array";
+	itype.c_type = "redot_array";
 	itype.c_type_in = itype.c_type;
 	itype.c_type_out = itype.cs_type;
 	itype.c_type_is_disposable_struct = false; // [c_out] takes ownership
@@ -4800,7 +4799,7 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 	itype.name = "Array_@generic";
 	itype.cname = itype.name;
 	itype.cs_out = "%5return new %2(%0(%1));";
-	// For generic Godot collections, Variant.From<T>/As<T> is slower, so we need this special case
+	// For generic Redot collections, Variant.From<T>/As<T> is slower, so we need this special case
 	itype.cs_variant_to_managed = "VariantUtils.ConvertToArray(%0)";
 	itype.cs_managed_to_variant = "VariantUtils.CreateFromArray(%0)";
 	builtin_types.insert(itype.cname, itype);
@@ -4815,7 +4814,7 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 	itype.cs_in_expr = "(%1)(%0 ?? new()).NativeValue";
 	itype.c_out = "%5return %0.CreateTakingOwnershipOfDisposableValue(%1);\n";
 	itype.c_arg_in = "&%s";
-	itype.c_type = "godot_dictionary";
+	itype.c_type = "redot_dictionary";
 	itype.c_type_in = itype.c_type;
 	itype.c_type_out = itype.cs_type;
 	itype.c_type_is_disposable_struct = false; // [c_out] takes ownership
@@ -4827,7 +4826,7 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 	itype.name = "Dictionary_@generic";
 	itype.cname = itype.name;
 	itype.cs_out = "%5return new %2(%0(%1));";
-	// For generic Godot collections, Variant.From<T>/As<T> is slower, so we need this special case
+	// For generic Redot collections, Variant.From<T>/As<T> is slower, so we need this special case
 	itype.cs_variant_to_managed = "VariantUtils.ConvertToDictionary(%0)";
 	itype.cs_managed_to_variant = "VariantUtils.CreateFromDictionary(%0)";
 	builtin_types.insert(itype.cname, itype);
@@ -5043,7 +5042,7 @@ static void handle_cmdline_options(String glue_dir_path) {
 	}
 }
 
-static void cleanup_and_exit_godot() {
+static void cleanup_and_exit_redot() {
 	// Exit once done.
 	Main::cleanup(true);
 	::exit(0);
@@ -5062,9 +5061,9 @@ void BindingsGenerator::handle_cmdline_args(const List<String> &p_cmdline_args) 
 				glue_dir_path = path_elem->get();
 				elem = elem->next();
 			} else {
-				ERR_PRINT(generate_all_glue_option + ": No output directory specified (expected path to '{GODOT_ROOT}/modules/mono/glue').");
+				ERR_PRINT(generate_all_glue_option + ": No output directory specified (expected path to '{redot_ROOT}/modules/mono/glue').");
 				// Exit once done with invalid command line arguments.
-				cleanup_and_exit_godot();
+				cleanup_and_exit_redot();
 			}
 
 			break;
@@ -5082,7 +5081,7 @@ void BindingsGenerator::handle_cmdline_args(const List<String> &p_cmdline_args) 
 			ERR_PRINT(generate_all_glue_option + ": Cannot generate Mono glue while running a game project. Change current directory or enable --editor.");
 		}
 		// Exit once done.
-		cleanup_and_exit_godot();
+		cleanup_and_exit_redot();
 	}
 }
 

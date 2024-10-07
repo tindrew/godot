@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/72967
+# https://github.com/redotengine/redot/issues/72967
 
 class CustomNode:
 	extends Node

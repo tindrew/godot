@@ -1,5 +1,5 @@
-# https://github.com/godotengine/godot/issues/54589
-# https://github.com/godotengine/godot/issues/56265
+# https://github.com/redotengine/redot/issues/54589
+# https://github.com/redotengine/redot/issues/56265
 
 extends Resource
 

@@ -2,11 +2,10 @@
 /*  naming_utils.cpp                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -45,14 +44,14 @@ HashMap<String, String> _create_hashmap_from_vector(Vector<Pair<String, String>>
 const HashMap<String, String> pascal_case_name_overrides = _create_hashmap_from_vector({
 		{ "BitMap", "Bitmap" },
 		{ "JSONRPC", "JsonRpc" },
-		{ "Object", "GodotObject" },
+		{ "Object", "RedotObject" },
 		{ "OpenXRIPBinding", "OpenXRIPBinding" },
 		{ "SkeletonModification2DCCDIK", "SkeletonModification2DCcdik" },
 		{ "SkeletonModification2DFABRIK", "SkeletonModification2DFabrik" },
 		{ "SkeletonModification3DCCDIK", "SkeletonModification3DCcdik" },
 		{ "SkeletonModification3DFABRIK", "SkeletonModification3DFabrik" },
 		{ "System", "System_" },
-		{ "Thread", "GodotThread" },
+		{ "Thread", "RedotThread" },
 });
 
 // Hardcoded collection of PascalCase part conversions.

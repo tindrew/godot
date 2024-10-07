@@ -67,7 +67,7 @@ if env["builtin_pcre2"]:
     env.modules_sources += thirdparty_obj
 
 
-# Godot source files
+# Redot source files
 
 module_obj = []
 

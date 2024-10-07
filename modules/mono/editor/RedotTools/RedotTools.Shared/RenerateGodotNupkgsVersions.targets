@@ -1,0 +1,39 @@
+<Project>
+  <!-- Generate C# file with the version of all the nupkgs bundled with Redot -->
+
+  <Target Name="SetPropertiesForGenerateRedotNupkgsVersions">
+    <PropertyGroup>
+      <GeneratedRedotNupkgsVersionsFile>$(IntermediateOutputPath)RedotNupkgsVersions.g.cs</GeneratedRedotNupkgsVersionsFile>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="GenerateRedotNupkgsVersionsFile"
+          DependsOnTargets="_GenerateRedotNupkgsVersionsFile"
+          BeforeTargets="PrepareForBuild;CompileDesignTime;BeforeCompile;CoreCompile">
+    <ItemGroup>
+      <Compile Include="$(GeneratedRedotNupkgsVersionsFile)" />
+      <FileWrites Include="$(GeneratedRedotNupkgsVersionsFile)" />
+    </ItemGroup>
+  </Target>
+  <Target Name="_GenerateRedotNupkgsVersionsFile"
+          DependsOnTargets="SetPropertiesForGenerateRedotNupkgsVersions"
+          Inputs="$(MSBuildProjectFile);$(MSBuildThisFileDirectory);$(MSBuildProjectFile)\..\..\..\SdkPackageVersions.props"
+          Outputs="$(GeneratedRedotNupkgsVersionsFile)">
+    <PropertyGroup>
+      <GenerateRedotNupkgsVersionsCode><![CDATA[
+namespace $(RootNamespace)
+{
+    public class GeneratedRedotNupkgsVersions
+    {
+        public const string RedotNETSdk = "$(PackageVersion_Redot_NET_Sdk)"%3b
+        public const string RedotSourceGenerators = "$(PackageVersion_Redot_SourceGenerators)"%3b
+        public const string RedotSharp = "$(PackageVersion_RedotSharp)"%3b
+    }
+}
+]]></GenerateRedotNupkgsVersionsCode>
+    </PropertyGroup>
+    <WriteLinesToFile Lines="$(GenerateRedotNupkgsVersionsCode)"
+                      File="$(GeneratedRedotNupkgsVersionsFile)"
+                      Overwrite="True" WriteOnlyWhenDifferent="True" />
+  </Target>
+</Project>

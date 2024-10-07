@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/71177
+# https://github.com/redotengine/redot/issues/71177
 
 func test():
 	builtin_method()

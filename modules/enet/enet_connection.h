@@ -2,11 +2,10 @@
 /*  enet_connection.h                                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -128,7 +127,7 @@ public:
 	void get_peers(List<Ref<ENetPacketPeer>> &r_peers);
 	int get_local_port() const;
 
-	// Godot additions
+	// Redot additions
 	Error dtls_server_setup(const Ref<TLSOptions> &p_options);
 	Error dtls_client_setup(const String &p_hostname, const Ref<TLSOptions> &p_options);
 	void refuse_new_connections(bool p_refuse);

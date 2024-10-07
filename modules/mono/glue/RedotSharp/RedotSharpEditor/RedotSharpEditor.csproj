@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{8FBEC238-D944-4074-8548-B3B524305905}</ProjectGuid>
+    <OutputPath>bin/$(Configuration)</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <RootNamespace>Redot</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
+    <DocumentationFile>$(OutputPath)/$(AssemblyName).xml</DocumentationFile>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>10</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Description>Redot C# Editor API.</Description>
+    <Authors>Redot Engine contributors</Authors>
+
+    <PackageId>RedotSharpEditor</PackageId>
+    <Version>4.4.0</Version>
+    <PackageVersion>$(PackageVersion_RedotSharp)</PackageVersion>
+    <RepositoryUrl>https://github.com/redotengine/redot/tree/master/modules/mono/glue/RedotSharp/RedotSharpEditor</RepositoryUrl>
+    <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright (c) Redot Engine contributors</Copyright>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);redot</DefineConstants>
+    <DefineConstants Condition=" '$(RedotFloat64)' == 'true' ">REAL_T_IS_DOUBLE;$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RedotSharp\RedotSharp.csproj">
+      <Private>false</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <!-- Compat Sources -->
+  <ItemGroup Condition=" '$(RedotNoDeprecated)' == '' ">
+    <Compile Include="Compat.cs" />
+  </ItemGroup>
+  <!--
+  We import a props file with auto-generated includes. This works well with Rider.
+  However, Visual Studio and MonoDevelop won't list them in the solution explorer.
+  We can't use wildcards as there may be undesired old files still hanging around.
+  Fortunately code completion, go to definition and such still work.
+  -->
+  <Import Condition=" '$(RedotSkipGenerated)' == '' " Project="Generated\GeneratedIncludes.props" />
+</Project>

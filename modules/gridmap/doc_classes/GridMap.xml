@@ -12,8 +12,8 @@
 	</description>
 	<tutorials>
 		<link title="Using gridmaps">$DOCS_URL/tutorials/3d/using_gridmaps.html</link>
-		<link title="3D Platformer Demo">https://godotengine.org/asset-library/asset/2748</link>
-		<link title="3D Kinematic Character Demo">https://godotengine.org/asset-library/asset/2739</link>
+		<link title="3D Platformer Demo">https://redotengine.org/asset-library/asset/2748</link>
+		<link title="3D Kinematic Character Demo">https://redotengine.org/asset-library/asset/2739</link>
 	</tutorials>
 	<methods>
 		<method name="clear">
@@ -45,7 +45,7 @@
 			<return type="Basis" />
 			<param index="0" name="index" type="int" />
 			<description>
-				Returns one of 24 possible rotations that lie along the vectors (x,y,z) with each component being either -1, 0, or 1. For further details, refer to the Godot source code.
+				Returns one of 24 possible rotations that lie along the vectors (x,y,z) with each component being either -1, 0, or 1. For further details, refer to the Redot source code.
 			</description>
 		</method>
 		<method name="get_cell_item" qualifiers="const">
@@ -100,7 +100,7 @@
 			<return type="int" />
 			<param index="0" name="basis" type="Basis" />
 			<description>
-				This function considers a discretization of rotations into 24 points on unit sphere, lying along the vectors (x,y,z) with each component being either -1, 0, or 1, and returns the index (in the range from 0 to 23) of the point best representing the orientation of the object. For further details, refer to the Godot source code.
+				This function considers a discretization of rotations into 24 points on unit sphere, lying along the vectors (x,y,z) with each component being either -1, 0, or 1, and returns the index (in the range from 0 to 23) of the point best representing the orientation of the object. For further details, refer to the Redot source code.
 			</description>
 		</method>
 		<method name="get_used_cells" qualifiers="const">

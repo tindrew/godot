@@ -1,4 +1,4 @@
-# https://github.com/godotengine/godot/issues/89439
+# https://github.com/redotengine/redot/issues/89439
 
 signal my_signal
 

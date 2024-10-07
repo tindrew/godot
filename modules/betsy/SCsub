@@ -18,7 +18,7 @@ env_thirdparty = env_betsy.Clone()
 env_thirdparty.disable_warnings()
 env.modules_sources += thirdparty_obj
 
-# Godot source files
+# Redot source files
 module_obj = []
 env_betsy.add_source_files(module_obj, "*.cpp")
 env.modules_sources += module_obj

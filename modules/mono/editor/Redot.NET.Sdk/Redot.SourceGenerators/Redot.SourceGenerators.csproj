@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>10</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Description>Core C# source generator for Redot projects.</Description>
+    <Authors>Redot Engine contributors</Authors>
+
+    <PackageId>Redot.SourceGenerators</PackageId>
+    <Version>4.4.0</Version>
+    <PackageVersion>$(PackageVersion_Redot_SourceGenerators)</PackageVersion>
+    <RepositoryUrl>https://github.com/redotengine/redot/tree/master/modules/mono/editor/Redot.NET.Sdk/Redot.SourceGenerators</RepositoryUrl>
+    <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright (c) Redot Engine contributors</Copyright>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <!-- Do not include the generator as a lib dependency -->
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+  </PropertyGroup>
+  <!-- Analyzer release tracking -->
+  <ItemGroup>
+    <AdditionalFiles Include="AnalyzerReleases.Shipped.md" />
+    <AdditionalFiles Include="AnalyzerReleases.Unshipped.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.11.0" PrivateAssets="all" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Package the generator in the analyzer directory of the nuget package -->
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+
+    <!-- Package the props file -->
+    <None Include="Redot.SourceGenerators.props" Pack="true" PackagePath="build" Visible="true" />
+  </ItemGroup>
+</Project>

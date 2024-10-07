@@ -2,11 +2,10 @@
 /*  openxr_hand_tracking_extension.cpp                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -206,19 +205,19 @@ void OpenXRHandTrackingExtension::on_process() {
 				hand_trackers[i].locations.jointCount = XR_HAND_JOINT_COUNT_EXT;
 				hand_trackers[i].locations.jointLocations = hand_trackers[i].joint_locations;
 
-				Ref<XRHandTracker> godot_tracker;
-				godot_tracker.instantiate();
-				godot_tracker->set_tracker_hand(i == 0 ? XRPositionalTracker::TRACKER_HAND_LEFT : XRPositionalTracker::TRACKER_HAND_RIGHT);
-				godot_tracker->set_tracker_name(i == 0 ? "/user/hand_tracker/left" : "/user/hand_tracker/right");
-				XRServer::get_singleton()->add_tracker(godot_tracker);
-				hand_trackers[i].godot_tracker = godot_tracker;
+				Ref<XRHandTracker> redot_tracker;
+				redot_tracker.instantiate();
+				redot_tracker->set_tracker_hand(i == 0 ? XRPositionalTracker::TRACKER_HAND_LEFT : XRPositionalTracker::TRACKER_HAND_RIGHT);
+				redot_tracker->set_tracker_name(i == 0 ? "/user/hand_tracker/left" : "/user/hand_tracker/right");
+				XRServer::get_singleton()->add_tracker(redot_tracker);
+				hand_trackers[i].redot_tracker = redot_tracker;
 
 				hand_trackers[i].is_initialized = true;
 			}
 		}
 
 		if (hand_trackers[i].is_initialized) {
-			Ref<XRHandTracker> godot_tracker = hand_trackers[i].godot_tracker;
+			Ref<XRHandTracker> redot_tracker = hand_trackers[i].redot_tracker;
 			void *next_pointer = nullptr;
 
 			XrHandJointsMotionRangeInfoEXT motion_range_info = { XR_TYPE_HAND_JOINTS_MOTION_RANGE_INFO_EXT, next_pointer, hand_trackers[i].motion_range };
@@ -237,9 +236,9 @@ void OpenXRHandTrackingExtension::on_process() {
 			if (XR_FAILED(result)) {
 				// not successful? then we do nothing.
 				print_line("OpenXR: Failed to get tracking for hand", i, "[", OpenXRAPI::get_singleton()->get_error_string(result), "]");
-				godot_tracker->set_hand_tracking_source(XRHandTracker::HAND_TRACKING_SOURCE_UNKNOWN);
-				godot_tracker->set_has_tracking_data(false);
-				godot_tracker->invalidate_pose("default");
+				redot_tracker->set_hand_tracking_source(XRHandTracker::HAND_TRACKING_SOURCE_UNKNOWN);
+				redot_tracker->set_has_tracking_data(false);
+				redot_tracker->invalidate_pose("default");
 				continue;
 			}
 
@@ -251,8 +250,8 @@ void OpenXRHandTrackingExtension::on_process() {
 
 			if (hand_trackers[i].locations.isActive) {
 				// SKELETON_RIG_HUMANOID bone adjustment. This rotation performs:
-				// OpenXR Z+ -> Godot Humanoid Y-  (Back along the bone)
-				// OpenXR Y+ -> Godot Humanoid Z- (Out the back of the hand)
+				// OpenXR Z+ -> Redot Humanoid Y-  (Back along the bone)
+				// OpenXR Y+ -> Redot Humanoid Z- (Out the back of the hand)
 				const Quaternion bone_adjustment(0.0, -Math_SQRT12, Math_SQRT12, 0.0);
 
 				for (int joint = 0; joint < XR_HAND_JOINT_COUNT_EXT; joint++) {
@@ -284,17 +283,17 @@ void OpenXRHandTrackingExtension::on_process() {
 					if (location.locationFlags & XR_SPACE_VELOCITY_LINEAR_VALID_BIT) {
 						flags.set_flag(XRHandTracker::HAND_JOINT_FLAG_LINEAR_VELOCITY_VALID);
 						linear_velocity = Vector3(velocity.linearVelocity.x, velocity.linearVelocity.y, velocity.linearVelocity.z);
-						godot_tracker->set_hand_joint_linear_velocity((XRHandTracker::HandJoint)joint, linear_velocity);
+						redot_tracker->set_hand_joint_linear_velocity((XRHandTracker::HandJoint)joint, linear_velocity);
 					}
 					if (location.locationFlags & XR_SPACE_VELOCITY_ANGULAR_VALID_BIT) {
 						flags.set_flag(XRHandTracker::HAND_JOINT_FLAG_ANGULAR_VELOCITY_VALID);
 						angular_velocity = Vector3(velocity.angularVelocity.x, velocity.angularVelocity.y, velocity.angularVelocity.z);
-						godot_tracker->set_hand_joint_angular_velocity((XRHandTracker::HandJoint)joint, angular_velocity);
+						redot_tracker->set_hand_joint_angular_velocity((XRHandTracker::HandJoint)joint, angular_velocity);
 					}
 
-					godot_tracker->set_hand_joint_flags((XRHandTracker::HandJoint)joint, flags);
-					godot_tracker->set_hand_joint_transform((XRHandTracker::HandJoint)joint, transform);
-					godot_tracker->set_hand_joint_radius((XRHandTracker::HandJoint)joint, location.radius);
+					redot_tracker->set_hand_joint_flags((XRHandTracker::HandJoint)joint, flags);
+					redot_tracker->set_hand_joint_transform((XRHandTracker::HandJoint)joint, transform);
+					redot_tracker->set_hand_joint_radius((XRHandTracker::HandJoint)joint, location.radius);
 
 					if (joint == XR_HAND_JOINT_PALM_EXT) {
 						if (location.locationFlags & XR_SPACE_LOCATION_POSITION_VALID_BIT) {
@@ -314,20 +313,20 @@ void OpenXRHandTrackingExtension::on_process() {
 									source = XRHandTracker::HAND_TRACKING_SOURCE_UNKNOWN;
 								}
 							}
-							godot_tracker->set_hand_tracking_source(source);
-							godot_tracker->set_has_tracking_data(true);
-							godot_tracker->set_pose("default", transform, linear_velocity, angular_velocity);
+							redot_tracker->set_hand_tracking_source(source);
+							redot_tracker->set_has_tracking_data(true);
+							redot_tracker->set_pose("default", transform, linear_velocity, angular_velocity);
 						} else {
-							godot_tracker->set_hand_tracking_source(hand_tracking_source_ext ? XRHandTracker::HAND_TRACKING_SOURCE_NOT_TRACKED : XRHandTracker::HAND_TRACKING_SOURCE_UNKNOWN);
-							godot_tracker->set_has_tracking_data(false);
-							godot_tracker->invalidate_pose("default");
+							redot_tracker->set_hand_tracking_source(hand_tracking_source_ext ? XRHandTracker::HAND_TRACKING_SOURCE_NOT_TRACKED : XRHandTracker::HAND_TRACKING_SOURCE_UNKNOWN);
+							redot_tracker->set_has_tracking_data(false);
+							redot_tracker->invalidate_pose("default");
 						}
 					}
 				}
 			} else {
-				godot_tracker->set_hand_tracking_source(hand_tracking_source_ext ? XRHandTracker::HAND_TRACKING_SOURCE_NOT_TRACKED : XRHandTracker::HAND_TRACKING_SOURCE_UNKNOWN);
-				godot_tracker->set_has_tracking_data(false);
-				godot_tracker->invalidate_pose("default");
+				redot_tracker->set_hand_tracking_source(hand_tracking_source_ext ? XRHandTracker::HAND_TRACKING_SOURCE_NOT_TRACKED : XRHandTracker::HAND_TRACKING_SOURCE_UNKNOWN);
+				redot_tracker->set_has_tracking_data(false);
+				redot_tracker->invalidate_pose("default");
 			}
 		}
 	}
@@ -349,7 +348,7 @@ void OpenXRHandTrackingExtension::cleanup_hand_tracking() {
 			hand_trackers[i].is_initialized = false;
 			hand_trackers[i].hand_tracker = XR_NULL_HANDLE;
 
-			XRServer::get_singleton()->remove_tracker(hand_trackers[i].godot_tracker);
+			XRServer::get_singleton()->remove_tracker(hand_trackers[i].redot_tracker);
 		}
 	}
 }
