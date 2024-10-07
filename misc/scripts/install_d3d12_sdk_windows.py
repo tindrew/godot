@@ -17,18 +17,18 @@ if sys.platform == "win32":
     mode = c_int(mode.value | 4)
     windll.kernel32.SetConsoleMode(c_int(stdout_handle), mode)
 
-# Base Godot dependencies path
+# Base Redot dependencies path
 # If cross-compiling (no LOCALAPPDATA), we install in `bin`
 deps_folder = os.getenv("LOCALAPPDATA")
 if deps_folder:
-    deps_folder = os.path.join(deps_folder, "Godot", "build_deps")
+    deps_folder = os.path.join(deps_folder, "Redot", "build_deps")
 else:
     deps_folder = os.path.join("bin", "build_deps")
 
 # Mesa NIR
-# Check for latest version: https://github.com/godotengine/godot-nir-static/releases/latest
+# Check for latest version: https://github.com/redotengine/redot-nir-static/releases/latest
 mesa_version = "23.1.9"
-mesa_filename = "godot-nir-23.1.9.zip"
+mesa_filename = "redot-nir-23.1.9.zip"
 mesa_archive = os.path.join(deps_folder, mesa_filename)
 mesa_folder = os.path.join(deps_folder, "mesa")
 # WinPixEventRuntime
@@ -54,7 +54,7 @@ if os.path.isfile(mesa_archive):
     os.remove(mesa_archive)
 print(f"Downloading Mesa NIR {mesa_filename} ...")
 urllib.request.urlretrieve(
-    f"https://github.com/godotengine/godot-nir-static/releases/download/{mesa_version}/{mesa_filename}",
+    f"https://github.com/redotengine/redot-nir-static/releases/download/{mesa_version}/{mesa_filename}",
     mesa_archive,
 )
 if os.path.exists(mesa_folder):
@@ -124,4 +124,4 @@ print(f"DirectX 12 Agility SDK {agility_sdk_version} installed successfully.\n")
 
 # Complete message
 print(f'\x1b[92mAll Direct3D 12 SDK components were installed to "{deps_folder}" successfully!\x1b[0m')
-print('\x1b[92mYou can now build Godot with Direct3D 12 support enabled by running "scons d3d12=yes".\x1b[0m')
+print('\x1b[92mYou can now build Redot with Direct3D 12 support enabled by running "scons d3d12=yes".\x1b[0m')

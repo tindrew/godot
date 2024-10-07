@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
-		<title>$GODOT_PROJECT_NAME</title>
+		<title>$redot_PROJECT_NAME</title>
 		<style>
 html, body, #canvas {
 	margin: 0;
@@ -76,7 +76,7 @@ body {
 	z-index: 1;
 }
 		</style>
-		$GODOT_HEAD_INCLUDE
+		$redot_HEAD_INCLUDE
 	</head>
 	<body>
 		<canvas id="canvas">
@@ -88,16 +88,16 @@ body {
 		</noscript>
 
 		<div id="status">
-			<img id="status-splash" src="$GODOT_SPLASH" alt="">
+			<img id="status-splash" src="$redot_SPLASH" alt="">
 			<progress id="status-progress"></progress>
 			<div id="status-notice"></div>
 		</div>
 
-		<script src="$GODOT_URL"></script>
+		<script src="$redot_URL"></script>
 		<script>
-const GODOT_CONFIG = $GODOT_CONFIG;
-const GODOT_THREADS_ENABLED = $GODOT_THREADS_ENABLED;
-const engine = new Engine(GODOT_CONFIG);
+const redot_CONFIG = $redot_CONFIG;
+const redot_THREADS_ENABLED = $redot_THREADS_ENABLED;
+const engine = new Engine(redot_CONFIG);
 
 (function () {
 	const statusOverlay = document.getElementById('status');
@@ -147,11 +147,11 @@ const engine = new Engine(GODOT_CONFIG);
 	}
 
 	const missing = Engine.getMissingFeatures({
-		threads: GODOT_THREADS_ENABLED,
+		threads: redot_THREADS_ENABLED,
 	});
 
 	if (missing.length !== 0) {
-		if (GODOT_CONFIG['serviceWorker'] && GODOT_CONFIG['ensureCrossOriginIsolationHeaders'] && 'serviceWorker' in navigator) {
+		if (redot_CONFIG['serviceWorker'] && redot_CONFIG['ensureCrossOriginIsolationHeaders'] && 'serviceWorker' in navigator) {
 			// There's a chance that installing the service worker would fix the issue
 			Promise.race([
 				navigator.serviceWorker.getRegistration().then((registration) => {
@@ -172,7 +172,7 @@ const engine = new Engine(GODOT_CONFIG);
 			});
 		} else {
 			// Display the message as usual
-			const missingMsg = 'Error\nThe following features required to run Godot projects on the Web are missing:\n';
+			const missingMsg = 'Error\nThe following features required to run Redot projects on the Web are missing:\n';
 			displayFailureNotice(missingMsg + missing.join('\n'));
 		}
 	} else {

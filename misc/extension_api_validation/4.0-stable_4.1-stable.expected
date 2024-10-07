@@ -309,7 +309,7 @@ Validate extension JSON: API was removed: classes/PathFollow2D/properties/lookah
 
 GH-77413
 --------
-Validate extension JSON: Error: Field 'classes/GLTFSkin/properties/godot_skin': type changed value in new API, from "Object" to "Skin".
+Validate extension JSON: Error: Field 'classes/GLTFSkin/properties/redot_skin': type changed value in new API, from "Object" to "Skin".
 
 
 GH-76082

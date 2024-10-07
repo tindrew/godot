@@ -36,7 +36,7 @@
 
 /* Begin PBXFileReference section */
 		1F1575711F582BE20003B888 /* dylibs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dylibs; path = "$binary/dylibs"; sourceTree = "<group>"; };
-		DEADBEEF1F582BE20003B888 /* $binary.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = godot; path = "$binary.xcframework"; sourceTree = "<group>"; };
+		DEADBEEF1F582BE20003B888 /* $binary.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = redot; path = "$binary.xcframework"; sourceTree = "<group>"; };
 		$modules_fileref
 		$swift_runtime_fileref
 		1FF4C1881F584E6300A41E41 /* $binary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "$binary.entitlements"; sourceTree = "<group>"; };
@@ -151,7 +151,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
-				ORGANIZATIONNAME = GodotEngine;
+				ORGANIZATIONNAME = RedotEngine;
 				TargetAttributes = {
 					D0BCFE3318AEBDA2004A7AAE = {
 						DevelopmentTeam = $team_id;
@@ -225,7 +225,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$godot_archs";
+				ARCHS = "$redot_archs";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -272,7 +272,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$godot_archs";
+				ARCHS = "$redot_archs";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -314,7 +314,7 @@
 		D0BCFE7218AEBDA3004A7AAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$godot_archs";
+				ARCHS = "$redot_archs";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "$binary/$binary.entitlements";
 				CODE_SIGN_IDENTITY = "$code_sign_identity_debug";
@@ -349,7 +349,7 @@
 		D0BCFE7318AEBDA3004A7AAE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$godot_archs";
+				ARCHS = "$redot_archs";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "$binary/$binary.entitlements";
 				CODE_SIGN_IDENTITY = "$code_sign_identity_release";

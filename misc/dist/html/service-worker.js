@@ -1,23 +1,23 @@
-// This service worker is required to expose an exported Godot project as a
+// This service worker is required to expose an exported Redot project as a
 // Progressive Web App. It provides an offline fallback page telling the user
 // that they need an Internet connection to run the project if desired.
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '___GODOT_VERSION___';
+const CACHE_VERSION = '___redot_VERSION___';
 /** @type {string} */
-const CACHE_PREFIX = '___GODOT_NAME___-sw-cache-';
+const CACHE_PREFIX = '___redot_NAME___-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
 /** @type {string} */
-const OFFLINE_URL = '___GODOT_OFFLINE_PAGE___';
+const OFFLINE_URL = '___redot_OFFLINE_PAGE___';
 /** @type {boolean} */
-const ENSURE_CROSSORIGIN_ISOLATION_HEADERS = ___GODOT_ENSURE_CROSSORIGIN_ISOLATION_HEADERS___;
+const ENSURE_CROSSORIGIN_ISOLATION_HEADERS = ___redot_ENSURE_CROSSORIGIN_ISOLATION_HEADERS___;
 // Files that will be cached on load.
 /** @type {string[]} */
-const CACHED_FILES = ___GODOT_CACHE___;
+const CACHED_FILES = ___redot_CACHE___;
 // Files that we might not want the user to preload, and will only be cached on first load.
 /** @type {string[]} */
-const CACHABLE_FILES = ___GODOT_OPT_CACHE___;
+const CACHABLE_FILES = ___redot_OPT_CACHE___;
 const FULL_CACHE = CACHED_FILES.concat(CACHABLE_FILES);
 
 self.addEventListener('install', (event) => {

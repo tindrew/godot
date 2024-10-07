@@ -1,7 +1,7 @@
 """
-Load this file to your GDB session to enable pretty-printing of some Godot C++ types.
+Load this file to your GDB session to enable pretty-printing of some Redot C++ types.
 
-GDB command: `source misc/utility/godot_gdb_pretty_print.py`.
+GDB command: `source misc/utility/redot_gdb_pretty_print.py`.
 
 To load these automatically in Visual Studio Code, add the source command to
 the `setupCommands` of your configuration in `launch.json`:
@@ -9,8 +9,8 @@ the `setupCommands` of your configuration in `launch.json`:
 "setupCommands": [
 ...
     {
-        "description": "Load custom pretty-printers for Godot types.",
-        "text": "source ${workspaceFolder}/misc/utility/godot_gdb_pretty_print.py"
+        "description": "Load custom pretty-printers for Redot types.",
+        "text": "source ${workspaceFolder}/misc/utility/redot_gdb_pretty_print.py"
     }
 ]
 ```
@@ -27,8 +27,8 @@ import re
 import gdb  # type: ignore
 
 
-# Printer for Godot StringName variables.
-class GodotStringNamePrinter:
+# Printer for Redot StringName variables.
+class RedotStringNamePrinter:
     def __init__(self, value):
         self.value = value
 
@@ -40,8 +40,8 @@ class GodotStringNamePrinter:
         return "string"
 
 
-# Printer for Godot String variables.
-class GodotStringPrinter:
+# Printer for Redot String variables.
+class RedotStringPrinter:
     def __init__(self, value):
         self.value = value
 
@@ -53,8 +53,8 @@ class GodotStringPrinter:
         return "string"
 
 
-# Printer for Godot Vector variables.
-class GodotVectorPrinter:
+# Printer for Redot Vector variables.
+class RedotVectorPrinter:
     def __init__(self, value):
         self.value = value
 
@@ -104,11 +104,11 @@ VECTOR_REGEX = re.compile("^Vector<.*$")
 # Tries to find a pretty printer for a debugger value.
 def lookup_pretty_printer(value):
     if value.type.name == "StringName":
-        return GodotStringNamePrinter(value)
+        return RedotStringNamePrinter(value)
     if value.type.name == "String":
-        return GodotStringPrinter(value)
+        return RedotStringPrinter(value)
     if value.type.name and VECTOR_REGEX.match(value.type.name):
-        return GodotVectorPrinter(value)
+        return RedotVectorPrinter(value)
     return None
 
 

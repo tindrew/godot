@@ -1,31 +1,31 @@
 <?xml version="1.0"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-  <mime-type type="application/x-godot-project">
-    <comment>Godot Engine project</comment>
+  <mime-type type="application/x-redot-project">
+    <comment>Redot Engine project</comment>
     <sub-class-of type="text/plain"/>
-    <icon name="x-godot-project"/>
-    <glob pattern="project.godot"/>
+    <icon name="x-redot-project"/>
+    <glob pattern="project.redot"/>
   </mime-type>
 
-  <mime-type type="application/x-godot-resource">
-    <comment>Godot Engine resource</comment>
-    <icon name="x-godot-resource"/>
+  <mime-type type="application/x-redot-resource">
+    <comment>Redot Engine resource</comment>
+    <icon name="x-redot-resource"/>
     <glob pattern="*.res"/>
     <glob pattern="*.tres"/>
   </mime-type>
 
-  <mime-type type="application/x-godot-scene">
-    <comment>Godot Engine scene</comment>
-    <icon name="x-godot-scene"/>
+  <mime-type type="application/x-redot-scene">
+    <comment>Redot Engine scene</comment>
+    <icon name="x-redot-scene"/>
     <glob pattern="*.scn"/>
     <glob pattern="*.tscn"/>
     <glob pattern="*.escn"/>
   </mime-type>
 
-  <mime-type type="application/x-godot-shader">
-    <comment>Godot Engine shader</comment>
+  <mime-type type="application/x-redot-shader">
+    <comment>Redot Engine shader</comment>
     <sub-class-of type="text/plain"/>
-    <icon name="x-godot-shader"/>
+    <icon name="x-redot-shader"/>
     <glob pattern="*.gdshader"/>
   </mime-type>
 
