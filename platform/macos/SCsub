@@ -17,7 +17,7 @@ def generate_bundle(target, source, env):
 
     if env.editor_build:
         # Editor bundle.
-        prefix = "redot." + env["platform"] + "." + env["target"]
+        prefix = "godot." + env["platform"] + "." + env["target"]
         if env.dev_build:
             prefix += ".dev"
         if env["precision"] == "double":
@@ -35,9 +35,9 @@ def generate_bundle(target, source, env):
         if not os.path.isdir(app_dir + "/Contents/MacOS"):
             os.mkdir(app_dir + "/Contents/MacOS")
         if target_bin != "":
-            shutil.copy(target_bin, app_dir + "/Contents/MacOS/redot")
+            shutil.copy(target_bin, app_dir + "/Contents/MacOS/Godot")
         if "mono" in env.module_version_string:
-            shutil.copytree(Dir("#bin/RedotSharp").abspath, app_dir + "/Contents/Resources/RedotSharp")
+            shutil.copytree(Dir("#bin/GodotSharp").abspath, app_dir + "/Contents/Resources/GodotSharp")
         version = get_build_version(False)
         short_version = get_build_version(True)
         with open(Dir("#misc/dist/macos").abspath + "/editor_info_plist.template", "rt", encoding="utf-8") as fin:
@@ -66,9 +66,9 @@ def generate_bundle(target, source, env):
             subprocess.run(sign_command)
     else:
         # Template bundle.
-        app_prefix = "redot." + env["platform"]
-        rel_prefix = "redot." + env["platform"] + "." + "template_release"
-        dbg_prefix = "redot." + env["platform"] + "." + "template_debug"
+        app_prefix = "godot." + env["platform"]
+        rel_prefix = "godot." + env["platform"] + "." + "template_release"
+        dbg_prefix = "godot." + env["platform"] + "." + "template_debug"
         if env.dev_build:
             app_prefix += ".dev"
             rel_prefix += ".dev"
@@ -91,9 +91,9 @@ def generate_bundle(target, source, env):
         if not os.path.isdir(app_dir + "/Contents/MacOS"):
             os.mkdir(app_dir + "/Contents/MacOS")
         if rel_target_bin != "":
-            shutil.copy(rel_target_bin, app_dir + "/Contents/MacOS/redot_macos_release.universal")
+            shutil.copy(rel_target_bin, app_dir + "/Contents/MacOS/godot_macos_release.universal")
         if dbg_target_bin != "":
-            shutil.copy(dbg_target_bin, app_dir + "/Contents/MacOS/redot_macos_debug.universal")
+            shutil.copy(dbg_target_bin, app_dir + "/Contents/MacOS/godot_macos_debug.universal")
 
         # ZIP .app bundle.
         zip_dir = Dir("#bin/" + (app_prefix + env.extra_suffix + env.module_version_string).replace(".", "_")).abspath
@@ -103,21 +103,21 @@ def generate_bundle(target, source, env):
 
 files = [
     "os_macos.mm",
-    "redot_application.mm",
-    "redot_application_delegate.mm",
+    "godot_application.mm",
+    "godot_application_delegate.mm",
     "crash_handler_macos.mm",
     "macos_terminal_logger.mm",
     "display_server_macos.mm",
-    "redot_button_view.mm",
-    "redot_content_view.mm",
-    "redot_status_item.mm",
-    "redot_window_delegate.mm",
-    "redot_window.mm",
+    "godot_button_view.mm",
+    "godot_content_view.mm",
+    "godot_status_item.mm",
+    "godot_window_delegate.mm",
+    "godot_window.mm",
     "key_mapping_macos.mm",
-    "redot_main_macos.mm",
-    "redot_menu_delegate.mm",
-    "redot_menu_item.mm",
-    "redot_open_save_delegate.mm",
+    "godot_main_macos.mm",
+    "godot_menu_delegate.mm",
+    "godot_menu_item.mm",
+    "godot_open_save_delegate.mm",
     "native_menu_macos.mm",
     "dir_access_macos.mm",
     "tts_macos.mm",
@@ -127,7 +127,7 @@ files = [
     "gl_manager_macos_legacy.mm",
 ]
 
-prog = env.add_program("#bin/redot", files)
+prog = env.add_program("#bin/godot", files)
 
 if env["debug_symbols"] and env["separate_debug_symbols"]:
     env.AddPostAction(prog, env.Run(platform_macos_builders.make_debug_macos))
