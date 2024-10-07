@@ -2,11 +2,10 @@
 /*  main_timer_sync.cpp                                                   */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -83,7 +82,7 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
 		// dropping loads of frames, so the estimate will be inaccurate
 		if (fps >= 50) {
 			_estimated_fps = fps;
-#ifdef GODOT_DEBUG_DELTA_SMOOTHER
+#ifdef redot_DEBUG_DELTA_SMOOTHER
 			print_line("initial guess (average measured) refresh rate: " + itos(fps));
 #endif
 		} else {
@@ -100,7 +99,7 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
 
 		if (_estimate_complete && _hits_at_estimated == 20) {
 			_estimate_locked = true;
-#ifdef GODOT_DEBUG_DELTA_SMOOTHER
+#ifdef redot_DEBUG_DELTA_SMOOTHER
 			print_line("estimate LOCKED at " + itos(_estimated_fps) + " fps");
 #endif
 			return;
@@ -114,13 +113,13 @@ void MainTimerSync::DeltaSmoother::update_refresh_rate_estimator(int64_t p_delta
 				_estimate_complete = true;
 				_vsync_delta = 1000000 / _estimated_fps;
 
-#ifdef GODOT_DEBUG_DELTA_SMOOTHER
+#ifdef redot_DEBUG_DELTA_SMOOTHER
 				print_line("estimate complete. vsync_delta " + itos(_vsync_delta) + ", fps " + itos(_estimated_fps));
 #endif
 			}
 		}
 
-#ifdef GODOT_DEBUG_DELTA_SMOOTHER
+#ifdef redot_DEBUG_DELTA_SMOOTHER
 		if ((_hits_at_estimated % (400 / NUM_READINGS)) == 0) {
 			String sz = "hits at estimated : " + itos(_hits_at_estimated) + ", above : " + itos(_hits_above_estimated) + "( " + itos(_hits_one_above_estimated) + " ), below : " + itos(_hits_below_estimated) + " (" + itos(_hits_one_below_estimated) + " )";
 

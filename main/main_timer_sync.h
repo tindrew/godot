@@ -2,11 +2,10 @@
 /*  main_timer_sync.h                                                     */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -34,7 +33,7 @@
 #include "core/config/engine.h"
 
 // Uncomment this define to get more debugging logs for the delta smoothing.
-// #define GODOT_DEBUG_DELTA_SMOOTHER
+// #define redot_DEBUG_DELTA_SMOOTHER
 
 struct MainFrameTime {
 	double process_step; // delta time to advance during process()
@@ -98,7 +97,7 @@ class MainTimerSync {
 
 			_estimate_complete = false;
 
-#ifdef GODOT_DEBUG_DELTA_SMOOTHER
+#ifdef redot_DEBUG_DELTA_SMOOTHER
 			print_line("estimated fps " + itos(_estimated_fps));
 #endif
 		}
