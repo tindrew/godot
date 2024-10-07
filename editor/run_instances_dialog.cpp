@@ -2,11 +2,10 @@
 /*  run_instances_dialog.cpp                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -186,7 +185,7 @@ void RunInstancesDialog::get_argument_list_for_instance(int p_idx, List<String> 
 
 	if (!raw_custom_args.is_empty()) {
 		// Allow the user to specify a command to run, similar to Steam's launch options.
-		// In this case, Godot will no longer be run directly; it's up to the underlying command
+		// In this case, Redot will no longer be run directly; it's up to the underlying command
 		// to run it. For instance, this can be used on Linux to force a running project
 		// to use Optimus using `prime-run` or similar.
 		// Example: `prime-run %command% --time-scale 0.5`
@@ -202,7 +201,7 @@ void RunInstancesDialog::get_argument_list_for_instance(int p_idx, List<String> 
 				exec = exec_args[0];
 				exec_args.remove_at(0);
 
-				// Append the Godot executable name before we append executable arguments
+				// Append the Redot executable name before we append executable arguments
 				// (since the order is reversed when using `push_front()`).
 				r_list.push_front(OS::get_singleton()->get_executable_path());
 			}
@@ -212,13 +211,13 @@ void RunInstancesDialog::get_argument_list_for_instance(int p_idx, List<String> 
 				r_list.push_front(exec_args[i].replace(" ", "%20"));
 			}
 
-			// Append Godot-specific custom arguments.
+			// Append Redot-specific custom arguments.
 			custom_args = _split_cmdline_args(raw_custom_args.substr(placeholder_pos + String("%command%").size()));
 			for (int i = 0; i < custom_args.size(); i++) {
 				r_list.push_back(custom_args[i].replace(" ", "%20"));
 			}
 		} else {
-			// Append Godot-specific custom arguments.
+			// Append Redot-specific custom arguments.
 			custom_args = _split_cmdline_args(raw_custom_args);
 			for (int i = 0; i < custom_args.size(); i++) {
 				r_list.push_back(custom_args[i].replace(" ", "%20"));
@@ -250,7 +249,7 @@ void RunInstancesDialog::apply_custom_features(int p_instance_idx) {
 			stripped_features.push_back(f);
 		}
 	}
-	OS::get_singleton()->set_environment("GODOT_EDITOR_CUSTOM_FEATURES", String(",").join(stripped_features));
+	OS::get_singleton()->set_environment("redot_EDITOR_CUSTOM_FEATURES", String(",").join(stripped_features));
 }
 
 RunInstancesDialog::RunInstancesDialog() {

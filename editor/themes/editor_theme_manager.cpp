@@ -2,11 +2,10 @@
 /*  editor_theme_manager.cpp                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -288,7 +287,7 @@ EditorThemeManager::ThemeConfiguration EditorThemeManager::_create_theme_config(
 				preset_accent_color = Color(0.26, 0.76, 1.00);
 				preset_base_color = Color(0.24, 0.26, 0.28);
 				preset_contrast = config.default_contrast;
-			} else if (config.preset == "Godot 2") {
+			} else if (config.preset == "Redot 2") {
 				preset_accent_color = Color(0.53, 0.67, 0.89);
 				preset_base_color = Color(0.24, 0.23, 0.27);
 				preset_contrast = config.default_contrast;
@@ -2613,7 +2612,7 @@ void EditorThemeManager::_populate_text_editor_styles(const Ref<EditorTheme> &p_
 	String text_editor_color_theme = EditorSettings::get_singleton()->get("text_editor/theme/color_theme");
 	if (text_editor_color_theme == "Default") {
 		_generate_text_editor_defaults(p_config);
-	} else if (text_editor_color_theme == "Godot 2") {
+	} else if (text_editor_color_theme == "Redot 2") {
 		EditorSettings::get_singleton()->load_text_editor_theme();
 	}
 

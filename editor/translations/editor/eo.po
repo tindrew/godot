@@ -1,7 +1,7 @@
-# Esperanto translation of the Godot Engine editor interface.
-# Copyright (c) 2014-present Godot Engine contributors.
+# Esperanto translation of the Redot Engine editor interface.
+# Copyright (c) 2014-present Redot Engine contributors.
 # Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
-# This file is distributed under the same license as the Godot source code.
+# This file is distributed under the same license as the Redot source code.
 # Scott Starkey <yekrats@gmail.com>, 2019.
 # AlexHoratio <yukithetupper@gmail.com>, 2019.
 # Teashrock <kajitsu22@gmail.com>, 2019.
@@ -24,12 +24,12 @@
 # casuallyblue <sierra@casuallyblue.dev>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor interface\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Redot Engine editor interface\n"
+"Report-Msgid-Bugs-To: https://github.com/redotengine/redot\n"
 "PO-Revision-Date: 2024-02-26 06:02+0000\n"
 "Last-Translator: casuallyblue <sierra@casuallyblue.dev>\n"
-"Language-Team: Esperanto <https://hosted.weblate.org/projects/godot-engine/"
-"godot/eo/>\n"
+"Language-Team: Esperanto <https://hosted.weblate.org/projects/redot-engine/"
+"redot/eo/>\n"
 "Language: eo\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
@@ -919,11 +919,11 @@ msgstr "Ne povis krei dosierujon."
 msgid "Create Folder"
 msgstr "Krei dosierujon"
 
-msgid "Thanks from the Godot community!"
-msgstr "Dankon de la komunumo de Godot!"
+msgid "Thanks from the Redot community!"
+msgstr "Dankon de la komunumo de Redot!"
 
-msgid "Godot Engine contributors"
-msgstr "Kontribuantoj de Godot Engine"
+msgid "Redot Engine contributors"
+msgstr "Kontribuantoj de Redot Engine"
 
 msgid "Project Founders"
 msgstr "Fondintoj de la Projekto"
@@ -956,12 +956,12 @@ msgid "Third-party Licenses"
 msgstr "Permesiloj de eksteraj liverantoj"
 
 msgid ""
-"Godot Engine relies on a number of third-party free and open source "
+"Redot Engine relies on a number of third-party free and open source "
 "libraries, all compatible with the terms of its MIT license. The following is "
 "an exhaustive list of all such third-party components with their respective "
 "copyright statements and license terms."
 msgstr ""
-"Godot Engine fidas al multe liberaj kaj malfermitkodaj bibliotekoj de ekstera "
+"Redot Engine fidas al multe liberaj kaj malfermitkodaj bibliotekoj de ekstera "
 "liveranto, ĉio kongruas kun la kondiĉoj de ĝia MIT-permesilo. La jenoj estas "
 "elĉerpa listo de ĉiom tiaj komponantoj de ekstera liveranto kun iliaj "
 "kopirajtaj atentigoj kaj permesilaj kondiĉoj respektive."
@@ -1320,8 +1320,8 @@ msgstr ""
 msgid "New profile name:"
 msgstr "Nomo de nova profilo:"
 
-msgid "Godot Feature Profile"
-msgstr "Profilo de funkciaro de Godot"
+msgid "Redot Feature Profile"
+msgstr "Profilo de funkciaro de Redot"
 
 msgid "Import Profile(s)"
 msgstr "Enporti profilo(j)n"
@@ -1816,8 +1816,8 @@ msgstr "Raporti cimon"
 msgid "Send Docs Feedback"
 msgstr "Sendi rimarkojn pri la dokumentaro"
 
-msgid "Support Godot Development"
-msgstr "Subteni Godot ellaboradon"
+msgid "Support Redot Development"
+msgstr "Subteni Redot ellaboradon"
 
 msgid "Update Continuously"
 msgstr "Ĝisdatigi kontinue"
@@ -2090,8 +2090,8 @@ msgstr "Oficaj eksportaj ŝablonoj estas ne haveblaj por programistaj muntoj."
 msgid "Select Template File"
 msgstr "Elekti ŝablonan dosieron"
 
-msgid "Godot Export Templates"
-msgstr "Eksportajn ŝablonojn de Godot"
+msgid "Redot Export Templates"
+msgstr "Eksportajn ŝablonojn de Redot"
 
 msgid "Duplicate"
 msgstr "Duobligi"
@@ -3540,8 +3540,8 @@ msgstr "Konservi etoson kiel..."
 msgid "Online Docs"
 msgstr "Enreta Dokumentaro"
 
-msgid "Open Godot online documentation."
-msgstr "Malfermi enretan dokumentaron de Godot."
+msgid "Open Redot online documentation."
+msgstr "Malfermi enretan dokumentaron de Redot."
 
 msgid "Find Next"
 msgstr "Trovu Sekva"
@@ -3745,9 +3745,9 @@ msgid "It would be a good idea to name your project."
 msgstr "Nomi vian projekton estus konsilinde."
 
 msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.godot\" file."
+"Invalid \".zip\" project file; it doesn't contain a \"project.redot\" file."
 msgstr ""
-"Nevalida projekta \".zip\" dosiero; ĝi ne enhavas dosieron \"project.godot\"."
+"Nevalida projekta \".zip\" dosiero; ĝi ne enhavas dosieron \"project.redot\"."
 
 msgid "The path specified doesn't exist."
 msgstr "La provizinta dosierindiko ne ekzistas."
@@ -3755,8 +3755,8 @@ msgstr "La provizinta dosierindiko ne ekzistas."
 msgid "New Game Project"
 msgstr "Nova luda projekto"
 
-msgid "Couldn't create project.godot in project path."
-msgstr "Ne eblas krei project.godot en projekta dosierindiko."
+msgid "Couldn't create project.redot in project path."
+msgstr "Ne eblas krei project.redot en projekta dosierindiko."
 
 msgid "Error opening package file, not in ZIP format."
 msgstr "Eraro dum malfermi la pakaĵan dosieron, ne de ZIP formato."
@@ -3809,8 +3809,8 @@ msgstr "Ŝanĝi mortzonon de faro"
 msgid "Erase Input Action"
 msgstr "Forigi enigan faron"
 
-msgid "Project Settings (project.godot)"
-msgstr "Projektaj agordoj (project.godot)"
+msgid "Project Settings (project.redot)"
+msgstr "Projektaj agordoj (project.redot)"
 
 msgid "Input Map"
 msgstr "Eniga mapo"

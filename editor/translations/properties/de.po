@@ -1,7 +1,7 @@
-# German translation of the Godot Engine properties.
-# Copyright (c) 2014-present Godot Engine contributors.
+# German translation of the Redot Engine properties.
+# Copyright (c) 2014-present Redot Engine contributors.
 # Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
-# This file is distributed under the same license as the Godot source code.
+# This file is distributed under the same license as the Redot source code.
 # Alexander Mahr <alex.mahr@gmail.com>, 2016, 2019.
 # Andreas Esau <andreasesau@gmail.com>, 2016.
 # Andreas Haas <liu.gam3@gmail.com>, 2016.
@@ -35,7 +35,7 @@
 # Julian Retzlaff <julian.retzlaff@googlemail.com>, 2018.
 # asyncial <mahlburg@posteo.de>, 2018.
 # ssantos <ssantos@web.de>, 2018.
-# Rémi Verschelde <akien@godotengine.org>, 2019.
+# Rémi Verschelde <akien@redotengine.org>, 2019.
 # Martin <martinreininger@gmx.net>, 2019, 2021.
 # Andreas During <anduring@web.de>, 2019.
 # Arthur S. Muszynski <artism90@gmail.com>, 2019.
@@ -55,7 +55,7 @@
 # Günther Bohn <ciscouser@gmx.de>, 2020, 2021.
 # Tom Wor <mail@tomwor.com>, 2020.
 # Bjarne Hiller <bjarne.hiller@gmail.com>, 2020.
-# Dirk Federmann <weblategodot@dirkfedermann.de>, 2020.
+# Dirk Federmann <weblateredot@dirkfedermann.de>, 2020.
 # Helmut Hirtes <helmut.h@gmx.de>, 2020.
 # Michal695 <michalek.jedrzejak@gmail.com>, 2020.
 # Leon Marz <leon.marz@kabelmail.de>, 2020.
@@ -106,12 +106,12 @@
 # tct123 <tct1234@protonmail.com>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine properties\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Redot Engine properties\n"
+"Report-Msgid-Bugs-To: https://github.com/redotengine/redot\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2024-07-30 16:40+0000\n"
 "Last-Translator: tct123 <tct1234@protonmail.com>\n"
-"Language-Team: German <https://hosted.weblate.org/projects/godot-engine/godot-"
+"Language-Team: German <https://hosted.weblate.org/projects/redot-engine/redot-"
 "properties/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -3643,8 +3643,8 @@ msgstr "Gelenke"
 msgid "Roots"
 msgstr "Wurzeln"
 
-msgid "Godot Bone Node"
-msgstr "Godot Knochen-Node"
+msgid "Redot Bone Node"
+msgstr "Redot Knochen-Node"
 
 msgid "Skin Root"
 msgstr "Skin-Wurzel"
@@ -3655,8 +3655,8 @@ msgstr "Gelenkoriginal"
 msgid "Non Joints"
 msgstr "Nicht-Gelenke"
 
-msgid "Godot Skin"
-msgstr "Godot-Skin"
+msgid "Redot Skin"
+msgstr "Redot-Skin"
 
 msgid "Src Image"
 msgstr "Quellbild"

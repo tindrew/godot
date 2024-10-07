@@ -1,7 +1,7 @@
-# Portuguese translation of the Godot Engine properties.
-# Copyright (c) 2014-present Godot Engine contributors.
+# Portuguese translation of the Redot Engine properties.
+# Copyright (c) 2014-present Redot Engine contributors.
 # Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
-# This file is distributed under the same license as the Godot source code.
+# This file is distributed under the same license as the Redot source code.
 # António Sarmento <antonio.luis.sarmento@gmail.com>, 2016.
 # Carlos Vieira <carlos.vieira@gmail.com>, 2017.
 # João <joao@nogordio.com>, 2018.
@@ -47,13 +47,13 @@
 # JulianoV <ventolajuliano@gmail.com>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine properties\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Redot Engine properties\n"
+"Report-Msgid-Bugs-To: https://github.com/redotengine/redot\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2024-08-30 21:09+0000\n"
 "Last-Translator: JulianoV <ventolajuliano@gmail.com>\n"
-"Language-Team: Portuguese <https://hosted.weblate.org/projects/godot-engine/"
-"godot-properties/pt/>\n"
+"Language-Team: Portuguese <https://hosted.weblate.org/projects/redot-engine/"
+"redot-properties/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3004,8 +3004,8 @@ msgstr "Pontos"
 msgid "Roots"
 msgstr "Raizes"
 
-msgid "Godot Bone Node"
-msgstr "Nó de Osso Godot"
+msgid "Redot Bone Node"
+msgstr "Nó de Osso Redot"
 
 msgid "Skin Root"
 msgstr "Raiz da Skin"
@@ -3016,8 +3016,8 @@ msgstr "Pontos Originais"
 msgid "Non Joints"
 msgstr "Não-Juntas"
 
-msgid "Godot Skin"
-msgstr "Skin Godot"
+msgid "Redot Skin"
+msgstr "Skin Redot"
 
 msgid "Src Image"
 msgstr "Imagem fonte"

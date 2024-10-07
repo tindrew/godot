@@ -1,7 +1,7 @@
-# Polish translation of the Godot Engine properties.
-# Copyright (c) 2014-present Godot Engine contributors.
+# Polish translation of the Redot Engine properties.
+# Copyright (c) 2014-present Redot Engine contributors.
 # Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
-# This file is distributed under the same license as the Godot source code.
+# This file is distributed under the same license as the Redot source code.
 # 8-bit Pixel <dawdejw@gmail.com>, 2016, 2023.
 # Adam Wolanski <adam.wolanski94@gmail.com>, 2017.
 # Adrian Węcławski <weclawskiadrian@gmail.com>, 2016.
@@ -59,7 +59,7 @@
 # Katarzyna Twardowska <katarina.twardowska@gmail.com>, 2022.
 # Mateusz Zdrzałek <matjozohd@gmail.com>, 2022.
 # Konrad <kobe-interactive@protonmail.com>, 2022.
-# Pixel Zone - Godot Engine Tutorials <karoltomaszewskimusic@gmail.com>, 2022.
+# Pixel Zone - Redot Engine Tutorials <karoltomaszewskimusic@gmail.com>, 2022.
 # DK0492 <doriankaczmarek28@gmail.com>, 2022, 2023.
 # Dawid Skubij <davidsd@tlen.pl>, 2022.
 # kingofsponges <q.patex.q@gmail.com>, 2022, 2023.
@@ -95,12 +95,12 @@
 # User <user938193@gmail.com>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine properties\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Redot Engine properties\n"
+"Report-Msgid-Bugs-To: https://github.com/redotengine/redot\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2024-09-02 17:25+0000\n"
 "Last-Translator: Tomek <kobewi4e@gmail.com>\n"
-"Language-Team: Polish <https://hosted.weblate.org/projects/godot-engine/godot-"
+"Language-Team: Polish <https://hosted.weblate.org/projects/redot-engine/redot-"
 "properties/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -3184,8 +3184,8 @@ msgstr "Światło"
 msgid "Roots"
 msgstr "Korzenie"
 
-msgid "Godot Skin"
-msgstr "Skórka Godot"
+msgid "Redot Skin"
+msgstr "Skórka Redot"
 
 msgid "Src Image"
 msgstr "Obraz źródłowy"

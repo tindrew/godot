@@ -1,7 +1,7 @@
-# Chinese (Simplified) translation of the Godot Engine properties.
-# Copyright (c) 2014-present Godot Engine contributors.
+# Chinese (Simplified) translation of the Redot Engine properties.
+# Copyright (c) 2014-present Redot Engine contributors.
 # Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
-# This file is distributed under the same license as the Godot source code.
+# This file is distributed under the same license as the Redot source code.
 # 360119124 <360119124@qq.com>, 2018.
 # 柠檬杀手 <lemonkiller@gmail.com>, 2018, 2020.
 # 纯洁的坏蛋 <tqj.zyy@gmail.com>, 2016.
@@ -94,13 +94,13 @@
 # Arsvine Zhu <2162371684@qq.com>, 2023.
 msgid ""
 msgstr ""
-"Project-Id-Version: Chinese (Simplified) (Godot Engine)\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Chinese (Simplified) (Redot Engine)\n"
+"Report-Msgid-Bugs-To: https://github.com/redotengine/redot\n"
 "POT-Creation-Date: 2018-01-20 12:15+0200\n"
 "PO-Revision-Date: 2024-08-23 10:34+0000\n"
 "Last-Translator: Haoyu Qiu <timothyqiu32@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
-"godot-engine/godot-properties/zh_Hans/>\n"
+"redot-engine/redot-properties/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3637,8 +3637,8 @@ msgstr "关节"
 msgid "Roots"
 msgstr "根"
 
-msgid "Godot Bone Node"
-msgstr "Godot 骨骼节点"
+msgid "Redot Bone Node"
+msgstr "Redot 骨骼节点"
 
 msgid "Skin Root"
 msgstr "蒙皮根"
@@ -3649,8 +3649,8 @@ msgstr "原关节"
 msgid "Non Joints"
 msgstr "非关节"
 
-msgid "Godot Skin"
-msgstr "Godot 蒙皮"
+msgid "Redot Skin"
+msgstr "Redot 蒙皮"
 
 msgid "Src Image"
 msgstr "来源图像"

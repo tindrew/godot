@@ -1,7 +1,7 @@
-# French translation of the Godot Engine properties.
-# Copyright (c) 2014-present Godot Engine contributors.
+# French translation of the Redot Engine properties.
+# Copyright (c) 2014-present Redot Engine contributors.
 # Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
-# This file is distributed under the same license as the Godot source code.
+# This file is distributed under the same license as the Redot source code.
 # Antoine Carrier <ac.g392@gmail.com>, 2017-2018.
 # ARocherVj <a.rocher.vj@gmail.com>, 2017.
 # Arthur Templé <tuturtemple@gmail.com>, 2018.
@@ -32,7 +32,7 @@
 # Przemyslaw Gasinski <gasinski.przemek@protonmail.ch>, 2017.
 # rafeu <duchainer@gmail.com>, 2016-2017.
 # rawida <rawida@tempinbox.com>, 2018.
-# Rémi Verschelde <akien@godotengine.org>, 2016-2022.
+# Rémi Verschelde <akien@redotengine.org>, 2016-2022.
 # Robin Arys <robinarys@hotmail.com>, 2017.
 # Roger BR <drai_kin@hotmail.com>, 2016.
 # salty64 <cedric.arrabie@univ-pau.fr>, 2018, 2020, 2021.
@@ -135,12 +135,12 @@
 # Fontaine Nathan <nathan.fontaine53@gmail.com>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine properties\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Redot Engine properties\n"
+"Report-Msgid-Bugs-To: https://github.com/redotengine/redot\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2024-09-04 20:31+0000\n"
 "Last-Translator: Fontaine Nathan <nathan.fontaine53@gmail.com>\n"
-"Language-Team: French <https://hosted.weblate.org/projects/godot-engine/godot-"
+"Language-Team: French <https://hosted.weblate.org/projects/redot-engine/redot-"
 "properties/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -3606,8 +3606,8 @@ msgstr "Jointures"
 msgid "Roots"
 msgstr "Racines"
 
-msgid "Godot Bone Node"
-msgstr "Nœud d'os de Godot"
+msgid "Redot Bone Node"
+msgstr "Nœud d'os de Redot"
 
 msgid "Skin Root"
 msgstr "Racine de l'enveloppe"
@@ -3618,8 +3618,8 @@ msgstr "Jointure à l'original"
 msgid "Non Joints"
 msgstr "Non jointures"
 
-msgid "Godot Skin"
-msgstr "Enveloppe Godot"
+msgid "Redot Skin"
+msgstr "Enveloppe Redot"
 
 msgid "Src Image"
 msgstr "Image source"

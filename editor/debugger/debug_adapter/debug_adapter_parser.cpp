@@ -2,11 +2,10 @@
 /*  debug_adapter_parser.cpp                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -56,7 +55,7 @@ void DebugAdapterParser::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("req_next", "params"), &DebugAdapterParser::req_next);
 	ClassDB::bind_method(D_METHOD("req_stepIn", "params"), &DebugAdapterParser::req_stepIn);
 	ClassDB::bind_method(D_METHOD("req_evaluate", "params"), &DebugAdapterParser::req_evaluate);
-	ClassDB::bind_method(D_METHOD("req_godot/put_msg", "params"), &DebugAdapterParser::req_godot_put_msg);
+	ClassDB::bind_method(D_METHOD("req_redot/put_msg", "params"), &DebugAdapterParser::req_redot_put_msg);
 }
 
 Dictionary DebugAdapterParser::prepare_base_event() const {
@@ -176,8 +175,8 @@ Dictionary DebugAdapterParser::req_launch(const Dictionary &p_params) const {
 		return prepare_error_response(p_params, DAP::ErrorType::WRONG_PATH, variables);
 	}
 
-	if (args.has("godot/custom_data")) {
-		DebugAdapterProtocol::get_singleton()->get_current_peer()->supportsCustomData = args["godot/custom_data"];
+	if (args.has("redot/custom_data")) {
+		DebugAdapterProtocol::get_singleton()->get_current_peer()->supportsCustomData = args["redot/custom_data"];
 	}
 
 	DebugAdapterProtocol::get_singleton()->get_current_peer()->pending_launch = p_params;
@@ -303,7 +302,7 @@ Dictionary DebugAdapterParser::req_threads(const Dictionary &p_params) const {
 	Array arr;
 	DAP::Thread thread;
 
-	thread.id = 1; // Hardcoded because Godot only supports debugging one thread at the moment
+	thread.id = 1; // Hardcoded because Redot only supports debugging one thread at the moment
 	thread.name = "Main";
 	arr.push_back(thread.to_json());
 	body["threads"] = arr;
@@ -491,7 +490,7 @@ Dictionary DebugAdapterParser::req_evaluate(const Dictionary &p_params) const {
 	return response;
 }
 
-Dictionary DebugAdapterParser::req_godot_put_msg(const Dictionary &p_params) const {
+Dictionary DebugAdapterParser::req_redot_put_msg(const Dictionary &p_params) const {
 	Dictionary args = p_params["arguments"];
 
 	String msg = args["message"];
@@ -626,7 +625,7 @@ Dictionary DebugAdapterParser::ev_breakpoint(const DAP::Breakpoint &p_breakpoint
 
 Dictionary DebugAdapterParser::ev_custom_data(const String &p_msg, const Array &p_data) const {
 	Dictionary event = prepare_base_event(), body;
-	event["event"] = "godot/custom_data";
+	event["event"] = "redot/custom_data";
 	event["body"] = body;
 
 	body["message"] = p_msg;

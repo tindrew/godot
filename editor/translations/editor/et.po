@@ -1,7 +1,7 @@
-# Estonian translation of the Godot Engine editor interface.
-# Copyright (c) 2014-present Godot Engine contributors.
+# Estonian translation of the Redot Engine editor interface.
+# Copyright (c) 2014-present Redot Engine contributors.
 # Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
-# This file is distributed under the same license as the Godot source code.
+# This file is distributed under the same license as the Redot source code.
 # Jens <arrkiin@gmail.com>, 2019.
 # Mattias Aabmets <mattias.aabmets@gmail.com>, 2019.
 # StReef <streef.gtx@gmail.com>, 2020, 2021.
@@ -13,12 +13,12 @@
 # Andreas Kuuskaru <andrku@tlu.ee>, 2023.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor interface\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Redot Engine editor interface\n"
+"Report-Msgid-Bugs-To: https://github.com/redotengine/redot\n"
 "PO-Revision-Date: 2023-09-29 19:03+0000\n"
 "Last-Translator: Andreas Kuuskaru <andrku@tlu.ee>\n"
-"Language-Team: Estonian <https://hosted.weblate.org/projects/godot-engine/"
-"godot/et/>\n"
+"Language-Team: Estonian <https://hosted.weblate.org/projects/redot-engine/"
+"redot/et/>\n"
 "Language: et\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
@@ -1036,11 +1036,11 @@ msgstr "Loo kaust"
 msgid "Folder name is valid."
 msgstr "Kausta nimi on kehtiv."
 
-msgid "Thanks from the Godot community!"
-msgstr "Suur tänu Godot kogukonnalt!"
+msgid "Thanks from the Redot community!"
+msgstr "Suur tänu Redot kogukonnalt!"
 
-msgid "Godot Engine contributors"
-msgstr "Godot mängumootori panustajad"
+msgid "Redot Engine contributors"
+msgstr "Redot mängumootori panustajad"
 
 msgid "Project Founders"
 msgstr "Projekti asutajad"
@@ -1077,12 +1077,12 @@ msgid "Third-party Licenses"
 msgstr "Kolmanda osapoole litsents"
 
 msgid ""
-"Godot Engine relies on a number of third-party free and open source "
+"Redot Engine relies on a number of third-party free and open source "
 "libraries, all compatible with the terms of its MIT license. The following is "
 "an exhaustive list of all such third-party components with their respective "
 "copyright statements and license terms."
 msgstr ""
-"Godot mängumootor tugineb mitmetele kolmandate osapoolte tasuta ja avatud "
+"Redot mängumootor tugineb mitmetele kolmandate osapoolte tasuta ja avatud "
 "lähtekoodiga teekidele, mis kõik on kooskõlas MIT-litsentsi tingimustega. "
 "Järgnev on kõigi selliste kolmandate osapoolte komponentide täielik loetelu "
 "koos vastavate autoriõiguste avalduste ja litsentsitingimustega."
@@ -1333,8 +1333,8 @@ msgstr "[tühi]"
 msgid "[unsaved]"
 msgstr "[salvestamata]"
 
-msgid "%s - Godot Engine"
-msgstr "%s - Godot Engine"
+msgid "%s - Redot Engine"
+msgstr "%s - Redot Engine"
 
 msgid "Dock Position"
 msgstr "Doki asukoht"
@@ -1472,8 +1472,8 @@ msgstr ""
 msgid "New profile name:"
 msgstr "Uus profiilinimi:"
 
-msgid "Godot Feature Profile"
-msgstr "Godoti funktsiooniprofiil"
+msgid "Redot Feature Profile"
+msgstr "Redoti funktsiooniprofiil"
 
 msgid "Import Profile(s)"
 msgstr "Impordi profiil(id)"
@@ -2344,8 +2344,8 @@ msgstr "Funktsionaalsuse Soovitamine"
 msgid "Send Docs Feedback"
 msgstr "Saada dokumentatsioonide tagasiside"
 
-msgid "Support Godot Development"
-msgstr "Toeta Godot'i Arendamist"
+msgid "Support Redot Development"
+msgstr "Toeta Redot'i Arendamist"
 
 msgid "Update Continuously"
 msgstr "Värskenda Pidevalt"
@@ -2852,8 +2852,8 @@ msgstr "Desinstallige mall"
 msgid "Select Template File"
 msgstr "Valige Malli Fail"
 
-msgid "Godot Export Templates"
-msgstr "Godoti Ekspordi mallid"
+msgid "Redot Export Templates"
+msgstr "Redoti Ekspordi mallid"
 
 msgid ""
 "The templates will continue to download.\n"
@@ -3011,8 +3011,8 @@ msgstr "Ekspordi Kõik..."
 msgid "ZIP File"
 msgstr "ZIP Fail"
 
-msgid "Godot Project Pack"
-msgstr "Godoti Projekti Pakk"
+msgid "Redot Project Pack"
+msgstr "Redoti Projekti Pakk"
 
 msgid "Export templates for this platform are missing:"
 msgstr "Selle platvormi ekspordimallid puuduvad:"
@@ -6624,8 +6624,8 @@ msgstr "Salvesta teema kui..."
 msgid "Online Docs"
 msgstr "Veebidokumentatsioonid"
 
-msgid "Open Godot online documentation."
-msgstr "Ava Godot Interneti Dokumentatisoon."
+msgid "Open Redot online documentation."
+msgstr "Ava Redot Interneti Dokumentatisoon."
 
 msgid "Unsaved file."
 msgstr "Salvestamata fail."
@@ -8686,8 +8686,8 @@ msgstr "Hea mõte oleks oma Projektile nimi panna."
 msgid "New Game Project"
 msgstr "Uus Mängu Projekt"
 
-msgid "Couldn't create project.godot in project path."
-msgstr "Projekti kaustas ei saanud faili project.godot luua."
+msgid "Couldn't create project.redot in project path."
+msgstr "Projekti kaustas ei saanud faili project.redot luua."
 
 msgid "Import & Edit"
 msgstr "Impordi & Redigeeri"
@@ -8713,8 +8713,8 @@ msgstr "Kustuta Üksus"
 msgid "Add Input Action"
 msgstr "Lisa Sisend Tegevus"
 
-msgid "Project Settings (project.godot)"
-msgstr "Projekti sätted (project.godot)"
+msgid "Project Settings (project.redot)"
+msgstr "Projekti sätted (project.redot)"
 
 msgid "Input Map"
 msgstr "Sisendikaart"

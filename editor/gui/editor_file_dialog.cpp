@@ -2,11 +2,10 @@
 /*  editor_file_dialog.cpp                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -210,7 +209,7 @@ void EditorFileDialog::_update_theme_item_cache() {
 void EditorFileDialog::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_POSTINITIALIZE: {
-			set_translation_domain(SNAME("godot.editor"));
+			set_translation_domain(SNAME("redot.editor"));
 		} break;
 
 		case NOTIFICATION_THEME_CHANGED:
@@ -752,7 +751,7 @@ void EditorFileDialog::_item_list_item_rmb_clicked(int p_item, const Vector2 &p_
 	// Allow specific actions only on one item.
 	bool single_item_selected = item_list->get_selected_items().size() == 1;
 
-	// Disallow deleting the .import folder, Godot kills a cat if you do and it is possibly a senseless novice action.
+	// Disallow deleting the .import folder, Redot kills a cat if you do and it is possibly a senseless novice action.
 	bool allow_delete = true;
 	for (int i = 0; i < item_list->get_item_count(); i++) {
 		if (!item_list->is_selected(i)) {

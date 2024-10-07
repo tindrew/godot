@@ -2,11 +2,10 @@
 /*  editor_about.cpp                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -168,7 +167,7 @@ ScrollContainer *EditorAbout::_populate_list(const String &p_name, const List<St
 }
 
 EditorAbout::EditorAbout() {
-	set_title(TTR("Thanks from the Godot community!"));
+	set_title(TTR("Thanks from the Redot community!"));
 	set_hide_on_ok(true);
 
 	VBoxContainer *vbc = memnew(VBoxContainer);
@@ -195,7 +194,7 @@ EditorAbout::EditorAbout() {
 	Label *about_text = memnew(Label);
 	about_text->set_v_size_flags(Control::SIZE_SHRINK_CENTER);
 	about_text->set_text(
-			String::utf8("\xc2\xa9 2014-present ") + TTR("Godot Engine contributors") + "." +
+			String::utf8("\xc2\xa9 2014-present ") + TTR("Redot Engine contributors") + "." +
 			String::utf8("\n\xc2\xa9 2007-2014 Juan Linietsky, Ariel Manzur.\n"));
 	version_info_vbc->add_child(about_text);
 
@@ -254,7 +253,7 @@ EditorAbout::EditorAbout() {
 	license_text_label->set_name(TTR("License"));
 	license_text_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	license_text_label->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	license_text_label->set_text(String::utf8(GODOT_LICENSE_TEXT));
+	license_text_label->set_text(String::utf8(redot_LICENSE_TEXT));
 	tc->add_child(license_text_label);
 
 	// Thirdparty License.
@@ -267,7 +266,7 @@ EditorAbout::EditorAbout() {
 	Label *tpl_label = memnew(Label);
 	tpl_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	tpl_label->set_autowrap_mode(TextServer::AUTOWRAP_WORD_SMART);
-	tpl_label->set_text(TTR("Godot Engine relies on a number of third-party free and open source libraries, all compatible with the terms of its MIT license. The following is an exhaustive list of all such third-party components with their respective copyright statements and license terms."));
+	tpl_label->set_text(TTR("Redot Engine relies on a number of third-party free and open source libraries, all compatible with the terms of its MIT license. The following is an exhaustive list of all such third-party components with their respective copyright statements and license terms."));
 	tpl_label->set_size(Size2(630, 1) * EDSCALE);
 	license_thirdparty->add_child(tpl_label);
 

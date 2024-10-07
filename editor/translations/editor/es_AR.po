@@ -1,7 +1,7 @@
-# Spanish (Argentina) translation of the Godot Engine editor interface.
-# Copyright (c) 2014-present Godot Engine contributors.
+# Spanish (Argentina) translation of the Redot Engine editor interface.
+# Copyright (c) 2014-present Redot Engine contributors.
 # Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
-# This file is distributed under the same license as the Godot source code.
+# This file is distributed under the same license as the Redot source code.
 # Diego López <diegodario21@gmail.com>, 2017.
 # Lisandro Lorea <lisandrolorea@gmail.com>, 2016-2018, 2019, 2020, 2021, 2022.
 # Roger Blanco Ribera <roger.blancoribera@gmail.com>, 2016-2018.
@@ -33,13 +33,13 @@
 # Franco Ezequiel Ibañez <francoibanez.dev@gmail.com>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor interface\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Redot Engine editor interface\n"
+"Report-Msgid-Bugs-To: https://github.com/redotengine/redot\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2024-03-18 13:37+0000\n"
 "Last-Translator: Franco Ezequiel Ibañez <francoibanez.dev@gmail.com>\n"
-"Language-Team: Spanish (Argentina) <https://hosted.weblate.org/projects/godot-"
-"engine/godot/es_AR/>\n"
+"Language-Team: Spanish (Argentina) <https://hosted.weblate.org/projects/redot-"
+"engine/redot/es_AR/>\n"
 "Language: es_AR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1382,11 +1382,11 @@ msgstr "No se pudo crear la carpeta."
 msgid "Create Folder"
 msgstr "Crear Carpeta"
 
-msgid "Thanks from the Godot community!"
-msgstr "Gracias de parte de la comunidad Godot!"
+msgid "Thanks from the Redot community!"
+msgstr "Gracias de parte de la comunidad Redot!"
 
-msgid "Godot Engine contributors"
-msgstr "Colaboradores de Godot Engine"
+msgid "Redot Engine contributors"
+msgstr "Colaboradores de Redot Engine"
 
 msgid "Project Founders"
 msgstr "Fundadores del Proyecto"
@@ -1419,12 +1419,12 @@ msgid "Third-party Licenses"
 msgstr "Licencia de Terceros"
 
 msgid ""
-"Godot Engine relies on a number of third-party free and open source "
+"Redot Engine relies on a number of third-party free and open source "
 "libraries, all compatible with the terms of its MIT license. The following is "
 "an exhaustive list of all such third-party components with their respective "
 "copyright statements and license terms."
 msgstr ""
-"Godot Engine se basa en una serie de librerías libres y de código abierto de "
+"Redot Engine se basa en una serie de librerías libres y de código abierto de "
 "terceros, todas ellas compatibles con los términos de su licencia MIT. La "
 "siguiente es una lista exhaustiva de todos estos componentes de terceros con "
 "sus respectivas declaraciones de derechos de autor y términos de licencia."
@@ -1792,8 +1792,8 @@ msgstr ""
 msgid "New profile name:"
 msgstr "Nuevo nombre de perfil:"
 
-msgid "Godot Feature Profile"
-msgstr "Perfil de Características de Godot"
+msgid "Redot Feature Profile"
+msgstr "Perfil de Características de Redot"
 
 msgid "Import Profile(s)"
 msgstr "Importar Perfil(es)"
@@ -2365,8 +2365,8 @@ msgstr "Sugerir una Feature"
 msgid "Send Docs Feedback"
 msgstr "Enviar comentarios sobre la documentación"
 
-msgid "Support Godot Development"
-msgstr "Apoyar el desarrollo de Godot"
+msgid "Support Redot Development"
+msgstr "Apoyar el desarrollo de Redot"
 
 msgid "Update Continuously"
 msgstr "Actualizar Continuamente"
@@ -2815,8 +2815,8 @@ msgstr "Desinstalar Plantilla"
 msgid "Select Template File"
 msgstr "Elegir Archivo de Plantilla"
 
-msgid "Godot Export Templates"
-msgstr "Plantillas de Exportación de Godot"
+msgid "Redot Export Templates"
+msgstr "Plantillas de Exportación de Redot"
 
 msgid ""
 "The templates will continue to download.\n"
@@ -5343,8 +5343,8 @@ msgstr "Guardar Tema Como..."
 msgid "Online Docs"
 msgstr "Documentación Online"
 
-msgid "Open Godot online documentation."
-msgstr "Abrir la documentación en línea de Godot."
+msgid "Open Redot online documentation."
+msgstr "Abrir la documentación en línea de Redot."
 
 msgid "%s Class Reference"
 msgstr "%s Referencia de Clase"
@@ -6783,11 +6783,11 @@ msgstr ""
 "(Sólo modo Fragmento/Luz) (Vector) Suma de la derivada absoluta en 'x' e 'y'."
 
 msgid ""
-"Custom Godot Shader Language expression, with custom amount of input and "
+"Custom Redot Shader Language expression, with custom amount of input and "
 "output ports. This is a direct injection of code into the vertex/fragment/"
 "light function, do not use it to write the function declarations inside."
 msgstr ""
-"Expresión personalizada del lenguaje de shaders de Godot, con una cantidad "
+"Expresión personalizada del lenguaje de shaders de Redot, con una cantidad "
 "determinada de puertos de entrada y salida. Esta es una inyección directa de "
 "código en la función vertex/fragment/light, no la uses para escribir "
 "declaraciones de funciones en su interior."
@@ -6864,10 +6864,10 @@ msgid "It would be a good idea to name your project."
 msgstr "Sería buena idea darle un nombre a tu proyecto."
 
 msgid ""
-"Invalid \".zip\" project file; it doesn't contain a \"project.godot\" file."
+"Invalid \".zip\" project file; it doesn't contain a \"project.redot\" file."
 msgstr ""
 "Archivo de projecto \".zip\" inválido; no contiene un archivo \"project."
-"godot\"."
+"redot\"."
 
 msgid "The path specified doesn't exist."
 msgstr "La ruta especificada no existe."
@@ -6875,8 +6875,8 @@ msgstr "La ruta especificada no existe."
 msgid "New Game Project"
 msgstr "Nuevo Proyecto de Juego"
 
-msgid "Couldn't create project.godot in project path."
-msgstr "No se pudo crear project.godot en la ruta de proyecto."
+msgid "Couldn't create project.redot in project path."
+msgstr "No se pudo crear project.redot en la ruta de proyecto."
 
 msgid "Error opening package file, not in ZIP format."
 msgstr "Error al abrir el archivo comprimido, no está en formato ZIP."
@@ -6929,8 +6929,8 @@ msgstr "Cambiar zona muerta de la Acción"
 msgid "Erase Input Action"
 msgstr "Borrar Acción de Entrada"
 
-msgid "Project Settings (project.godot)"
-msgstr "Configuración de Proyecto (project.godot)"
+msgid "Project Settings (project.redot)"
+msgstr "Configuración de Proyecto (project.redot)"
 
 msgid "Input Map"
 msgstr "Mapa de Entradas"

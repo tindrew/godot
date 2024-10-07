@@ -2,11 +2,10 @@
 /*  editor_property_name_processor.cpp                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -145,7 +144,7 @@ EditorPropertyNameProcessor::EditorPropertyNameProcessor() {
 
 	// The following initialization is parsed by the l10n extraction script with a regex.
 	// The map name and value definition format should be kept synced with the regex.
-	// https://github.com/godotengine/godot-editor-l10n/blob/main/scripts/common.py
+	// https://github.com/redotengine/redot-editor-l10n/blob/main/scripts/common.py
 	capitalize_string_remaps["2d"] = "2D";
 	capitalize_string_remaps["3d"] = "3D";
 	capitalize_string_remaps["4d"] = "4D";

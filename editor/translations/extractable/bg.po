@@ -1,16 +1,16 @@
-# Bulgarian translation of the Godot Engine extractable strings.
-# Copyright (c) 2014-present Godot Engine contributors.
+# Bulgarian translation of the Redot Engine extractable strings.
+# Copyright (c) 2014-present Redot Engine contributors.
 # Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
-# This file is distributed under the same license as the Godot source code.
+# This file is distributed under the same license as the Redot source code.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine extractable strings\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Redot Engine extractable strings\n"
+"Report-Msgid-Bugs-To: https://github.com/redotengine/redot\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2023-07-17 09:43+0000\n"
 "Last-Translator: 100daysummer <bobbydochev@gmail.com>\n"
-"Language-Team: Bulgarian <https://hosted.weblate.org/projects/godot-engine/"
-"godot/bg/>\n"
+"Language-Team: Bulgarian <https://hosted.weblate.org/projects/redot-engine/"
+"redot/bg/>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

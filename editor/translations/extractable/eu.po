@@ -1,14 +1,14 @@
-# Basque translation of the Godot Engine extractable strings.
-# Copyright (c) 2014-present Godot Engine contributors.
+# Basque translation of the Redot Engine extractable strings.
+# Copyright (c) 2014-present Redot Engine contributors.
 # Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
-# This file is distributed under the same license as the Godot source code.
+# This file is distributed under the same license as the Redot source code.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine extractable strings\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Redot Engine extractable strings\n"
+"Report-Msgid-Bugs-To: https://github.com/redotengine/redot\n"
 "PO-Revision-Date: 2023-11-06 00:35+0000\n"
 "Last-Translator: Pablo Mori <pablomcando2008@gmail.com>\n"
-"Language-Team: Basque <https://hosted.weblate.org/projects/godot-engine/godot/"
+"Language-Team: Basque <https://hosted.weblate.org/projects/redot-engine/redot/"
 "eu/>\n"
 "Language: eu\n"
 "Content-Type: text/plain; charset=UTF-8\n"

@@ -2,11 +2,10 @@
 /*  editor_node.cpp                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -536,8 +535,8 @@ void EditorNode::_update_theme(bool p_skip_creation) {
 
 		help_menu->set_item_icon(help_menu->get_item_index(HELP_SEARCH), theme->get_icon(SNAME("HelpSearch"), EditorStringName(EditorIcons)));
 		help_menu->set_item_icon(help_menu->get_item_index(HELP_COPY_SYSTEM_INFO), theme->get_icon(SNAME("ActionCopy"), EditorStringName(EditorIcons)));
-		help_menu->set_item_icon(help_menu->get_item_index(HELP_ABOUT), theme->get_icon(SNAME("Godot"), EditorStringName(EditorIcons)));
-		help_menu->set_item_icon(help_menu->get_item_index(HELP_SUPPORT_GODOT_DEVELOPMENT), theme->get_icon(SNAME("Heart"), EditorStringName(EditorIcons)));
+		help_menu->set_item_icon(help_menu->get_item_index(HELP_ABOUT), theme->get_icon(SNAME("Redot"), EditorStringName(EditorIcons)));
+		help_menu->set_item_icon(help_menu->get_item_index(HELP_SUPPORT_redot_DEVELOPMENT), theme->get_icon(SNAME("Heart"), EditorStringName(EditorIcons)));
 
 		if (EditorDebuggerNode::get_singleton()->is_visible()) {
 			bottom_panel->add_theme_style_override(SceneStringName(panel), theme->get_stylebox(SNAME("BottomPanelDebuggerOverride"), EditorStringName(EditorStyles)));
@@ -1177,10 +1176,10 @@ void EditorNode::_scan_external_changes() {
 		}
 	}
 
-	String project_settings_path = ProjectSettings::get_singleton()->get_resource_path().path_join("project.godot");
+	String project_settings_path = ProjectSettings::get_singleton()->get_resource_path().path_join("project.redot");
 	if (FileAccess::get_modified_time(project_settings_path) > ProjectSettings::get_singleton()->get_last_saved_time()) {
 		TreeItem *ti = disk_changed_list->create_item(r);
-		ti->set_text(0, "project.godot");
+		ti->set_text(0, "project.redot");
 		need_reload = true;
 	}
 
@@ -1494,7 +1493,7 @@ void EditorNode::_dialog_display_load_error(String p_file, Error p_error) {
 				show_accept(vformat(TTR("Missing file '%s' or one of its dependencies."), p_file.get_file()), TTR("OK"));
 			} break;
 			case ERR_FILE_UNRECOGNIZED: {
-				show_accept(vformat(TTR("File '%s' is saved in a format that is newer than the formats supported by this version of Godot, so it can't be opened."), p_file.get_file()), TTR("OK"));
+				show_accept(vformat(TTR("File '%s' is saved in a format that is newer than the formats supported by this version of Redot, so it can't be opened."), p_file.get_file()), TTR("OK"));
 			} break;
 			default: {
 				show_accept(vformat(TTR("Error while loading file '%s'."), p_file.get_file()), TTR("OK"));
@@ -3134,29 +3133,29 @@ void EditorNode::_menu_option_confirm(int p_option, bool p_confirmed) {
 			OS::get_singleton()->shell_open(VERSION_DOCS_URL "/");
 		} break;
 		case HELP_FORUM: {
-			OS::get_singleton()->shell_open("https://forum.godotengine.org/");
+			OS::get_singleton()->shell_open("https://forum.redotengine.org/");
 		} break;
 		case HELP_REPORT_A_BUG: {
-			OS::get_singleton()->shell_open("https://github.com/godotengine/godot/issues");
+			OS::get_singleton()->shell_open("https://github.com/redotengine/redot/issues");
 		} break;
 		case HELP_COPY_SYSTEM_INFO: {
 			String info = _get_system_info();
 			DisplayServer::get_singleton()->clipboard_set(info);
 		} break;
 		case HELP_SUGGEST_A_FEATURE: {
-			OS::get_singleton()->shell_open("https://github.com/godotengine/godot-proposals#readme");
+			OS::get_singleton()->shell_open("https://github.com/redotengine/redot-proposals#readme");
 		} break;
 		case HELP_SEND_DOCS_FEEDBACK: {
-			OS::get_singleton()->shell_open("https://github.com/godotengine/godot-docs/issues");
+			OS::get_singleton()->shell_open("https://github.com/redotengine/redot-docs/issues");
 		} break;
 		case HELP_COMMUNITY: {
-			OS::get_singleton()->shell_open("https://godotengine.org/community");
+			OS::get_singleton()->shell_open("https://redotengine.org/community");
 		} break;
 		case HELP_ABOUT: {
 			about->popup_centered(Size2(780, 500) * EDSCALE);
 		} break;
-		case HELP_SUPPORT_GODOT_DEVELOPMENT: {
-			OS::get_singleton()->shell_open("https://godotengine.org/donate");
+		case HELP_SUPPORT_redot_DEVELOPMENT: {
+			OS::get_singleton()->shell_open("https://redotengine.org/donate");
 		} break;
 		case SET_RENDERER_NAME_SAVE_AND_RESTART: {
 			ProjectSettings::get_singleton()->set("rendering/renderer/rendering_method", renderer_request);
@@ -4944,11 +4943,11 @@ String EditorNode::_get_system_info() const {
 	}
 	const String distribution_version = OS::get_singleton()->get_version();
 
-	String godot_version = "Godot v" + String(VERSION_FULL_CONFIG);
+	String redot_version = "Redot v" + String(VERSION_FULL_CONFIG);
 	if (String(VERSION_BUILD) != "official") {
 		String hash = String(VERSION_HASH);
 		hash = hash.is_empty() ? String("unknown") : vformat("(%s)", hash.left(9));
-		godot_version += " " + hash;
+		redot_version += " " + hash;
 	}
 
 	String display_session_type;
@@ -5014,7 +5013,7 @@ String EditorNode::_get_system_info() const {
 
 	// Join info.
 	Vector<String> info;
-	info.push_back(godot_version);
+	info.push_back(redot_version);
 	String distribution_display_session_type = distribution_name;
 	if (!distribution_version.is_empty()) {
 		distribution_display_session_type += " " + distribution_version;
@@ -5133,7 +5132,7 @@ Vector<EditorNodeInitCallback> EditorNode::_init_callbacks;
 
 void EditorNode::_begin_first_scan() {
 	// In headless mode, scan right away.
-	// This allows users to continue using `godot --headless --editor --quit` to prepare a project.
+	// This allows users to continue using `redot --headless --editor --quit` to prepare a project.
 	if (!DisplayServer::get_singleton()->window_can_draw()) {
 		OS::get_singleton()->benchmark_begin_measure("Editor", "First Scan");
 		EditorFileSystem::get_singleton()->scan();
@@ -6423,7 +6422,7 @@ bool EditorNode::call_build() {
 
 	for (int i = 0; i < build_callback_count && builds_successful; i++) {
 		if (!build_callbacks[i]()) {
-			ERR_PRINT("A Godot Engine build callback failed.");
+			ERR_PRINT("A Redot Engine build callback failed.");
 			builds_successful = false;
 		}
 	}
@@ -6693,7 +6692,7 @@ EditorNode::EditorNode() {
 	DEV_ASSERT(!singleton);
 	singleton = this;
 
-	set_translation_domain("godot.editor");
+	set_translation_domain("redot.editor");
 
 	Resource::_get_local_scene_func = _resource_get_edited_scene;
 
@@ -7416,9 +7415,9 @@ EditorNode::EditorNode() {
 	help_menu->add_separator();
 	if (!global_menu || !OS::get_singleton()->has_feature("macos")) {
 		// On macOS  "Quit" and "About" options are in the "app" menu.
-		help_menu->add_icon_shortcut(theme->get_icon(SNAME("Godot"), EditorStringName(EditorIcons)), ED_SHORTCUT_AND_COMMAND("editor/about", TTR("About Godot...")), HELP_ABOUT);
+		help_menu->add_icon_shortcut(theme->get_icon(SNAME("Redot"), EditorStringName(EditorIcons)), ED_SHORTCUT_AND_COMMAND("editor/about", TTR("About Redot...")), HELP_ABOUT);
 	}
-	help_menu->add_icon_shortcut(theme->get_icon(SNAME("Heart"), EditorStringName(EditorIcons)), ED_SHORTCUT_AND_COMMAND("editor/support_development", TTR("Support Godot Development")), HELP_SUPPORT_GODOT_DEVELOPMENT);
+	help_menu->add_icon_shortcut(theme->get_icon(SNAME("Heart"), EditorStringName(EditorIcons)), ED_SHORTCUT_AND_COMMAND("editor/support_development", TTR("Support Redot Development")), HELP_SUPPORT_redot_DEVELOPMENT);
 
 	// Spacer to center 2D / 3D / Script buttons.
 	Control *right_spacer = memnew(Control);

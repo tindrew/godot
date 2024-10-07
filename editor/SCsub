@@ -91,7 +91,7 @@ void register_exporter_types() {{
     )
 
     # Editor interface and class reference translations incur a significant size
-    # cost for the editor binary (see godot-proposals#3421).
+    # cost for the editor binary (see redot-proposals#3421).
     # To limit it, we only include translations with a high enough completion
     # ratio (20% for the editor UI, 10% for the class reference).
     # Generated with `make include-list` for each resource.

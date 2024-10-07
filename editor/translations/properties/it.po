@@ -1,7 +1,7 @@
-# Italian translation of the Godot Engine properties.
-# Copyright (c) 2014-present Godot Engine contributors.
+# Italian translation of the Redot Engine properties.
+# Copyright (c) 2014-present Redot Engine contributors.
 # Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
-# This file is distributed under the same license as the Godot source code.
+# This file is distributed under the same license as the Redot source code.
 # Alessio Corridori <alessiocorridori@hotmail.com>, 2018.
 # Dario Bonfanti <bonfi.96@hotmail.it>, 2016-2017.
 # Dario D'Ambra <legione0@gmail.com>, 2017.
@@ -90,13 +90,13 @@
 # Stefano siser <stefano.siser@gmail.com>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine properties\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Redot Engine properties\n"
+"Report-Msgid-Bugs-To: https://github.com/redotengine/redot\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2024-09-10 14:09+0000\n"
 "Last-Translator: Stefano siser <stefano.siser@gmail.com>\n"
-"Language-Team: Italian <https://hosted.weblate.org/projects/godot-engine/"
-"godot-properties/it/>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/redot-engine/"
+"redot-properties/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3496,8 +3496,8 @@ msgstr "Articolazioni"
 msgid "Roots"
 msgstr "Radici"
 
-msgid "Godot Bone Node"
-msgstr "Nodo d'osso di Godot"
+msgid "Redot Bone Node"
+msgstr "Nodo d'osso di Redot"
 
 msgid "Skin Root"
 msgstr "Radice della Skin"
@@ -3505,8 +3505,8 @@ msgstr "Radice della Skin"
 msgid "Non Joints"
 msgstr "Non articolazioni"
 
-msgid "Godot Skin"
-msgstr "Skin Godot"
+msgid "Redot Skin"
+msgstr "Skin Redot"
 
 msgid "Src Image"
 msgstr "Immagine sorgente"

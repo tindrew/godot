@@ -1,7 +1,7 @@
-# Ukrainian translation of the Godot Engine properties.
-# Copyright (c) 2014-present Godot Engine contributors.
+# Ukrainian translation of the Redot Engine properties.
+# Copyright (c) 2014-present Redot Engine contributors.
 # Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
-# This file is distributed under the same license as the Godot source code.
+# This file is distributed under the same license as the Redot source code.
 # Aleksandr <XpycT.TOP@gmail.com>, 2017.
 # Yuri Chornoivan <yurchor@ukr.net>, 2018, 2019, 2020, 2021, 2022.
 # Андрій Бандура <andriykopanytsia@gmail.com>, 2018.
@@ -37,13 +37,13 @@
 # Oleksandr <galaxynarium@gmail.com>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: Ukrainian (Godot Engine)\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Ukrainian (Redot Engine)\n"
+"Report-Msgid-Bugs-To: https://github.com/redotengine/redot\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2024-09-07 20:09+0000\n"
 "Last-Translator: Oleksandr <galaxynarium@gmail.com>\n"
-"Language-Team: Ukrainian <https://hosted.weblate.org/projects/godot-engine/"
-"godot-properties/uk/>\n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/redot-engine/"
+"redot-properties/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2620,7 +2620,7 @@ msgstr "Суглоби"
 msgid "Roots"
 msgstr "Корені"
 
-msgid "Godot Bone Node"
+msgid "Redot Bone Node"
 msgstr "Отримати вузол сцени"
 
 msgid "Skin Root"

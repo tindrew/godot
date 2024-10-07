@@ -1,7 +1,7 @@
-# Bengali translation of the Godot Engine editor interface.
-# Copyright (c) 2014-present Godot Engine contributors.
+# Bengali translation of the Redot Engine editor interface.
+# Copyright (c) 2014-present Redot Engine contributors.
 # Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
-# This file is distributed under the same license as the Godot source code.
+# This file is distributed under the same license as the Redot source code.
 # Abu Md. Maruf Sarker <maruf.webdev@gmail.com>, 2016-2017.
 # Abdullah Zubair <abdullahzubair109@gmail.com>, 2017.
 # Tahmid Karim <tahmidk15@gmail.com>, 2016.
@@ -19,13 +19,13 @@
 # shahriarlabib000 <shahriarlabib000@gmail.com>, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor interface\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Redot Engine editor interface\n"
+"Report-Msgid-Bugs-To: https://github.com/redotengine/redot\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2024-08-24 11:09+0000\n"
 "Last-Translator: shahriarlabib000 <shahriarlabib000@gmail.com>\n"
-"Language-Team: Bengali <https://hosted.weblate.org/projects/godot-engine/"
-"godot/bn/>\n"
+"Language-Team: Bengali <https://hosted.weblate.org/projects/redot-engine/"
+"redot/bn/>\n"
 "Language: bn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1481,11 +1481,11 @@ msgstr "ফোল্ডার তৈরি করুন"
 msgid "Folder name is valid."
 msgstr "ফোল্ডার নামটি গ্রহণযোগ্য।"
 
-msgid "Thanks from the Godot community!"
-msgstr "Godot কমিউনিটি হতে আপনাকে ধন্যবাদ!"
+msgid "Thanks from the Redot community!"
+msgstr "Redot কমিউনিটি হতে আপনাকে ধন্যবাদ!"
 
-msgid "Godot Engine contributors"
-msgstr "Godot Engine কন্ট্রিবিউটরস"
+msgid "Redot Engine contributors"
+msgstr "Redot Engine কন্ট্রিবিউটরস"
 
 msgid "Project Founders"
 msgstr "প্রজেক্ট ফাউন্ডার"
@@ -2299,8 +2299,8 @@ msgstr "সাহায্য অনুসন্ধান করুন…"
 msgid "Online Documentation"
 msgstr "অনলাইন ডকুমেন্টেশন"
 
-msgid "About Godot..."
-msgstr "Godot সম্পর্কে…"
+msgid "About Redot..."
+msgstr "Redot সম্পর্কে…"
 
 msgid "Inspector"
 msgstr "পরিদর্শক/পরীক্ষক"
@@ -4509,8 +4509,8 @@ msgstr "সংরক্ষণে সমস্যা হয়েছে"
 msgid "Save Theme As..."
 msgstr "থিম এইরূপে সংরক্ষণ করুন..."
 
-msgid "Open '%s' in Godot online documentation."
-msgstr "Godot অনলাইন ডকুমেন্টেশনে '%s' খুলুন।"
+msgid "Open '%s' in Redot online documentation."
+msgstr "Redot অনলাইন ডকুমেন্টেশনে '%s' খুলুন।"
 
 msgid "%s Class Reference"
 msgstr "%s ক্লাস রেফারেন্স"
@@ -5258,9 +5258,9 @@ msgid "Valid project found at path."
 msgstr "পাথ এ বৈধ প্রকল্প পাওয়া গেছে।"
 
 msgid ""
-"Please choose a \"project.godot\", a directory with one, or a \".zip\" file."
+"Please choose a \"project.redot\", a directory with one, or a \".zip\" file."
 msgstr ""
-"অনুগ্রহ করে একটি \"project.godot\", একটি সহ একটি ডিরেক্টরি বা একটি \".zip\" ফাইল "
+"অনুগ্রহ করে একটি \"project.redot\", একটি সহ একটি ডিরেক্টরি বা একটি \".zip\" ফাইল "
 "চয়ন করুন।"
 
 msgid ""

@@ -2,11 +2,10 @@
 /*  editor_translation.cpp                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -54,7 +53,7 @@ Vector<String> get_editor_locales() {
 }
 
 void load_editor_translations(const String &p_locale) {
-	const Ref<TranslationDomain> domain = TranslationServer::get_singleton()->get_or_add_domain("godot.editor");
+	const Ref<TranslationDomain> domain = TranslationServer::get_singleton()->get_or_add_domain("redot.editor");
 
 	EditorTranslationList *etl = _editor_translations;
 	while (etl->data) {
@@ -82,7 +81,7 @@ void load_editor_translations(const String &p_locale) {
 }
 
 void load_property_translations(const String &p_locale) {
-	const Ref<TranslationDomain> domain = TranslationServer::get_singleton()->get_or_add_domain("godot.properties");
+	const Ref<TranslationDomain> domain = TranslationServer::get_singleton()->get_or_add_domain("redot.properties");
 
 	PropertyTranslationList *etl = _property_translations;
 	while (etl->data) {
@@ -110,7 +109,7 @@ void load_property_translations(const String &p_locale) {
 }
 
 void load_doc_translations(const String &p_locale) {
-	const Ref<TranslationDomain> domain = TranslationServer::get_singleton()->get_or_add_domain("godot.documentation");
+	const Ref<TranslationDomain> domain = TranslationServer::get_singleton()->get_or_add_domain("redot.documentation");
 
 	DocTranslationList *dtl = _doc_translations;
 	while (dtl->data) {
@@ -138,7 +137,7 @@ void load_doc_translations(const String &p_locale) {
 }
 
 void load_extractable_translations(const String &p_locale) {
-	const Ref<TranslationDomain> domain = TranslationServer::get_singleton()->get_or_add_domain("godot.editor");
+	const Ref<TranslationDomain> domain = TranslationServer::get_singleton()->get_or_add_domain("redot.editor");
 
 	ExtractableTranslationList *etl = _extractable_translations;
 	while (etl->data) {

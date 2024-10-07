@@ -2,11 +2,10 @@
 /*  editor_color_map.h                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -39,7 +38,7 @@
 // The default icon theme is designed to be used for a dark theme. This map stores
 // Color values to convert to other colors for better readability on a light theme.
 class EditorColorMap {
-	// Godot Color values are used to avoid the ambiguity of strings
+	// Redot Color values are used to avoid the ambiguity of strings
 	// (where "#ffffff", "fff", and "white" are all equivalent).
 	static HashMap<Color, Color> color_conversion_map;
 	// The names of the icons to never convert, even if one of their colors

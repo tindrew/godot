@@ -1,7 +1,7 @@
-# Georgian translation of the Godot Engine editor interface.
-# Copyright (c) 2014-present Godot Engine contributors.
+# Georgian translation of the Redot Engine editor interface.
+# Copyright (c) 2014-present Redot Engine contributors.
 # Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.
-# This file is distributed under the same license as the Godot source code.
+# This file is distributed under the same license as the Redot source code.
 # Giorgi Beriashvili <giorgi.beriashvili@outlook.com>, 2018.
 # George Dzavashvili <dzavashviligeorge@gmail.com>, 2018.
 # დემეტრე შონია <blender.animation.maker@gmail.com>, 2019.
@@ -9,13 +9,13 @@
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2023, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: Godot Engine editor interface\n"
-"Report-Msgid-Bugs-To: https://github.com/godotengine/godot\n"
+"Project-Id-Version: Redot Engine editor interface\n"
+"Report-Msgid-Bugs-To: https://github.com/redotengine/redot\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2024-08-14 12:59+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
-"Language-Team: Georgian <https://hosted.weblate.org/projects/godot-engine/"
-"godot/ka/>\n"
+"Language-Team: Georgian <https://hosted.weblate.org/projects/redot-engine/"
+"redot/ka/>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1091,11 +1091,11 @@ msgstr "საქაღალდის შექმნა"
 msgid "Folder name is valid."
 msgstr "საქაღალდის სახელი სწორია."
 
-msgid "Thanks from the Godot community!"
-msgstr "მადლობა Godot საზოგადოებისგან!"
+msgid "Thanks from the Redot community!"
+msgstr "მადლობა Redot საზოგადოებისგან!"
 
-msgid "Godot Engine contributors"
-msgstr "Godot ძრავის ხელშემწყობები"
+msgid "Redot Engine contributors"
+msgstr "Redot ძრავის ხელშემწყობები"
 
 msgid "Project Founders"
 msgstr "პროექტის დამფუძნებლები"
