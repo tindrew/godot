@@ -2,11 +2,10 @@
 /*  extension_api_dump.cpp                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -87,7 +86,7 @@ static String get_property_info_type_name(const PropertyInfo &p_info) {
 	return get_builtin_or_variant_type_name(p_info.type);
 }
 
-static String get_type_meta_name(const GodotTypeInfo::Metadata metadata) {
+static String get_type_meta_name(const RedotTypeInfo::Metadata metadata) {
 	static const char *argmeta[13] = { "none", "int8", "int16", "int32", "int64", "uint8", "uint16", "uint32", "uint64", "float", "double", "char16", "char32" };
 	return argmeta[metadata];
 }
@@ -1029,7 +1028,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 							d3["type"] = get_property_info_type_name(pinfo);
 
 							if (mi.get_argument_meta(-1) > 0) {
-								d3["meta"] = get_type_meta_name((GodotTypeInfo::Metadata)mi.get_argument_meta(-1));
+								d3["meta"] = get_type_meta_name((RedotTypeInfo::Metadata)mi.get_argument_meta(-1));
 							}
 
 							d2["return_value"] = d3;
@@ -1046,7 +1045,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 							d3["type"] = get_property_info_type_name(pinfo);
 
 							if (mi.get_argument_meta(i) > 0) {
-								d3["meta"] = get_type_meta_name((GodotTypeInfo::Metadata)mi.get_argument_meta(i));
+								d3["meta"] = get_type_meta_name((RedotTypeInfo::Metadata)mi.get_argument_meta(i));
 							}
 
 							arguments.push_back(d3);
@@ -1169,7 +1168,7 @@ Dictionary GDExtensionAPIDump::generate_extension_api(bool p_include_docs) {
 						d3["name"] = itr->name;
 						d3["type"] = get_property_info_type_name(*itr);
 						if (F.get_argument_meta(i) > 0) {
-							d3["meta"] = get_type_meta_name((GodotTypeInfo::Metadata)F.get_argument_meta(i));
+							d3["meta"] = get_type_meta_name((RedotTypeInfo::Metadata)F.get_argument_meta(i));
 						}
 						arguments.push_back(d3);
 					}

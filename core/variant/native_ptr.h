@@ -2,11 +2,10 @@
 /*  native_ptr.h                                                          */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -98,7 +97,7 @@ struct GDExtensionPtr {
 template <typename T>
 struct GetTypeInfo<GDExtensionConstPtr<T>> {
 	static const Variant::Type VARIANT_TYPE = Variant::NIL;
-	static const GodotTypeInfo::Metadata METADATA = GodotTypeInfo::METADATA_NONE;
+	static const RedotTypeInfo::Metadata METADATA = RedotTypeInfo::METADATA_NONE;
 	static inline PropertyInfo get_class_info() {
 		return PropertyInfo(Variant::INT, String(), PROPERTY_HINT_INT_IS_POINTER, GDExtensionConstPtr<T>::get_name());
 	}
@@ -107,7 +106,7 @@ struct GetTypeInfo<GDExtensionConstPtr<T>> {
 template <typename T>
 struct GetTypeInfo<GDExtensionPtr<T>> {
 	static const Variant::Type VARIANT_TYPE = Variant::NIL;
-	static const GodotTypeInfo::Metadata METADATA = GodotTypeInfo::METADATA_NONE;
+	static const RedotTypeInfo::Metadata METADATA = RedotTypeInfo::METADATA_NONE;
 	static inline PropertyInfo get_class_info() {
 		return PropertyInfo(Variant::INT, String(), PROPERTY_HINT_INT_IS_POINTER, GDExtensionPtr<T>::get_name());
 	}

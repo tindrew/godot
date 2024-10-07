@@ -2,11 +2,10 @@
 /*  gdextension_interface.cpp                                             */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -240,11 +239,11 @@ GDExtensionInterfaceFunctionPtr gdextension_get_proc_address(const char *p_name)
 	return GDExtension::get_interface_function(p_name);
 }
 
-static void gdextension_get_godot_version(GDExtensionGodotVersion *r_godot_version) {
-	r_godot_version->major = VERSION_MAJOR;
-	r_godot_version->minor = VERSION_MINOR;
-	r_godot_version->patch = VERSION_PATCH;
-	r_godot_version->string = VERSION_FULL_NAME;
+static void gdextension_get_redot_version(GDExtensionRedotVersion *r_redot_version) {
+	r_redot_version->major = VERSION_MAJOR;
+	r_redot_version->minor = VERSION_MINOR;
+	r_redot_version->patch = VERSION_PATCH;
+	r_redot_version->string = VERSION_FULL_NAME;
 }
 
 // Memory Functions
@@ -1572,7 +1571,7 @@ static void gdextension_editor_help_load_xml_from_utf8_chars(const char *p_data)
 #define REGISTER_INTERFACE_FUNC(m_name) GDExtension::register_interface_function(#m_name, (GDExtensionInterfaceFunctionPtr) & gdextension_##m_name)
 
 void gdextension_setup_interface() {
-	REGISTER_INTERFACE_FUNC(get_godot_version);
+	REGISTER_INTERFACE_FUNC(get_redot_version);
 	REGISTER_INTERFACE_FUNC(mem_alloc);
 	REGISTER_INTERFACE_FUNC(mem_realloc);
 	REGISTER_INTERFACE_FUNC(mem_free);

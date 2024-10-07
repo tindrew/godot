@@ -2,11 +2,10 @@
 /*  color_names.inc                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -40,7 +39,7 @@ struct NamedColor {
 };
 
 // NOTE: This data is duplicated in the file:
-// modules/mono/glue/GodotSharp/GodotSharp/Core/Colors.cs
+// modules/mono/glue/RedotSharp/RedotSharp/Core/Colors.cs
 
 static NamedColor named_colors[] = {
 	{ "ALICE_BLUE", Color::hex(0xF0F8FFFF) },

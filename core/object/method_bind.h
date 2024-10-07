@@ -2,11 +2,10 @@
 /*  method_bind.h                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -101,7 +100,7 @@ public:
 	void set_argument_names(const Vector<StringName> &p_names); // Set by ClassDB, can't be inferred otherwise.
 	Vector<StringName> get_argument_names() const;
 
-	virtual GodotTypeInfo::Metadata get_argument_meta(int p_arg) const = 0;
+	virtual RedotTypeInfo::Metadata get_argument_meta(int p_arg) const = 0;
 #endif
 
 	void set_hint_flags(uint32_t p_hint) { hint_flags = p_hint; }
@@ -163,8 +162,8 @@ public:
 	}
 
 #ifdef DEBUG_METHODS_ENABLED
-	virtual GodotTypeInfo::Metadata get_argument_meta(int) const override {
-		return GodotTypeInfo::METADATA_NONE;
+	virtual RedotTypeInfo::Metadata get_argument_meta(int) const override {
+		return RedotTypeInfo::METADATA_NONE;
 	}
 #endif
 
@@ -330,7 +329,7 @@ protected:
 
 public:
 #ifdef DEBUG_METHODS_ENABLED
-	virtual GodotTypeInfo::Metadata get_argument_meta(int p_arg) const override {
+	virtual RedotTypeInfo::Metadata get_argument_meta(int p_arg) const override {
 		return call_get_argument_metadata<P...>(p_arg);
 	}
 
@@ -414,7 +413,7 @@ protected:
 
 public:
 #ifdef DEBUG_METHODS_ENABLED
-	virtual GodotTypeInfo::Metadata get_argument_meta(int p_arg) const override {
+	virtual RedotTypeInfo::Metadata get_argument_meta(int p_arg) const override {
 		return call_get_argument_metadata<P...>(p_arg);
 	}
 
@@ -504,7 +503,7 @@ protected:
 
 public:
 #ifdef DEBUG_METHODS_ENABLED
-	virtual GodotTypeInfo::Metadata get_argument_meta(int p_arg) const override {
+	virtual RedotTypeInfo::Metadata get_argument_meta(int p_arg) const override {
 		if (p_arg >= 0) {
 			return call_get_argument_metadata<P...>(p_arg);
 		} else {
@@ -600,7 +599,7 @@ protected:
 
 public:
 #ifdef DEBUG_METHODS_ENABLED
-	virtual GodotTypeInfo::Metadata get_argument_meta(int p_arg) const override {
+	virtual RedotTypeInfo::Metadata get_argument_meta(int p_arg) const override {
 		if (p_arg >= 0) {
 			return call_get_argument_metadata<P...>(p_arg);
 		} else {
@@ -689,7 +688,7 @@ protected:
 
 public:
 #ifdef DEBUG_METHODS_ENABLED
-	virtual GodotTypeInfo::Metadata get_argument_meta(int p_arg) const override {
+	virtual RedotTypeInfo::Metadata get_argument_meta(int p_arg) const override {
 		return call_get_argument_metadata<P...>(p_arg);
 	}
 
@@ -752,7 +751,7 @@ protected:
 
 public:
 #ifdef DEBUG_METHODS_ENABLED
-	virtual GodotTypeInfo::Metadata get_argument_meta(int p_arg) const override {
+	virtual RedotTypeInfo::Metadata get_argument_meta(int p_arg) const override {
 		if (p_arg >= 0) {
 			return call_get_argument_metadata<P...>(p_arg);
 		} else {

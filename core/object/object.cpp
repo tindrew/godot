@@ -2,11 +2,10 @@
 /*  object.cpp                                                            */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -1144,7 +1143,7 @@ Error Object::emit_signalp(const StringName &p_name, const Variant **p_args, int
 	}
 
 	// If this is a ref-counted object, prevent it from being destroyed during signal emission,
-	// which is needed in certain edge cases; e.g., https://github.com/godotengine/godot/issues/73889.
+	// which is needed in certain edge cases; e.g., https://github.com/redotengine/redot/issues/73889.
 	Ref<RefCounted> rc = Ref<RefCounted>(Object::cast_to<RefCounted>(this));
 
 	// Ensure that disconnecting the signal or even deleting the object
@@ -1746,7 +1745,7 @@ void Object::_bind_methods() {
 	{
 		MethodInfo mi("_notification");
 		mi.arguments.push_back(PropertyInfo(Variant::INT, "what"));
-		mi.arguments_metadata.push_back(GodotTypeInfo::Metadata::METADATA_INT_IS_INT32);
+		mi.arguments_metadata.push_back(RedotTypeInfo::Metadata::METADATA_INT_IS_INT32);
 		BIND_OBJ_CORE_METHOD(mi);
 	}
 

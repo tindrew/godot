@@ -2,11 +2,10 @@
 /*  variant_parser.cpp                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -521,7 +520,7 @@ Error VariantParser::_parse_enginecfg(Stream *p_stream, Vector<String> &strings,
 	Token token;
 	get_token(p_stream, token, line, r_err_str);
 	if (token.type != TK_PARENTHESIS_OPEN) {
-		r_err_str = "Expected '(' in old-style project.godot construct";
+		r_err_str = "Expected '(' in old-style project.redot construct";
 		return ERR_PARSE_ERROR;
 	}
 
@@ -531,7 +530,7 @@ Error VariantParser::_parse_enginecfg(Stream *p_stream, Vector<String> &strings,
 		char32_t c = p_stream->get_char();
 
 		if (p_stream->is_eof()) {
-			r_err_str = "Unexpected EOF while parsing old-style project.godot construct";
+			r_err_str = "Unexpected EOF while parsing old-style project.redot construct";
 			return ERR_PARSE_ERROR;
 		}
 
@@ -876,7 +875,7 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			}
 
 			value = Basis(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
-		} else if (id == "Transform3D" || id == "Transform") { // "Transform" kept for compatibility with Godot <4.
+		} else if (id == "Transform3D" || id == "Transform") { // "Transform" kept for compatibility with Redot <4.
 			Vector<real_t> args;
 			Error err = _parse_construct<real_t>(p_stream, args, line, r_err_str);
 			if (err) {
@@ -889,7 +888,7 @@ Error VariantParser::parse_value(Token &token, Variant &value, Stream *p_stream,
 			}
 
 			value = Transform3D(Basis(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]), Vector3(args[9], args[10], args[11]));
-		} else if (id == "Projection") { // "Transform" kept for compatibility with Godot <4.
+		} else if (id == "Projection") { // "Transform" kept for compatibility with Redot <4.
 			Vector<real_t> args;
 			Error err = _parse_construct<real_t>(p_stream, args, line, r_err_str);
 			if (err) {

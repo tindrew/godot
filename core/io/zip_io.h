@@ -2,11 +2,10 @@
 /*  zip_io.h                                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -40,9 +39,9 @@
 #include "thirdparty/minizip/zip.h"
 
 // Get the current file info and safely convert the full filepath to a String.
-int godot_unzip_get_current_file_info(unzFile p_zip_file, unz_file_info64 &r_file_info, String &r_filepath);
+int redot_unzip_get_current_file_info(unzFile p_zip_file, unz_file_info64 &r_file_info, String &r_filepath);
 // Try to locate the file in the archive specified by the filepath (works with large paths and Unicode).
-int godot_unzip_locate_file(unzFile p_zip_file, const String &p_filepath, bool p_case_sensitive = true);
+int redot_unzip_locate_file(unzFile p_zip_file, const String &p_filepath, bool p_case_sensitive = true);
 
 //
 

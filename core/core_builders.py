@@ -224,7 +224,7 @@ def make_license_header(target, source, env):
         f.write("/* THIS FILE IS GENERATED DO NOT EDIT */\n")
         f.write("#ifndef LICENSE_GEN_H\n")
         f.write("#define LICENSE_GEN_H\n")
-        f.write("const char *const GODOT_LICENSE_TEXT =")
+        f.write("const char *const redot_LICENSE_TEXT =")
 
         with open(src_license, "r", encoding="utf-8") as license_file:
             for line in license_file:

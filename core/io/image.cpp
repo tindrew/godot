@@ -2,11 +2,10 @@
 /*  image.cpp                                                             */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -4034,7 +4033,7 @@ Error Image::load_tga_from_buffer(const Vector<uint8_t> &p_array) {
 	ERR_FAIL_NULL_V_MSG(
 			_tga_mem_loader_func,
 			ERR_UNAVAILABLE,
-			"The TGA module isn't enabled. Recompile the Godot editor or export template binary with the `module_tga_enabled=yes` SCons option.");
+			"The TGA module isn't enabled. Recompile the Redot editor or export template binary with the `module_tga_enabled=yes` SCons option.");
 	return _load_from_buffer(p_array, _tga_mem_loader_func);
 }
 
@@ -4042,7 +4041,7 @@ Error Image::load_bmp_from_buffer(const Vector<uint8_t> &p_array) {
 	ERR_FAIL_NULL_V_MSG(
 			_bmp_mem_loader_func,
 			ERR_UNAVAILABLE,
-			"The BMP module isn't enabled. Recompile the Godot editor or export template binary with the `module_bmp_enabled=yes` SCons option.");
+			"The BMP module isn't enabled. Recompile the Redot editor or export template binary with the `module_bmp_enabled=yes` SCons option.");
 	return _load_from_buffer(p_array, _bmp_mem_loader_func);
 }
 
@@ -4050,7 +4049,7 @@ Error Image::load_svg_from_buffer(const Vector<uint8_t> &p_array, float scale) {
 	ERR_FAIL_NULL_V_MSG(
 			_svg_scalable_mem_loader_func,
 			ERR_UNAVAILABLE,
-			"The SVG module isn't enabled. Recompile the Godot editor or export template binary with the `module_svg_enabled=yes` SCons option.");
+			"The SVG module isn't enabled. Recompile the Redot editor or export template binary with the `module_svg_enabled=yes` SCons option.");
 
 	int buffer_size = p_array.size();
 
@@ -4072,7 +4071,7 @@ Error Image::load_ktx_from_buffer(const Vector<uint8_t> &p_array) {
 	ERR_FAIL_NULL_V_MSG(
 			_ktx_mem_loader_func,
 			ERR_UNAVAILABLE,
-			"The KTX module isn't enabled. Recompile the Godot editor or export template binary with the `module_ktx_enabled=yes` SCons option.");
+			"The KTX module isn't enabled. Recompile the Redot editor or export template binary with the `module_ktx_enabled=yes` SCons option.");
 	return _load_from_buffer(p_array, _ktx_mem_loader_func);
 }
 

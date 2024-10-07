@@ -111,7 +111,7 @@ env_thirdparty.add_source_files(thirdparty_obj, thirdparty_minizip_sources)
 
 # Zstd library, can be unbundled in theory
 # though we currently use some private symbols
-# https://github.com/godotengine/godot/issues/17374
+# https://github.com/redotengine/redot/issues/17374
 if env["builtin_zstd"]:
     thirdparty_zstd_dir = "#thirdparty/zstd/"
     thirdparty_zstd_sources = [
@@ -158,7 +158,7 @@ if env["builtin_zstd"]:
 env.core_sources += thirdparty_obj
 
 
-# Godot source files
+# Redot source files
 
 env.add_source_files(env.core_sources, "*.cpp")
 
@@ -190,7 +190,7 @@ def version_info_builder(target, source, env):
 #define VERSION_MODULE_CONFIG "{module_config}"
 #define VERSION_WEBSITE "{website}"
 #define VERSION_DOCS_BRANCH "{docs_branch}"
-#define VERSION_DOCS_URL "https://docs.godotengine.org/en/" VERSION_DOCS_BRANCH
+#define VERSION_DOCS_URL "https://docs.redotengine.org/en/" VERSION_DOCS_BRANCH
 """.format(**env.version_info)
         )
 

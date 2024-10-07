@@ -2,11 +2,10 @@
 /*  convex_hull.cpp                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -29,7 +28,7 @@
 /**************************************************************************/
 
 /*
- * Based on Godot's patched VHACD-version of Bullet's btConvexHullComputer.
+ * Based on Redot's patched VHACD-version of Bullet's btConvexHullComputer.
  * See /thirdparty/vhacd/btConvexHullComputer.cpp at 64403ddcab9f1dca2408f0a412a22d899708bbb1
  * In turn, based on /src/LinearMath/btConvexHullComputer.cpp in <https://github.com/bulletphysics/bullet3>
  * at 73b217fb07e7e3ce126caeb28ab3c9ddd0718467
@@ -37,8 +36,8 @@
  * Changes:
  * - int32_t is consistently used instead of int in some cases
  * - integrated patch db0d6c92927f5a1358b887f2645c11f3014f0e8a from Bullet (CWE-190 integer overflow in btConvexHullComputer)
- * - adapted to Godot's code style
- * - replaced Bullet's types (e.g. vectors) with Godot's
+ * - adapted to Redot's code style
+ * - replaced Bullet's types (e.g. vectors) with Redot's
  * - replaced custom Pool implementation with PagedAllocator
  */
 
@@ -70,10 +69,10 @@ subject to the following restrictions:
 //#define DEBUG_CONVEX_HULL
 //#define SHOW_ITERATIONS
 
-// -- GODOT start --
+// -- redot start --
 // Assembly optimizations are not used at the moment.
 //#define USE_X86_64_ASM
-// -- GODOT end --
+// -- redot end --
 
 #ifdef DEBUG_ENABLED
 #define CHULL_ASSERT(m_cond)                                     \
@@ -2326,7 +2325,7 @@ Error ConvexHullComputer::convex_hull(const Vector<Vector3> &p_points, Geometry3
 			e = e->get_next_edge_of_face();
 		} while (e != e_start);
 
-		// reverse indices: Godot wants clockwise, but this is counter-clockwise
+		// reverse indices: Redot wants clockwise, but this is counter-clockwise
 		if (face.indices.size() > 2) {
 			// reverse all but the first index.
 			int *indices = face.indices.ptr();

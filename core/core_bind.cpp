@@ -2,11 +2,10 @@
 /*  core_bind.cpp                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -287,18 +286,18 @@ String OS::get_executable_path() const {
 
 Error OS::shell_open(const String &p_uri) {
 	if (p_uri.begins_with("res://")) {
-		WARN_PRINT("Attempting to open an URL with the \"res://\" protocol. Use `ProjectSettings.globalize_path()` to convert a Godot-specific path to a system path before opening it with `OS.shell_open()`.");
+		WARN_PRINT("Attempting to open an URL with the \"res://\" protocol. Use `ProjectSettings.globalize_path()` to convert a Redot-specific path to a system path before opening it with `OS.shell_open()`.");
 	} else if (p_uri.begins_with("user://")) {
-		WARN_PRINT("Attempting to open an URL with the \"user://\" protocol. Use `ProjectSettings.globalize_path()` to convert a Godot-specific path to a system path before opening it with `OS.shell_open()`.");
+		WARN_PRINT("Attempting to open an URL with the \"user://\" protocol. Use `ProjectSettings.globalize_path()` to convert a Redot-specific path to a system path before opening it with `OS.shell_open()`.");
 	}
 	return ::OS::get_singleton()->shell_open(p_uri);
 }
 
 Error OS::shell_show_in_file_manager(const String &p_path, bool p_open_folder) {
 	if (p_path.begins_with("res://")) {
-		WARN_PRINT("Attempting to explore file path with the \"res://\" protocol. Use `ProjectSettings.globalize_path()` to convert a Godot-specific path to a system path before opening it with `OS.shell_show_in_file_manager()`.");
+		WARN_PRINT("Attempting to explore file path with the \"res://\" protocol. Use `ProjectSettings.globalize_path()` to convert a Redot-specific path to a system path before opening it with `OS.shell_show_in_file_manager()`.");
 	} else if (p_path.begins_with("user://")) {
-		WARN_PRINT("Attempting to explore file path with the \"user://\" protocol. Use `ProjectSettings.globalize_path()` to convert a Godot-specific path to a system path before opening it with `OS.shell_show_in_file_manager()`.");
+		WARN_PRINT("Attempting to explore file path with the \"user://\" protocol. Use `ProjectSettings.globalize_path()` to convert a Redot-specific path to a system path before opening it with `OS.shell_show_in_file_manager()`.");
 	}
 	return ::OS::get_singleton()->shell_show_in_file_manager(p_path, p_open_folder);
 }

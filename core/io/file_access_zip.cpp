@@ -2,11 +2,10 @@
 /*  file_access_zip.cpp                                                   */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -42,7 +41,7 @@ struct ZipData {
 	Ref<FileAccess> f;
 };
 
-static void *godot_open(voidpf opaque, const char *p_fname, int mode) {
+static void *redot_open(voidpf opaque, const char *p_fname, int mode) {
 	if (mode & ZLIB_FILEFUNC_MODE_WRITE) {
 		return nullptr;
 	}
@@ -55,22 +54,22 @@ static void *godot_open(voidpf opaque, const char *p_fname, int mode) {
 	return zd;
 }
 
-static uLong godot_read(voidpf opaque, voidpf stream, void *buf, uLong size) {
+static uLong redot_read(voidpf opaque, voidpf stream, void *buf, uLong size) {
 	ZipData *zd = (ZipData *)stream;
 	zd->f->get_buffer((uint8_t *)buf, size);
 	return size;
 }
 
-static uLong godot_write(voidpf opaque, voidpf stream, const void *buf, uLong size) {
+static uLong redot_write(voidpf opaque, voidpf stream, const void *buf, uLong size) {
 	return 0;
 }
 
-static long godot_tell(voidpf opaque, voidpf stream) {
+static long redot_tell(voidpf opaque, voidpf stream) {
 	ZipData *zd = (ZipData *)stream;
 	return zd->f->get_position();
 }
 
-static long godot_seek(voidpf opaque, voidpf stream, uLong offset, int origin) {
+static long redot_seek(voidpf opaque, voidpf stream, uLong offset, int origin) {
 	ZipData *zd = (ZipData *)stream;
 
 	uint64_t pos = offset;
@@ -89,22 +88,22 @@ static long godot_seek(voidpf opaque, voidpf stream, uLong offset, int origin) {
 	return 0;
 }
 
-static int godot_close(voidpf opaque, voidpf stream) {
+static int redot_close(voidpf opaque, voidpf stream) {
 	ZipData *zd = (ZipData *)stream;
 	memdelete(zd);
 	return 0;
 }
 
-static int godot_testerror(voidpf opaque, voidpf stream) {
+static int redot_testerror(voidpf opaque, voidpf stream) {
 	ZipData *zd = (ZipData *)stream;
 	return zd->f->get_error() != OK ? 1 : 0;
 }
 
-static voidpf godot_alloc(voidpf opaque, uInt items, uInt size) {
+static voidpf redot_alloc(voidpf opaque, uInt items, uInt size) {
 	return memalloc((size_t)items * size);
 }
 
-static void godot_free(voidpf opaque, voidpf address) {
+static void redot_free(voidpf opaque, voidpf address) {
 	memfree(address);
 }
 } // extern "C"
@@ -123,17 +122,17 @@ unzFile ZipArchive::get_file_handle(const String &p_file) const {
 	memset(&io, 0, sizeof(io));
 
 	io.opaque = nullptr;
-	io.zopen_file = godot_open;
-	io.zread_file = godot_read;
-	io.zwrite_file = godot_write;
+	io.zopen_file = redot_open;
+	io.zread_file = redot_read;
+	io.zwrite_file = redot_write;
 
-	io.ztell_file = godot_tell;
-	io.zseek_file = godot_seek;
-	io.zclose_file = godot_close;
-	io.zerror_file = godot_testerror;
+	io.ztell_file = redot_tell;
+	io.zseek_file = redot_seek;
+	io.zclose_file = redot_close;
+	io.zerror_file = redot_testerror;
 
-	io.alloc_mem = godot_alloc;
-	io.free_mem = godot_free;
+	io.alloc_mem = redot_alloc;
+	io.free_mem = redot_free;
 
 	unzFile pkg = unzOpen2(packages[file.package].filename.utf8().get_data(), &io);
 	ERR_FAIL_NULL_V_MSG(pkg, nullptr, "Cannot open file '" + packages[file.package].filename + "'.");
@@ -158,14 +157,14 @@ bool ZipArchive::try_open_pack(const String &p_path, bool p_replace_files, uint6
 	memset(&io, 0, sizeof(io));
 
 	io.opaque = nullptr;
-	io.zopen_file = godot_open;
-	io.zread_file = godot_read;
-	io.zwrite_file = godot_write;
+	io.zopen_file = redot_open;
+	io.zread_file = redot_read;
+	io.zwrite_file = redot_write;
 
-	io.ztell_file = godot_tell;
-	io.zseek_file = godot_seek;
-	io.zclose_file = godot_close;
-	io.zerror_file = godot_testerror;
+	io.ztell_file = redot_tell;
+	io.zseek_file = redot_seek;
+	io.zclose_file = redot_close;
+	io.zerror_file = redot_testerror;
 
 	unzFile zfile = unzOpen2(p_path.utf8().get_data(), &io);
 	ERR_FAIL_NULL_V(zfile, false);

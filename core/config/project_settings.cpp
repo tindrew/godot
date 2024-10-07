@@ -2,11 +2,10 @@
 /*  project_settings.cpp                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -49,7 +48,7 @@
 #include "modules/modules_enabled.gen.h" // For mono.
 #endif // TOOLS_ENABLED
 
-const String ProjectSettings::PROJECT_DATA_DIR_NAME_SUFFIX = "godot";
+const String ProjectSettings::PROJECT_DATA_DIR_NAME_SUFFIX = "redot";
 
 ProjectSettings *ProjectSettings::singleton = nullptr;
 
@@ -74,7 +73,7 @@ String ProjectSettings::get_imported_files_path() const {
 }
 
 #ifdef TOOLS_ENABLED
-// Returns the features that a project must have when opened with this build of Godot.
+// Returns the features that a project must have when opened with this build of Redot.
 // This is used by the project manager to provide the initial_settings for config/features.
 const PackedStringArray ProjectSettings::get_required_features() {
 	PackedStringArray features;
@@ -85,7 +84,7 @@ const PackedStringArray ProjectSettings::get_required_features() {
 	return features;
 }
 
-// Returns the features supported by this build of Godot. Includes all required features.
+// Returns the features supported by this build of Redot. Includes all required features.
 const PackedStringArray ProjectSettings::_get_supported_features() {
 	PackedStringArray features = get_required_features();
 #ifdef MODULE_MONO_ENABLED
@@ -108,7 +107,7 @@ const PackedStringArray ProjectSettings::_get_supported_features() {
 	return features;
 }
 
-// Returns the features that this project needs but this build of Godot lacks.
+// Returns the features that this project needs but this build of Redot lacks.
 const PackedStringArray ProjectSettings::get_unsupported_features(const PackedStringArray &p_project_features) {
 	PackedStringArray unsupported_features;
 	PackedStringArray supported_features = singleton->_get_supported_features();
@@ -125,7 +124,7 @@ const PackedStringArray ProjectSettings::get_unsupported_features(const PackedSt
 	return unsupported_features;
 }
 
-// Returns the features that both this project has and this build of Godot has, ensuring required features exist.
+// Returns the features that both this project has and this build of Redot has, ensuring required features exist.
 const PackedStringArray ProjectSettings::_trim_to_supported_features(const PackedStringArray &p_project_features) {
 	// Remove unsupported features if present.
 	PackedStringArray features = PackedStringArray(p_project_features);
@@ -511,7 +510,7 @@ void ProjectSettings::_convert_to_last_version(int p_from_version) {
 }
 
 /*
- * This method is responsible for loading a project.godot file and/or data file
+ * This method is responsible for loading a project.redot file and/or data file
  * using the following merit order:
  *  - If using NetworkClient, try to lookup project file or fail.
  *  - If --main-pack was passed by the user (`p_main_pack`), load it or fail.
@@ -551,7 +550,7 @@ Error ProjectSettings::_setup(const String &p_path, const String &p_main_pack, b
 		bool ok = _load_resource_pack(p_main_pack);
 		ERR_FAIL_COND_V_MSG(!ok, ERR_CANT_OPEN, "Cannot open resource pack '" + p_main_pack + "'.");
 
-		Error err = _load_settings_text_or_binary("res://project.godot", "res://project.binary");
+		Error err = _load_settings_text_or_binary("res://project.redot", "res://project.binary");
 		if (err == OK && !p_ignore_override) {
 			// Load override from location of the main pack
 			// Optional, we don't mind if it fails
@@ -570,7 +569,7 @@ Error ProjectSettings::_setup(const String &p_path, const String &p_main_pack, b
 		bool found = _load_resource_pack(exec_path);
 
 		// Attempt with exec_name.pck.
-		// (This is the usual case when distributing a Godot game.)
+		// (This is the usual case when distributing a Redot game.)
 		String exec_dir = exec_path.get_base_dir();
 		String exec_filename = exec_path.get_file();
 		String exec_basename = exec_filename.get_basename();
@@ -601,7 +600,7 @@ Error ProjectSettings::_setup(const String &p_path, const String &p_main_pack, b
 
 		// If we opened our package, try and load our project.
 		if (found) {
-			Error err = _load_settings_text_or_binary("res://project.godot", "res://project.binary");
+			Error err = _load_settings_text_or_binary("res://project.redot", "res://project.binary");
 			if (err == OK && !p_ignore_override) {
 				// Load overrides from the PCK and the executable location.
 				// Optional, we don't mind if either fails.
@@ -616,7 +615,7 @@ Error ProjectSettings::_setup(const String &p_path, const String &p_main_pack, b
 	// (Only Android -when reading from pck- and iOS use this.)
 
 	if (!OS::get_singleton()->get_resource_dir().is_empty()) {
-		Error err = _load_settings_text_or_binary("res://project.godot", "res://project.binary");
+		Error err = _load_settings_text_or_binary("res://project.redot", "res://project.binary");
 		if (err == OK && !p_ignore_override) {
 			// Optional, we don't mind if it fails.
 			_load_settings_text("res://override.cfg");
@@ -639,7 +638,7 @@ Error ProjectSettings::_setup(const String &p_path, const String &p_main_pack, b
 		// Set the resource path early so things can be resolved when loading.
 		resource_path = current_dir;
 		resource_path = resource_path.replace("\\", "/"); // Windows path to Unix path just in case.
-		err = _load_settings_text_or_binary(current_dir.path_join("project.godot"), current_dir.path_join("project.binary"));
+		err = _load_settings_text_or_binary(current_dir.path_join("project.redot"), current_dir.path_join("project.binary"));
 		if (err == OK && !p_ignore_override) {
 			// Optional, we don't mind if it fails.
 			_load_settings_text(current_dir.path_join("override.cfg"));
@@ -768,10 +767,10 @@ Error ProjectSettings::_load_settings_text(const String &p_path) {
 
 		err = VariantParser::parse_tag_assign_eof(&stream, lines, error_text, next_tag, assign, value, nullptr, true);
 		if (err == ERR_FILE_EOF) {
-			// If we're loading a project.godot from source code, we can operate some
+			// If we're loading a project.redot from source code, we can operate some
 			// ProjectSettings conversions if need be.
 			_convert_to_last_version(config_version);
-			last_save_time = FileAccess::get_modified_time(get_resource_path().path_join("project.godot"));
+			last_save_time = FileAccess::get_modified_time(get_resource_path().path_join("project.redot"));
 			return OK;
 		}
 		ERR_FAIL_COND_V_MSG(err != OK, err, "Error parsing " + p_path + " at line " + itos(lines) + ": " + error_text + " File might be corrupted.");
@@ -794,7 +793,7 @@ Error ProjectSettings::_load_settings_text(const String &p_path) {
 }
 
 Error ProjectSettings::_load_settings_text_or_binary(const String &p_text_path, const String &p_bin_path) {
-	// Attempt first to load the binary project.godot file.
+	// Attempt first to load the binary project.redot file.
 	Error err = _load_settings_binary(p_bin_path);
 	if (err == OK) {
 		return OK;
@@ -803,7 +802,7 @@ Error ProjectSettings::_load_settings_text_or_binary(const String &p_text_path, 
 		ERR_PRINT("Couldn't load file '" + p_bin_path + "', error code " + itos(err) + ".");
 	}
 
-	// Fallback to text-based project.godot file if binary was not found.
+	// Fallback to text-based project.redot file if binary was not found.
 	err = _load_settings_text(p_text_path);
 	if (err == OK) {
 		return OK;
@@ -850,9 +849,9 @@ void ProjectSettings::clear(const String &p_name) {
 }
 
 Error ProjectSettings::save() {
-	Error error = save_custom(get_resource_path().path_join("project.godot"));
+	Error error = save_custom(get_resource_path().path_join("project.redot"));
 	if (error == OK) {
-		last_save_time = FileAccess::get_modified_time(get_resource_path().path_join("project.godot"));
+		last_save_time = FileAccess::get_modified_time(get_resource_path().path_join("project.redot"));
 	}
 	return error;
 }
@@ -930,7 +929,7 @@ Error ProjectSettings::_save_settings_text(const String &p_file, const RBMap<Str
 	Error err;
 	Ref<FileAccess> file = FileAccess::open(p_file, FileAccess::WRITE, &err);
 
-	ERR_FAIL_COND_V_MSG(err != OK, err, "Couldn't save project.godot - " + p_file + ".");
+	ERR_FAIL_COND_V_MSG(err != OK, err, "Couldn't save project.redot - " + p_file + ".");
 
 	file->store_line("; Engine configuration file.");
 	file->store_line("; It's best edited using the editor UI and not directly,");
@@ -1098,7 +1097,7 @@ Error ProjectSettings::save_custom(const String &p_path, const CustomMap &p_cust
 		save_features += f;
 	}
 
-	if (p_path.ends_with(".godot") || p_path.ends_with("override.cfg")) {
+	if (p_path.ends_with(".redot") || p_path.ends_with("override.cfg")) {
 		return _save_settings_text(p_path, save_props, p_custom, save_features);
 	} else if (p_path.ends_with(".binary")) {
 		return _save_settings_binary(p_path, save_props, p_custom, save_features);
@@ -1410,7 +1409,7 @@ void ProjectSettings::_add_builtin_input_map() {
 
 ProjectSettings::ProjectSettings() {
 	// Initialization of engine variables should be done in the setup() method,
-	// so that the values can be overridden from project.godot or project.binary.
+	// so that the values can be overridden from project.redot or project.binary.
 
 	CRASH_COND_MSG(singleton != nullptr, "Instantiating a new ProjectSettings singleton is not supported.");
 	singleton = this;
@@ -1418,7 +1417,7 @@ ProjectSettings::ProjectSettings() {
 #ifdef TOOLS_ENABLED
 	// Available only at runtime in editor builds. Needs to be processed before anything else to work properly.
 	if (!Engine::get_singleton()->is_editor_hint()) {
-		String editor_features = OS::get_singleton()->get_environment("GODOT_EDITOR_CUSTOM_FEATURES");
+		String editor_features = OS::get_singleton()->get_environment("redot_EDITOR_CUSTOM_FEATURES");
 		if (!editor_features.is_empty()) {
 			PackedStringArray feature_list = editor_features.split(",");
 			for (const String &s : feature_list) {
@@ -1513,7 +1512,7 @@ ProjectSettings::ProjectSettings() {
 	GLOBAL_DEF("debug/settings/crash_handler/message",
 			String("Please include this when reporting the bug to the project developer."));
 	GLOBAL_DEF("debug/settings/crash_handler/message.editor",
-			String("Please include this when reporting the bug on: https://github.com/godotengine/godot/issues"));
+			String("Please include this when reporting the bug on: https://github.com/redotengine/redot/issues"));
 	GLOBAL_DEF_RST(PropertyInfo(Variant::INT, "rendering/occlusion_culling/bvh_build_quality", PROPERTY_HINT_ENUM, "Low,Medium,High"), 2);
 	GLOBAL_DEF_RST("rendering/occlusion_culling/jitter_projection", true);
 
