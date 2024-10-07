@@ -215,12 +215,14 @@ EditorAbout::EditorAbout() {
 	// TRANSLATORS: This refers to a job title.
 	dev_sections.push_back(TTR("Project Manager", "Job Title"));
 	dev_sections.push_back(TTR("Developers"));
+/* TODO put in valid values later on
 	const char *const *dev_src[] = {
 		AUTHORS_FOUNDERS,
 		AUTHORS_LEAD_DEVELOPERS,
 		AUTHORS_PROJECT_MANAGERS,
 		AUTHORS_DEVELOPERS,
 	};
+
 	tc->add_child(_populate_list(TTR("Authors"), dev_sections, dev_src, 0b1)); // First section (Project Founders) is always one column.
 
 	// Donors.
@@ -245,7 +247,7 @@ EditorAbout::EditorAbout() {
 		DONORS_MEMBERS_GOLD,
 	};
 	tc->add_child(_populate_list(TTR("Donors"), donor_sections, donor_src, 0b1, true)); // First section (Patron) is one column.
-
+*/
 	// License.
 
 	license_text_label = memnew(RichTextLabel);

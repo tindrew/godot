@@ -154,12 +154,12 @@ static Array array_from_info_count(const char *const *info_list, int info_count)
 
 Dictionary Engine::get_author_info() const {
 	Dictionary dict;
-
+/*
 	dict["lead_developers"] = array_from_info(AUTHORS_LEAD_DEVELOPERS);
 	dict["project_managers"] = array_from_info(AUTHORS_PROJECT_MANAGERS);
 	dict["founders"] = array_from_info(AUTHORS_FOUNDERS);
 	dict["developers"] = array_from_info(AUTHORS_DEVELOPERS);
-
+*/
 	return dict;
 }
 
@@ -187,6 +187,7 @@ TypedArray<Dictionary> Engine::get_copyright_info() const {
 
 Dictionary Engine::get_donor_info() const {
 	Dictionary donors;
+/*
 	donors["patrons"] = array_from_info(DONORS_PATRONS);
 	donors["platinum_sponsors"] = array_from_info(DONORS_SPONSORS_PLATINUM);
 	donors["gold_sponsors"] = array_from_info(DONORS_SPONSORS_GOLD);
@@ -195,6 +196,7 @@ Dictionary Engine::get_donor_info() const {
 	donors["titanium_members"] = array_from_info(DONORS_MEMBERS_TITANIUM);
 	donors["platinum_members"] = array_from_info(DONORS_MEMBERS_PLATINUM);
 	donors["gold_members"] = array_from_info(DONORS_MEMBERS_GOLD);
+*/
 	return donors;
 }
 
