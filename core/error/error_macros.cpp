@@ -40,14 +40,6 @@
 #include "scene/main/node.h"
 #endif
 
-int repetitions_last_line = -1;
-const char *repetitions_last_function = NULL;
-// No need to initialize: by constructon, can never be checked if line/function don't match.
-char repetitions_last_message[256];
-int repetitions_last_message_count = 0;
-const int MAX_LOG_MESSAGE_REPETITIONS = 6;
-const char *REPETITIONS_WARNING_MESSAGE = "Last message repeated 6 times...";
-
 static ErrorHandlerList *error_handler_list = nullptr;
 
 void add_error_handler(ErrorHandlerList *p_handler) {
@@ -106,25 +98,6 @@ void _err_print_error(const char *p_function, const char *p_file, int p_line, co
 	}
 
 	_global_lock();
-
-	if (repetitions_last_line == p_line && repetitions_last_function == p_function && ::strcmp(p_message, repetitions_last_message) == 0) {
-		if (repetitions_last_message_count == MAX_LOG_MESSAGE_REPETITIONS) {
-			p_message = REPETITIONS_WARNING_MESSAGE;
-			repetitions_last_message_count += 1; // avoid rollover errors
-		} else if (repetitions_last_message_count < MAX_LOG_MESSAGE_REPETITIONS) {
-			repetitions_last_message_count += 1;
-		} else {
-			_global_unlock();
-			return;
-		}
-	} else {
-		repetitions_last_message_count = 0;
-		repetitions_last_line = p_line;
-		repetitions_last_function = p_function;
-		// The message memory lifetime may end after this call.
-		::strncpy(repetitions_last_message, p_message, sizeof(repetitions_last_message));
-	}
-
 	ErrorHandlerList *l = error_handler_list;
 	while (l) {
 		l->errfunc(l->userdata, p_function, p_file, p_line, p_error, p_message, p_editor_notify, p_type);
