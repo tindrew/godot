@@ -125,8 +125,8 @@
 		</member>
 		<member name="billboard_mode" type="int" setter="set_billboard_mode" getter="get_billboard_mode" enum="BaseMaterial3D.BillboardMode" default="0">
 			Controls how the object faces the camera. See [enum BillboardMode].
-			[b]Note:[/b] When billboarding is enabled and the material also casts shadows, billboards will face [b]the[/b] camera in the scene when rendering shadows. In scenes with multiple cameras, the intended shadow cannot be determined and this will result in undefined behavior. See [url=https://github.com/godotengine/godot/pull/72638]GitHub Pull Request #72638[/url] for details.
-			[b]Note:[/b] Billboard mode is not suitable for VR because the left-right vector of the camera is not horizontal when the screen is attached to your head instead of on the table. See [url=https://github.com/godotengine/godot/issues/41567]GitHub issue #41567[/url] for details.
+			[b]Note:[/b] When billboarding is enabled and the material also casts shadows, billboards will face [b]the[/b] camera in the scene when rendering shadows. In scenes with multiple cameras, the intended shadow cannot be determined and this will result in undefined behavior. See [url=https://github.com/redotengine/redot/pull/72638]GitHub Pull Request #72638[/url] for details.
+			[b]Note:[/b] Billboard mode is not suitable for VR because the left-right vector of the camera is not horizontal when the screen is attached to your head instead of on the table. See [url=https://github.com/redotengine/redot/issues/41567]GitHub issue #41567[/url] for details.
 		</member>
 		<member name="blend_mode" type="int" setter="set_blend_mode" getter="get_blend_mode" enum="BaseMaterial3D.BlendMode" default="0">
 			The material's blend mode.
@@ -166,7 +166,7 @@
 		</member>
 		<member name="detail_normal" type="Texture2D" setter="set_texture" getter="get_texture">
 			Texture that specifies the per-pixel normal of the detail overlay. The [member detail_normal] texture only uses the red and green channels; the blue and alpha channels are ignored. The normal read from [member detail_normal] is oriented around the surface normal provided by the [Mesh].
-			[b]Note:[/b] Godot expects the normal map to use X+, Y+, and Z+ coordinates. See [url=http://wiki.polycount.com/wiki/Normal_Map_Technical_Details#Common_Swizzle_Coordinates]this page[/url] for a comparison of normal map coordinates expected by popular engines.
+			[b]Note:[/b] Redot expects the normal map to use X+, Y+, and Z+ coordinates. See [url=http://wiki.polycount.com/wiki/Normal_Map_Technical_Details#Common_Swizzle_Coordinates]this page[/url] for a comparison of normal map coordinates expected by popular engines.
 		</member>
 		<member name="detail_uv_layer" type="int" setter="set_detail_uv" getter="get_detail_uv" enum="BaseMaterial3D.DetailUV" default="0">
 			Specifies whether to use [code]UV[/code] or [code]UV2[/code] for the detail layer. See [enum DetailUV] for options.
@@ -240,7 +240,7 @@
 		</member>
 		<member name="heightmap_flip_texture" type="bool" setter="set_flag" getter="get_flag" default="false">
 			If [code]true[/code], interprets the height map texture as a depth map, with brighter values appearing to be "lower" in altitude compared to darker values.
-			This can be enabled for compatibility with some materials authored for Godot 3.x. This is not necessary if the Invert import option was used to invert the depth map in Godot 3.x, in which case [member heightmap_flip_texture] should remain [code]false[/code].
+			This can be enabled for compatibility with some materials authored for Redot 3.x. This is not necessary if the Invert import option was used to invert the depth map in Redot 3.x, in which case [member heightmap_flip_texture] should remain [code]false[/code].
 		</member>
 		<member name="heightmap_max_layers" type="int" setter="set_heightmap_deep_parallax_max_layers" getter="get_heightmap_deep_parallax_max_layers">
 			The number of layers to use for parallax occlusion mapping when the camera is up close to the material. Higher values result in a more convincing depth effect, especially in materials that have steep height changes. Higher values have a significant cost on the GPU, so it should only be increased on materials where it makes a significant visual difference.
@@ -290,7 +290,7 @@
 		<member name="normal_texture" type="Texture2D" setter="set_texture" getter="get_texture">
 			Texture used to specify the normal at a given pixel. The [member normal_texture] only uses the red and green channels; the blue and alpha channels are ignored. The normal read from [member normal_texture] is oriented around the surface normal provided by the [Mesh].
 			[b]Note:[/b] The mesh must have both normals and tangents defined in its vertex data. Otherwise, the normal map won't render correctly and will only appear to darken the whole surface. If creating geometry with [SurfaceTool], you can use [method SurfaceTool.generate_normals] and [method SurfaceTool.generate_tangents] to automatically generate normals and tangents respectively.
-			[b]Note:[/b] Godot expects the normal map to use X+, Y+, and Z+ coordinates. See [url=http://wiki.polycount.com/wiki/Normal_Map_Technical_Details#Common_Swizzle_Coordinates]this page[/url] for a comparison of normal map coordinates expected by popular engines.
+			[b]Note:[/b] Redot expects the normal map to use X+, Y+, and Z+ coordinates. See [url=http://wiki.polycount.com/wiki/Normal_Map_Technical_Details#Common_Swizzle_Coordinates]this page[/url] for a comparison of normal map coordinates expected by popular engines.
 			[b]Note:[/b] If [member detail_enabled] is [code]true[/code], the [member detail_albedo] texture is drawn [i]below[/i] the [member normal_texture]. To display a normal map [i]above[/i] the [member detail_albedo] texture, use [member detail_normal] instead.
 		</member>
 		<member name="orm_texture" type="Texture2D" setter="set_texture" getter="get_texture">

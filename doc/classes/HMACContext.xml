@@ -25,7 +25,7 @@
 
 		[/gdscript]
 		[csharp]
-		using Godot;
+		using Redot;
 		using System.Diagnostics;
 
 		public partial class MyNode : Node

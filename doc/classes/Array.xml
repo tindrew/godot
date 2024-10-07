@@ -17,7 +17,7 @@
 		print(array[-3]) # Prints "Second"
 		[/gdscript]
 		[csharp]
-		var array = new Godot.Collections.Array{"First", 2, 3, "Last"};
+		var array = new Redot.Collections.Array{"First", 2, 3, "Last"};
 		GD.Print(array[0]); // Prints "First"
 		GD.Print(array[2]); // Prints 3
 		GD.Print(array[array.Count - 1]); // Prints "Last"
@@ -184,16 +184,16 @@
 				public override void _Ready()
 				{
 				    // Prints true (3/3 elements evaluate to true).
-				    GD.Print(new Godot.Collections.Array&gt;int&lt; { 6, 10, 6 }.All(GreaterThan5));
+				    GD.Print(new Redot.Collections.Array&gt;int&lt; { 6, 10, 6 }.All(GreaterThan5));
 				    // Prints false (1/3 elements evaluate to true).
-				    GD.Print(new Godot.Collections.Array&gt;int&lt; { 4, 10, 4 }.All(GreaterThan5));
+				    GD.Print(new Redot.Collections.Array&gt;int&lt; { 4, 10, 4 }.All(GreaterThan5));
 				    // Prints false (0/3 elements evaluate to true).
-				    GD.Print(new Godot.Collections.Array&gt;int&lt; { 4, 4, 4 }.All(GreaterThan5));
+				    GD.Print(new Redot.Collections.Array&gt;int&lt; { 4, 4, 4 }.All(GreaterThan5));
 				    // Prints true (0/0 elements evaluate to true).
-				    GD.Print(new Godot.Collections.Array&gt;int&lt; { }.All(GreaterThan5));
+				    GD.Print(new Redot.Collections.Array&gt;int&lt; { }.All(GreaterThan5));
 
 				    // Same as the first line above, but using a lambda function.
-				    GD.Print(new Godot.Collections.Array&gt;int&lt; { 6, 10, 6 }.All(element =&gt; element &gt; 5)); // Prints true
+				    GD.Print(new Redot.Collections.Array&gt;int&lt; { 6, 10, 6 }.All(element =&gt; element &gt; 5)); // Prints true
 				}
 				[/csharp]
 				[/codeblocks]
@@ -358,7 +358,7 @@
 				print(array) # Prints [2, 2, 2, 2, 2]
 				[/gdscript]
 				[csharp]
-				var array = new Godot.Collections.Array();
+				var array = new Redot.Collections.Array();
 				array.Resize(5);
 				array.Fill(2);
 				GD.Print(array); // Prints [2, 2, 2, 2, 2]
@@ -460,7 +460,7 @@
 				print(["inside", 7].has("7"))       # Prints false
 				[/gdscript]
 				[csharp]
-				var arr = new Godot.Collections.Array { "inside", 7 };
+				var arr = new Redot.Collections.Array { "inside", 7 };
 				// By C# convention, this method is renamed to `Contains`.
 				GD.Print(arr.Contains("inside"));  // Prints true
 				GD.Print(arr.Contains("outside")); // Prints false
@@ -573,7 +573,7 @@
 				print([1, 2, 3.25, "Hi"].pick_random())
 				[/gdscript]
 				[csharp]
-				var array = new Godot.Collections.Array { 1, 2, 3.25f, "Hi" };
+				var array = new Redot.Collections.Array { 1, 2, 3.25f, "Hi" };
 				GD.Print(array.PickRandom()); // May print 1, 2, 3.25, or "Hi".
 				[/csharp]
 				[/codeblocks]
@@ -755,7 +755,7 @@
 				print(numbers) # Prints [2.5, 5, 8, 10]
 				[/gdscript]
 				[csharp]
-				var numbers = new Godot.Collections.Array { 10, 5, 2.5, 8 };
+				var numbers = new Redot.Collections.Array { 10, 5, 2.5, 8 };
 				numbers.Sort();
 				GD.Print(numbers); // Prints [2.5, 5, 8, 10]
 				[/csharp]
@@ -817,8 +817,8 @@
 				[/gdscript]
 				[csharp]
 				// Note that concatenation is not possible with C#'s native Array type.
-				var array1 = new Godot.Collections.Array{"One", 2};
-				var array2 = new Godot.Collections.Array{3, "Four"};
+				var array1 = new Redot.Collections.Array{"One", 2};
+				var array2 = new Redot.Collections.Array{3, "Four"};
 				GD.Print(array1 + array2); // Prints ["One", 2, 3, "Four"]
 				[/csharp]
 				[/codeblocks]

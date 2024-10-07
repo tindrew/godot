@@ -38,7 +38,7 @@
 		assert(data.to_utf8_buffer() == decrypted)
 		[/gdscript]
 		[csharp]
-		using Godot;
+		using Redot;
 		using System.Diagnostics;
 
 		Crypto crypto = new Crypto();

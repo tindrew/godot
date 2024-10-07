@@ -34,12 +34,12 @@
 			The [url=https://en.wikipedia.org/wiki/Uniform_Resource_Identifier]URI[/url] for this [LinkButton]. If set to a valid URI, pressing the button opens the URI using the operating system's default program for the protocol (via [method OS.shell_open]). HTTP and HTTPS URLs open the default web browser.
 			[codeblocks]
 			[gdscript]
-			uri = "https://godotengine.org"  # Opens the URL in the default web browser.
+			uri = "https://redotengine.org"  # Opens the URL in the default web browser.
 			uri = "C:\SomeFolder"  # Opens the file explorer at the given path.
 			uri = "C:\SomeImage.png"  # Opens the given image in the default viewing app.
 			[/gdscript]
 			[csharp]
-			Uri = "https://godotengine.org"; // Opens the URL in the default web browser.
+			Uri = "https://redotengine.org"; // Opens the URL in the default web browser.
 			Uri = "C:\SomeFolder"; // Opens the file explorer at the given path.
 			Uri = "C:\SomeImage.png"; // Opens the given image in the default viewing app.
 			[/csharp]

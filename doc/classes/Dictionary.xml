@@ -29,8 +29,8 @@
 		}
 		[/gdscript]
 		[csharp]
-		var myDict = new Godot.Collections.Dictionary(); // Creates an empty dictionary.
-		var pointsDict = new Godot.Collections.Dictionary
+		var myDict = new Redot.Collections.Dictionary(); // Creates an empty dictionary.
+		var pointsDict = new Redot.Collections.Dictionary
 		{
 		    {"White", 50},
 		    {"Yellow", 75},
@@ -50,7 +50,7 @@
 		[csharp]
 		[Export(PropertyHint.Enum, "White,Yellow,Orange")]
 		public string MyColor { get; set; }
-		private Godot.Collections.Dictionary _pointsDict = new Godot.Collections.Dictionary
+		private Redot.Collections.Dictionary _pointsDict = new Redot.Collections.Dictionary
 		{
 		    {"White", 50},
 		    {"Yellow", 75},
@@ -72,9 +72,9 @@
 		}
 		[/gdscript]
 		[csharp]
-		var myDict = new Godot.Collections.Dictionary
+		var myDict = new Redot.Collections.Dictionary
 		{
-		    {"First Array", new Godot.Collections.Array{1, 2, 3, 4}}
+		    {"First Array", new Redot.Collections.Array{1, 2, 3, 4}}
 		};
 		[/csharp]
 		[/codeblocks]
@@ -85,7 +85,7 @@
 		points_dict["Blue"] = 150 # Add "Blue" as a key and assign 150 as its value.
 		[/gdscript]
 		[csharp]
-		var pointsDict = new Godot.Collections.Dictionary
+		var pointsDict = new Redot.Collections.Dictionary
 		{
 		    {"White", 50},
 		    {"Yellow", 75},
@@ -109,12 +109,12 @@
 		[/gdscript]
 		[csharp]
 		// This is a valid dictionary.
-		// To access the string "Nested value" below, use `((Godot.Collections.Dictionary)myDict["sub_dict"])["sub_key"]`.
-		var myDict = new Godot.Collections.Dictionary {
+		// To access the string "Nested value" below, use `((Redot.Collections.Dictionary)myDict["sub_dict"])["sub_key"]`.
+		var myDict = new Redot.Collections.Dictionary {
 		    {"String Key", 5},
-		    {4, new Godot.Collections.Array{1,2,3}},
+		    {4, new Redot.Collections.Array{1,2,3}},
 		    {7, "Hello"},
-		    {"sub_dict", new Godot.Collections.Dictionary{{"sub_key", "Nested value"}}}
+		    {"sub_dict", new Redot.Collections.Dictionary{{"sub_key", "Nested value"}}}
 		};
 		[/csharp]
 		[/codeblocks]
@@ -126,7 +126,7 @@
 		    var amount = groceries[fruit]
 		[/gdscript]
 		[csharp]
-		var groceries = new Godot.Collections.Dictionary{{"Orange", 20}, {"Apple", 2}, {"Banana", 4}};
+		var groceries = new Redot.Collections.Dictionary{{"Orange", 20}, {"Apple", 2}, {"Banana", 4}};
 		foreach (var (fruit, amount) in groceries)
 		{
 		    // `fruit` is the key, `amount` is the value.
@@ -138,8 +138,8 @@
 	</description>
 	<tutorials>
 		<link title="GDScript basics: Dictionary">$DOCS_URL/tutorials/scripting/gdscript/gdscript_basics.html#dictionary</link>
-		<link title="3D Voxel Demo">https://godotengine.org/asset-library/asset/2755</link>
-		<link title="Operating System Testing Demo">https://godotengine.org/asset-library/asset/2789</link>
+		<link title="3D Voxel Demo">https://redotengine.org/asset-library/asset/2755</link>
+		<link title="Operating System Testing Demo">https://redotengine.org/asset-library/asset/2789</link>
 	</tutorials>
 	<constructors>
 		<constructor name="Dictionary">
@@ -266,29 +266,29 @@
 				[codeblocks]
 				[gdscript]
 				var my_dict = {
-				    "Godot" : 4,
+				    "Redot" : 4,
 				    210 : null,
 				}
 
-				print(my_dict.has("Godot")) # Prints true
+				print(my_dict.has("Redot")) # Prints true
 				print(my_dict.has(210))     # Prints true
 				print(my_dict.has(4))       # Prints false
 				[/gdscript]
 				[csharp]
-				var myDict = new Godot.Collections.Dictionary
+				var myDict = new Redot.Collections.Dictionary
 				{
-				    { "Godot", 4 },
+				    { "Redot", 4 },
 				    { 210, default },
 				};
 
-				GD.Print(myDict.ContainsKey("Godot")); // Prints true
+				GD.Print(myDict.ContainsKey("Redot")); // Prints true
 				GD.Print(myDict.ContainsKey(210));     // Prints true
 				GD.Print(myDict.ContainsKey(4));       // Prints false
 				[/csharp]
 				[/codeblocks]
 				In GDScript, this is equivalent to the [code]in[/code] operator:
 				[codeblock]
-				if "Godot" in {"Godot": 4}:
+				if "Redot" in {"Redot": 4}:
 				    print("The key is here!") # Will be printed.
 				[/codeblock]
 				[b]Note:[/b] This method returns [code]true[/code] as long as the [param key] exists, even if its corresponding value is [code]null[/code].
@@ -317,10 +317,10 @@
 				print(dict1.hash() == dict2.hash()) # Prints true
 				[/gdscript]
 				[csharp]
-				var dict1 = new Godot.Collections.Dictionary{{"A", 10}, {"B", 2}};
-				var dict2 = new Godot.Collections.Dictionary{{"A", 10}, {"B", 2}};
+				var dict1 = new Redot.Collections.Dictionary{{"A", 10}, {"B", 2}};
+				var dict2 = new Redot.Collections.Dictionary{{"A", 10}, {"B", 2}};
 
-				// Godot.Collections.Dictionary has no Hash() method. Use GD.Hash() instead.
+				// Redot.Collections.Dictionary has no Hash() method. Use GD.Hash() instead.
 				GD.Print(GD.Hash(dict1) == GD.Hash(dict2)); // Prints true
 				[/csharp]
 				[/codeblocks]
@@ -411,13 +411,13 @@
 				print(dict)  # { "item": "sword", "quantity": 15, "color": "silver" }
 				[/gdscript]
 				[csharp]
-				var dict = new Godot.Collections.Dictionary
+				var dict = new Redot.Collections.Dictionary
 				{
 				    ["item"] = "sword",
 				    ["quantity"] = 2,
 				};
 
-				var otherDict = new Godot.Collections.Dictionary
+				var otherDict = new Redot.Collections.Dictionary
 				{
 				    ["quantity"] = 15,
 				    ["color"] = "silver",

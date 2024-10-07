@@ -9,7 +9,7 @@
 		See also [AudioStreamGenerator] for procedurally generating sounds.
 	</description>
 	<tutorials>
-		<link title="Audio Spectrum Visualizer Demo">https://godotengine.org/asset-library/asset/2762</link>
+		<link title="Audio Spectrum Visualizer Demo">https://redotengine.org/asset-library/asset/2762</link>
 	</tutorials>
 	<members>
 		<member name="buffer_length" type="float" setter="set_buffer_length" getter="get_buffer_length" default="2.0">

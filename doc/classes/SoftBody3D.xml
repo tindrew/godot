@@ -110,7 +110,7 @@
 		</member>
 		<member name="drag_coefficient" type="float" setter="set_drag_coefficient" getter="get_drag_coefficient" default="0.0">
 			The body's drag coefficient. Higher values increase this body's air resistance.
-			[b]Note:[/b] This value is currently unused by Godot's default physics implementation.
+			[b]Note:[/b] This value is currently unused by Redot's default physics implementation.
 		</member>
 		<member name="linear_stiffness" type="float" setter="set_linear_stiffness" getter="get_linear_stiffness" default="0.5">
 			Higher values will result in a stiffer body, while lower values will increase the body's ability to bend. The value can be between [code]0.0[/code] and [code]1.0[/code] (inclusive).

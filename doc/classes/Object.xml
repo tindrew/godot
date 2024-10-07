@@ -5,11 +5,11 @@
 	</brief_description>
 	<description>
 		An advanced [Variant] type. All classes in the engine inherit from Object. Each class may define new properties, methods or signals, which are available to all inheriting classes. For example, a [Sprite2D] instance is able to call [method Node.add_child] because it inherits from [Node].
-		You can create new instances, using [code]Object.new()[/code] in GDScript, or [code]new GodotObject[/code] in C#.
+		You can create new instances, using [code]Object.new()[/code] in GDScript, or [code]new RedotObject[/code] in C#.
 		To delete an Object instance, call [method free]. This is necessary for most classes inheriting Object, because they do not manage memory on their own, and will otherwise cause memory leaks when no longer in use. There are a few classes that perform memory management. For example, [RefCounted] (and by extension [Resource]) deletes itself when no longer referenced, and [Node] deletes its children when freed.
 		Objects can have a [Script] attached to them. Once the [Script] is instantiated, it effectively acts as an extension to the base class, allowing it to define and inherit new properties, methods and signals.
 		Inside a [Script], [method _get_property_list] may be overridden to customize properties in several ways. This allows them to be available to the editor, display as lists of options, sub-divide into groups, save on disk, etc. Scripting languages offer easier ways to customize properties, such as with the [annotation @GDScript.@export] annotation.
-		Godot is very dynamic. An object's script, and therefore its properties, methods and signals, can be changed at run-time. Because of this, there can be occasions where, for example, a property required by a method may not exist. To prevent run-time errors, see methods such as [method set], [method get], [method call], [method has_method], [method has_signal], etc. Note that these methods are [b]much[/b] slower than direct references.
+		Redot is very dynamic. An object's script, and therefore its properties, methods and signals, can be changed at run-time. Because of this, there can be occasions where, for example, a property required by a method may not exist. To prevent run-time errors, see methods such as [method set], [method get], [method call], [method has_method], [method has_signal], etc. Note that these methods are [b]much[/b] slower than direct references.
 		In GDScript, you can also check if a given property, method, or signal name exists in an object with the [code]in[/code] operator:
 		[codeblock]
 		var node = Node.new()
@@ -26,7 +26,7 @@
 	<tutorials>
 		<link title="Object class introduction">$DOCS_URL/contributing/development/core_and_modules/object_class.html</link>
 		<link title="When and how to avoid using nodes for everything">$DOCS_URL/tutorials/best_practices/node_alternatives.html</link>
-		<link title="Object notifications">$DOCS_URL/tutorials/best_practices/godot_notifications.html</link>
+		<link title="Object notifications">$DOCS_URL/tutorials/best_practices/redot_notifications.html</link>
 	</tutorials>
 	<methods>
 		<method name="_get" qualifiers="virtual">
@@ -58,11 +58,11 @@
 				    return default;
 				}
 
-				public override Godot.Collections.Array&lt;Godot.Collections.Dictionary&gt; _GetPropertyList()
+				public override Redot.Collections.Array&lt;Redot.Collections.Dictionary&gt; _GetPropertyList()
 				{
-				    return new Godot.Collections.Array&lt;Godot.Collections.Dictionary&gt;()
+				    return new Redot.Collections.Array&lt;Redot.Collections.Dictionary&gt;()
 				    {
-				        new Godot.Collections.Dictionary()
+				        new Redot.Collections.Dictionary()
 				        {
 				            { "name", "FakeProperty" },
 				            { "type", (int)Variant.Type.Int }
@@ -136,15 +136,15 @@
 				        }
 				    }
 
-				    private Godot.Collections.Array&lt;int&gt; _numbers = new();
+				    private Redot.Collections.Array&lt;int&gt; _numbers = new();
 
-				    public override Godot.Collections.Array&lt;Godot.Collections.Dictionary&gt; _GetPropertyList()
+				    public override Redot.Collections.Array&lt;Redot.Collections.Dictionary&gt; _GetPropertyList()
 				    {
-				        var properties = new Godot.Collections.Array&lt;Godot.Collections.Dictionary&gt;();
+				        var properties = new Redot.Collections.Array&lt;Redot.Collections.Dictionary&gt;();
 
 				        for (int i = 0; i &lt; _numberCount; i++)
 				        {
-				            properties.Add(new Godot.Collections.Dictionary()
+				            properties.Add(new Redot.Collections.Dictionary()
 				            {
 				                { "name", $"number_{i}" },
 				                { "type", (int)Variant.Type.Int },
@@ -188,7 +188,7 @@
 		<method name="_init" qualifiers="virtual">
 			<return type="void" />
 			<description>
-				Called when the object's script is instantiated, oftentimes after the object is initialized in memory (through [code]Object.new()[/code] in GDScript, or [code]new GodotObject[/code] in C#). It can be also defined to take in parameters. This method is similar to a constructor in most programming languages.
+				Called when the object's script is instantiated, oftentimes after the object is initialized in memory (through [code]Object.new()[/code] in GDScript, or [code]new RedotObject[/code] in C#). It can be also defined to take in parameters. This method is similar to a constructor in most programming languages.
 				[b]Note:[/b] If [method _init] is defined with [i]required[/i] parameters, the Object with script may only be created directly. If any other means (such as [method PackedScene.instantiate] or [method Node.duplicate]) are used, the script's initialization will fail.
 			</description>
 		</method>
@@ -305,7 +305,7 @@
 				    ]
 				[/gdscript]
 				[csharp]
-				private Godot.Collections.Dictionary _internalData = new Godot.Collections.Dictionary();
+				private Redot.Collections.Dictionary _internalData = new Redot.Collections.Dictionary();
 
 				public override bool _Set(StringName property, Variant value)
 				{
@@ -319,11 +319,11 @@
 				    return false;
 				}
 
-				public override Godot.Collections.Array&lt;Godot.Collections.Dictionary&gt; _GetPropertyList()
+				public override Redot.Collections.Array&lt;Redot.Collections.Dictionary&gt; _GetPropertyList()
 				{
-				    return new Godot.Collections.Array&lt;Godot.Collections.Dictionary&gt;()
+				    return new Redot.Collections.Array&lt;Redot.Collections.Dictionary&gt;()
 				    {
-				        new Godot.Collections.Dictionary()
+				        new Redot.Collections.Dictionary()
 				        {
 				            { "name", "FakeProperty" },
 				            { "type", (int)Variant.Type.Int }
@@ -340,11 +340,11 @@
 				Override this method to customize the return value of [method to_string], and therefore the object's representation as a [String].
 				[codeblock]
 				func _to_string():
-				    return "Welcome to Godot 4!"
+				    return "Welcome to Redot 4!"
 
 				func _init():
-				    print(self)       # Prints Welcome to Godot 4!"
-				    var a = str(self) # a is "Welcome to Godot 4!"
+				    print(self)       # Prints Welcome to Redot 4!"
+				    var a = str(self) # a is "Welcome to Redot 4!"
 				[/codeblock]
 			</description>
 		</method>
@@ -388,7 +388,7 @@
 				    [Export]
 				    public int Number { get; set; }
 
-				    public override void _ValidateProperty(Godot.Collections.Dictionary property)
+				    public override void _ValidateProperty(Redot.Collections.Dictionary property)
 				    {
 				        if (property["name"].AsStringName() == PropertyName.Number &amp;&amp; !IsNumberEditable)
 				        {
@@ -415,14 +415,14 @@
 				])
 				[/gdscript]
 				[csharp]
-				AddUserSignal("Hurt", new Godot.Collections.Array()
+				AddUserSignal("Hurt", new Redot.Collections.Array()
 				{
-				    new Godot.Collections.Dictionary()
+				    new Redot.Collections.Dictionary()
 				    {
 				        { "name", "damage" },
 				        { "type", (int)Variant.Type.Int }
 				    },
-				    new Godot.Collections.Dictionary()
+				    new Redot.Collections.Dictionary()
 				    {
 				        { "name", "source" },
 				        { "type", (int)Variant.Type.Object }
@@ -447,7 +447,7 @@
 				node.Call(Node3D.MethodName.Rotate, new Vector3(1f, 0f, 0f), 1.571f);
 				[/csharp]
 				[/codeblocks]
-				[b]Note:[/b] In C#, [param method] must be in snake_case when referring to built-in Godot methods. Prefer using the names exposed in the [code]MethodName[/code] class to avoid allocating a new [StringName] on each call.
+				[b]Note:[/b] In C#, [param method] must be in snake_case when referring to built-in Redot methods. Prefer using the names exposed in the [code]MethodName[/code] class to avoid allocating a new [StringName] on each call.
 			</description>
 		</method>
 		<method name="call_deferred" qualifiers="vararg">
@@ -468,7 +468,7 @@
 				[/csharp]
 				[/codeblocks]
 				See also [method Callable.call_deferred].
-				[b]Note:[/b] In C#, [param method] must be in snake_case when referring to built-in Godot methods. Prefer using the names exposed in the [code]MethodName[/code] class to avoid allocating a new [StringName] on each call.
+				[b]Note:[/b] In C#, [param method] must be in snake_case when referring to built-in Redot methods. Prefer using the names exposed in the [code]MethodName[/code] class to avoid allocating a new [StringName] on each call.
 				[b]Note:[/b] If you're looking to delay the function call by a frame, refer to the [signal SceneTree.process_frame] and [signal SceneTree.physics_frame] signals.
 				[codeblock]
 				var node = Node3D.new()
@@ -493,10 +493,10 @@
 				[/gdscript]
 				[csharp]
 				var node = new Node3D();
-				node.Callv(Node3D.MethodName.Rotate, new Godot.Collections.Array { new Vector3(1f, 0f, 0f), 1.571f });
+				node.Callv(Node3D.MethodName.Rotate, new Redot.Collections.Array { new Vector3(1f, 0f, 0f), 1.571f });
 				[/csharp]
 				[/codeblocks]
-				[b]Note:[/b] In C#, [param method] must be in snake_case when referring to built-in Godot methods. Prefer using the names exposed in the [code]MethodName[/code] class to avoid allocating a new [StringName] on each call.
+				[b]Note:[/b] In C#, [param method] must be in snake_case when referring to built-in Redot methods. Prefer using the names exposed in the [code]MethodName[/code] class to avoid allocating a new [StringName] on each call.
 			</description>
 		</method>
 		<method name="can_translate_messages" qualifiers="const">
@@ -521,7 +521,7 @@
 				A signal can only be connected once to the same [Callable]. If the signal is already connected, this method returns [constant ERR_INVALID_PARAMETER] and pushes an error message, unless the signal is connected with [constant CONNECT_REFERENCE_COUNTED]. To prevent this, use [method is_connected] first to check for existing connections.
 				If the [param callable]'s object is freed, the connection will be lost.
 				[b]Examples with recommended syntax:[/b]
-				Connecting signals is one of the most common operations in Godot and the API gives many options to do so, which are described further down. The code block below shows the recommended approach.
+				Connecting signals is one of the most common operations in Redot and the API gives many options to do so, which are described further down. The code block below shows the recommended approach.
 				[codeblocks]
 				[gdscript]
 				func _ready():
@@ -590,9 +590,9 @@
 				    var button = new Button();
 				    // Option 1: In C#, we can use signals as events and connect with this idiomatic syntax:
 				    button.ButtonDown += OnButtonDown;
-				    // Option 2: GodotObject.Connect() with a constructed Callable from a method group.
+				    // Option 2: RedotObject.Connect() with a constructed Callable from a method group.
 				    button.Connect(Button.SignalName.ButtonDown, Callable.From(OnButtonDown));
-				    // Option 3: GodotObject.Connect() with a constructed Callable using a target object and method name.
+				    // Option 3: RedotObject.Connect() with a constructed Callable using a target object and method name.
 				    button.Connect(Button.SignalName.ButtonDown, new Callable(this, MethodName.OnButtonDown));
 				}
 
@@ -669,7 +669,7 @@
 				EmitSignal(SignalName.GameOver);
 				[/csharp]
 				[/codeblocks]
-				[b]Note:[/b] In C#, [param signal] must be in snake_case when referring to built-in Godot signals. Prefer using the names exposed in the [code]SignalName[/code] class to avoid allocating a new [StringName] on each call.
+				[b]Note:[/b] In C#, [param signal] must be in snake_case when referring to built-in Redot signals. Prefer using the names exposed in the [code]SignalName[/code] class to avoid allocating a new [StringName] on each call.
 			</description>
 		</method>
 		<method name="free" keywords="delete, remove, kill, die">
@@ -695,7 +695,7 @@
 				var a = node.Get(Node2D.PropertyName.Rotation); // a is 1.5
 				[/csharp]
 				[/codeblocks]
-				[b]Note:[/b] In C#, [param property] must be in snake_case when referring to built-in Godot properties. Prefer using the names exposed in the [code]PropertyName[/code] class to avoid allocating a new [StringName] on each call.
+				[b]Note:[/b] In C#, [param property] must be in snake_case when referring to built-in Redot properties. Prefer using the names exposed in the [code]PropertyName[/code] class to avoid allocating a new [StringName] on each call.
 			</description>
 		</method>
 		<method name="get_class" qualifiers="const">
@@ -734,7 +734,7 @@
 				var b = node.GetIndexed("position:y"); // b is -10
 				[/csharp]
 				[/codeblocks]
-				[b]Note:[/b] In C#, [param property_path] must be in snake_case when referring to built-in Godot properties. Prefer using the names exposed in the [code]PropertyName[/code] class to avoid allocating a new [StringName] on each call.
+				[b]Note:[/b] In C#, [param property_path] must be in snake_case when referring to built-in Redot properties. Prefer using the names exposed in the [code]PropertyName[/code] class to avoid allocating a new [StringName] on each call.
 				[b]Note:[/b] This method does not support actual paths to nodes in the [SceneTree], only sub-property paths. In the context of nodes, use [method Node.get_node_and_resource] instead.
 			</description>
 		</method>
@@ -766,7 +766,7 @@
 			<param index="0" name="method" type="StringName" />
 			<description>
 				Returns the number of arguments of the given [param method] by name.
-				[b]Note:[/b] In C#, [param method] must be in snake_case when referring to built-in Godot methods. Prefer using the names exposed in the [code]MethodName[/code] class to avoid allocating a new [StringName] on each call.
+				[b]Note:[/b] In C#, [param method] must be in snake_case when referring to built-in Redot methods. Prefer using the names exposed in the [code]MethodName[/code] class to avoid allocating a new [StringName] on each call.
 			</description>
 		</method>
 		<method name="get_method_list" qualifiers="const">
@@ -792,7 +792,7 @@
 				- [code]hint[/code] is [i]how[/i] the property is meant to be edited (see [enum PropertyHint]);
 				- [code]hint_string[/code] depends on the hint (see [enum PropertyHint]);
 				- [code]usage[/code] is a combination of [enum PropertyUsageFlags].
-				[b]Note:[/b] In GDScript, all class members are treated as properties. In C# and GDExtension, it may be necessary to explicitly mark class members as Godot properties using decorators or attributes.
+				[b]Note:[/b] In GDScript, all class members are treated as properties. In C# and GDExtension, it may be necessary to explicitly mark class members as Redot properties using decorators or attributes.
 			</description>
 		</method>
 		<method name="get_script" qualifiers="const">
@@ -829,7 +829,7 @@
 			<param index="0" name="signal" type="StringName" />
 			<description>
 				Returns [code]true[/code] if any connection exists on the given [param signal] name.
-				[b]Note:[/b] In C#, [param signal] must be in snake_case when referring to built-in Godot methods. Prefer using the names exposed in the [code]SignalName[/code] class to avoid allocating a new [StringName] on each call.
+				[b]Note:[/b] In C#, [param signal] must be in snake_case when referring to built-in Redot methods. Prefer using the names exposed in the [code]SignalName[/code] class to avoid allocating a new [StringName] on each call.
 			</description>
 		</method>
 		<method name="has_meta" qualifiers="const">
@@ -846,7 +846,7 @@
 			<param index="0" name="method" type="StringName" />
 			<description>
 				Returns [code]true[/code] if the given [param method] name exists in the object.
-				[b]Note:[/b] In C#, [param method] must be in snake_case when referring to built-in Godot methods. Prefer using the names exposed in the [code]MethodName[/code] class to avoid allocating a new [StringName] on each call.
+				[b]Note:[/b] In C#, [param method] must be in snake_case when referring to built-in Redot methods. Prefer using the names exposed in the [code]MethodName[/code] class to avoid allocating a new [StringName] on each call.
 			</description>
 		</method>
 		<method name="has_signal" qualifiers="const">
@@ -854,7 +854,7 @@
 			<param index="0" name="signal" type="StringName" />
 			<description>
 				Returns [code]true[/code] if the given [param signal] name exists in the object.
-				[b]Note:[/b] In C#, [param signal] must be in snake_case when referring to built-in Godot methods. Prefer using the names exposed in the [code]SignalName[/code] class to avoid allocating a new [StringName] on each call.
+				[b]Note:[/b] In C#, [param signal] must be in snake_case when referring to built-in Redot methods. Prefer using the names exposed in the [code]SignalName[/code] class to avoid allocating a new [StringName] on each call.
 			</description>
 		</method>
 		<method name="has_user_signal" qualifiers="const">
@@ -898,7 +898,7 @@
 			<param index="1" name="callable" type="Callable" />
 			<description>
 				Returns [code]true[/code] if a connection exists between the given [param signal] name and [param callable].
-				[b]Note:[/b] In C#, [param signal] must be in snake_case when referring to built-in Godot methods. Prefer using the names exposed in the [code]SignalName[/code] class to avoid allocating a new [StringName] on each call.
+				[b]Note:[/b] In C#, [param signal] must be in snake_case when referring to built-in Redot methods. Prefer using the names exposed in the [code]SignalName[/code] class to avoid allocating a new [StringName] on each call.
 			</description>
 		</method>
 		<method name="is_queued_for_deletion" qualifiers="const">
@@ -930,10 +930,10 @@
 				player.SetScript(GD.Load("res://player.gd"));
 
 				player.Notification(NotificationEnterTree);
-				// The call order is GodotObject -&gt; Node -&gt; Node2D -&gt; player.gd.
+				// The call order is RedotObject -&gt; Node -&gt; Node2D -&gt; player.gd.
 
 				player.Notification(NotificationEnterTree, true);
-				// The call order is player.gd -&gt; Node2D -&gt; Node -&gt; GodotObject.
+				// The call order is player.gd -&gt; Node2D -&gt; Node -&gt; RedotObject.
 				[/csharp]
 				[/codeblocks]
 			</description>
@@ -994,7 +994,7 @@
 				GD.Print(node.GlobalScale); // Prints Vector2(8, 2.5)
 				[/csharp]
 				[/codeblocks]
-				[b]Note:[/b] In C#, [param property] must be in snake_case when referring to built-in Godot properties. Prefer using the names exposed in the [code]PropertyName[/code] class to avoid allocating a new [StringName] on each call.
+				[b]Note:[/b] In C#, [param property] must be in snake_case when referring to built-in Redot properties. Prefer using the names exposed in the [code]PropertyName[/code] class to avoid allocating a new [StringName] on each call.
 			</description>
 		</method>
 		<method name="set_block_signals">
@@ -1032,7 +1032,7 @@
 				GD.Print(node.Rotation); // Prints 3.0
 				[/csharp]
 				[/codeblocks]
-				[b]Note:[/b] In C#, [param property] must be in snake_case when referring to built-in Godot properties. Prefer using the names exposed in the [code]PropertyName[/code] class to avoid allocating a new [StringName] on each call.
+				[b]Note:[/b] In C#, [param property] must be in snake_case when referring to built-in Redot properties. Prefer using the names exposed in the [code]PropertyName[/code] class to avoid allocating a new [StringName] on each call.
 			</description>
 		</method>
 		<method name="set_indexed">
@@ -1055,7 +1055,7 @@
 				GD.Print(node.Position); // Prints (42, -10)
 				[/csharp]
 				[/codeblocks]
-				[b]Note:[/b] In C#, [param property_path] must be in snake_case when referring to built-in Godot properties. Prefer using the names exposed in the [code]PropertyName[/code] class to avoid allocating a new [StringName] on each call.
+				[b]Note:[/b] In C#, [param property_path] must be in snake_case when referring to built-in Redot properties. Prefer using the names exposed in the [code]PropertyName[/code] class to avoid allocating a new [StringName] on each call.
 			</description>
 		</method>
 		<method name="set_message_translation">
