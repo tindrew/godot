@@ -1,6 +1,6 @@
-# Godot Engine authors
+# Redot Engine authors
 
-Godot Engine is developed by a community of voluntary contributors who
+Redot Engine is developed by a community of voluntary contributors who
 contribute code, bug reports, documentation, translations, support, etc.,
 across multiple repositories.
 
@@ -16,20 +16,19 @@ wrote which part of the codebase.
 GitHub usernames are indicated in parentheses, or as sole entry when no other
 name is available.
 
-## Project Founders
+### Project Founders
 
-    Juan Linietsky (reduz)
-    Ariel Manzur (punto-)
+    [TODO fill in this blank]
 
-## Lead Developer
+### Lead Developer
 
-    Juan Linietsky (reduz)
+    [TODO fill in this blank]
 
-## Project Manager
+### Project Manager
 
-    Rémi Verschelde (akien-mga)
+    [TODO fill in this blank]
 
-## Developers
+### Developers
 
     Aaron Franke (aaronfranke)
     Aaron Pagano (aaronp64)

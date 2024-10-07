@@ -51,8 +51,8 @@ def get_build_version(short):
         v += ".%d" % version.patch
     status = version.status
     if not short:
-        if os.getenv("GODOT_VERSION_STATUS") is not None:
-            status = str(os.getenv("GODOT_VERSION_STATUS"))
+        if os.getenv("redot_VERSION_STATUS") is not None:
+            status = str(os.getenv("redot_VERSION_STATUS"))
         v += ".%s.%s" % (status, name)
     return v
 
