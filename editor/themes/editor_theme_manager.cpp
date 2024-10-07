@@ -317,8 +317,8 @@ EditorThemeManager::ThemeConfiguration EditorThemeManager::_create_theme_config(
 				preset_contrast = 0.0;
 				preset_draw_extra_borders = true;
 			} else { // Default
-				preset_accent_color = Color(0.44, 0.73, 0.98);
-				preset_base_color = Color(0.21, 0.24, 0.29);
+				preset_accent_color = Color(0.65, 0.15, 0.00);
+				preset_base_color = Color(0.15, 0.15, 0.15);
 				preset_contrast = config.default_contrast;
 			}
 
