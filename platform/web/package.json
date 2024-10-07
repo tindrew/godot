@@ -1,9 +1,9 @@
 {
-  "name": "godot",
+  "name": "redot",
   "private": true,
   "version": "1.0.0",
-  "description": "Development and linting setup for Godot's Web platform code",
-  "author": "Godot Engine contributors",
+  "description": "Development and linting setup for Redot's Web platform code",
+  "author": "Redot Engine contributors",
   "license": "MIT",
   "scripts": {
     "docs": "jsdoc --template js/jsdoc2rst/ js/engine/engine.js js/engine/config.js js/engine/features.js --destination ''",

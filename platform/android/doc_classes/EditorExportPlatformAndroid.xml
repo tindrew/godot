@@ -71,30 +71,30 @@
 		</member>
 		<member name="keystore/debug" type="String" setter="" getter="">
 			Path of the debug keystore file.
-			Can be overridden with the environment variable [code]GODOT_ANDROID_KEYSTORE_DEBUG_PATH[/code].
+			Can be overridden with the environment variable [code]redot_ANDROID_KEYSTORE_DEBUG_PATH[/code].
 			Fallbacks to [code]EditorSettings.export/android/debug_keystore[/code] if empty.
 		</member>
 		<member name="keystore/debug_password" type="String" setter="" getter="">
 			Password for the debug keystore file.
-			Can be overridden with the environment variable [code]GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD[/code].
+			Can be overridden with the environment variable [code]redot_ANDROID_KEYSTORE_DEBUG_PASSWORD[/code].
 			Fallbacks to [code]EditorSettings.export/android/debug_keystore_pass[/code] if both it and [member keystore/debug] are empty.
 		</member>
 		<member name="keystore/debug_user" type="String" setter="" getter="">
 			User name for the debug keystore file.
-			Can be overridden with the environment variable [code]GODOT_ANDROID_KEYSTORE_DEBUG_USER[/code].
+			Can be overridden with the environment variable [code]redot_ANDROID_KEYSTORE_DEBUG_USER[/code].
 			Fallbacks to [code]EditorSettings.export/android/debug_keystore_user[/code] if both it and [member keystore/debug] are empty.
 		</member>
 		<member name="keystore/release" type="String" setter="" getter="">
 			Path of the release keystore file.
-			Can be overridden with the environment variable [code]GODOT_ANDROID_KEYSTORE_RELEASE_PATH[/code].
+			Can be overridden with the environment variable [code]redot_ANDROID_KEYSTORE_RELEASE_PATH[/code].
 		</member>
 		<member name="keystore/release_password" type="String" setter="" getter="">
 			Password for the release keystore file.
-			Can be overridden with the environment variable [code]GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD[/code].
+			Can be overridden with the environment variable [code]redot_ANDROID_KEYSTORE_RELEASE_PASSWORD[/code].
 		</member>
 		<member name="keystore/release_user" type="String" setter="" getter="">
 			User name for the release keystore file.
-			Can be overridden with the environment variable [code]GODOT_ANDROID_KEYSTORE_RELEASE_USER[/code].
+			Can be overridden with the environment variable [code]redot_ANDROID_KEYSTORE_RELEASE_USER[/code].
 		</member>
 		<member name="launcher_icons/adaptive_background_432x432" type="String" setter="" getter="">
 			Background layer of the application adaptive icon file. See [url=https://developer.android.com/develop/ui/views/launch/icon_design_adaptive#design-adaptive-icons]Design adaptive icons[/url].

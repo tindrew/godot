@@ -37,7 +37,7 @@
     <application>
 
         <activity
-            android:name=".GodotEditor"
+            android:name=".RedotEditor"
             android:exported="true"
             android:screenOrientation="landscape"
             tools:node="merge"
@@ -53,12 +53,12 @@
         </activity>
 
         <activity
-            android:name=".GodotXRGame"
+            android:name=".RedotXRGame"
             android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize|density|keyboard|navigation|screenLayout|uiMode"
-            android:process=":GodotXRGame"
+            android:process=":RedotXRGame"
             android:launchMode="singleTask"
             android:icon="@mipmap/ic_play_window"
-            android:label="@string/godot_game_activity_name"
+            android:label="@string/redot_game_activity_name"
             android:exported="false"
             android:screenOrientation="landscape"
             android:resizeableActivity="false"
@@ -85,8 +85,8 @@
         manager and editor windows.
          -->
         <meta-data
-            android:name="org.godotengine.plugin.v2.GodotOpenXRMeta"
-            android:value="org.godotengine.openxr.vendors.meta.GodotOpenXRMeta"
+            android:name="org.redotengine.plugin.v2.RedotOpenXRMeta"
+            android:value="org.redotengine.openxr.vendors.meta.RedotOpenXRMeta"
             tools:node="remove" />
 
         <!-- Enable system splash screen -->

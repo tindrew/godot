@@ -2,11 +2,10 @@
 /*  web_tools_editor_plugin.cpp                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -41,9 +40,9 @@
 
 #include <emscripten/emscripten.h>
 
-// Web functions defined in library_godot_editor_tools.js
+// Web functions defined in library_redot_editor_tools.js
 extern "C" {
-extern void godot_js_os_download_buffer(const uint8_t *p_buf, int p_buf_size, const char *p_name, const char *p_mime);
+extern void redot_js_os_download_buffer(const uint8_t *p_buf, int p_buf_size, const char *p_name, const char *p_mime);
 }
 
 static void _web_editor_init_callback() {
@@ -89,7 +88,7 @@ void WebToolsEditorPlugin::_download_zip() {
 		Vector<uint8_t> buf;
 		buf.resize(f->get_length());
 		f->get_buffer(buf.ptrw(), buf.size());
-		godot_js_os_download_buffer(buf.ptr(), buf.size(), output_name.utf8().get_data(), "application/zip");
+		redot_js_os_download_buffer(buf.ptr(), buf.size(), output_name.utf8().get_data(), "application/zip");
 	}
 
 	// Remove the temporary file since it was sent to the user's native filesystem as a download.

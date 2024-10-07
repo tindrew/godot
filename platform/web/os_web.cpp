@@ -2,11 +2,10 @@
 /*  os_web.cpp                                                            */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -32,7 +31,7 @@
 
 #include "api/javascript_bridge_singleton.h"
 #include "display_server_web.h"
-#include "godot_js.h"
+#include "redot_js.h"
 
 #include "core/config/project_settings.h"
 #include "core/debugger/engine_debugger.h"
@@ -47,7 +46,7 @@
 #include <stdlib.h>
 
 void OS_Web::alert(const String &p_alert, const String &p_title) {
-	godot_js_display_alert(p_alert.utf8().get_data());
+	redot_js_display_alert(p_alert.utf8().get_data());
 }
 
 // Lifecycle
@@ -76,7 +75,7 @@ bool OS_Web::main_loop_iterate() {
 	if (is_userfs_persistent() && idb_needs_sync && !idb_is_syncing) {
 		idb_is_syncing = true;
 		idb_needs_sync = false;
-		godot_js_os_fs_sync(&fs_sync_callback);
+		redot_js_os_fs_sync(&fs_sync_callback);
 	}
 
 	DisplayServer::get_singleton()->process_events();
@@ -115,7 +114,7 @@ Error OS_Web::create_process(const String &p_path, const List<String> &p_argumen
 		args.push_back(E);
 	}
 	String json_args = Variant(args).to_json_string();
-	int failed = godot_js_os_execute(json_args.utf8().get_data());
+	int failed = redot_js_os_execute(json_args.utf8().get_data());
 	ERR_FAIL_COND_V_MSG(failed, ERR_UNAVAILABLE, "OS::execute() or create_process() must be implemented in Web via 'engine.setOnExecute' if required.");
 	return OK;
 }
@@ -137,7 +136,7 @@ int OS_Web::get_process_exit_code(const ProcessID &p_pid) const {
 }
 
 int OS_Web::get_processor_count() const {
-	return godot_js_os_hw_concurrency_get();
+	return redot_js_os_hw_concurrency_get();
 }
 
 String OS_Web::get_unique_id() const {
@@ -148,7 +147,7 @@ bool OS_Web::_check_internal_feature_support(const String &p_feature) {
 	if (p_feature == "web") {
 		return true;
 	}
-	if (godot_js_os_has_feature(p_feature.utf8().get_data())) {
+	if (redot_js_os_has_feature(p_feature.utf8().get_data())) {
 		return true;
 	}
 	return false;
@@ -160,7 +159,7 @@ String OS_Web::get_executable_path() const {
 
 Error OS_Web::shell_open(const String &p_uri) {
 	// Open URI in a new tab, browser will deal with it by protocol.
-	godot_js_os_shell_open(p_uri.utf8().get_data());
+	redot_js_os_shell_open(p_uri.utf8().get_data());
 	return OK;
 }
 
@@ -175,7 +174,7 @@ void OS_Web::add_frame_delay(bool p_can_draw) {
 }
 
 void OS_Web::vibrate_handheld(int p_duration_ms, float p_amplitude) {
-	godot_js_input_vibrate_handheld(p_duration_ms);
+	redot_js_input_vibrate_handheld(p_duration_ms);
 }
 
 String OS_Web::get_user_data_dir() const {
@@ -190,11 +189,11 @@ String OS_Web::get_user_data_dir() const {
 			}
 			return userfs.path_join(custom_dir).replace("\\", "/");
 		} else {
-			return userfs.path_join(get_godot_dir_name()).path_join("app_userdata").path_join(appname).replace("\\", "/");
+			return userfs.path_join(get_redot_dir_name()).path_join("app_userdata").path_join(appname).replace("\\", "/");
 		}
 	}
 
-	return userfs.path_join(get_godot_dir_name()).path_join("app_userdata").path_join("[unnamed project]");
+	return userfs.path_join(get_redot_dir_name()).path_join("app_userdata").path_join("[unnamed project]");
 }
 
 String OS_Web::get_cache_path() const {
@@ -240,7 +239,7 @@ void OS_Web::force_fs_sync() {
 }
 
 Error OS_Web::pwa_update() {
-	return godot_js_pwa_update() ? FAILED : OK;
+	return redot_js_pwa_update() ? FAILED : OK;
 }
 
 bool OS_Web::is_userfs_persistent() const {
@@ -268,10 +267,10 @@ void OS_Web::initialize_joypads() {
 
 OS_Web::OS_Web() {
 	char locale_ptr[16];
-	godot_js_config_locale_get(locale_ptr, 16);
+	redot_js_config_locale_get(locale_ptr, 16);
 	setenv("LANG", locale_ptr, true);
 
-	godot_js_pwa_cb(&OS_Web::update_pwa_state_callback);
+	redot_js_pwa_cb(&OS_Web::update_pwa_state_callback);
 
 	if (AudioDriverWeb::is_available()) {
 		audio_drivers.push_back(memnew(AudioDriverWorklet));
@@ -280,7 +279,7 @@ OS_Web::OS_Web() {
 		AudioDriverManager::add_driver(audio_driver);
 	}
 
-	idb_available = godot_js_os_fs_is_persistent();
+	idb_available = redot_js_os_fs_is_persistent();
 
 	Vector<Logger *> loggers;
 	loggers.push_back(memnew(StdLogger));

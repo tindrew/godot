@@ -2,11 +2,10 @@
 /*  os_ios.mm                                                             */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -34,7 +33,7 @@
 
 #import "app_delegate.h"
 #import "display_server_ios.h"
-#import "godot_view.h"
+#import "redot_view.h"
 #import "ios_terminal_logger.h"
 #import "view_controller.h"
 
@@ -56,7 +55,7 @@
 #import <QuartzCore/CAMetalLayer.h>
 
 #if defined(VULKAN_ENABLED)
-#include "drivers/vulkan/godot_vulkan.h"
+#include "drivers/vulkan/redot_vulkan.h"
 #endif // VULKAN_ENABLED
 #endif
 
@@ -603,7 +602,7 @@ void OS_IOS::on_focus_out() {
 			OS::get_singleton()->get_main_loop()->notification(MainLoop::NOTIFICATION_APPLICATION_FOCUS_OUT);
 		}
 
-		[AppDelegate.viewController.godotView stopRendering];
+		[AppDelegate.viewController.redotView stopRendering];
 
 		audio_driver.stop();
 	}
@@ -621,7 +620,7 @@ void OS_IOS::on_focus_in() {
 			OS::get_singleton()->get_main_loop()->notification(MainLoop::NOTIFICATION_APPLICATION_FOCUS_IN);
 		}
 
-		[AppDelegate.viewController.godotView startRendering];
+		[AppDelegate.viewController.redotView startRendering];
 
 		audio_driver.start();
 	}

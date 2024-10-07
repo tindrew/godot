@@ -2,11 +2,10 @@
 /*  os_macos.mm                                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -32,8 +31,8 @@
 
 #include "dir_access_macos.h"
 #include "display_server_macos.h"
-#include "godot_application.h"
-#include "godot_application_delegate.h"
+#include "redot_application.h"
+#include "redot_application_delegate.h"
 #include "macos_terminal_logger.h"
 
 #include "core/crypto/crypto_core.h"
@@ -292,7 +291,7 @@ String OS_MacOS::get_bundle_icon_path() const {
 }
 
 // Get properly capitalized engine name for system paths
-String OS_MacOS::get_godot_dir_name() const {
+String OS_MacOS::get_redot_dir_name() const {
 	return String(VERSION_SHORT_NAME).capitalize();
 }
 
@@ -830,7 +829,7 @@ OS_MacOS::OS_MacOS() {
 	DisplayServerMacOS::register_macos_driver();
 
 	// Implicitly create shared NSApplication instance.
-	[GodotApplication sharedApplication];
+	[RedotApplication sharedApplication];
 
 	// In case we are unbundled, make us a proper UI application.
 	[NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
@@ -843,7 +842,7 @@ OS_MacOS::OS_MacOS() {
 	[NSApp setMainMenu:main_menu];
 	[NSApp finishLaunching];
 
-	id delegate = [[GodotApplicationDelegate alloc] init];
+	id delegate = [[RedotApplicationDelegate alloc] init];
 	ERR_FAIL_NULL(delegate);
 	[NSApp setDelegate:delegate];
 	[NSApp registerUserInterfaceItemSearchHandler:delegate];

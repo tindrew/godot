@@ -2,11 +2,10 @@
 /*  display_layer.h                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -44,16 +43,16 @@
 #if defined(TARGET_OS_SIMULATOR) && TARGET_OS_SIMULATOR
 #if defined(__IPHONE_13_0)
 API_AVAILABLE(ios(13.0))
-@interface GodotMetalLayer : CAMetalLayer <DisplayLayer>
+@interface RedotMetalLayer : CAMetalLayer <DisplayLayer>
 #else
-@interface GodotMetalLayer : CALayer <DisplayLayer>
+@interface RedotMetalLayer : CALayer <DisplayLayer>
 #endif
 #else
-@interface GodotMetalLayer : CAMetalLayer <DisplayLayer>
+@interface RedotMetalLayer : CAMetalLayer <DisplayLayer>
 #endif
 @end
 
 API_DEPRECATED("OpenGLES is deprecated", ios(2.0, 12.0))
-@interface GodotOpenGLLayer : CAEAGLLayer <DisplayLayer>
+@interface RedotOpenGLLayer : CAEAGLLayer <DisplayLayer>
 
 @end

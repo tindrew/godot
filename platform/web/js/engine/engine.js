@@ -93,7 +93,7 @@ const Engine = (function () {
 					return new Promise(function (resolve, reject) {
 						promise.then(function (response) {
 							const cloned = new Response(response.clone().body, { 'headers': [['content-type', 'application/wasm']] });
-							Godot(me.config.getModuleConfig(loadPath, cloned)).then(function (module) {
+							Redot(me.config.getModuleConfig(loadPath, cloned)).then(function (module) {
 								const paths = me.config.persistentPaths;
 								module['initFS'](paths).then(function (err) {
 									me.rtenv = module;
@@ -153,13 +153,13 @@ const Engine = (function () {
 
 					let config = {};
 					try {
-						config = me.config.getGodotConfig(function () {
+						config = me.config.getRedotConfig(function () {
 							me.rtenv = null;
 						});
 					} catch (e) {
 						return Promise.reject(e);
 					}
-					// Godot configuration.
+					// Redot configuration.
 					me.rtenv['initConfig'](config);
 
 					// Preload GDExtension libraries.

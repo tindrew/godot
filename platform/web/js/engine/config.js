@@ -1,11 +1,11 @@
 /**
- * An object used to configure the Engine instance based on godot export options, and to override those in custom HTML
+ * An object used to configure the Engine instance based on redot export options, and to override those in custom HTML
  * templates if needed.
  *
  * @header Engine configuration
  * @summary The Engine configuration object. This is just a typedef, create it like a regular object, e.g.:
  *
- * ``const MyConfig = { executable: 'godot', unloadAfterInit: false }``
+ * ``const MyConfig = { executable: 'redot', unloadAfterInit: false }``
  *
  * @typedef {Object} EngineConfig
  */
@@ -37,7 +37,7 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		 */
 		canvas: null,
 		/**
-		 * The name of the WASM file without the extension. (Set by Godot Editor export process).
+		 * The name of the WASM file without the extension. (Set by Redot Editor export process).
 		 *
 		 * @memberof EngineConfig
 		 * @default
@@ -64,14 +64,14 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		 */
 		locale: null,
 		/**
-		 * The canvas resize policy determines how the canvas should be resized by Godot.
+		 * The canvas resize policy determines how the canvas should be resized by Redot.
 		 *
-		 * ``0`` means Godot won't do any resizing. This is useful if you want to control the canvas size from
+		 * ``0`` means Redot won't do any resizing. This is useful if you want to control the canvas size from
 		 * javascript code in your template.
 		 *
-		 * ``1`` means Godot will resize the canvas on start, and when changing window size via engine functions.
+		 * ``1`` means Redot will resize the canvas on start, and when changing window size via engine functions.
 		 *
-		 * ``2`` means Godot will adapt the canvas size to match the whole browser window.
+		 * ``2`` means Redot will adapt the canvas size to match the whole browser window.
 		 *
 		 * @memberof EngineConfig
 		 * @type {number}
@@ -134,12 +134,12 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		 */
 		fileSizes: [],
 		/**
-		 * A callback function for handling Godot's ``OS.execute`` calls.
+		 * A callback function for handling Redot's ``OS.execute`` calls.
 		 *
 		 * This is for example used in the Web Editor template to switch between project manager and editor, and for running the game.
 		 *
 		 * @callback EngineConfig.onExecute
-		 * @param {string} path The path that Godot's wants executed.
+		 * @param {string} path The path that Redot's wants executed.
 		 * @param {Array.<string>} args The arguments of the "command" to execute.
 		 */
 		/**
@@ -148,12 +148,12 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		 */
 		onExecute: null,
 		/**
-		 * A callback function for being notified when the Godot instance quits.
+		 * A callback function for being notified when the Redot instance quits.
 		 *
 		 * **Note**: This function will not be called if the engine crashes or become unresponsive.
 		 *
 		 * @callback EngineConfig.onExit
-		 * @param {number} status_code The status code returned by Godot on exit.
+		 * @param {number} status_code The status code returned by Redot on exit.
 		 */
 		/**
 		 * @ignore
@@ -246,7 +246,7 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		this.onPrint = parse('onPrint', this.onPrint);
 		this.onProgress = parse('onProgress', this.onProgress);
 
-		// Godot config
+		// Redot config
 		this.canvas = parse('canvas', this.canvas);
 		this.executable = parse('executable', this.executable);
 		this.mainPack = parse('mainPack', this.mainPack);
@@ -293,7 +293,7 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 				return {};
 			},
 			'locateFile': function (path) {
-				if (!path.startsWith('godot.')) {
+				if (!path.startsWith('redot.')) {
 					return path;
 				} else if (path.endsWith('.worker.js')) {
 					return `${loadPath}.worker.js`;
@@ -319,7 +319,7 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 	 * @ignore
 	 * @param {function()} cleanup
 	 */
-	Config.prototype.getGodotConfig = function (cleanup) {
+	Config.prototype.getRedotConfig = function (cleanup) {
 		// Try to find a canvas
 		if (!(this.canvas instanceof HTMLCanvasElement)) {
 			const nodes = document.getElementsByTagName('canvas');
@@ -345,7 +345,7 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		locale = locale.replace('-', '_');
 		const onExit = this.onExit;
 
-		// Godot configuration.
+		// Redot configuration.
 		return {
 			'canvas': this.canvas,
 			'canvasResizePolicy': this.canvasResizePolicy,

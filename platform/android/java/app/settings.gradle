@@ -1,4 +1,4 @@
-// This is the root directory of the Godot Android gradle build.
+// This is the root directory of the Redot Android gradle build.
 pluginManagement {
     apply from: 'config.gradle'
 

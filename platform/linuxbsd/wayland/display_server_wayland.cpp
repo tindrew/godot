@@ -2,11 +2,10 @@
 /*  display_server_wayland.cpp                                            */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -55,11 +54,11 @@ String DisplayServerWayland::_get_app_id_from_context(Context p_context) {
 
 	switch (p_context) {
 		case CONTEXT_EDITOR: {
-			app_id = "org.godotengine.Editor";
+			app_id = "org.redotengine.Editor";
 		} break;
 
 		case CONTEXT_PROJECTMAN: {
-			app_id = "org.godotengine.ProjectManager";
+			app_id = "org.redotengine.ProjectManager";
 		} break;
 
 		case CONTEXT_ENGINE:
@@ -68,7 +67,7 @@ String DisplayServerWayland::_get_app_id_from_context(Context p_context) {
 			if (config_name.length() != 0) {
 				app_id = config_name;
 			} else {
-				app_id = "org.godotengine.Godot";
+				app_id = "org.redotengine.Redot";
 			}
 		}
 	}
@@ -1418,7 +1417,7 @@ DisplayServerWayland::DisplayServerWayland(const String &p_rendering_driver, Win
 
 			if (prime_idx) {
 				print_line(vformat("Found discrete GPU, setting DRI_PRIME=%d to use it.", prime_idx));
-				print_line("Note: Set DRI_PRIME=0 in the environment to disable Godot from using the discrete GPU.");
+				print_line("Note: Set DRI_PRIME=0 in the environment to disable Redot from using the discrete GPU.");
 				setenv("DRI_PRIME", itos(prime_idx).utf8().ptr(), 1);
 			}
 		}
@@ -1495,7 +1494,7 @@ DisplayServerWayland::DisplayServerWayland(const String &p_rendering_driver, Win
 	wd.flags = p_flags;
 	wd.vsync_mode = p_vsync_mode;
 	wd.rect.size = p_resolution;
-	wd.title = "Godot";
+	wd.title = "Redot";
 
 	_show_window();
 

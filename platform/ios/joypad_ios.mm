@@ -2,11 +2,10 @@
 /*  joypad_ios.mm                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -30,7 +29,7 @@
 
 #import "joypad_ios.h"
 
-#import "godot_view.h"
+#import "redot_view.h"
 #import "os_ios.h"
 
 #include "core/config/project_settings.h"
@@ -70,13 +69,13 @@ void JoypadIOS::start_processing() {
 	self = [super init];
 
 	if (self) {
-		[self godot_commonInit];
+		[self redot_commonInit];
 	}
 
 	return self;
 }
 
-- (void)godot_commonInit {
+- (void)redot_commonInit {
 	self.isObserving = NO;
 	self.isProcessing = NO;
 }
@@ -158,7 +157,7 @@ void JoypadIOS::start_processing() {
 		controller.playerIndex = [self getFreePlayerIndex];
 	}
 
-	// tell Godot about our new controller
+	// tell Redot about our new controller
 	Input::get_singleton()->joy_connection_changed(joy_id, true, String::utf8([controller.vendorName UTF8String]));
 
 	// add it to our dictionary, this will retain our controllers
@@ -196,7 +195,7 @@ void JoypadIOS::start_processing() {
 
 	NSArray *keys = [self.connectedJoypads allKeysForObject:controller];
 	for (NSNumber *key in keys) {
-		// tell Godot this joystick is no longer there
+		// tell Redot this joystick is no longer there
 		int joy_id = [key intValue];
 		Input::get_singleton()->joy_connection_changed(joy_id, false, "");
 

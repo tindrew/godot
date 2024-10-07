@@ -39,7 +39,7 @@
 			Application distribution target (release export).
 		</member>
 		<member name="application/export_project_only" type="bool" setter="" getter="">
-			If [code]true[/code], exports iOS project files without building an XCArchive or [code].ipa[/code] file. If [code]false[/code], exports iOS project files and builds an XCArchive and [code].ipa[/code] file at the same time. When combining Godot with Fastlane or other build pipelines, you may want to set this to [code]true[/code].
+			If [code]true[/code], exports iOS project files without building an XCArchive or [code].ipa[/code] file. If [code]false[/code], exports iOS project files and builds an XCArchive and [code].ipa[/code] file at the same time. When combining Redot with Fastlane or other build pipelines, you may want to set this to [code]true[/code].
 		</member>
 		<member name="application/generate_simulator_library_if_missing" type="bool" setter="" getter="">
 			If [code]true[/code], and ARM64 simulator library is missing from the export template, it is automatically generated from ARM64 device library.
@@ -52,11 +52,11 @@
 		</member>
 		<member name="application/provisioning_profile_uuid_debug" type="String" setter="" getter="">
 			UUID of the provisioning profile. If left empty, Xcode will download or create a provisioning profile automatically. See [url=https://developer.apple.com/help/account/manage-profiles/edit-download-or-delete-profiles]Edit, download, or delete provisioning profiles[/url].
-			Can be overridden with the environment variable [code]GODOT_IOS_PROVISIONING_PROFILE_UUID_DEBUG[/code].
+			Can be overridden with the environment variable [code]redot_IOS_PROVISIONING_PROFILE_UUID_DEBUG[/code].
 		</member>
 		<member name="application/provisioning_profile_uuid_release" type="String" setter="" getter="">
 			UUID of the provisioning profile. If left empty, Xcode will download or create a provisioning profile automatically. See [url=https://developer.apple.com/help/account/manage-profiles/edit-download-or-delete-profiles]Edit, download, or delete provisioning profiles[/url].
-			Can be overridden with the environment variable [code]GODOT_IOS_PROVISIONING_PROFILE_UUID_RELEASE[/code].
+			Can be overridden with the environment variable [code]redot_IOS_PROVISIONING_PROFILE_UUID_RELEASE[/code].
 		</member>
 		<member name="application/short_version" type="String" setter="" getter="">
 			Application version visible to the user, can only contain numeric characters ([code]0-9[/code]) and periods ([code].[/code]). Falls back to [member ProjectSettings.application/config/version] if left empty.

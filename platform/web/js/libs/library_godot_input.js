@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  library_godot_input.js                                                */
+/*  library_redot_input.js                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -32,10 +31,10 @@
  * IME API helper.
  */
 
-const GodotIME = {
-	$GodotIME__deps: ['$GodotRuntime', '$GodotEventListeners'],
-	$GodotIME__postset: 'GodotOS.atexit(function(resolve, reject) { GodotIME.clear(); resolve(); });',
-	$GodotIME: {
+const RedotIME = {
+	$RedotIME__deps: ['$RedotRuntime', '$RedotEventListeners'],
+	$RedotIME__postset: 'RedotOS.atexit(function(resolve, reject) { RedotIME.clear(); resolve(); });',
+	$RedotIME: {
 		ime: null,
 		active: false,
 
@@ -45,58 +44,58 @@ const GodotIME = {
 
 		ime_active: function (active) {
 			function focus_timer() {
-				GodotIME.active = true;
-				GodotIME.ime.focus();
+				RedotIME.active = true;
+				RedotIME.ime.focus();
 			}
 
-			if (GodotIME.ime) {
+			if (RedotIME.ime) {
 				if (active) {
-					GodotIME.ime.style.display = 'block';
+					RedotIME.ime.style.display = 'block';
 					setInterval(focus_timer, 100);
 				} else {
-					GodotIME.ime.style.display = 'none';
-					GodotConfig.canvas.focus();
-					GodotIME.active = false;
+					RedotIME.ime.style.display = 'none';
+					RedotConfig.canvas.focus();
+					RedotIME.active = false;
 				}
 			}
 		},
 
 		ime_position: function (x, y) {
-			if (GodotIME.ime) {
-				const canvas = GodotConfig.canvas;
+			if (RedotIME.ime) {
+				const canvas = RedotConfig.canvas;
 				const rect = canvas.getBoundingClientRect();
 				const rw = canvas.width / rect.width;
 				const rh = canvas.height / rect.height;
 				const clx = (x / rw) + rect.x;
 				const cly = (y / rh) + rect.y;
 
-				GodotIME.ime.style.left = `${clx}px`;
-				GodotIME.ime.style.top = `${cly}px`;
+				RedotIME.ime.style.left = `${clx}px`;
+				RedotIME.ime.style.top = `${cly}px`;
 			}
 		},
 
 		init: function (ime_cb, key_cb, code, key) {
 			function key_event_cb(pressed, evt) {
-				const modifiers = GodotIME.getModifiers(evt);
-				GodotRuntime.stringToHeap(evt.code, code, 32);
-				GodotRuntime.stringToHeap(evt.key, key, 32);
+				const modifiers = RedotIME.getModifiers(evt);
+				RedotRuntime.stringToHeap(evt.code, code, 32);
+				RedotRuntime.stringToHeap(evt.key, key, 32);
 				key_cb(pressed, evt.repeat, modifiers);
 				evt.preventDefault();
 			}
 			function ime_event_cb(event) {
-				if (GodotIME.ime) {
+				if (RedotIME.ime) {
 					if (event.type === 'compositionstart') {
 						ime_cb(0, null);
-						GodotIME.ime.innerHTML = '';
+						RedotIME.ime.innerHTML = '';
 					} else if (event.type === 'compositionupdate') {
-						const ptr = GodotRuntime.allocString(event.data);
+						const ptr = RedotRuntime.allocString(event.data);
 						ime_cb(1, ptr);
-						GodotRuntime.free(ptr);
+						RedotRuntime.free(ptr);
 					} else if (event.type === 'compositionend') {
-						const ptr = GodotRuntime.allocString(event.data);
+						const ptr = RedotRuntime.allocString(event.data);
 						ime_cb(2, ptr);
-						GodotRuntime.free(ptr);
-						GodotIME.ime.innerHTML = '';
+						RedotRuntime.free(ptr);
+						RedotIME.ime.innerHTML = '';
 					}
 				}
 			}
@@ -116,38 +115,38 @@ const GodotIME = {
 			ime.style.display = 'none';
 			ime.contentEditable = 'true';
 
-			GodotEventListeners.add(ime, 'compositionstart', ime_event_cb, false);
-			GodotEventListeners.add(ime, 'compositionupdate', ime_event_cb, false);
-			GodotEventListeners.add(ime, 'compositionend', ime_event_cb, false);
-			GodotEventListeners.add(ime, 'keydown', key_event_cb.bind(null, 1), false);
-			GodotEventListeners.add(ime, 'keyup', key_event_cb.bind(null, 0), false);
+			RedotEventListeners.add(ime, 'compositionstart', ime_event_cb, false);
+			RedotEventListeners.add(ime, 'compositionupdate', ime_event_cb, false);
+			RedotEventListeners.add(ime, 'compositionend', ime_event_cb, false);
+			RedotEventListeners.add(ime, 'keydown', key_event_cb.bind(null, 1), false);
+			RedotEventListeners.add(ime, 'keyup', key_event_cb.bind(null, 0), false);
 
 			ime.onblur = function () {
 				this.style.display = 'none';
-				GodotConfig.canvas.focus();
-				GodotIME.active = false;
+				RedotConfig.canvas.focus();
+				RedotIME.active = false;
 			};
 
-			GodotConfig.canvas.parentElement.appendChild(ime);
-			GodotIME.ime = ime;
+			RedotConfig.canvas.parentElement.appendChild(ime);
+			RedotIME.ime = ime;
 		},
 
 		clear: function () {
-			if (GodotIME.ime) {
-				GodotIME.ime.remove();
-				GodotIME.ime = null;
+			if (RedotIME.ime) {
+				RedotIME.ime.remove();
+				RedotIME.ime = null;
 			}
 		},
 	},
 };
-mergeInto(LibraryManager.library, GodotIME);
+mergeInto(LibraryManager.library, RedotIME);
 
 /*
  * Gamepad API helper.
  */
-const GodotInputGamepads = {
-	$GodotInputGamepads__deps: ['$GodotRuntime', '$GodotEventListeners'],
-	$GodotInputGamepads: {
+const RedotInputGamepads = {
+	$RedotInputGamepads__deps: ['$RedotRuntime', '$RedotEventListeners'],
+	$RedotInputGamepads: {
 		samples: [],
 
 		get_pads: function () {
@@ -166,16 +165,16 @@ const GodotInputGamepads = {
 		},
 
 		get_samples: function () {
-			return GodotInputGamepads.samples;
+			return RedotInputGamepads.samples;
 		},
 
 		get_sample: function (index) {
-			const samples = GodotInputGamepads.samples;
+			const samples = RedotInputGamepads.samples;
 			return index < samples.length ? samples[index] : null;
 		},
 
 		sample: function () {
-			const pads = GodotInputGamepads.get_pads();
+			const pads = RedotInputGamepads.get_pads();
 			const samples = [];
 			for (let i = 0; i < pads.length; i++) {
 				const pad = pads[i];
@@ -197,32 +196,32 @@ const GodotInputGamepads = {
 				}
 				samples.push(s);
 			}
-			GodotInputGamepads.samples = samples;
+			RedotInputGamepads.samples = samples;
 		},
 
 		init: function (onchange) {
-			GodotInputGamepads.samples = [];
+			RedotInputGamepads.samples = [];
 			function add(pad) {
-				const guid = GodotInputGamepads.get_guid(pad);
-				const c_id = GodotRuntime.allocString(pad.id);
-				const c_guid = GodotRuntime.allocString(guid);
+				const guid = RedotInputGamepads.get_guid(pad);
+				const c_id = RedotRuntime.allocString(pad.id);
+				const c_guid = RedotRuntime.allocString(guid);
 				onchange(pad.index, 1, c_id, c_guid);
-				GodotRuntime.free(c_id);
-				GodotRuntime.free(c_guid);
+				RedotRuntime.free(c_id);
+				RedotRuntime.free(c_guid);
 			}
-			const pads = GodotInputGamepads.get_pads();
+			const pads = RedotInputGamepads.get_pads();
 			for (let i = 0; i < pads.length; i++) {
 				// Might be reserved space.
 				if (pads[i]) {
 					add(pads[i]);
 				}
 			}
-			GodotEventListeners.add(window, 'gamepadconnected', function (evt) {
+			RedotEventListeners.add(window, 'gamepadconnected', function (evt) {
 				if (evt.gamepad) {
 					add(evt.gamepad);
 				}
 			}, false);
-			GodotEventListeners.add(window, 'gamepaddisconnected', function (evt) {
+			RedotEventListeners.add(window, 'gamepaddisconnected', function (evt) {
 				if (evt.gamepad) {
 					onchange(evt.gamepad.index, 0);
 				}
@@ -271,40 +270,40 @@ const GodotInputGamepads = {
 		},
 	},
 };
-mergeInto(LibraryManager.library, GodotInputGamepads);
+mergeInto(LibraryManager.library, RedotInputGamepads);
 
 /*
  * Drag and drop helper.
- * This is pretty big, but basically detect dropped files on GodotConfig.canvas,
+ * This is pretty big, but basically detect dropped files on RedotConfig.canvas,
  * process them one by one (recursively for directories), and copies them to
- * the temporary FS path '/tmp/drop-[random]/' so it can be emitted as a godot
+ * the temporary FS path '/tmp/drop-[random]/' so it can be emitted as a redot
  * event (that requires a string array of paths).
  *
  * NOTE: The temporary files are removed after the callback. This means that
  * deferred callbacks won't be able to access the files.
  */
-const GodotInputDragDrop = {
-	$GodotInputDragDrop__deps: ['$FS', '$GodotFS'],
-	$GodotInputDragDrop: {
+const RedotInputDragDrop = {
+	$RedotInputDragDrop__deps: ['$FS', '$RedotFS'],
+	$RedotInputDragDrop: {
 		promises: [],
 		pending_files: [],
 
 		add_entry: function (entry) {
 			if (entry.isDirectory) {
-				GodotInputDragDrop.add_dir(entry);
+				RedotInputDragDrop.add_dir(entry);
 			} else if (entry.isFile) {
-				GodotInputDragDrop.add_file(entry);
+				RedotInputDragDrop.add_file(entry);
 			} else {
-				GodotRuntime.error('Unrecognized entry...', entry);
+				RedotRuntime.error('Unrecognized entry...', entry);
 			}
 		},
 
 		add_dir: function (entry) {
-			GodotInputDragDrop.promises.push(new Promise(function (resolve, reject) {
+			RedotInputDragDrop.promises.push(new Promise(function (resolve, reject) {
 				const reader = entry.createReader();
 				reader.readEntries(function (entries) {
 					for (let i = 0; i < entries.length; i++) {
-						GodotInputDragDrop.add_entry(entries[i]);
+						RedotInputDragDrop.add_entry(entries[i]);
 					}
 					resolve();
 				});
@@ -312,7 +311,7 @@ const GodotInputDragDrop = {
 		},
 
 		add_file: function (entry) {
-			GodotInputDragDrop.promises.push(new Promise(function (resolve, reject) {
+			RedotInputDragDrop.promises.push(new Promise(function (resolve, reject) {
 				entry.file(function (file) {
 					const reader = new FileReader();
 					reader.onload = function () {
@@ -326,29 +325,29 @@ const GodotInputDragDrop = {
 						if (!f['path']) {
 							f['path'] = f['name'];
 						}
-						GodotInputDragDrop.pending_files.push(f);
+						RedotInputDragDrop.pending_files.push(f);
 						resolve();
 					};
 					reader.onerror = function () {
-						GodotRuntime.print('Error reading file');
+						RedotRuntime.print('Error reading file');
 						reject();
 					};
 					reader.readAsArrayBuffer(file);
 				}, function (err) {
-					GodotRuntime.print('Error!');
+					RedotRuntime.print('Error!');
 					reject();
 				});
 			}));
 		},
 
 		process: function (resolve, reject) {
-			if (GodotInputDragDrop.promises.length === 0) {
+			if (RedotInputDragDrop.promises.length === 0) {
 				resolve();
 				return;
 			}
-			GodotInputDragDrop.promises.pop().then(function () {
+			RedotInputDragDrop.promises.pop().then(function () {
 				setTimeout(function () {
-					GodotInputDragDrop.process(resolve, reject);
+					RedotInputDragDrop.process(resolve, reject);
 				}, 0);
 			});
 		},
@@ -366,20 +365,20 @@ const GodotInputDragDrop = {
 						entry = item.webkitGetAsEntry();
 					}
 					if (entry) {
-						GodotInputDragDrop.add_entry(entry);
+						RedotInputDragDrop.add_entry(entry);
 					}
 				}
 			} else {
-				GodotRuntime.error('File upload not supported');
+				RedotRuntime.error('File upload not supported');
 			}
-			new Promise(GodotInputDragDrop.process).then(function () {
+			new Promise(RedotInputDragDrop.process).then(function () {
 				const DROP = `/tmp/drop-${parseInt(Math.random() * (1 << 30), 10)}/`;
 				const drops = [];
 				const files = [];
 				FS.mkdir(DROP.slice(0, -1)); // Without trailing slash
-				GodotInputDragDrop.pending_files.forEach((elem) => {
+				RedotInputDragDrop.pending_files.forEach((elem) => {
 					const path = elem['path'];
-					GodotFS.copy_to_fs(DROP + path, elem['data']);
+					RedotFS.copy_to_fs(DROP + path, elem['data']);
 					let idx = path.indexOf('/');
 					if (idx === -1) {
 						// Root file
@@ -394,17 +393,17 @@ const GodotInputDragDrop = {
 					}
 					files.push(DROP + path);
 				});
-				GodotInputDragDrop.promises = [];
-				GodotInputDragDrop.pending_files = [];
+				RedotInputDragDrop.promises = [];
+				RedotInputDragDrop.pending_files = [];
 				callback(drops);
-				if (GodotConfig.persistent_drops) {
+				if (RedotConfig.persistent_drops) {
 					// Delay removal at exit.
-					GodotOS.atexit(function (resolve, reject) {
-						GodotInputDragDrop.remove_drop(files, DROP);
+					RedotOS.atexit(function (resolve, reject) {
+						RedotInputDragDrop.remove_drop(files, DROP);
 						resolve();
 					});
 				} else {
-					GodotInputDragDrop.remove_drop(files, DROP);
+					RedotInputDragDrop.remove_drop(files, DROP);
 				}
 			});
 		},
@@ -441,24 +440,24 @@ const GodotInputDragDrop = {
 
 		handler: function (callback) {
 			return function (ev) {
-				GodotInputDragDrop._process_event(ev, callback);
+				RedotInputDragDrop._process_event(ev, callback);
 			};
 		},
 	},
 };
-mergeInto(LibraryManager.library, GodotInputDragDrop);
+mergeInto(LibraryManager.library, RedotInputDragDrop);
 
 /*
- * Godot exposed input functions.
+ * Redot exposed input functions.
  */
-const GodotInput = {
-	$GodotInput__deps: ['$GodotRuntime', '$GodotConfig', '$GodotEventListeners', '$GodotInputGamepads', '$GodotInputDragDrop', '$GodotIME'],
-	$GodotInput: {
+const RedotInput = {
+	$RedotInput__deps: ['$RedotRuntime', '$RedotConfig', '$RedotEventListeners', '$RedotInputGamepads', '$RedotInputDragDrop', '$RedotIME'],
+	$RedotInput: {
 		getModifiers: function (evt) {
 			return (evt.shiftKey + 0) + ((evt.altKey + 0) << 1) + ((evt.ctrlKey + 0) << 2) + ((evt.metaKey + 0) << 3);
 		},
 		computePosition: function (evt, rect) {
-			const canvas = GodotConfig.canvas;
+			const canvas = RedotConfig.canvas;
 			const rw = canvas.width / rect.width;
 			const rh = canvas.height / rect.height;
 			const x = (evt.clientX - rect.x) * rw;
@@ -470,235 +469,235 @@ const GodotInput = {
 	/*
 	 * Mouse API
 	 */
-	godot_js_input_mouse_move_cb__proxy: 'sync',
-	godot_js_input_mouse_move_cb__sig: 'vi',
-	godot_js_input_mouse_move_cb: function (callback) {
-		const func = GodotRuntime.get_func(callback);
-		const canvas = GodotConfig.canvas;
+	redot_js_input_mouse_move_cb__proxy: 'sync',
+	redot_js_input_mouse_move_cb__sig: 'vi',
+	redot_js_input_mouse_move_cb: function (callback) {
+		const func = RedotRuntime.get_func(callback);
+		const canvas = RedotConfig.canvas;
 		function move_cb(evt) {
 			const rect = canvas.getBoundingClientRect();
-			const pos = GodotInput.computePosition(evt, rect);
+			const pos = RedotInput.computePosition(evt, rect);
 			// Scale movement
 			const rw = canvas.width / rect.width;
 			const rh = canvas.height / rect.height;
 			const rel_pos_x = evt.movementX * rw;
 			const rel_pos_y = evt.movementY * rh;
-			const modifiers = GodotInput.getModifiers(evt);
+			const modifiers = RedotInput.getModifiers(evt);
 			func(pos[0], pos[1], rel_pos_x, rel_pos_y, modifiers);
 		}
-		GodotEventListeners.add(window, 'mousemove', move_cb, false);
+		RedotEventListeners.add(window, 'mousemove', move_cb, false);
 	},
 
-	godot_js_input_mouse_wheel_cb__proxy: 'sync',
-	godot_js_input_mouse_wheel_cb__sig: 'vi',
-	godot_js_input_mouse_wheel_cb: function (callback) {
-		const func = GodotRuntime.get_func(callback);
+	redot_js_input_mouse_wheel_cb__proxy: 'sync',
+	redot_js_input_mouse_wheel_cb__sig: 'vi',
+	redot_js_input_mouse_wheel_cb: function (callback) {
+		const func = RedotRuntime.get_func(callback);
 		function wheel_cb(evt) {
 			if (func(evt['deltaX'] || 0, evt['deltaY'] || 0)) {
 				evt.preventDefault();
 			}
 		}
-		GodotEventListeners.add(GodotConfig.canvas, 'wheel', wheel_cb, false);
+		RedotEventListeners.add(RedotConfig.canvas, 'wheel', wheel_cb, false);
 	},
 
-	godot_js_input_mouse_button_cb__proxy: 'sync',
-	godot_js_input_mouse_button_cb__sig: 'vi',
-	godot_js_input_mouse_button_cb: function (callback) {
-		const func = GodotRuntime.get_func(callback);
-		const canvas = GodotConfig.canvas;
+	redot_js_input_mouse_button_cb__proxy: 'sync',
+	redot_js_input_mouse_button_cb__sig: 'vi',
+	redot_js_input_mouse_button_cb: function (callback) {
+		const func = RedotRuntime.get_func(callback);
+		const canvas = RedotConfig.canvas;
 		function button_cb(p_pressed, evt) {
 			const rect = canvas.getBoundingClientRect();
-			const pos = GodotInput.computePosition(evt, rect);
-			const modifiers = GodotInput.getModifiers(evt);
+			const pos = RedotInput.computePosition(evt, rect);
+			const modifiers = RedotInput.getModifiers(evt);
 			// Since the event is consumed, focus manually.
 			// NOTE: The iframe container may not have focus yet, so focus even when already active.
 			if (p_pressed) {
-				GodotConfig.canvas.focus();
+				RedotConfig.canvas.focus();
 			}
 			if (func(p_pressed, evt.button, pos[0], pos[1], modifiers)) {
 				evt.preventDefault();
 			}
 		}
-		GodotEventListeners.add(canvas, 'mousedown', button_cb.bind(null, 1), false);
-		GodotEventListeners.add(window, 'mouseup', button_cb.bind(null, 0), false);
+		RedotEventListeners.add(canvas, 'mousedown', button_cb.bind(null, 1), false);
+		RedotEventListeners.add(window, 'mouseup', button_cb.bind(null, 0), false);
 	},
 
 	/*
 	 * Touch API
 	 */
-	godot_js_input_touch_cb__proxy: 'sync',
-	godot_js_input_touch_cb__sig: 'viii',
-	godot_js_input_touch_cb: function (callback, ids, coords) {
-		const func = GodotRuntime.get_func(callback);
-		const canvas = GodotConfig.canvas;
+	redot_js_input_touch_cb__proxy: 'sync',
+	redot_js_input_touch_cb__sig: 'viii',
+	redot_js_input_touch_cb: function (callback, ids, coords) {
+		const func = RedotRuntime.get_func(callback);
+		const canvas = RedotConfig.canvas;
 		function touch_cb(type, evt) {
 			// Since the event is consumed, focus manually.
 			// NOTE: The iframe container may not have focus yet, so focus even when already active.
 			if (type === 0) {
-				GodotConfig.canvas.focus();
+				RedotConfig.canvas.focus();
 			}
 			const rect = canvas.getBoundingClientRect();
 			const touches = evt.changedTouches;
 			for (let i = 0; i < touches.length; i++) {
 				const touch = touches[i];
-				const pos = GodotInput.computePosition(touch, rect);
-				GodotRuntime.setHeapValue(coords + (i * 2) * 8, pos[0], 'double');
-				GodotRuntime.setHeapValue(coords + (i * 2 + 1) * 8, pos[1], 'double');
-				GodotRuntime.setHeapValue(ids + i * 4, touch.identifier, 'i32');
+				const pos = RedotInput.computePosition(touch, rect);
+				RedotRuntime.setHeapValue(coords + (i * 2) * 8, pos[0], 'double');
+				RedotRuntime.setHeapValue(coords + (i * 2 + 1) * 8, pos[1], 'double');
+				RedotRuntime.setHeapValue(ids + i * 4, touch.identifier, 'i32');
 			}
 			func(type, touches.length);
 			if (evt.cancelable) {
 				evt.preventDefault();
 			}
 		}
-		GodotEventListeners.add(canvas, 'touchstart', touch_cb.bind(null, 0), false);
-		GodotEventListeners.add(canvas, 'touchend', touch_cb.bind(null, 1), false);
-		GodotEventListeners.add(canvas, 'touchcancel', touch_cb.bind(null, 1), false);
-		GodotEventListeners.add(canvas, 'touchmove', touch_cb.bind(null, 2), false);
+		RedotEventListeners.add(canvas, 'touchstart', touch_cb.bind(null, 0), false);
+		RedotEventListeners.add(canvas, 'touchend', touch_cb.bind(null, 1), false);
+		RedotEventListeners.add(canvas, 'touchcancel', touch_cb.bind(null, 1), false);
+		RedotEventListeners.add(canvas, 'touchmove', touch_cb.bind(null, 2), false);
 	},
 
 	/*
 	 * Key API
 	 */
-	godot_js_input_key_cb__proxy: 'sync',
-	godot_js_input_key_cb__sig: 'viii',
-	godot_js_input_key_cb: function (callback, code, key) {
-		const func = GodotRuntime.get_func(callback);
+	redot_js_input_key_cb__proxy: 'sync',
+	redot_js_input_key_cb__sig: 'viii',
+	redot_js_input_key_cb: function (callback, code, key) {
+		const func = RedotRuntime.get_func(callback);
 		function key_cb(pressed, evt) {
-			const modifiers = GodotInput.getModifiers(evt);
-			GodotRuntime.stringToHeap(evt.code, code, 32);
-			GodotRuntime.stringToHeap(evt.key, key, 32);
+			const modifiers = RedotInput.getModifiers(evt);
+			RedotRuntime.stringToHeap(evt.code, code, 32);
+			RedotRuntime.stringToHeap(evt.key, key, 32);
 			func(pressed, evt.repeat, modifiers);
 			evt.preventDefault();
 		}
-		GodotEventListeners.add(GodotConfig.canvas, 'keydown', key_cb.bind(null, 1), false);
-		GodotEventListeners.add(GodotConfig.canvas, 'keyup', key_cb.bind(null, 0), false);
+		RedotEventListeners.add(RedotConfig.canvas, 'keydown', key_cb.bind(null, 1), false);
+		RedotEventListeners.add(RedotConfig.canvas, 'keyup', key_cb.bind(null, 0), false);
 	},
 
 	/*
 	 * IME API
 	 */
-	godot_js_set_ime_active__proxy: 'sync',
-	godot_js_set_ime_active__sig: 'vi',
-	godot_js_set_ime_active: function (p_active) {
-		GodotIME.ime_active(p_active);
+	redot_js_set_ime_active__proxy: 'sync',
+	redot_js_set_ime_active__sig: 'vi',
+	redot_js_set_ime_active: function (p_active) {
+		RedotIME.ime_active(p_active);
 	},
 
-	godot_js_set_ime_position__proxy: 'sync',
-	godot_js_set_ime_position__sig: 'vii',
-	godot_js_set_ime_position: function (p_x, p_y) {
-		GodotIME.ime_position(p_x, p_y);
+	redot_js_set_ime_position__proxy: 'sync',
+	redot_js_set_ime_position__sig: 'vii',
+	redot_js_set_ime_position: function (p_x, p_y) {
+		RedotIME.ime_position(p_x, p_y);
 	},
 
-	godot_js_set_ime_cb__proxy: 'sync',
-	godot_js_set_ime_cb__sig: 'viiii',
-	godot_js_set_ime_cb: function (p_ime_cb, p_key_cb, code, key) {
-		const ime_cb = GodotRuntime.get_func(p_ime_cb);
-		const key_cb = GodotRuntime.get_func(p_key_cb);
-		GodotIME.init(ime_cb, key_cb, code, key);
+	redot_js_set_ime_cb__proxy: 'sync',
+	redot_js_set_ime_cb__sig: 'viiii',
+	redot_js_set_ime_cb: function (p_ime_cb, p_key_cb, code, key) {
+		const ime_cb = RedotRuntime.get_func(p_ime_cb);
+		const key_cb = RedotRuntime.get_func(p_key_cb);
+		RedotIME.init(ime_cb, key_cb, code, key);
 	},
 
-	godot_js_is_ime_focused__proxy: 'sync',
-	godot_js_is_ime_focused__sig: 'i',
-	godot_js_is_ime_focused: function () {
-		return GodotIME.active;
+	redot_js_is_ime_focused__proxy: 'sync',
+	redot_js_is_ime_focused__sig: 'i',
+	redot_js_is_ime_focused: function () {
+		return RedotIME.active;
 	},
 
 	/*
 	 * Gamepad API
 	 */
-	godot_js_input_gamepad_cb__proxy: 'sync',
-	godot_js_input_gamepad_cb__sig: 'vi',
-	godot_js_input_gamepad_cb: function (change_cb) {
-		const onchange = GodotRuntime.get_func(change_cb);
-		GodotInputGamepads.init(onchange);
+	redot_js_input_gamepad_cb__proxy: 'sync',
+	redot_js_input_gamepad_cb__sig: 'vi',
+	redot_js_input_gamepad_cb: function (change_cb) {
+		const onchange = RedotRuntime.get_func(change_cb);
+		RedotInputGamepads.init(onchange);
 	},
 
-	godot_js_input_gamepad_sample_count__proxy: 'sync',
-	godot_js_input_gamepad_sample_count__sig: 'i',
-	godot_js_input_gamepad_sample_count: function () {
-		return GodotInputGamepads.get_samples().length;
+	redot_js_input_gamepad_sample_count__proxy: 'sync',
+	redot_js_input_gamepad_sample_count__sig: 'i',
+	redot_js_input_gamepad_sample_count: function () {
+		return RedotInputGamepads.get_samples().length;
 	},
 
-	godot_js_input_gamepad_sample__proxy: 'sync',
-	godot_js_input_gamepad_sample__sig: 'i',
-	godot_js_input_gamepad_sample: function () {
-		GodotInputGamepads.sample();
+	redot_js_input_gamepad_sample__proxy: 'sync',
+	redot_js_input_gamepad_sample__sig: 'i',
+	redot_js_input_gamepad_sample: function () {
+		RedotInputGamepads.sample();
 		return 0;
 	},
 
-	godot_js_input_gamepad_sample_get__proxy: 'sync',
-	godot_js_input_gamepad_sample_get__sig: 'iiiiiii',
-	godot_js_input_gamepad_sample_get: function (p_index, r_btns, r_btns_num, r_axes, r_axes_num, r_standard) {
-		const sample = GodotInputGamepads.get_sample(p_index);
+	redot_js_input_gamepad_sample_get__proxy: 'sync',
+	redot_js_input_gamepad_sample_get__sig: 'iiiiiii',
+	redot_js_input_gamepad_sample_get: function (p_index, r_btns, r_btns_num, r_axes, r_axes_num, r_standard) {
+		const sample = RedotInputGamepads.get_sample(p_index);
 		if (!sample || !sample.connected) {
 			return 1;
 		}
 		const btns = sample.buttons;
 		const btns_len = btns.length < 16 ? btns.length : 16;
 		for (let i = 0; i < btns_len; i++) {
-			GodotRuntime.setHeapValue(r_btns + (i << 2), btns[i], 'float');
+			RedotRuntime.setHeapValue(r_btns + (i << 2), btns[i], 'float');
 		}
-		GodotRuntime.setHeapValue(r_btns_num, btns_len, 'i32');
+		RedotRuntime.setHeapValue(r_btns_num, btns_len, 'i32');
 		const axes = sample.axes;
 		const axes_len = axes.length < 10 ? axes.length : 10;
 		for (let i = 0; i < axes_len; i++) {
-			GodotRuntime.setHeapValue(r_axes + (i << 2), axes[i], 'float');
+			RedotRuntime.setHeapValue(r_axes + (i << 2), axes[i], 'float');
 		}
-		GodotRuntime.setHeapValue(r_axes_num, axes_len, 'i32');
+		RedotRuntime.setHeapValue(r_axes_num, axes_len, 'i32');
 		const is_standard = sample.standard ? 1 : 0;
-		GodotRuntime.setHeapValue(r_standard, is_standard, 'i32');
+		RedotRuntime.setHeapValue(r_standard, is_standard, 'i32');
 		return 0;
 	},
 
 	/*
 	 * Drag/Drop API
 	 */
-	godot_js_input_drop_files_cb__proxy: 'sync',
-	godot_js_input_drop_files_cb__sig: 'vi',
-	godot_js_input_drop_files_cb: function (callback) {
-		const func = GodotRuntime.get_func(callback);
+	redot_js_input_drop_files_cb__proxy: 'sync',
+	redot_js_input_drop_files_cb__sig: 'vi',
+	redot_js_input_drop_files_cb: function (callback) {
+		const func = RedotRuntime.get_func(callback);
 		const dropFiles = function (files) {
 			const args = files || [];
 			if (!args.length) {
 				return;
 			}
 			const argc = args.length;
-			const argv = GodotRuntime.allocStringArray(args);
+			const argv = RedotRuntime.allocStringArray(args);
 			func(argv, argc);
-			GodotRuntime.freeStringArray(argv, argc);
+			RedotRuntime.freeStringArray(argv, argc);
 		};
-		const canvas = GodotConfig.canvas;
-		GodotEventListeners.add(canvas, 'dragover', function (ev) {
+		const canvas = RedotConfig.canvas;
+		RedotEventListeners.add(canvas, 'dragover', function (ev) {
 			// Prevent default behavior (which would try to open the file(s))
 			ev.preventDefault();
 		}, false);
-		GodotEventListeners.add(canvas, 'drop', GodotInputDragDrop.handler(dropFiles));
+		RedotEventListeners.add(canvas, 'drop', RedotInputDragDrop.handler(dropFiles));
 	},
 
 	/* Paste API */
-	godot_js_input_paste_cb__proxy: 'sync',
-	godot_js_input_paste_cb__sig: 'vi',
-	godot_js_input_paste_cb: function (callback) {
-		const func = GodotRuntime.get_func(callback);
-		GodotEventListeners.add(window, 'paste', function (evt) {
+	redot_js_input_paste_cb__proxy: 'sync',
+	redot_js_input_paste_cb__sig: 'vi',
+	redot_js_input_paste_cb: function (callback) {
+		const func = RedotRuntime.get_func(callback);
+		RedotEventListeners.add(window, 'paste', function (evt) {
 			const text = evt.clipboardData.getData('text');
-			const ptr = GodotRuntime.allocString(text);
+			const ptr = RedotRuntime.allocString(text);
 			func(ptr);
-			GodotRuntime.free(ptr);
+			RedotRuntime.free(ptr);
 		}, false);
 	},
 
-	godot_js_input_vibrate_handheld__proxy: 'sync',
-	godot_js_input_vibrate_handheld__sig: 'vi',
-	godot_js_input_vibrate_handheld: function (p_duration_ms) {
+	redot_js_input_vibrate_handheld__proxy: 'sync',
+	redot_js_input_vibrate_handheld__sig: 'vi',
+	redot_js_input_vibrate_handheld: function (p_duration_ms) {
 		if (typeof navigator.vibrate !== 'function') {
-			GodotRuntime.print('This browser does not support vibration.');
+			RedotRuntime.print('This browser does not support vibration.');
 		} else {
 			navigator.vibrate(p_duration_ms);
 		}
 	},
 };
 
-autoAddDeps(GodotInput, '$GodotInput');
-mergeInto(LibraryManager.library, GodotInput);
+autoAddDeps(RedotInput, '$RedotInput');
+mergeInto(LibraryManager.library, RedotInput);

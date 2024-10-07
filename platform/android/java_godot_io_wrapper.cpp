@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  java_godot_io_wrapper.cpp                                             */
+/*  java_redot_io_wrapper.cpp                                             */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -28,7 +27,7 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#include "java_godot_io_wrapper.h"
+#include "java_redot_io_wrapper.h"
 
 #include "core/error/error_list.h"
 #include "core/math/rect2.h"
@@ -36,13 +35,13 @@
 
 // JNIEnv is only valid within the thread it belongs to, in a multi threading environment
 // we can't cache it.
-// For GodotIO we call all access methods from our thread and we thus get a valid JNIEnv
+// For RedotIO we call all access methods from our thread and we thus get a valid JNIEnv
 // from get_jni_env().
 
-GodotIOJavaWrapper::GodotIOJavaWrapper(JNIEnv *p_env, jobject p_godot_io_instance) {
-	godot_io_instance = p_env->NewGlobalRef(p_godot_io_instance);
-	if (godot_io_instance) {
-		cls = p_env->GetObjectClass(godot_io_instance);
+RedotIOJavaWrapper::RedotIOJavaWrapper(JNIEnv *p_env, jobject p_redot_io_instance) {
+	redot_io_instance = p_env->NewGlobalRef(p_redot_io_instance);
+	if (redot_io_instance) {
+		cls = p_env->GetObjectClass(redot_io_instance);
 		if (cls) {
 			cls = (jclass)p_env->NewGlobalRef(cls);
 		} else {
@@ -69,24 +68,24 @@ GodotIOJavaWrapper::GodotIOJavaWrapper(JNIEnv *p_env, jobject p_godot_io_instanc
 	}
 }
 
-GodotIOJavaWrapper::~GodotIOJavaWrapper() {
+RedotIOJavaWrapper::~RedotIOJavaWrapper() {
 	JNIEnv *env = get_jni_env();
 	ERR_FAIL_NULL(env);
 
 	env->DeleteGlobalRef(cls);
-	env->DeleteGlobalRef(godot_io_instance);
+	env->DeleteGlobalRef(redot_io_instance);
 }
 
-jobject GodotIOJavaWrapper::get_instance() {
-	return godot_io_instance;
+jobject RedotIOJavaWrapper::get_instance() {
+	return redot_io_instance;
 }
 
-Error GodotIOJavaWrapper::open_uri(const String &p_uri) {
+Error RedotIOJavaWrapper::open_uri(const String &p_uri) {
 	if (_open_URI) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_NULL_V(env, ERR_UNAVAILABLE);
 		jstring jStr = env->NewStringUTF(p_uri.utf8().get_data());
-		Error result = env->CallIntMethod(godot_io_instance, _open_URI, jStr) ? ERR_CANT_OPEN : OK;
+		Error result = env->CallIntMethod(redot_io_instance, _open_URI, jStr) ? ERR_CANT_OPEN : OK;
 		env->DeleteLocalRef(jStr);
 		return result;
 	} else {
@@ -94,89 +93,89 @@ Error GodotIOJavaWrapper::open_uri(const String &p_uri) {
 	}
 }
 
-String GodotIOJavaWrapper::get_cache_dir() {
+String RedotIOJavaWrapper::get_cache_dir() {
 	if (_get_cache_dir) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_NULL_V(env, String());
-		jstring s = (jstring)env->CallObjectMethod(godot_io_instance, _get_cache_dir);
+		jstring s = (jstring)env->CallObjectMethod(redot_io_instance, _get_cache_dir);
 		return jstring_to_string(s, env);
 	} else {
 		return String();
 	}
 }
 
-String GodotIOJavaWrapper::get_user_data_dir() {
+String RedotIOJavaWrapper::get_user_data_dir() {
 	if (_get_data_dir) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_NULL_V(env, String());
-		jstring s = (jstring)env->CallObjectMethod(godot_io_instance, _get_data_dir);
+		jstring s = (jstring)env->CallObjectMethod(redot_io_instance, _get_data_dir);
 		return jstring_to_string(s, env);
 	} else {
 		return String();
 	}
 }
 
-String GodotIOJavaWrapper::get_locale() {
+String RedotIOJavaWrapper::get_locale() {
 	if (_get_locale) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_NULL_V(env, String());
-		jstring s = (jstring)env->CallObjectMethod(godot_io_instance, _get_locale);
+		jstring s = (jstring)env->CallObjectMethod(redot_io_instance, _get_locale);
 		return jstring_to_string(s, env);
 	} else {
 		return String();
 	}
 }
 
-String GodotIOJavaWrapper::get_model() {
+String RedotIOJavaWrapper::get_model() {
 	if (_get_model) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_NULL_V(env, String());
-		jstring s = (jstring)env->CallObjectMethod(godot_io_instance, _get_model);
+		jstring s = (jstring)env->CallObjectMethod(redot_io_instance, _get_model);
 		return jstring_to_string(s, env);
 	} else {
 		return String();
 	}
 }
 
-int GodotIOJavaWrapper::get_screen_dpi() {
+int RedotIOJavaWrapper::get_screen_dpi() {
 	if (_get_screen_DPI) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_NULL_V(env, 160);
-		return env->CallIntMethod(godot_io_instance, _get_screen_DPI);
+		return env->CallIntMethod(redot_io_instance, _get_screen_DPI);
 	} else {
 		return 160;
 	}
 }
 
-float GodotIOJavaWrapper::get_scaled_density() {
+float RedotIOJavaWrapper::get_scaled_density() {
 	if (_get_scaled_density) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_NULL_V(env, 1.0f);
-		return env->CallFloatMethod(godot_io_instance, _get_scaled_density);
+		return env->CallFloatMethod(redot_io_instance, _get_scaled_density);
 	} else {
 		return 1.0f;
 	}
 }
 
-float GodotIOJavaWrapper::get_screen_refresh_rate(float fallback) {
+float RedotIOJavaWrapper::get_screen_refresh_rate(float fallback) {
 	if (_get_screen_refresh_rate) {
 		JNIEnv *env = get_jni_env();
 		if (env == nullptr) {
 			ERR_PRINT("An error occurred while trying to get screen refresh rate.");
 			return fallback;
 		}
-		return (float)env->CallDoubleMethod(godot_io_instance, _get_screen_refresh_rate, (double)fallback);
+		return (float)env->CallDoubleMethod(redot_io_instance, _get_screen_refresh_rate, (double)fallback);
 	}
 	ERR_PRINT("An error occurred while trying to get the screen refresh rate.");
 	return fallback;
 }
 
-TypedArray<Rect2> GodotIOJavaWrapper::get_display_cutouts() {
+TypedArray<Rect2> RedotIOJavaWrapper::get_display_cutouts() {
 	TypedArray<Rect2> result;
 	ERR_FAIL_NULL_V(_get_display_cutouts, result);
 	JNIEnv *env = get_jni_env();
 	ERR_FAIL_NULL_V(env, result);
-	jintArray returnArray = (jintArray)env->CallObjectMethod(godot_io_instance, _get_display_cutouts);
+	jintArray returnArray = (jintArray)env->CallObjectMethod(redot_io_instance, _get_display_cutouts);
 	jint arrayLength = env->GetArrayLength(returnArray);
 	jint *arrayBody = env->GetIntArrayElements(returnArray, JNI_FALSE);
 	int cutouts = arrayLength / 4;
@@ -192,12 +191,12 @@ TypedArray<Rect2> GodotIOJavaWrapper::get_display_cutouts() {
 	return result;
 }
 
-Rect2i GodotIOJavaWrapper::get_display_safe_area() {
+Rect2i RedotIOJavaWrapper::get_display_safe_area() {
 	Rect2i result;
 	ERR_FAIL_NULL_V(_get_display_safe_area, result);
 	JNIEnv *env = get_jni_env();
 	ERR_FAIL_NULL_V(env, result);
-	jintArray returnArray = (jintArray)env->CallObjectMethod(godot_io_instance, _get_display_safe_area);
+	jintArray returnArray = (jintArray)env->CallObjectMethod(redot_io_instance, _get_display_safe_area);
 	ERR_FAIL_COND_V(env->GetArrayLength(returnArray) != 4, result);
 	jint *arrayBody = env->GetIntArrayElements(returnArray, JNI_FALSE);
 	result = Rect2i(arrayBody[0], arrayBody[1], arrayBody[2], arrayBody[3]);
@@ -205,62 +204,62 @@ Rect2i GodotIOJavaWrapper::get_display_safe_area() {
 	return result;
 }
 
-String GodotIOJavaWrapper::get_unique_id() {
+String RedotIOJavaWrapper::get_unique_id() {
 	if (_get_unique_id) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_NULL_V(env, String());
-		jstring s = (jstring)env->CallObjectMethod(godot_io_instance, _get_unique_id);
+		jstring s = (jstring)env->CallObjectMethod(redot_io_instance, _get_unique_id);
 		return jstring_to_string(s, env);
 	} else {
 		return String();
 	}
 }
 
-bool GodotIOJavaWrapper::has_vk() {
+bool RedotIOJavaWrapper::has_vk() {
 	return (_show_keyboard != nullptr) && (_hide_keyboard != nullptr);
 }
 
-void GodotIOJavaWrapper::show_vk(const String &p_existing, int p_type, int p_max_input_length, int p_cursor_start, int p_cursor_end) {
+void RedotIOJavaWrapper::show_vk(const String &p_existing, int p_type, int p_max_input_length, int p_cursor_start, int p_cursor_end) {
 	if (_show_keyboard) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_NULL(env);
 		jstring jStr = env->NewStringUTF(p_existing.utf8().get_data());
-		env->CallVoidMethod(godot_io_instance, _show_keyboard, jStr, p_type, p_max_input_length, p_cursor_start, p_cursor_end);
+		env->CallVoidMethod(redot_io_instance, _show_keyboard, jStr, p_type, p_max_input_length, p_cursor_start, p_cursor_end);
 		env->DeleteLocalRef(jStr);
 	}
 }
 
-void GodotIOJavaWrapper::hide_vk() {
+void RedotIOJavaWrapper::hide_vk() {
 	if (_hide_keyboard) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_NULL(env);
-		env->CallVoidMethod(godot_io_instance, _hide_keyboard);
+		env->CallVoidMethod(redot_io_instance, _hide_keyboard);
 	}
 }
 
-void GodotIOJavaWrapper::set_screen_orientation(int p_orient) {
+void RedotIOJavaWrapper::set_screen_orientation(int p_orient) {
 	if (_set_screen_orientation) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_NULL(env);
-		env->CallVoidMethod(godot_io_instance, _set_screen_orientation, p_orient);
+		env->CallVoidMethod(redot_io_instance, _set_screen_orientation, p_orient);
 	}
 }
 
-int GodotIOJavaWrapper::get_screen_orientation() {
+int RedotIOJavaWrapper::get_screen_orientation() {
 	if (_get_screen_orientation) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_NULL_V(env, 0);
-		return env->CallIntMethod(godot_io_instance, _get_screen_orientation);
+		return env->CallIntMethod(redot_io_instance, _get_screen_orientation);
 	} else {
 		return 0;
 	}
 }
 
-String GodotIOJavaWrapper::get_system_dir(int p_dir, bool p_shared_storage) {
+String RedotIOJavaWrapper::get_system_dir(int p_dir, bool p_shared_storage) {
 	if (_get_system_dir) {
 		JNIEnv *env = get_jni_env();
 		ERR_FAIL_NULL_V(env, String("."));
-		jstring s = (jstring)env->CallObjectMethod(godot_io_instance, _get_system_dir, p_dir, p_shared_storage);
+		jstring s = (jstring)env->CallObjectMethod(redot_io_instance, _get_system_dir, p_dir, p_shared_storage);
 		return jstring_to_string(s, env);
 	} else {
 		return String(".");
@@ -271,10 +270,10 @@ String GodotIOJavaWrapper::get_system_dir(int p_dir, bool p_shared_storage) {
 // ensure the change is immediately visible to other threads.
 static SafeNumeric<int> virtual_keyboard_height;
 
-int GodotIOJavaWrapper::get_vk_height() {
+int RedotIOJavaWrapper::get_vk_height() {
 	return virtual_keyboard_height.get();
 }
 
-void GodotIOJavaWrapper::set_vk_height(int p_height) {
+void RedotIOJavaWrapper::set_vk_height(int p_height) {
 	virtual_keyboard_height.set(p_height);
 }

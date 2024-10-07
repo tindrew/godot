@@ -11,9 +11,9 @@ packaging macOS export templates.
 
 ## Documentation
 
-- [Compiling for macOS](https://docs.godotengine.org/en/latest/contributing/development/compiling/compiling_for_macos.html)
+- [Compiling for macOS](https://docs.redotengine.org/en/latest/contributing/development/compiling/compiling_for_macos.html)
   - Instructions on building this platform port from source.
-- [Exporting for macOS](https://docs.godotengine.org/en/latest/tutorials/export/exporting_for_macos.html)
+- [Exporting for macOS](https://docs.redotengine.org/en/latest/tutorials/export/exporting_for_macos.html)
   - Instructions on using the compiled export templates to export a project.
-- [Running Godot apps on macOS](https://docs.godotengine.org/en/latest/tutorials/export/running_on_macos.html)
-  - Instructions on running Godot projects on macOS.
+- [Running Redot apps on macOS](https://docs.redotengine.org/en/latest/tutorials/export/running_on_macos.html)
+  - Instructions on running Redot projects on macOS.

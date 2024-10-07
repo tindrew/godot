@@ -7,7 +7,7 @@ const pluginReference = require('eslint-plugin-html');
 const stylistic = require('@stylistic/eslint-plugin');
 
 if (process && process.env && process.env.npm_command && !fs.existsSync('./platform/web/eslint.config.cjs')) {
-	throw Error('eslint must be run from the Godot project root folder');
+	throw Error('eslint must be run from the Redot project root folder');
 }
 
 const emscriptenGlobals = {
@@ -129,7 +129,7 @@ module.exports = [
 			globals: {
 				...globals.browser,
 				'Features': true,
-				'Godot': true,
+				'Redot': true,
 				'InternalConfig': true,
 				'Preloader': true,
 			},
@@ -143,12 +143,12 @@ module.exports = [
 			globals: {
 				...globals.browser,
 				...emscriptenGlobals,
-				'GodotConfig': true,
-				'GodotEventListeners': true,
-				'GodotFS': true,
-				'GodotOS': true,
-				'GodotAudio': true,
-				'GodotRuntime': true,
+				'RedotConfig': true,
+				'RedotEventListeners': true,
+				'RedotFS': true,
+				'RedotOS': true,
+				'RedotAudio': true,
+				'RedotRuntime': true,
 				'IDHandler': true,
 				'XRWebGLLayer': true,
 			},
@@ -161,9 +161,9 @@ module.exports = [
 		languageOptions: {
 			globals: {
 				...globals.browser,
-				'___GODOT_CACHE___': true,
-				'___GODOT_ENSURE_CROSSORIGIN_ISOLATION_HEADERS___': true,
-				'___GODOT_OPT_CACHE___': true,
+				'___redot_CACHE___': true,
+				'___redot_ENSURE_CROSSORIGIN_ISOLATION_HEADERS___': true,
+				'___redot_OPT_CACHE___': true,
 			},
 		},
 	},
@@ -180,10 +180,10 @@ module.exports = [
 			globals: {
 				...globals.browser,
 				'Engine': true,
-				'$GODOT_CONFIG': true,
-				'$GODOT_PROJECT_NAME': true,
-				'$GODOT_THREADS_ENABLED': true,
-				'___GODOT_THREADS_ENABLED___': true,
+				'$redot_CONFIG': true,
+				'$redot_PROJECT_NAME': true,
+				'$redot_THREADS_ENABLED': true,
+				'___redot_THREADS_ENABLED___': true,
 			},
 		},
 		rules: {

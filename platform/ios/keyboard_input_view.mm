@@ -2,11 +2,10 @@
 /*  keyboard_input_view.mm                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -35,20 +34,20 @@
 
 #include "core/os/keyboard.h"
 
-@interface GodotKeyboardInputView () <UITextViewDelegate>
+@interface RedotKeyboardInputView () <UITextViewDelegate>
 
 @property(nonatomic, copy) NSString *previousText;
 @property(nonatomic, assign) NSRange previousSelectedRange;
 
 @end
 
-@implementation GodotKeyboardInputView
+@implementation RedotKeyboardInputView
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
 	self = [super initWithCoder:coder];
 
 	if (self) {
-		[self godot_commonInit];
+		[self redot_commonInit];
 	}
 
 	return self;
@@ -58,13 +57,13 @@
 	self = [super initWithFrame:frame textContainer:textContainer];
 
 	if (self) {
-		[self godot_commonInit];
+		[self redot_commonInit];
 	}
 
 	return self;
 }
 
-- (void)godot_commonInit {
+- (void)redot_commonInit {
 	self.hidden = YES;
 	self.delegate = self;
 

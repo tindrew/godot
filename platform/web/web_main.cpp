@@ -2,11 +2,10 @@
 /*  web_main.cpp                                                          */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -29,7 +28,7 @@
 /**************************************************************************/
 
 #include "display_server_web.h"
-#include "godot_js.h"
+#include "redot_js.h"
 #include "os_web.h"
 
 #include "core/config/engine.h"
@@ -96,12 +95,12 @@ void main_loop_callback() {
 	if (os->main_loop_iterate()) {
 		emscripten_cancel_main_loop(); // Cancel current loop and set the cleanup one.
 		emscripten_set_main_loop(exit_callback, -1, false);
-		godot_js_os_finish_async(cleanup_after_sync);
+		redot_js_os_finish_async(cleanup_after_sync);
 	}
 }
 
 /// When calling main, it is assumed FS is setup and synced.
-extern EMSCRIPTEN_KEEPALIVE int godot_web_main(int argc, char *argv[]) {
+extern EMSCRIPTEN_KEEPALIVE int redot_web_main(int argc, char *argv[]) {
 	os = new OS_Web();
 
 	// We must override main when testing is enabled
@@ -113,7 +112,7 @@ extern EMSCRIPTEN_KEEPALIVE int godot_web_main(int argc, char *argv[]) {
 	if (err != OK) {
 		// Will only exit after sync.
 		emscripten_set_main_loop(exit_callback, -1, false);
-		godot_js_os_finish_async(cleanup_after_sync);
+		redot_js_os_finish_async(cleanup_after_sync);
 		if (err == ERR_HELP) { // Returned by --help and --version, so success.
 			return EXIT_SUCCESS;
 		}

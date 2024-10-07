@@ -2,11 +2,10 @@
 /*  export_plugin.h                                                       */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -31,7 +30,7 @@
 #ifndef IOS_EXPORT_PLUGIN_H
 #define IOS_EXPORT_PLUGIN_H
 
-#include "godot_plugin_config.h"
+#include "redot_plugin_config.h"
 
 #include "core/config/project_settings.h"
 #include "core/io/file_access.h"
@@ -52,8 +51,8 @@
 
 // Optional environment variables for defining confidential information. If any
 // of these is set, they will override the values set in the credentials file.
-const String ENV_IOS_PROFILE_UUID_DEBUG = "GODOT_IOS_PROVISIONING_PROFILE_UUID_DEBUG";
-const String ENV_IOS_PROFILE_UUID_RELEASE = "GODOT_IOS_PROVISIONING_PROFILE_UUID_RELEASE";
+const String ENV_IOS_PROFILE_UUID_DEBUG = "redot_IOS_PROVISIONING_PROFILE_UUID_DEBUG";
+const String ENV_IOS_PROFILE_UUID_RELEASE = "redot_IOS_PROVISIONING_PROFILE_UUID_RELEASE";
 
 class EditorExportPlatformIOS : public EditorExportPlatform {
 	GDCLASS(EditorExportPlatformIOS, EditorExportPlatform);

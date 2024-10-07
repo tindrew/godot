@@ -2,11 +2,10 @@
 /*  wayland_thread.cpp                                                    */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -103,7 +102,7 @@ int WaylandThread::_allocate_shm_file(size_t size) {
 
 	do {
 		// Generate a random name.
-		char name[] = "/wl_shm-godot-XXXXXX";
+		char name[] = "/wl_shm-redot-XXXXXX";
 		for (long unsigned int i = sizeof(name) - 7; i < sizeof(name) - 1; i++) {
 			name[i] = Math::random('A', 'Z');
 		}
@@ -405,7 +404,7 @@ void WaylandThread::_wl_registry_on_global(void *data, struct wl_registry *wl_re
 
 	if (strcmp(interface, wl_output_interface.name) == 0) {
 		struct wl_output *wl_output = (struct wl_output *)wl_registry_bind(wl_registry, name, &wl_output_interface, CLAMP((int)version, 1, 4));
-		wl_proxy_tag_godot((struct wl_proxy *)wl_output);
+		wl_proxy_tag_redot((struct wl_proxy *)wl_output);
 
 		registry->wl_outputs.push_back(wl_output);
 
@@ -413,14 +412,14 @@ void WaylandThread::_wl_registry_on_global(void *data, struct wl_registry *wl_re
 		ss->wl_output_name = name;
 		ss->wayland_thread = registry->wayland_thread;
 
-		wl_proxy_tag_godot((struct wl_proxy *)wl_output);
+		wl_proxy_tag_redot((struct wl_proxy *)wl_output);
 		wl_output_add_listener(wl_output, &wl_output_listener, ss);
 		return;
 	}
 
 	if (strcmp(interface, wl_seat_interface.name) == 0) {
 		struct wl_seat *wl_seat = (struct wl_seat *)wl_registry_bind(wl_registry, name, &wl_seat_interface, CLAMP((int)version, 1, 9));
-		wl_proxy_tag_godot((struct wl_proxy *)wl_seat);
+		wl_proxy_tag_redot((struct wl_proxy *)wl_seat);
 
 		SeatState *ss = memnew(SeatState);
 		ss->wl_seat = wl_seat;
@@ -938,7 +937,7 @@ void WaylandThread::_wl_registry_on_global_remove(void *data, struct wl_registry
 }
 
 void WaylandThread::_wl_surface_on_enter(void *data, struct wl_surface *wl_surface, struct wl_output *wl_output) {
-	if (!wl_output || !wl_proxy_is_godot((struct wl_proxy *)wl_output)) {
+	if (!wl_output || !wl_proxy_is_redot((struct wl_proxy *)wl_output)) {
 		// This won't have the right data bound to it. Not worth it and would probably
 		// just break everything.
 		return;
@@ -986,7 +985,7 @@ void WaylandThread::_frame_wl_callback_on_done(void *data, struct wl_callback *w
 }
 
 void WaylandThread::_wl_surface_on_leave(void *data, struct wl_surface *wl_surface, struct wl_output *wl_output) {
-	if (!wl_output || !wl_proxy_is_godot((struct wl_proxy *)wl_output)) {
+	if (!wl_output || !wl_proxy_is_redot((struct wl_proxy *)wl_output)) {
 		// This won't have the right data bound to it. Not worth it and would probably
 		// just break everything.
 		return;
@@ -1360,7 +1359,7 @@ void WaylandThread::_cursor_frame_callback_on_done(void *data, struct wl_callbac
 }
 
 void WaylandThread::_wl_pointer_on_enter(void *data, struct wl_pointer *wl_pointer, uint32_t serial, struct wl_surface *surface, wl_fixed_t surface_x, wl_fixed_t surface_y) {
-	if (!surface || !wl_proxy_is_godot((struct wl_proxy *)surface)) {
+	if (!surface || !wl_proxy_is_redot((struct wl_proxy *)surface)) {
 		return;
 	}
 
@@ -1384,7 +1383,7 @@ void WaylandThread::_wl_pointer_on_enter(void *data, struct wl_pointer *wl_point
 }
 
 void WaylandThread::_wl_pointer_on_leave(void *data, struct wl_pointer *wl_pointer, uint32_t serial, struct wl_surface *surface) {
-	if (!surface || !wl_proxy_is_godot((struct wl_proxy *)surface)) {
+	if (!surface || !wl_proxy_is_redot((struct wl_proxy *)surface)) {
 		return;
 	}
 
@@ -1891,7 +1890,7 @@ void WaylandThread::_wl_keyboard_on_repeat_info(void *data, struct wl_keyboard *
 
 // NOTE: Don't forget to `memfree` the offer's state.
 void WaylandThread::_wl_data_device_on_data_offer(void *data, struct wl_data_device *wl_data_device, struct wl_data_offer *id) {
-	wl_proxy_tag_godot((struct wl_proxy *)id);
+	wl_proxy_tag_redot((struct wl_proxy *)id);
 	wl_data_offer_add_listener(id, &wl_data_offer_listener, memnew(OfferState));
 }
 
@@ -1902,7 +1901,7 @@ void WaylandThread::_wl_data_device_on_enter(void *data, struct wl_data_device *
 	ss->dnd_enter_serial = serial;
 	ss->wl_data_offer_dnd = id;
 
-	// Godot only supports DnD file copying for now.
+	// Redot only supports DnD file copying for now.
 	wl_data_offer_accept(id, serial, "text/uri-list");
 	wl_data_offer_set_actions(id, WL_DATA_DEVICE_MANAGER_DND_ACTION_COPY, WL_DATA_DEVICE_MANAGER_DND_ACTION_COPY);
 }
@@ -2115,7 +2114,7 @@ void WaylandThread::_wp_pointer_gesture_pinch_on_update(void *data, struct zwp_p
 		magnify_msg.instantiate();
 		magnify_msg->event = mg;
 
-		// Since Wayland allows only one gesture at a time and godot instead expects
+		// Since Wayland allows only one gesture at a time and redot instead expects
 		// both of them, we'll have to create two separate input events: one for
 		// magnification and one for panning.
 
@@ -2153,7 +2152,7 @@ void WaylandThread::_wp_pointer_gesture_pinch_on_end(void *data, struct zwp_poin
 
 // NOTE: Don't forget to `memfree` the offer's state.
 void WaylandThread::_wp_primary_selection_device_on_data_offer(void *data, struct zwp_primary_selection_device_v1 *wp_primary_selection_device_v1, struct zwp_primary_selection_offer_v1 *offer) {
-	wl_proxy_tag_godot((struct wl_proxy *)offer);
+	wl_proxy_tag_redot((struct wl_proxy *)offer);
 	zwp_primary_selection_offer_v1_add_listener(offer, &wp_primary_selection_offer_listener, memnew(OfferState));
 }
 
@@ -2233,7 +2232,7 @@ void WaylandThread::_wp_tablet_seat_on_tool_added(void *data, struct zwp_tablet_
 	TabletToolState *state = memnew(TabletToolState);
 	state->wl_seat = ss->wl_seat;
 
-	wl_proxy_tag_godot((struct wl_proxy *)id);
+	wl_proxy_tag_redot((struct wl_proxy *)id);
 	zwp_tablet_tool_v2_add_listener(id, &wp_tablet_tool_listener, state);
 
 	ss->tablet_tools.push_back(id);
@@ -2288,7 +2287,7 @@ void WaylandThread::_wp_tablet_tool_on_removed(void *data, struct zwp_tablet_too
 }
 
 void WaylandThread::_wp_tablet_tool_on_proximity_in(void *data, struct zwp_tablet_tool_v2 *wp_tablet_tool_v2, uint32_t serial, struct zwp_tablet_v2 *tablet, struct wl_surface *surface) {
-	if (!surface || !wl_proxy_is_godot((struct wl_proxy *)surface)) {
+	if (!surface || !wl_proxy_is_redot((struct wl_proxy *)surface)) {
 		// We're probably on a decoration or something.
 		return;
 	}
@@ -2507,7 +2506,7 @@ void WaylandThread::_wp_tablet_tool_on_frame(void *data, struct zwp_tablet_tool_
 		mm->set_position(td.position);
 		mm->set_global_position(td.position);
 
-		// NOTE: The Godot API expects normalized values and we store them raw,
+		// NOTE: The Redot API expects normalized values and we store them raw,
 		// straight from the compositor, so we have to normalize them here.
 
 		// According to the tablet proto spec, tilt is expressed in degrees relative
@@ -2787,13 +2786,13 @@ struct wl_display *WaylandThread::get_wl_display() const {
 // aren't formatted as we like. This method is needed to detect whether a proxy
 // has our tag. Also, be careful! The proxy has to be manually tagged or it
 // won't be recognized.
-bool WaylandThread::wl_proxy_is_godot(struct wl_proxy *p_proxy) {
+bool WaylandThread::wl_proxy_is_redot(struct wl_proxy *p_proxy) {
 	ERR_FAIL_NULL_V(p_proxy, false);
 
 	return wl_proxy_get_tag(p_proxy) == &proxy_tag;
 }
 
-void WaylandThread::wl_proxy_tag_godot(struct wl_proxy *p_proxy) {
+void WaylandThread::wl_proxy_tag_redot(struct wl_proxy *p_proxy) {
 	ERR_FAIL_NULL(p_proxy);
 
 	wl_proxy_set_tag(p_proxy, &proxy_tag);
@@ -2802,7 +2801,7 @@ void WaylandThread::wl_proxy_tag_godot(struct wl_proxy *p_proxy) {
 // Returns the wl_surface's `WindowState`, otherwise `nullptr`.
 // NOTE: This will fail if the surface isn't tagged as ours.
 WaylandThread::WindowState *WaylandThread::wl_surface_get_window_state(struct wl_surface *p_surface) {
-	if (p_surface && wl_proxy_is_godot((wl_proxy *)p_surface)) {
+	if (p_surface && wl_proxy_is_redot((wl_proxy *)p_surface)) {
 		return (WindowState *)wl_surface_get_user_data(p_surface);
 	}
 
@@ -2812,7 +2811,7 @@ WaylandThread::WindowState *WaylandThread::wl_surface_get_window_state(struct wl
 // Returns the wl_outputs's `ScreenState`, otherwise `nullptr`.
 // NOTE: This will fail if the output isn't tagged as ours.
 WaylandThread::ScreenState *WaylandThread::wl_output_get_screen_state(struct wl_output *p_output) {
-	if (p_output && wl_proxy_is_godot((wl_proxy *)p_output)) {
+	if (p_output && wl_proxy_is_redot((wl_proxy *)p_output)) {
 		return (ScreenState *)wl_output_get_user_data(p_output);
 	}
 
@@ -2822,7 +2821,7 @@ WaylandThread::ScreenState *WaylandThread::wl_output_get_screen_state(struct wl_
 // Returns the wl_seat's `SeatState`, otherwise `nullptr`.
 // NOTE: This will fail if the output isn't tagged as ours.
 WaylandThread::SeatState *WaylandThread::wl_seat_get_seat_state(struct wl_seat *p_seat) {
-	if (p_seat && wl_proxy_is_godot((wl_proxy *)p_seat)) {
+	if (p_seat && wl_proxy_is_redot((wl_proxy *)p_seat)) {
 		return (SeatState *)wl_seat_get_user_data(p_seat);
 	}
 
@@ -2832,7 +2831,7 @@ WaylandThread::SeatState *WaylandThread::wl_seat_get_seat_state(struct wl_seat *
 // Returns the wp_tablet_tool's `TabletToolState`, otherwise `nullptr`.
 // NOTE: This will fail if the output isn't tagged as ours.
 WaylandThread::TabletToolState *WaylandThread::wp_tablet_tool_get_state(struct zwp_tablet_tool_v2 *p_tool) {
-	if (p_tool && wl_proxy_is_godot((wl_proxy *)p_tool)) {
+	if (p_tool && wl_proxy_is_redot((wl_proxy *)p_tool)) {
 		return (TabletToolState *)zwp_tablet_tool_v2_get_user_data(p_tool);
 	}
 
@@ -2841,7 +2840,7 @@ WaylandThread::TabletToolState *WaylandThread::wp_tablet_tool_get_state(struct z
 // Returns the wl_data_offer's `OfferState`, otherwise `nullptr`.
 // NOTE: This will fail if the output isn't tagged as ours.
 WaylandThread::OfferState *WaylandThread::wl_data_offer_get_offer_state(struct wl_data_offer *p_offer) {
-	if (p_offer && wl_proxy_is_godot((wl_proxy *)p_offer)) {
+	if (p_offer && wl_proxy_is_redot((wl_proxy *)p_offer)) {
 		return (OfferState *)wl_data_offer_get_user_data(p_offer);
 	}
 
@@ -2851,7 +2850,7 @@ WaylandThread::OfferState *WaylandThread::wl_data_offer_get_offer_state(struct w
 // Returns the wl_data_offer's `OfferState`, otherwise `nullptr`.
 // NOTE: This will fail if the output isn't tagged as ours.
 WaylandThread::OfferState *WaylandThread::wp_primary_selection_offer_get_offer_state(struct zwp_primary_selection_offer_v1 *p_offer) {
-	if (p_offer && wl_proxy_is_godot((wl_proxy *)p_offer)) {
+	if (p_offer && wl_proxy_is_redot((wl_proxy *)p_offer)) {
 		return (OfferState *)zwp_primary_selection_offer_v1_get_user_data(p_offer);
 	}
 
@@ -2877,7 +2876,7 @@ int WaylandThread::window_state_get_preferred_buffer_scale(WindowState *p_ws) {
 	int max_size = 1;
 
 	// ================================ IMPORTANT =================================
-	// NOTE: Due to a Godot limitation, we can't really rescale the whole UI yet.
+	// NOTE: Due to a Redot limitation, we can't really rescale the whole UI yet.
 	// Because of this reason, all platforms have resorted to forcing the highest
 	// scale possible of a system on any window, despite of what screen it's onto.
 	// On this backend everything's already in place for dynamic window scale
@@ -3220,7 +3219,7 @@ void WaylandThread::window_create(DisplayServer::WindowID p_window_id, int p_wid
 	ws.rect.size.height = p_height;
 
 	ws.wl_surface = wl_compositor_create_surface(registry.wl_compositor);
-	wl_proxy_tag_godot((struct wl_proxy *)ws.wl_surface);
+	wl_proxy_tag_redot((struct wl_proxy *)ws.wl_surface);
 	wl_surface_add_listener(ws.wl_surface, &wl_surface_listener, &ws);
 
 	if (registry.wp_viewporter) {
@@ -3651,7 +3650,7 @@ void WaylandThread::pointer_set_hint(const Point2i &p_hint) {
 
 	if (ws) {
 		// NOTE: It looks like it's not really recommended to convert from
-		// "godot-space" to "wayland-space" and in general I received mixed feelings
+		// "redot-space" to "wayland-space" and in general I received mixed feelings
 		// discussing about this. I'm not really sure about the maths behind this but,
 		// oh well, we're setting a cursor hint. ¯\_(ツ)_/¯
 		// See: https://oftc.irclog.whitequark.org/wayland/2023-08-23#1692756914-1692816818
@@ -4023,7 +4022,7 @@ Vector<uint8_t> WaylandThread::selection_get_mime(const String &p_mime) const {
 
 	if (ss->wl_data_source_selection) {
 		// We have a source so the stuff we're pasting is ours. We'll have to pass the
-		// data directly or we'd stall waiting for Godot (ourselves) to send us the
+		// data directly or we'd stall waiting for Redot (ourselves) to send us the
 		// data :P
 
 		OfferState *os = wl_data_offer_get_offer_state(ss->wl_data_offer_selection);
@@ -4066,7 +4065,7 @@ Vector<uint8_t> WaylandThread::primary_get_mime(const String &p_mime) const {
 
 	if (ss->wp_primary_selection_source) {
 		// We have a source so the stuff we're pasting is ours. We'll have to pass the
-		// data directly or we'd stall waiting for Godot (ourselves) to send us the
+		// data directly or we'd stall waiting for Redot (ourselves) to send us the
 		// data :P
 
 		OfferState *os = wp_primary_selection_offer_get_offer_state(ss->wp_primary_selection_offer);

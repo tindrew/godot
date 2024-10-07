@@ -17,11 +17,11 @@ ext.versions = [
 ]
 
 ext.getExportPackageName = { ->
-    // Retrieve the app id from the project property set by the Godot build command.
+    // Retrieve the app id from the project property set by the Redot build command.
     String appId = project.hasProperty("export_package_name") ? project.property("export_package_name") : ""
     // Check if the app id is valid, otherwise use the default.
     if (appId == null || appId.isEmpty()) {
-        appId = "com.godot.game"
+        appId = "com.redot.game"
     }
     return appId
 }
@@ -70,11 +70,11 @@ ext.getExportTargetSdkVersion = { ->
     }
 }
 
-ext.getGodotEditorVersion = { ->
-    String editorVersion = project.hasProperty("godot_editor_version") ? project.property("godot_editor_version") : ""
+ext.getRedotEditorVersion = { ->
+    String editorVersion = project.hasProperty("redot_editor_version") ? project.property("redot_editor_version") : ""
     if (editorVersion == null || editorVersion.isEmpty()) {
         // Try the library version first
-        editorVersion = getGodotLibraryVersionName()
+        editorVersion = getRedotLibraryVersionName()
 
         if (editorVersion.isEmpty()) {
             // Fallback value.
@@ -84,21 +84,21 @@ ext.getGodotEditorVersion = { ->
     return editorVersion
 }
 
-ext.getGodotLibraryVersionCode = { ->
+ext.getRedotLibraryVersionCode = { ->
     String versionName = ""
     int versionCode = 1
-    (versionName, versionCode) = getGodotLibraryVersion()
+    (versionName, versionCode) = getRedotLibraryVersion()
     return versionCode
 }
 
-ext.getGodotLibraryVersionName = { ->
+ext.getRedotLibraryVersionName = { ->
     String versionName = ""
     int versionCode = 1
-    (versionName, versionCode) = getGodotLibraryVersion()
+    (versionName, versionCode) = getRedotLibraryVersion()
     return versionName
 }
 
-ext.generateGodotLibraryVersion = { List<String> requiredKeys ->
+ext.generateRedotLibraryVersion = { List<String> requiredKeys ->
     // Attempt to read the version from the `version.py` file.
     String libraryVersionName = ""
     int libraryVersionCode = 0
@@ -175,16 +175,16 @@ ext.generateGodotLibraryVersion = { List<String> requiredKeys ->
     return [libraryVersionName, libraryVersionCode]
 }
 
-ext.getGodotLibraryVersion = { ->
+ext.getRedotLibraryVersion = { ->
     List<String> requiredKeys = ["major", "minor", "patch", "status", "module_config"]
-    return generateGodotLibraryVersion(requiredKeys)
+    return generateRedotLibraryVersion(requiredKeys)
 }
 
-ext.getGodotPublishVersion = { ->
+ext.getRedotPublishVersion = { ->
     List<String> requiredKeys = ["major", "minor", "patch", "status"]
     String versionName = ""
     int versionCode = 1
-    (versionName, versionCode) = generateGodotLibraryVersion(requiredKeys)
+    (versionName, versionCode) = generateRedotLibraryVersion(requiredKeys)
     if (!versionName.endsWith("stable")) {
         versionName += "-SNAPSHOT"
     }
@@ -219,7 +219,7 @@ ext.getExportPath = {
 ext.getExportFilename = {
     String exportFilename = project.hasProperty("export_filename") ? project.property("export_filename") : ""
     if (exportFilename == null || exportFilename.isEmpty()) {
-        exportFilename = "godot_android"
+        exportFilename = "redot_android"
     }
     return exportFilename
 }
@@ -252,7 +252,7 @@ ext.getExportFormat = {
  * Parse the project properties for the 'plugins_maven_repos' property and return the list
  * of maven repos.
  */
-ext.getGodotPluginsMavenRepos = { ->
+ext.getRedotPluginsMavenRepos = { ->
     Set<String> mavenRepos = []
 
     // Retrieve the list of maven repos.
@@ -272,7 +272,7 @@ ext.getGodotPluginsMavenRepos = { ->
  * Parse the project properties for the 'plugins_remote_binaries' property and return
  * it for inclusion in the build dependencies.
  */
-ext.getGodotPluginsRemoteBinaries = { ->
+ext.getRedotPluginsRemoteBinaries = { ->
     Set<String> remoteDeps = []
 
     // Retrieve the list of remote plugins binaries.
@@ -291,7 +291,7 @@ ext.getGodotPluginsRemoteBinaries = { ->
  * Parse the project properties for the 'plugins_local_binaries' property and return
  * their binaries for inclusion in the build dependencies.
  */
-ext.getGodotPluginsLocalBinaries = { ->
+ext.getRedotPluginsLocalBinaries = { ->
     Set<String> binDeps = []
 
     // Retrieve the list of local plugins binaries.

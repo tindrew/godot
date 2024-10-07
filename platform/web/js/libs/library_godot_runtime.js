@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  library_godot_runtime.js                                              */
+/*  library_redot_runtime.js                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -28,8 +27,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-const GodotRuntime = {
-	$GodotRuntime: {
+const RedotRuntime = {
+	$RedotRuntime: {
 		/*
 		 * Functions
 		 */
@@ -91,9 +90,9 @@ const GodotRuntime = {
 
 		parseStringArray: function (p_ptr, p_size) {
 			const strings = [];
-			const ptrs = GodotRuntime.heapSub(HEAP32, p_ptr, p_size); // TODO wasm64
+			const ptrs = RedotRuntime.heapSub(HEAP32, p_ptr, p_size); // TODO wasm64
 			ptrs.forEach(function (ptr) {
-				strings.push(GodotRuntime.parseString(ptr));
+				strings.push(RedotRuntime.parseString(ptr));
 			});
 			return strings;
 		},
@@ -103,26 +102,26 @@ const GodotRuntime = {
 		},
 
 		allocString: function (p_str) {
-			const length = GodotRuntime.strlen(p_str) + 1;
-			const c_str = GodotRuntime.malloc(length);
+			const length = RedotRuntime.strlen(p_str) + 1;
+			const c_str = RedotRuntime.malloc(length);
 			stringToUTF8(p_str, c_str, length);
 			return c_str;
 		},
 
 		allocStringArray: function (p_strings) {
 			const size = p_strings.length;
-			const c_ptr = GodotRuntime.malloc(size * 4);
+			const c_ptr = RedotRuntime.malloc(size * 4);
 			for (let i = 0; i < size; i++) {
-				HEAP32[(c_ptr >> 2) + i] = GodotRuntime.allocString(p_strings[i]);
+				HEAP32[(c_ptr >> 2) + i] = RedotRuntime.allocString(p_strings[i]);
 			}
 			return c_ptr;
 		},
 
 		freeStringArray: function (p_ptr, p_len) {
 			for (let i = 0; i < p_len; i++) {
-				GodotRuntime.free(HEAP32[(p_ptr >> 2) + i]);
+				RedotRuntime.free(HEAP32[(p_ptr >> 2) + i]);
 			}
-			GodotRuntime.free(p_ptr);
+			RedotRuntime.free(p_ptr);
 		},
 
 		stringToHeap: function (p_str, p_ptr, p_len) {
@@ -130,5 +129,5 @@ const GodotRuntime = {
 		},
 	},
 };
-autoAddDeps(GodotRuntime, '$GodotRuntime');
-mergeInto(LibraryManager.library, GodotRuntime);
+autoAddDeps(RedotRuntime, '$RedotRuntime');
+mergeInto(LibraryManager.library, RedotRuntime);

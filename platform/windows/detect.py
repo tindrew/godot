@@ -47,7 +47,7 @@ def try_cmd(test, prefix, arch, check_clang=False):
 def can_build():
     if os.name == "nt":
         # Building natively on Windows
-        # If VCINSTALLDIR is set in the OS environ, use traditional Godot logic to set up MSVC
+        # If VCINSTALLDIR is set in the OS environ, use traditional Redot logic to set up MSVC
         if os.getenv("VCINSTALLDIR"):  # MSVC, manual setup
             return True
 
@@ -163,7 +163,7 @@ def get_opts():
     # Direct3D 12 SDK dependencies folder.
     d3d12_deps_folder = os.getenv("LOCALAPPDATA")
     if d3d12_deps_folder:
-        d3d12_deps_folder = os.path.join(d3d12_deps_folder, "Godot", "build_deps")
+        d3d12_deps_folder = os.path.join(d3d12_deps_folder, "Redot", "build_deps")
     else:
         # Cross-compiling, the deps install script puts things in `bin`.
         # Getting an absolute path to it is a bit hacky in Python.
@@ -306,7 +306,7 @@ def setup_msvc_auto(env: "SConsEnvironment"):
     # Our x86_64 and arm64 are the same, and we need to map the 32-bit
     # architectures to other names since MSVC isn't as explicit.
     # The rest we don't need to worry about because they are
-    # aliases or aren't supported by Godot (itanium & ia64).
+    # aliases or aren't supported by Redot (itanium & ia64).
     msvc_arch_aliases = {"x86_32": "x86", "arm32": "arm"}
     if env["arch"] in msvc_arch_aliases.keys():
         env["TARGET_ARCH"] = msvc_arch_aliases[env["arch"]]
@@ -555,7 +555,7 @@ def configure_msvc(env: "SConsEnvironment", vcvars_msvc_config):
                 "The Direct3D 12 rendering driver requires dependencies to be installed.\n"
                 "You can install them by running `python misc\\scripts\\install_d3d12_sdk_windows.py`.\n"
                 "See the documentation for more information:\n\t"
-                "https://docs.godotengine.org/en/latest/contributing/development/compiling/compiling_for_windows.html"
+                "https://docs.redotengine.org/en/latest/contributing/development/compiling/compiling_for_windows.html"
             )
             sys.exit(255)
 
@@ -637,7 +637,7 @@ def configure_msvc(env: "SConsEnvironment", vcvars_msvc_config):
     env["BUILDERS"]["ProgramOriginal"] = env["BUILDERS"]["Program"]
     env["BUILDERS"]["Program"] = methods.precious_program
 
-    env.Append(LINKFLAGS=["/NATVIS:platform\\windows\\godot.natvis"])
+    env.Append(LINKFLAGS=["/NATVIS:platform\\windows\\redot.natvis"])
 
     if env["use_asan"]:
         env.AppendUnique(LINKFLAGS=["/STACK:" + str(STACK_SIZE_SANITIZERS)])
@@ -905,7 +905,7 @@ def configure_mingw(env: "SConsEnvironment"):
                 "The Direct3D 12 rendering driver requires dependencies to be installed.\n"
                 "You can install them by running `python misc\\scripts\\install_d3d12_sdk_windows.py`.\n"
                 "See the documentation for more information:\n\t"
-                "https://docs.godotengine.org/en/latest/contributing/development/compiling/compiling_for_windows.html"
+                "https://docs.redotengine.org/en/latest/contributing/development/compiling/compiling_for_windows.html"
             )
             sys.exit(255)
 

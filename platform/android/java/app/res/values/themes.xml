@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<style name="GodotAppMainTheme" parent="@android:style/Theme.Black.NoTitleBar"/>
+	<style name="RedotAppMainTheme" parent="@android:style/Theme.Black.NoTitleBar"/>
 
-	<style name="GodotAppSplashTheme" parent="Theme.SplashScreen">
+	<style name="RedotAppSplashTheme" parent="Theme.SplashScreen">
 		<!-- Set the splash screen background, animated icon, and animation
    duration. -->
 		<item name="android:windowSplashScreenBackground">@mipmap/icon_background</item>
@@ -14,6 +14,6 @@
 
 		<!-- Set the theme of the Activity that directly follows your splash
 		screen. This is required. -->
-		<item name="postSplashScreenTheme">@style/GodotAppMainTheme</item>
+		<item name="postSplashScreenTheme">@style/RedotAppMainTheme</item>
 	</style>
 </resources>

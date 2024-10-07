@@ -1,4 +1,4 @@
-// Gradle build config for Godot Engine's Android port.
+// Gradle build config for Redot Engine's Android port.
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -14,8 +14,8 @@ allprojects {
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/"}
 
-        // Godot user plugins custom maven repos
-        String[] mavenRepos = getGodotPluginsMavenRepos()
+        // Redot user plugins custom maven repos
+        String[] mavenRepos = getRedotPluginsMavenRepos()
         if (mavenRepos != null && mavenRepos.size() > 0) {
             for (String repoUrl : mavenRepos) {
                 maven {
@@ -39,26 +39,26 @@ dependencies {
 
     if (rootProject.findProject(":lib")) {
         implementation project(":lib")
-    } else if (rootProject.findProject(":godot:lib")) {
-        implementation project(":godot:lib")
+    } else if (rootProject.findProject(":redot:lib")) {
+        implementation project(":redot:lib")
     } else {
-        // Godot gradle build mode. In this scenario this project is the only one around and the Godot
-        // library is available through the pre-generated godot-lib.*.aar android archive files.
+        // Redot gradle build mode. In this scenario this project is the only one around and the Redot
+        // library is available through the pre-generated redot-lib.*.aar android archive files.
         debugImplementation fileTree(dir: 'libs/debug', include: ['**/*.jar', '*.aar'])
         devImplementation fileTree(dir: 'libs/dev', include: ['**/*.jar', '*.aar'])
         releaseImplementation fileTree(dir: 'libs/release', include: ['**/*.jar', '*.aar'])
     }
 
-    // Godot user plugins remote dependencies
-    String[] remoteDeps = getGodotPluginsRemoteBinaries()
+    // Redot user plugins remote dependencies
+    String[] remoteDeps = getRedotPluginsRemoteBinaries()
     if (remoteDeps != null && remoteDeps.size() > 0) {
         for (String dep : remoteDeps) {
             implementation dep
         }
     }
 
-    // Godot user plugins local dependencies
-    String[] pluginsBinaries = getGodotPluginsLocalBinaries()
+    // Redot user plugins local dependencies
+    String[] pluginsBinaries = getRedotPluginsLocalBinaries()
     if (pluginsBinaries != null && pluginsBinaries.size() > 0) {
         implementation files(pluginsBinaries)
     }
@@ -92,10 +92,10 @@ android {
 
     assetPacks = [":assetPacks:installTime"]
 
-    namespace = 'com.godot.game'
+    namespace = 'com.redot.game'
 
     defaultConfig {
-        // The default ignore pattern for the 'assets' directory includes hidden files and directories which are used by Godot projects.
+        // The default ignore pattern for the 'assets' directory includes hidden files and directories which are used by Redot projects.
         aaptOptions {
             ignoreAssetsPattern "!.svn:!.git:!.gitignore:!.ds_store:!*.scc:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"
         }
@@ -105,7 +105,7 @@ android {
             abiFilters export_abi_list
         }
 
-        manifestPlaceholders = [godotEditorVersion: getGodotEditorVersion()]
+        manifestPlaceholders = [redotEditorVersion: getRedotEditorVersion()]
 
         // Feel free to modify the application id to your own.
         applicationId getExportPackageName()
@@ -141,7 +141,7 @@ android {
             useLegacyPackaging shouldUseLegacyPackaging()
         }
 
-        // Always select Godot's version of libc++_shared.so in case deps have their own
+        // Always select Redot's version of libc++_shared.so in case deps have their own
         pickFirst 'lib/x86/libc++_shared.so'
         pickFirst 'lib/x86_64/libc++_shared.so'
         pickFirst 'lib/armeabi-v7a/libc++_shared.so'
@@ -177,7 +177,7 @@ android {
 
         debug {
             // Signing and zip-aligning are skipped for prebuilt builds, but
-            // performed for Godot gradle builds.
+            // performed for Redot gradle builds.
             zipAlignEnabled shouldZipAlign()
             if (shouldSign()) {
                 signingConfig signingConfigs.debug
@@ -189,7 +189,7 @@ android {
         dev {
             initWith debug
             // Signing and zip-aligning are skipped for prebuilt builds, but
-            // performed for Godot gradle builds.
+            // performed for Redot gradle builds.
             zipAlignEnabled shouldZipAlign()
             if (shouldSign()) {
                 signingConfig signingConfigs.debug
@@ -200,7 +200,7 @@ android {
 
         release {
             // Signing and zip-aligning are skipped for prebuilt builds, but
-            // performed for Godot gradle builds.
+            // performed for Redot gradle builds.
             zipAlignEnabled shouldZipAlign()
             if (shouldSign()) {
                 signingConfig signingConfigs.release
@@ -267,11 +267,11 @@ task copyAndRenameBinary(type: Copy) {
 }
 
 /**
- * Used to validate the version of the Java SDK used for the Godot gradle builds.
+ * Used to validate the version of the Java SDK used for the Redot gradle builds.
  */
 task validateJavaVersion {
     if (JavaVersion.current() != versions.javaVersion) {
-        throw new GradleException("Invalid Java version ${JavaVersion.current()}. Version ${versions.javaVersion} is the required Java version for Godot gradle builds.")
+        throw new GradleException("Invalid Java version ${JavaVersion.current()}. Version ${versions.javaVersion} is the required Java version for Redot gradle builds.")
     }
 }
 

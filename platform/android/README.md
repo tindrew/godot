@@ -5,9 +5,9 @@ using [Gradle](https://gradle.org/) as a build system.
 
 ## Documentation
 
-- [Compiling for Android](https://docs.godotengine.org/en/latest/contributing/development/compiling/compiling_for_android.html)
+- [Compiling for Android](https://docs.redotengine.org/en/latest/contributing/development/compiling/compiling_for_android.html)
   - Instructions on building this platform port from source.
-- [Exporting for Android](https://docs.godotengine.org/en/latest/tutorials/export/exporting_for_android.html)
+- [Exporting for Android](https://docs.redotengine.org/en/latest/tutorials/export/exporting_for_android.html)
   - Instructions on using the compiled export templates to export a project.
 
 ## Artwork license

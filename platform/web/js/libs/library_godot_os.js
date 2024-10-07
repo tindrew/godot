@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  library_godot_os.js                                                   */
+/*  library_redot_os.js                                                   */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -52,10 +51,10 @@ const IDHandler = {
 autoAddDeps(IDHandler, '$IDHandler');
 mergeInto(LibraryManager.library, IDHandler);
 
-const GodotConfig = {
-	$GodotConfig__postset: 'Module["initConfig"] = GodotConfig.init_config;',
-	$GodotConfig__deps: ['$GodotRuntime'],
-	$GodotConfig: {
+const RedotConfig = {
+	$RedotConfig__postset: 'Module["initConfig"] = RedotConfig.init_config;',
+	$RedotConfig__deps: ['$RedotRuntime'],
+	$RedotConfig: {
 		canvas: null,
 		locale: 'en',
 		canvas_resize_policy: 2, // Adaptive
@@ -65,15 +64,15 @@ const GodotConfig = {
 		on_exit: null,
 
 		init_config: function (p_opts) {
-			GodotConfig.canvas_resize_policy = p_opts['canvasResizePolicy'];
-			GodotConfig.canvas = p_opts['canvas'];
-			GodotConfig.locale = p_opts['locale'] || GodotConfig.locale;
-			GodotConfig.virtual_keyboard = p_opts['virtualKeyboard'];
-			GodotConfig.persistent_drops = !!p_opts['persistentDrops'];
-			GodotConfig.on_execute = p_opts['onExecute'];
-			GodotConfig.on_exit = p_opts['onExit'];
+			RedotConfig.canvas_resize_policy = p_opts['canvasResizePolicy'];
+			RedotConfig.canvas = p_opts['canvas'];
+			RedotConfig.locale = p_opts['locale'] || RedotConfig.locale;
+			RedotConfig.virtual_keyboard = p_opts['virtualKeyboard'];
+			RedotConfig.persistent_drops = !!p_opts['persistentDrops'];
+			RedotConfig.on_execute = p_opts['onExecute'];
+			RedotConfig.on_exit = p_opts['onExit'];
 			if (p_opts['focusCanvas']) {
-				GodotConfig.canvas.focus();
+				RedotConfig.canvas.focus();
 			}
 		},
 
@@ -81,39 +80,39 @@ const GodotConfig = {
 			return Module['locateFile'](file);
 		},
 		clear: function () {
-			GodotConfig.canvas = null;
-			GodotConfig.locale = 'en';
-			GodotConfig.canvas_resize_policy = 2;
-			GodotConfig.virtual_keyboard = false;
-			GodotConfig.persistent_drops = false;
-			GodotConfig.on_execute = null;
-			GodotConfig.on_exit = null;
+			RedotConfig.canvas = null;
+			RedotConfig.locale = 'en';
+			RedotConfig.canvas_resize_policy = 2;
+			RedotConfig.virtual_keyboard = false;
+			RedotConfig.persistent_drops = false;
+			RedotConfig.on_execute = null;
+			RedotConfig.on_exit = null;
 		},
 	},
 
-	godot_js_config_canvas_id_get__proxy: 'sync',
-	godot_js_config_canvas_id_get__sig: 'vii',
-	godot_js_config_canvas_id_get: function (p_ptr, p_ptr_max) {
-		GodotRuntime.stringToHeap(`#${GodotConfig.canvas.id}`, p_ptr, p_ptr_max);
+	redot_js_config_canvas_id_get__proxy: 'sync',
+	redot_js_config_canvas_id_get__sig: 'vii',
+	redot_js_config_canvas_id_get: function (p_ptr, p_ptr_max) {
+		RedotRuntime.stringToHeap(`#${RedotConfig.canvas.id}`, p_ptr, p_ptr_max);
 	},
 
-	godot_js_config_locale_get__proxy: 'sync',
-	godot_js_config_locale_get__sig: 'vii',
-	godot_js_config_locale_get: function (p_ptr, p_ptr_max) {
-		GodotRuntime.stringToHeap(GodotConfig.locale, p_ptr, p_ptr_max);
+	redot_js_config_locale_get__proxy: 'sync',
+	redot_js_config_locale_get__sig: 'vii',
+	redot_js_config_locale_get: function (p_ptr, p_ptr_max) {
+		RedotRuntime.stringToHeap(RedotConfig.locale, p_ptr, p_ptr_max);
 	},
 };
 
-autoAddDeps(GodotConfig, '$GodotConfig');
-mergeInto(LibraryManager.library, GodotConfig);
+autoAddDeps(RedotConfig, '$RedotConfig');
+mergeInto(LibraryManager.library, RedotConfig);
 
-const GodotFS = {
-	$GodotFS__deps: ['$FS', '$IDBFS', '$GodotRuntime'],
-	$GodotFS__postset: [
-		'Module["initFS"] = GodotFS.init;',
-		'Module["copyToFS"] = GodotFS.copy_to_fs;',
+const RedotFS = {
+	$RedotFS__deps: ['$FS', '$IDBFS', '$RedotRuntime'],
+	$RedotFS__postset: [
+		'Module["initFS"] = RedotFS.init;',
+		'Module["copyToFS"] = RedotFS.copy_to_fs;',
 	].join(''),
-	$GodotFS: {
+	$RedotFS: {
 		// ERRNO_CODES works every odd version of emscripten, but this will break too eventually.
 		ENOENT: 44,
 		_idbfs: false,
@@ -121,83 +120,83 @@ const GodotFS = {
 		_mount_points: [],
 
 		is_persistent: function () {
-			return GodotFS._idbfs ? 1 : 0;
+			return RedotFS._idbfs ? 1 : 0;
 		},
 
-		// Initialize godot file system, setting up persistent paths.
+		// Initialize redot file system, setting up persistent paths.
 		// Returns a promise that resolves when the FS is ready.
 		// We keep track of mount_points, so that we can properly close the IDBFS
 		// since emscripten is not doing it by itself. (emscripten GH#12516).
 		init: function (persistentPaths) {
-			GodotFS._idbfs = false;
+			RedotFS._idbfs = false;
 			if (!Array.isArray(persistentPaths)) {
 				return Promise.reject(new Error('Persistent paths must be an array'));
 			}
 			if (!persistentPaths.length) {
 				return Promise.resolve();
 			}
-			GodotFS._mount_points = persistentPaths.slice();
+			RedotFS._mount_points = persistentPaths.slice();
 
 			function createRecursive(dir) {
 				try {
 					FS.stat(dir);
 				} catch (e) {
-					if (e.errno !== GodotFS.ENOENT) {
+					if (e.errno !== RedotFS.ENOENT) {
 						// Let mkdirTree throw in case, we cannot trust the above check.
-						GodotRuntime.error(e);
+						RedotRuntime.error(e);
 					}
 					FS.mkdirTree(dir);
 				}
 			}
 
-			GodotFS._mount_points.forEach(function (path) {
+			RedotFS._mount_points.forEach(function (path) {
 				createRecursive(path);
 				FS.mount(IDBFS, {}, path);
 			});
 			return new Promise(function (resolve, reject) {
 				FS.syncfs(true, function (err) {
 					if (err) {
-						GodotFS._mount_points = [];
-						GodotFS._idbfs = false;
-						GodotRuntime.print(`IndexedDB not available: ${err.message}`);
+						RedotFS._mount_points = [];
+						RedotFS._idbfs = false;
+						RedotRuntime.print(`IndexedDB not available: ${err.message}`);
 					} else {
-						GodotFS._idbfs = true;
+						RedotFS._idbfs = true;
 					}
 					resolve(err);
 				});
 			});
 		},
 
-		// Deinit godot file system, making sure to unmount file systems, and close IDBFS(s).
+		// Deinit redot file system, making sure to unmount file systems, and close IDBFS(s).
 		deinit: function () {
-			GodotFS._mount_points.forEach(function (path) {
+			RedotFS._mount_points.forEach(function (path) {
 				try {
 					FS.unmount(path);
 				} catch (e) {
-					GodotRuntime.print('Already unmounted', e);
+					RedotRuntime.print('Already unmounted', e);
 				}
-				if (GodotFS._idbfs && IDBFS.dbs[path]) {
+				if (RedotFS._idbfs && IDBFS.dbs[path]) {
 					IDBFS.dbs[path].close();
 					delete IDBFS.dbs[path];
 				}
 			});
-			GodotFS._mount_points = [];
-			GodotFS._idbfs = false;
-			GodotFS._syncing = false;
+			RedotFS._mount_points = [];
+			RedotFS._idbfs = false;
+			RedotFS._syncing = false;
 		},
 
 		sync: function () {
-			if (GodotFS._syncing) {
-				GodotRuntime.error('Already syncing!');
+			if (RedotFS._syncing) {
+				RedotRuntime.error('Already syncing!');
 				return Promise.resolve();
 			}
-			GodotFS._syncing = true;
+			RedotFS._syncing = true;
 			return new Promise(function (resolve, reject) {
 				FS.syncfs(false, function (error) {
 					if (error) {
-						GodotRuntime.error(`Failed to save IDB file system: ${error.message}`);
+						RedotRuntime.error(`Failed to save IDB file system: ${error.message}`);
 					}
-					GodotFS._syncing = false;
+					RedotFS._syncing = false;
 					resolve(error);
 				});
 			});
@@ -213,9 +212,9 @@ const GodotFS = {
 			try {
 				FS.stat(dir);
 			} catch (e) {
-				if (e.errno !== GodotFS.ENOENT) {
+				if (e.errno !== RedotFS.ENOENT) {
 					// Let mkdirTree throw in case, we cannot trust the above check.
-					GodotRuntime.error(e);
+					RedotRuntime.error(e);
 				}
 				FS.mkdirTree(dir);
 			}
@@ -223,42 +222,42 @@ const GodotFS = {
 		},
 	},
 };
-mergeInto(LibraryManager.library, GodotFS);
+mergeInto(LibraryManager.library, RedotFS);
 
-const GodotOS = {
-	$GodotOS__deps: ['$GodotRuntime', '$GodotConfig', '$GodotFS'],
-	$GodotOS__postset: [
-		'Module["request_quit"] = function() { GodotOS.request_quit() };',
-		'Module["onExit"] = GodotOS.cleanup;',
-		'GodotOS._fs_sync_promise = Promise.resolve();',
+const RedotOS = {
+	$RedotOS__deps: ['$RedotRuntime', '$RedotConfig', '$RedotFS'],
+	$RedotOS__postset: [
+		'Module["request_quit"] = function() { RedotOS.request_quit() };',
+		'Module["onExit"] = RedotOS.cleanup;',
+		'RedotOS._fs_sync_promise = Promise.resolve();',
 	].join(''),
-	$GodotOS: {
+	$RedotOS: {
 		request_quit: function () {},
 		_async_cbs: [],
 		_fs_sync_promise: null,
 
 		atexit: function (p_promise_cb) {
-			GodotOS._async_cbs.push(p_promise_cb);
+			RedotOS._async_cbs.push(p_promise_cb);
 		},
 
 		cleanup: function (exit_code) {
-			const cb = GodotConfig.on_exit;
-			GodotFS.deinit();
-			GodotConfig.clear();
+			const cb = RedotConfig.on_exit;
+			RedotFS.deinit();
+			RedotConfig.clear();
 			if (cb) {
 				cb(exit_code);
 			}
 		},
 
 		finish_async: function (callback) {
-			GodotOS._fs_sync_promise.then(function (err) {
+			RedotOS._fs_sync_promise.then(function (err) {
 				const promises = [];
-				GodotOS._async_cbs.forEach(function (cb) {
+				RedotOS._async_cbs.forEach(function (cb) {
 					promises.push(new Promise(cb));
 				});
 				return Promise.all(promises);
 			}).then(function () {
-				return GodotFS.sync(); // Final FS sync.
+				return RedotFS.sync(); // Final FS sync.
 			}).then(function (err) {
 				// Always deferred.
 				setTimeout(function () {
@@ -268,39 +267,39 @@ const GodotOS = {
 		},
 	},
 
-	godot_js_os_finish_async__proxy: 'sync',
-	godot_js_os_finish_async__sig: 'vi',
-	godot_js_os_finish_async: function (p_callback) {
-		const func = GodotRuntime.get_func(p_callback);
-		GodotOS.finish_async(func);
+	redot_js_os_finish_async__proxy: 'sync',
+	redot_js_os_finish_async__sig: 'vi',
+	redot_js_os_finish_async: function (p_callback) {
+		const func = RedotRuntime.get_func(p_callback);
+		RedotOS.finish_async(func);
 	},
 
-	godot_js_os_request_quit_cb__proxy: 'sync',
-	godot_js_os_request_quit_cb__sig: 'vi',
-	godot_js_os_request_quit_cb: function (p_callback) {
-		GodotOS.request_quit = GodotRuntime.get_func(p_callback);
+	redot_js_os_request_quit_cb__proxy: 'sync',
+	redot_js_os_request_quit_cb__sig: 'vi',
+	redot_js_os_request_quit_cb: function (p_callback) {
+		RedotOS.request_quit = RedotRuntime.get_func(p_callback);
 	},
 
-	godot_js_os_fs_is_persistent__proxy: 'sync',
-	godot_js_os_fs_is_persistent__sig: 'i',
-	godot_js_os_fs_is_persistent: function () {
-		return GodotFS.is_persistent();
+	redot_js_os_fs_is_persistent__proxy: 'sync',
+	redot_js_os_fs_is_persistent__sig: 'i',
+	redot_js_os_fs_is_persistent: function () {
+		return RedotFS.is_persistent();
 	},
 
-	godot_js_os_fs_sync__proxy: 'sync',
-	godot_js_os_fs_sync__sig: 'vi',
-	godot_js_os_fs_sync: function (callback) {
-		const func = GodotRuntime.get_func(callback);
-		GodotOS._fs_sync_promise = GodotFS.sync();
-		GodotOS._fs_sync_promise.then(function (err) {
+	redot_js_os_fs_sync__proxy: 'sync',
+	redot_js_os_fs_sync__sig: 'vi',
+	redot_js_os_fs_sync: function (callback) {
+		const func = RedotRuntime.get_func(callback);
+		RedotOS._fs_sync_promise = RedotFS.sync();
+		RedotOS._fs_sync_promise.then(function (err) {
 			func();
 		});
 	},
 
-	godot_js_os_has_feature__proxy: 'sync',
-	godot_js_os_has_feature__sig: 'ii',
-	godot_js_os_has_feature: function (p_ftr) {
-		const ftr = GodotRuntime.parseString(p_ftr);
+	redot_js_os_has_feature__proxy: 'sync',
+	redot_js_os_has_feature__sig: 'ii',
+	redot_js_os_has_feature: function (p_ftr) {
+		const ftr = RedotRuntime.parseString(p_ftr);
 		const ua = navigator.userAgent;
 		if (ftr === 'web_macos') {
 			return (ua.indexOf('Mac') !== -1) ? 1 : 0;
@@ -320,38 +319,38 @@ const GodotOS = {
 		return 0;
 	},
 
-	godot_js_os_execute__proxy: 'sync',
-	godot_js_os_execute__sig: 'ii',
-	godot_js_os_execute: function (p_json) {
-		const json_args = GodotRuntime.parseString(p_json);
+	redot_js_os_execute__proxy: 'sync',
+	redot_js_os_execute__sig: 'ii',
+	redot_js_os_execute: function (p_json) {
+		const json_args = RedotRuntime.parseString(p_json);
 		const args = JSON.parse(json_args);
-		if (GodotConfig.on_execute) {
-			GodotConfig.on_execute(args);
+		if (RedotConfig.on_execute) {
+			RedotConfig.on_execute(args);
 			return 0;
 		}
 		return 1;
 	},
 
-	godot_js_os_shell_open__proxy: 'sync',
-	godot_js_os_shell_open__sig: 'vi',
-	godot_js_os_shell_open: function (p_uri) {
-		window.open(GodotRuntime.parseString(p_uri), '_blank');
+	redot_js_os_shell_open__proxy: 'sync',
+	redot_js_os_shell_open__sig: 'vi',
+	redot_js_os_shell_open: function (p_uri) {
+		window.open(RedotRuntime.parseString(p_uri), '_blank');
 	},
 
-	godot_js_os_hw_concurrency_get__proxy: 'sync',
-	godot_js_os_hw_concurrency_get__sig: 'i',
-	godot_js_os_hw_concurrency_get: function () {
-		// TODO Godot core needs fixing to avoid spawning too many threads (> 24).
+	redot_js_os_hw_concurrency_get__proxy: 'sync',
+	redot_js_os_hw_concurrency_get__sig: 'i',
+	redot_js_os_hw_concurrency_get: function () {
+		// TODO Redot core needs fixing to avoid spawning too many threads (> 24).
 		const concurrency = navigator.hardwareConcurrency || 1;
 		return concurrency < 2 ? concurrency : 2;
 	},
 
-	godot_js_os_download_buffer__proxy: 'sync',
-	godot_js_os_download_buffer__sig: 'viiii',
-	godot_js_os_download_buffer: function (p_ptr, p_size, p_name, p_mime) {
-		const buf = GodotRuntime.heapSlice(HEAP8, p_ptr, p_size);
-		const name = GodotRuntime.parseString(p_name);
-		const mime = GodotRuntime.parseString(p_mime);
+	redot_js_os_download_buffer__proxy: 'sync',
+	redot_js_os_download_buffer__sig: 'viiii',
+	redot_js_os_download_buffer: function (p_ptr, p_size, p_name, p_mime) {
+		const buf = RedotRuntime.heapSlice(HEAP8, p_ptr, p_size);
+		const name = RedotRuntime.parseString(p_name);
+		const mime = RedotRuntime.parseString(p_mime);
 		const blob = new Blob([buf], { type: mime });
 		const url = window.URL.createObjectURL(blob);
 		const a = document.createElement('a');
@@ -365,27 +364,27 @@ const GodotOS = {
 	},
 };
 
-autoAddDeps(GodotOS, '$GodotOS');
-mergeInto(LibraryManager.library, GodotOS);
+autoAddDeps(RedotOS, '$RedotOS');
+mergeInto(LibraryManager.library, RedotOS);
 
 /*
- * Godot event listeners.
+ * Redot event listeners.
  * Keeps track of registered event listeners so it can remove them on shutdown.
  */
-const GodotEventListeners = {
-	$GodotEventListeners__deps: ['$GodotOS'],
-	$GodotEventListeners__postset: 'GodotOS.atexit(function(resolve, reject) { GodotEventListeners.clear(); resolve(); });',
-	$GodotEventListeners: {
+const RedotEventListeners = {
+	$RedotEventListeners__deps: ['$RedotOS'],
+	$RedotEventListeners__postset: 'RedotOS.atexit(function(resolve, reject) { RedotEventListeners.clear(); resolve(); });',
+	$RedotEventListeners: {
 		handlers: [],
 
 		has: function (target, event, method, capture) {
-			return GodotEventListeners.handlers.findIndex(function (e) {
+			return RedotEventListeners.handlers.findIndex(function (e) {
 				return e.target === target && e.event === event && e.method === method && e.capture === capture;
 			}) !== -1;
 		},
 
 		add: function (target, event, method, capture) {
-			if (GodotEventListeners.has(target, event, method, capture)) {
+			if (RedotEventListeners.has(target, event, method, capture)) {
 				return;
 			}
 			function Handler(p_target, p_event, p_method, p_capture) {
@@ -394,24 +393,24 @@ const GodotEventListeners = {
 				this.method = p_method;
 				this.capture = p_capture;
 			}
-			GodotEventListeners.handlers.push(new Handler(target, event, method, capture));
+			RedotEventListeners.handlers.push(new Handler(target, event, method, capture));
 			target.addEventListener(event, method, capture);
 		},
 
 		clear: function () {
-			GodotEventListeners.handlers.forEach(function (h) {
+			RedotEventListeners.handlers.forEach(function (h) {
 				h.target.removeEventListener(h.event, h.method, h.capture);
 			});
-			GodotEventListeners.handlers.length = 0;
+			RedotEventListeners.handlers.length = 0;
 		},
 	},
 };
-mergeInto(LibraryManager.library, GodotEventListeners);
+mergeInto(LibraryManager.library, RedotEventListeners);
 
-const GodotPWA = {
+const RedotPWA = {
 
-	$GodotPWA__deps: ['$GodotRuntime', '$GodotEventListeners'],
-	$GodotPWA: {
+	$RedotPWA__deps: ['$RedotRuntime', '$RedotEventListeners'],
+	$RedotPWA: {
 		hasUpdate: false,
 
 		updateState: function (cb, reg) {
@@ -422,14 +421,14 @@ const GodotPWA = {
 				return;
 			}
 			if (reg.waiting) {
-				GodotPWA.hasUpdate = true;
+				RedotPWA.hasUpdate = true;
 				cb();
 			}
-			GodotEventListeners.add(reg, 'updatefound', function () {
+			RedotEventListeners.add(reg, 'updatefound', function () {
 				const installing = reg.installing;
-				GodotEventListeners.add(installing, 'statechange', function () {
+				RedotEventListeners.add(installing, 'statechange', function () {
 					if (installing.state === 'installed') {
-						GodotPWA.hasUpdate = true;
+						RedotPWA.hasUpdate = true;
 						cb();
 					}
 				});
@@ -437,19 +436,19 @@ const GodotPWA = {
 		},
 	},
 
-	godot_js_pwa_cb__proxy: 'sync',
-	godot_js_pwa_cb__sig: 'vi',
-	godot_js_pwa_cb: function (p_update_cb) {
+	redot_js_pwa_cb__proxy: 'sync',
+	redot_js_pwa_cb__sig: 'vi',
+	redot_js_pwa_cb: function (p_update_cb) {
 		if ('serviceWorker' in navigator) {
-			const cb = GodotRuntime.get_func(p_update_cb);
-			navigator.serviceWorker.getRegistration().then(GodotPWA.updateState.bind(null, cb));
+			const cb = RedotRuntime.get_func(p_update_cb);
+			navigator.serviceWorker.getRegistration().then(RedotPWA.updateState.bind(null, cb));
 		}
 	},
 
-	godot_js_pwa_update__proxy: 'sync',
-	godot_js_pwa_update__sig: 'i',
-	godot_js_pwa_update: function () {
-		if ('serviceWorker' in navigator && GodotPWA.hasUpdate) {
+	redot_js_pwa_update__proxy: 'sync',
+	redot_js_pwa_update__sig: 'i',
+	redot_js_pwa_update: function () {
+		if ('serviceWorker' in navigator && RedotPWA.hasUpdate) {
 			navigator.serviceWorker.getRegistration().then(function (reg) {
 				if (!reg || !reg.waiting) {
 					return;
@@ -462,5 +461,5 @@ const GodotPWA = {
 	},
 };
 
-autoAddDeps(GodotPWA, '$GodotPWA');
-mergeInto(LibraryManager.library, GodotPWA);
+autoAddDeps(RedotPWA, '$RedotPWA');
+mergeInto(LibraryManager.library, RedotPWA);

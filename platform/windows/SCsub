@@ -11,7 +11,7 @@ import platform_windows_builders
 sources = []
 
 common_win = [
-    "godot_windows.cpp",
+    "redot_windows.cpp",
     "os_windows.cpp",
     "display_server_windows.cpp",
     "key_mapping_windows.cpp",
@@ -48,22 +48,22 @@ def arrange_program_clean(prog):
         Clean(prog, extra_files_to_clean)
 
 
-res_file = "godot_res.rc"
-res_target = "godot_res" + env["OBJSUFFIX"]
+res_file = "redot_res.rc"
+res_target = "redot_res" + env["OBJSUFFIX"]
 res_obj = env.RES(res_target, res_file)
 env.Depends(res_obj, "#core/version_generated.gen.h")
 
 env.add_source_files(sources, common_win)
 sources += res_obj
 
-prog = env.add_program("#bin/godot", sources, PROGSUFFIX=env["PROGSUFFIX"])
+prog = env.add_program("#bin/redot", sources, PROGSUFFIX=env["PROGSUFFIX"])
 arrange_program_clean(prog)
 
 # Build console wrapper app.
 if env["windows_subsystem"] == "gui":
     env_wrap = env.Clone()
-    res_wrap_file = "godot_res_wrap.rc"
-    res_wrap_target = "godot_res_wrap" + env["OBJSUFFIX"]
+    res_wrap_file = "redot_res_wrap.rc"
+    res_wrap_target = "redot_res_wrap" + env["OBJSUFFIX"]
     res_wrap_obj = env_wrap.RES(res_wrap_target, res_wrap_file)
     env_wrap.Depends(res_wrap_obj, "#core/version_generated.gen.h")
 
@@ -74,7 +74,7 @@ if env["windows_subsystem"] == "gui":
         env_wrap.Append(LINKFLAGS=["-Wl,--subsystem,console"])
         env_wrap.Append(LIBS=["version"])
 
-    prog_wrap = env_wrap.add_program("#bin/godot", common_win_wrap + res_wrap_obj, PROGSUFFIX=env["PROGSUFFIX_WRAP"])
+    prog_wrap = env_wrap.add_program("#bin/redot", common_win_wrap + res_wrap_obj, PROGSUFFIX=env["PROGSUFFIX_WRAP"])
     arrange_program_clean(prog_wrap)
     env_wrap.Depends(prog_wrap, prog)
     sources += common_win_wrap + res_wrap_obj
@@ -82,7 +82,7 @@ if env["windows_subsystem"] == "gui":
 # Microsoft Visual Studio Project Generation
 if env["vsproj"]:
     env.vs_srcs += ["platform/windows/" + res_file]
-    env.vs_srcs += ["platform/windows/godot.natvis"]
+    env.vs_srcs += ["platform/windows/redot.natvis"]
     for x in common_win:
         env.vs_srcs += ["platform/windows/" + str(x)]
     if env["windows_subsystem"] == "gui":

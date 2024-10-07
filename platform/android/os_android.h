@@ -2,11 +2,10 @@
 /*  os_android.h                                                          */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -37,8 +36,8 @@
 #include "drivers/unix/os_unix.h"
 #include "servers/audio_server.h"
 
-class GodotJavaWrapper;
-class GodotIOJavaWrapper;
+class RedotJavaWrapper;
+class RedotIOJavaWrapper;
 
 struct ANativeWindow;
 
@@ -80,8 +79,8 @@ private:
 	HashSet<String> font_names;
 	bool font_config_loaded = false;
 
-	GodotJavaWrapper *godot_java = nullptr;
-	GodotIOJavaWrapper *godot_io_java = nullptr;
+	RedotJavaWrapper *redot_java = nullptr;
+	RedotIOJavaWrapper *redot_io_java = nullptr;
 
 	void _load_system_font_config();
 	String get_system_property(const char *key) const;
@@ -109,8 +108,8 @@ public:
 	typedef int64_t ProcessID;
 
 	static OS_Android *get_singleton();
-	GodotJavaWrapper *get_godot_java();
-	GodotIOJavaWrapper *get_godot_io_java();
+	RedotJavaWrapper *get_redot_java();
+	RedotIOJavaWrapper *get_redot_io_java();
 
 	virtual bool request_permission(const String &p_name) override;
 	virtual bool request_permissions() override;
@@ -177,7 +176,7 @@ public:
 	virtual void load_platform_gdextensions() const override;
 
 	virtual bool _check_internal_feature_support(const String &p_feature) override;
-	OS_Android(GodotJavaWrapper *p_godot_java, GodotIOJavaWrapper *p_godot_io_java, bool p_use_apk_expansion);
+	OS_Android(RedotJavaWrapper *p_redot_java, RedotIOJavaWrapper *p_redot_io_java, bool p_use_apk_expansion);
 	~OS_Android();
 
 private:

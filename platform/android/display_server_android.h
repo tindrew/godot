@@ -2,11 +2,10 @@
 /*  display_server_android.h                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -44,7 +43,7 @@ class DisplayServerAndroid : public DisplayServer {
 	String rendering_driver;
 
 	// https://developer.android.com/reference/android/view/PointerIcon
-	// mapping between Godot's cursor shape to Android's'
+	// mapping between Redot's cursor shape to Android's'
 	int android_cursors[CURSOR_MAX] = {
 		1000, //CURSOR_ARROW
 		1008, //CURSOR_IBEAM

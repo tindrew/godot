@@ -2,11 +2,10 @@
 /*  display_server_ios.mm                                                 */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -32,7 +31,7 @@
 
 #import "app_delegate.h"
 #import "device_metrics.h"
-#import "godot_view.h"
+#import "redot_view.h"
 #import "ios.h"
 #import "key_mapping_ios.h"
 #import "keyboard_input_view.h"
@@ -84,7 +83,7 @@ DisplayServerIOS::DisplayServerIOS(const String &p_rendering_driver, WindowMode 
 
 #if defined(VULKAN_ENABLED)
 	if (rendering_driver == "vulkan") {
-		layer = [AppDelegate.viewController.godotView initializeRenderingForDriver:@"vulkan"];
+		layer = [AppDelegate.viewController.redotView initializeRenderingForDriver:@"vulkan"];
 		if (!layer) {
 			ERR_FAIL_MSG("Failed to create iOS Vulkan rendering layer.");
 		}
@@ -95,7 +94,7 @@ DisplayServerIOS::DisplayServerIOS(const String &p_rendering_driver, WindowMode 
 #ifdef METAL_ENABLED
 	if (rendering_driver == "metal") {
 		if (@available(iOS 14.0, *)) {
-			layer = [AppDelegate.viewController.godotView initializeRenderingForDriver:@"metal"];
+			layer = [AppDelegate.viewController.redotView initializeRenderingForDriver:@"metal"];
 			wpd.metal.layer = (CAMetalLayer *)layer;
 			rendering_context = memnew(RenderingContextDriverMetal);
 		} else {
@@ -150,7 +149,7 @@ DisplayServerIOS::DisplayServerIOS(const String &p_rendering_driver, WindowMode 
 
 #if defined(GLES3_ENABLED)
 	if (rendering_driver == "opengl3") {
-		CALayer *layer = [AppDelegate.viewController.godotView initializeRenderingForDriver:@"opengl3"];
+		CALayer *layer = [AppDelegate.viewController.redotView initializeRenderingForDriver:@"opengl3"];
 
 		if (!layer) {
 			ERR_FAIL_MSG("Failed to create iOS OpenGLES rendering layer.");
@@ -449,7 +448,7 @@ void DisplayServerIOS::emit_system_theme_changed() {
 
 Rect2i DisplayServerIOS::get_display_safe_area() const {
 	UIEdgeInsets insets = UIEdgeInsetsZero;
-	UIView *view = AppDelegate.viewController.godotView;
+	UIView *view = AppDelegate.viewController.redotView;
 	if ([view respondsToSelector:@selector(safeAreaInsets)]) {
 		insets = [view safeAreaInsets];
 	}
@@ -472,7 +471,7 @@ Point2i DisplayServerIOS::screen_get_position(int p_screen) const {
 }
 
 Size2i DisplayServerIOS::screen_get_size(int p_screen) const {
-	CALayer *layer = AppDelegate.viewController.godotView.renderingLayer;
+	CALayer *layer = AppDelegate.viewController.redotView.renderingLayer;
 
 	if (!layer) {
 		return Size2i();
@@ -491,7 +490,7 @@ int DisplayServerIOS::screen_get_dpi(int p_screen) const {
 
 	NSString *string = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
 
-	NSDictionary *iOSModelToDPI = [GodotDeviceMetrics dpiList];
+	NSDictionary *iOSModelToDPI = [RedotDeviceMetrics dpiList];
 
 	for (NSArray *keyArray in iOSModelToDPI) {
 		if ([keyArray containsObject:string]) {
@@ -554,7 +553,7 @@ int64_t DisplayServerIOS::window_get_native_handle(HandleType p_handle_type, Win
 			return (int64_t)AppDelegate.viewController;
 		}
 		case WINDOW_VIEW: {
-			return (int64_t)AppDelegate.viewController.godotView;
+			return (int64_t)AppDelegate.viewController.redotView;
 		}
 		default: {
 			return 0;

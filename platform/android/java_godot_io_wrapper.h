@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  java_godot_io_wrapper.h                                               */
+/*  java_redot_io_wrapper.h                                               */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -28,8 +27,8 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef JAVA_GODOT_IO_WRAPPER_H
-#define JAVA_GODOT_IO_WRAPPER_H
+#ifndef JAVA_redot_IO_WRAPPER_H
+#define JAVA_redot_IO_WRAPPER_H
 
 #include "string_android.h"
 
@@ -39,10 +38,10 @@
 #include <android/log.h>
 #include <jni.h>
 
-// Class that makes functions in java/src/org/godotengine/godot/GodotIO.java callable from C++
-class GodotIOJavaWrapper {
+// Class that makes functions in java/src/org/redotengine/redot/RedotIO.java callable from C++
+class RedotIOJavaWrapper {
 private:
-	jobject godot_io_instance;
+	jobject redot_io_instance;
 	jclass cls;
 
 	jmethodID _open_URI = 0;
@@ -63,8 +62,8 @@ private:
 	jmethodID _get_system_dir = 0;
 
 public:
-	GodotIOJavaWrapper(JNIEnv *p_env, jobject p_godot_io_instance);
-	~GodotIOJavaWrapper();
+	RedotIOJavaWrapper(JNIEnv *p_env, jobject p_redot_io_instance);
+	~RedotIOJavaWrapper();
 
 	jobject get_instance();
 
@@ -89,4 +88,4 @@ public:
 	String get_system_dir(int p_dir, bool p_shared_storage);
 };
 
-#endif // JAVA_GODOT_IO_WRAPPER_H
+#endif // JAVA_redot_IO_WRAPPER_H

@@ -16,7 +16,7 @@
         android:required="true" />
 
     <application
-        android:label="@string/godot_project_name_string"
+        android:label="@string/redot_project_name_string"
         android:allowBackup="false"
         android:icon="@mipmap/icon"
         android:appCategory="game"
@@ -29,15 +29,15 @@
             android:enabled="true"
             tools:targetApi="29" />
 
-        <!-- Records the version of the Godot editor used for building -->
+        <!-- Records the version of the Redot editor used for building -->
         <meta-data
-            android:name="org.godotengine.editor.version"
-            android:value="${godotEditorVersion}" />
+            android:name="org.redotengine.editor.version"
+            android:value="${redotEditorVersion}" />
 
         <activity
-            android:name=".GodotApp"
-            android:label="@string/godot_project_name_string"
-            android:theme="@style/GodotAppSplashTheme"
+            android:name=".RedotApp"
+            android:label="@string/redot_project_name_string"
+            android:theme="@style/RedotAppSplashTheme"
             android:launchMode="singleInstancePerTask"
             android:excludeFromRecents="false"
             android:exported="true"

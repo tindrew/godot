@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  java_godot_wrapper.h                                                  */
+/*  java_redot_wrapper.h                                                  */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -28,10 +27,10 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef JAVA_GODOT_WRAPPER_H
-#define JAVA_GODOT_WRAPPER_H
+#ifndef JAVA_redot_WRAPPER_H
+#define JAVA_redot_WRAPPER_H
 
-#include "java_godot_view_wrapper.h"
+#include "java_redot_view_wrapper.h"
 #include "string_android.h"
 
 #include "core/templates/list.h"
@@ -39,15 +38,15 @@
 #include <android/log.h>
 #include <jni.h>
 
-// Class that makes functions in java/src/org/godotengine/godot/Godot.kt callable from C++
-class GodotJavaWrapper {
+// Class that makes functions in java/src/org/redotengine/redot/Redot.kt callable from C++
+class RedotJavaWrapper {
 private:
-	jobject godot_instance;
+	jobject redot_instance;
 	jobject activity;
-	jclass godot_class;
+	jclass redot_class;
 	jclass activity_class;
 
-	GodotJavaViewWrapper *godot_view = nullptr;
+	RedotJavaViewWrapper *redot_view = nullptr;
 
 	jmethodID _restart = nullptr;
 	jmethodID _finish = nullptr;
@@ -66,10 +65,10 @@ private:
 	jmethodID _init_input_devices = nullptr;
 	jmethodID _vibrate = nullptr;
 	jmethodID _get_input_fallback_mapping = nullptr;
-	jmethodID _on_godot_setup_completed = nullptr;
-	jmethodID _on_godot_main_loop_started = nullptr;
-	jmethodID _on_godot_terminating = nullptr;
-	jmethodID _create_new_godot_instance = nullptr;
+	jmethodID _on_redot_setup_completed = nullptr;
+	jmethodID _on_redot_main_loop_started = nullptr;
+	jmethodID _on_redot_terminating = nullptr;
+	jmethodID _create_new_redot_instance = nullptr;
 	jmethodID _get_render_view = nullptr;
 	jmethodID _begin_benchmark_measure = nullptr;
 	jmethodID _end_benchmark_measure = nullptr;
@@ -81,16 +80,16 @@ private:
 	jmethodID _is_in_immersive_mode = nullptr;
 
 public:
-	GodotJavaWrapper(JNIEnv *p_env, jobject p_activity, jobject p_godot_instance);
-	~GodotJavaWrapper();
+	RedotJavaWrapper(JNIEnv *p_env, jobject p_activity, jobject p_redot_instance);
+	~RedotJavaWrapper();
 
 	jobject get_activity();
 
-	GodotJavaViewWrapper *get_godot_view();
+	RedotJavaViewWrapper *get_redot_view();
 
-	void on_godot_setup_completed(JNIEnv *p_env = nullptr);
-	void on_godot_main_loop_started(JNIEnv *p_env = nullptr);
-	void on_godot_terminating(JNIEnv *p_env = nullptr);
+	void on_redot_setup_completed(JNIEnv *p_env = nullptr);
+	void on_redot_main_loop_started(JNIEnv *p_env = nullptr);
+	void on_redot_terminating(JNIEnv *p_env = nullptr);
 	void restart(JNIEnv *p_env = nullptr);
 	bool force_quit(JNIEnv *p_env = nullptr, int p_instance_id = 0);
 	void set_keep_screen_on(bool p_enabled);
@@ -110,7 +109,7 @@ public:
 	void init_input_devices();
 	void vibrate(int p_duration_ms, float p_amplitude = -1.0);
 	String get_input_fallback_mapping();
-	int create_new_godot_instance(const List<String> &args);
+	int create_new_redot_instance(const List<String> &args);
 	void begin_benchmark_measure(const String &p_context, const String &p_label);
 	void end_benchmark_measure(const String &p_context, const String &p_label);
 	void dump_benchmark(const String &benchmark_file);
@@ -129,4 +128,4 @@ public:
 	bool is_in_immersive_mode();
 };
 
-#endif // JAVA_GODOT_WRAPPER_H
+#endif // JAVA_redot_WRAPPER_H
