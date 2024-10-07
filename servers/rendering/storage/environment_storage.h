@@ -2,11 +2,10 @@
 /*  environment_storage.h                                                 */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -40,7 +39,7 @@ private:
 
 	// Environment
 	struct Environment {
-		// Note, we capture and store all environment parameters received from Godot here.
+		// Note, we capture and store all environment parameters received from Redot here.
 		// Not all renderers support all effects and should just ignore the bits they don't support.
 
 		// Background

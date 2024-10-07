@@ -2,11 +2,10 @@
 /*  fsr2.cpp                                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -528,8 +527,8 @@ FSR2Effect::FSR2Effect() {
 			"\n#define FFX_FSR2_OPTION_LOW_RESOLUTION_MOTION_VECTORS 1\n"
 			"\n#define FFX_FSR2_OPTION_HDR_COLOR_INPUT 1\n"
 			"\n#define FFX_FSR2_OPTION_INVERTED_DEPTH 1\n"
-			"\n#define FFX_FSR2_OPTION_GODOT_REACTIVE_MASK_CLAMP 1\n"
-			"\n#define FFX_FSR2_OPTION_GODOT_DERIVE_INVALID_MOTION_VECTORS 1\n";
+			"\n#define FFX_FSR2_OPTION_redot_REACTIVE_MASK_CLAMP 1\n"
+			"\n#define FFX_FSR2_OPTION_redot_DERIVE_INVALID_MOTION_VECTORS 1\n";
 
 	if (use_lut) {
 		general_defines_base += "\n#define FFX_FSR2_OPTION_REPROJECT_USE_LANCZOS_TYPE 1\n";
@@ -543,7 +542,7 @@ FSR2Effect::FSR2Effect() {
 	Vector<String> modes;
 	modes.push_back("");
 
-	// Since Godot currently lacks a shader reflection mechanism to persist the name of the bindings in the shader cache and
+	// Since Redot currently lacks a shader reflection mechanism to persist the name of the bindings in the shader cache and
 	// there's also no mechanism to compile the shaders offline, the bindings are created manually by looking at the GLSL
 	// files included in FSR2 and mapping the macro bindings (#define FSR2_BIND_*) to their respective implementation names.
 	//

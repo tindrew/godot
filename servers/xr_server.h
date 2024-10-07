@@ -2,11 +2,10 @@
 /*  xr_server.h                                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -199,7 +198,7 @@ public:
 	Transform3D get_hmd_transform();
 
 	/*
-		Interfaces are objects that 'glue' Godot to an AR or VR SDK such as the Oculus SDK, OpenVR, OpenHMD, etc.
+		Interfaces are objects that 'glue' Redot to an AR or VR SDK such as the Oculus SDK, OpenVR, OpenHMD, etc.
 	*/
 	void add_interface(const Ref<XRInterface> &p_interface);
 	void remove_interface(const Ref<XRInterface> &p_interface);
@@ -239,7 +238,7 @@ public:
 	// Many of these interfaces will also do a predictive sync which ensures we run at a steady framerate.
 	void pre_render();
 
-	// End-frame is called right after Godot has finished its rendering bits.
+	// End-frame is called right after Redot has finished its rendering bits.
 	void end_frame();
 
 	XRServer();

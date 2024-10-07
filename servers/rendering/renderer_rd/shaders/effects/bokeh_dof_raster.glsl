@@ -12,7 +12,7 @@ layout(location = 0) out vec2 uv_interp;
 
 void main() {
 	// old code, ARM driver bug on Mali-GXXx GPUs and Vulkan API 1.3.xxx
-	// https://github.com/godotengine/godot/pull/92817#issuecomment-2168625982
+	// https://github.com/redotengine/redot/pull/92817#issuecomment-2168625982
 	//vec2 base_arr[3] = vec2[](vec2(-1.0, -1.0), vec2(-1.0, 3.0), vec2(3.0, -1.0));
 	//gl_Position = vec4(base_arr[gl_VertexIndex], 0.0, 1.0);
 	//uv_interp = clamp(gl_Position.xy, vec2(0.0, 0.0), vec2(1.0, 1.0)) * 2.0; // saturate(x) * 2.0

@@ -2,11 +2,10 @@
 /*  rendering_device_graph.h                                              */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -39,7 +38,7 @@
 // even detrimental to performance. However, there are currently some known
 // cases where using them can solve problems that using singular memory
 // barriers does not, probably due to driver issues (see comment on PR #84976
-// https://github.com/godotengine/godot/pull/84976#issuecomment-1878566830).
+// https://github.com/redotengine/redot/pull/84976#issuecomment-1878566830).
 
 #define USE_BUFFER_BARRIERS 1
 
