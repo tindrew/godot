@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  godot_module_mbedtls_config.h                                         */
+/*  redot.h                                                               */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -28,37 +27,54 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_MODULE_MBEDTLS_CONFIG_H
-#define GODOT_MODULE_MBEDTLS_CONFIG_H
+/**
+ @file  redot.h
+ @brief ENet Redot header
+*/
 
-#include "platform_config.h"
+#ifndef __ENET_redot_H__
+#define __ENET_redot_H__
 
-#ifdef GODOT_MBEDTLS_INCLUDE_H
-
-// Allow platforms to customize the mbedTLS configuration.
-#include GODOT_MBEDTLS_INCLUDE_H
-
-#else
-
-// Include default mbedTLS config.
-#include <mbedtls/mbedtls_config.h>
-
-// Disable weak cryptography.
-#undef MBEDTLS_KEY_EXCHANGE_DHE_PSK_ENABLED
-#undef MBEDTLS_KEY_EXCHANGE_DHE_RSA_ENABLED
-#undef MBEDTLS_DES_C
-#undef MBEDTLS_DHM_C
-
-#if !(defined(__linux__) && defined(__aarch64__))
-// ARMv8 hardware AES operations. Detection only possible on linux.
-// May technically be supported on some ARM32 arches but doesn't seem
-// to be in our current Linux SDK's neon-fp-armv8.
-#undef MBEDTLS_AESCE_C
+#ifdef WINDOWS_ENABLED
+#include <stdint.h>
+#include <winsock2.h>
+#endif
+#ifdef UNIX_ENABLED
+#include <arpa/inet.h>
 #endif
 
-// Disable deprecated
-#define MBEDTLS_DEPRECATED_REMOVED
+#ifdef MSG_MAXIOVLEN
+#define ENET_BUFFER_MAXIMUM MSG_MAXIOVLEN
+#endif
 
-#endif // GODOT_MBEDTLS_INCLUDE_H
+typedef void *ENetSocket;
 
-#endif // GODOT_MODULE_MBEDTLS_CONFIG_H
+#define ENET_SOCKET_NULL NULL
+
+#define ENET_HOST_TO_NET_16(value) (htons(value)) /**< macro that converts host to net byte-order of a 16-bit value */
+#define ENET_HOST_TO_NET_32(value) (htonl(value)) /**< macro that converts host to net byte-order of a 32-bit value */
+
+#define ENET_NET_TO_HOST_16(value) (ntohs(value)) /**< macro that converts net to host byte-order of a 16-bit value */
+#define ENET_NET_TO_HOST_32(value) (ntohl(value)) /**< macro that converts net to host byte-order of a 32-bit value */
+
+typedef struct
+{
+	void *data;
+	size_t dataLength;
+} ENetBuffer;
+
+#define ENET_CALLBACK
+
+#define ENET_API extern
+
+typedef void ENetSocketSet;
+
+typedef struct _ENetAddress
+{
+   uint8_t host[16];
+   uint16_t port;
+   uint8_t wildcard;
+} ENetAddress;
+#define enet_host_equal(host_a, host_b) (memcmp(&host_a, &host_b,16) == 0)
+
+#endif /* __ENET_redot_H__ */

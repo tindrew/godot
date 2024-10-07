@@ -51,11 +51,11 @@
 
 #define FSR2_BIND_CB_FSR2                                    18
 
-// -- GODOT start --
-#if FFX_FSR2_OPTION_GODOT_DERIVE_INVALID_MOTION_VECTORS
+// -- redot start --
+#if FFX_FSR2_OPTION_redot_DERIVE_INVALID_MOTION_VECTORS
 #define FSR2_BIND_SRV_INPUT_DEPTH                            5
 #endif
-// -- GODOT end --
+// -- redot end --
 
 #include "ffx_fsr2_callbacks_glsl.h"
 #include "ffx_fsr2_common.h"

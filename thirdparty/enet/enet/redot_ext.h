@@ -1,5 +1,5 @@
-#ifndef __ENET_GODOT_EXT_H__
-#define __ENET_GODOT_EXT_H__
+#ifndef __ENET_redot_EXT_H__
+#define __ENET_redot_EXT_H__
 
 /** Sets the host field in the address parameter from ip struct.
     @param address destination to store resolved address
@@ -15,4 +15,4 @@ ENET_API int enet_host_dtls_server_setup (ENetHost *, void *);
 ENET_API int enet_host_dtls_client_setup (ENetHost *, const char *, void *);
 ENET_API void enet_host_refuse_new_connections (ENetHost *, int);
 
-#endif // __ENET_GODOT_EXT_H__
+#endif // __ENET_redot_EXT_H__

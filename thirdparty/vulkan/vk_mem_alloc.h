@@ -122,7 +122,7 @@ for user-defined purpose without allocating any real GPU memory.
 See documentation chapter: \ref statistics.
 */
 
-#include "drivers/vulkan/godot_vulkan.h"
+#include "drivers/vulkan/redot_vulkan.h"
 
 #ifdef __cplusplus
 extern "C" {

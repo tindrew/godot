@@ -29,7 +29,7 @@ Files extracted from upstream source:
 - `shaders` folder from `src/ffx-fsr2-api` with `ffx_*.hlsl` files excluded
 - `LICENSE.txt`
 
-Apply `patches` to add the new options required by Godot and general compilation fixes.
+Apply `patches` to add the new options required by Redot and general compilation fixes.
 
 
 ## angle
@@ -146,8 +146,8 @@ Files extracted from upstream source:
 - `include/D3D12MemAlloc.h`
 - `LICENSE.txt`, `NOTICES.txt`
 
-Important: Some files have Godot-made changes for use with MinGW.
-They are marked with `/* GODOT start */` and `/* GODOT end */`
+Important: Some files have Redot-made changes for use with MinGW.
+They are marked with `/* redot start */` and `/* redot end */`
 comments.
 
 
@@ -163,8 +163,8 @@ Files extracted from upstream source:
 - `include/dxguids/*.h`
 - `LICENSE`
 
-Important: Some files have Godot-made changes for use with MinGW.
-They are marked with `/* GODOT start */` and `/* GODOT end */`
+Important: Some files have Redot-made changes for use with MinGW.
+They are marked with `/* redot start */` and `/* redot end */`
 comments.
 
 
@@ -188,16 +188,16 @@ Files extracted from upstream source:
 
 Files extracted from upstream:
 
-- All `.cpp` files listed in `modules/raycast/godot_update_embree.py`
-- All header files in the directories listed in `modules/raycast/godot_update_embree.py`
-- All config files listed in `modules/raycast/godot_update_embree.py`
+- All `.cpp` files listed in `modules/raycast/redot_update_embree.py`
+- All header files in the directories listed in `modules/raycast/redot_update_embree.py`
+- All config files listed in `modules/raycast/redot_update_embree.py`
 - `LICENSE.txt`
 
-The `modules/raycast/godot_update_embree.py` script can be used to pull the
+The `modules/raycast/redot_update_embree.py` script can be used to pull the
 relevant files from the latest Embree release and apply some automatic changes.
 
 Some changes have been made in order to remove exceptions and fix minor build errors.
-They are marked with `// -- GODOT start --` and `// -- GODOT end --`
+They are marked with `// -- redot start --` and `// -- redot end --`
 comments. Apply the patches in the `patches/` folder when syncing on newer upstream
 commits.
 
@@ -215,12 +215,12 @@ Files extracted from upstream source:
 - `LICENSE` file
 
 Important: `enet.h`, `host.c`, `protocol.c` have been slightly modified
-to be usable by Godot's socket implementation and allow IPv6 and DTLS.
+to be usable by Redot's socket implementation and allow IPv6 and DTLS.
 Apply the patches in the `patches/` folder when syncing on newer upstream
 commits.
 
-Three files (`godot.cpp`, `enet/godot.h`, `enet/godot_ext.h`) have been added to
-provide ENet socket implementation using Godot classes.
+Three files (`redot.cpp`, `enet/redot.h`, `enet/redot_ext.h`) have been added to
+provide ENet socket implementation using Redot classes.
 
 It is still possible to build against a system wide ENet but doing so will limit
 its functionality to IPv4 only.
@@ -414,7 +414,7 @@ Files extracted from upstream source:
 
 Files generated from upstream source:
 
-- The `icudt75l.dat` built with the provided `godot_data.json` config file (see
+- The `icudt75l.dat` built with the provided `redot_data.json` config file (see
   https://github.com/unicode-org/icu/blob/master/docs/userguide/icu_data/buildtool.md
   for instructions).
 
@@ -422,9 +422,9 @@ Files generated from upstream source:
   (replace `data` subfolder from the main source archive)
 2. Build ICU with default options: `./runConfigureICU {PLATFORM} && make`
 3. Reconfigure ICU with custom data config:
-   `ICU_DATA_FILTER_FILE={GODOT_SOURCE}/thirdparty/icu4c/godot_data.json ./runConfigureICU {PLATFORM} --with-data-packaging=common`
+   `ICU_DATA_FILTER_FILE={redot_SOURCE}/thirdparty/icu4c/redot_data.json ./runConfigureICU {PLATFORM} --with-data-packaging=common`
 4. Delete `data/out` folder and rebuild data: `cd data && rm -rf ./out && make`
-5. Copy `source/data/out/icudt75l.dat` to the `{GODOT_SOURCE}/thirdparty/icu4c/icudt75l.dat`
+5. Copy `source/data/out/icudt75l.dat` to the `{redot_SOURCE}/thirdparty/icu4c/icudt75l.dat`
 
 
 ## jpeg-compressor
@@ -468,7 +468,7 @@ Files extracted from upstream source:
 - `other_include/KHR/`
 - `utils/unused.h`
 
-Some Godot-specific changes are applied via patches included in the `patches` folder.
+Some Redot-specific changes are applied via patches included in the `patches` folder.
 
 
 ## libogg
@@ -536,7 +536,7 @@ Files extracted from upstream source:
 - `src/` and `sharpyuv/` except from `.am`, `.rc` and `.in` files
 - `AUTHORS`, `COPYING`, `PATENTS`
 
-Patch `godot-node-debug-fix.patch` workarounds shadowing of Godot's Node class
+Patch `redot-node-debug-fix.patch` workarounds shadowing of Redot's Node class
 in the MSVC debugger.
 
 
@@ -555,9 +555,9 @@ File extracted from upstream release tarball:
 - The `LICENSE` file (edited to keep only the Apache 2.0 variant)
 - Applied the patch `msvc-redeclaration-bug.diff` to fix a compilation error
   with some MSVC versions
-- Added 2 files `godot_core_mbedtls_platform.c` and `godot_core_mbedtls_config.h`
+- Added 2 files `redot_core_mbedtls_platform.c` and `redot_core_mbedtls_config.h`
   providing configuration for light bundling with core
-- Added the file `godot_module_mbedtls_config.h` to customize the build
+- Added the file `redot_module_mbedtls_config.h` to customize the build
   configuration when bundling the full library
 
 
@@ -591,7 +591,7 @@ Files extracted from upstream repository:
 - `mingw.shared_mutex.h`
 - `mingw.thread.h`
 
-Once copied, apply `godot.patch` (needed because Godot is built without exceptions
+Once copied, apply `redot.patch` (needed because Redot is built without exceptions
 and to avoid std:: replacements leak in Clang builds).
 
 
@@ -624,7 +624,7 @@ Files extracted from upstream source:
   `listdevices.c,minihttptestserver.c,miniupnpcmodule.c,upnpc.c,upnperrors.*,test*`
 - `LICENSE`
 
-The only modified file is `src/miniupnpcstrings.h`, which was created for Godot
+The only modified file is `src/miniupnpcstrings.h`, which was created for Redot
 (it is usually autogenerated by cmake). Bump the version number for miniupnpc in
 that file when upgrading.
 
@@ -641,14 +641,14 @@ Files extracted from the upstream source:
   `{crypt.h,ioapi.{c,h},unzip.{c,h},zip.{c,h}}`
   `MiniZip64_info.txt`
 
-Important: Some files have Godot-made changes for use in core/io.
-They are marked with `/* GODOT start */` and `/* GODOT end */`
+Important: Some files have Redot-made changes for use in core/io.
+They are marked with `/* redot start */` and `/* redot end */`
 comments and a patch is provided in the `patches` folder.
 
 
 ## misc
 
-Collection of single-file libraries used in Godot components.
+Collection of single-file libraries used in Redot components.
 
 - `bcdec.h`
   * Upstream: https://github.com/iOrange/bcdec
@@ -656,7 +656,7 @@ Collection of single-file libraries used in Godot components.
   * License: MIT
 - `clipper.{cpp,hpp}`
   * Upstream: https://sourceforge.net/projects/polyclipping
-  * Version: 6.4.2 (2017) + Godot changes (added optional exceptions handling)
+  * Version: 6.4.2 (2017) + Redot changes (added optional exceptions handling)
   * License: BSL-1.0
 - `cubemap_coeffs.h`
   * Upstream: https://research.activision.com/publications/archives/fast-filtering-of-reflection-probes
@@ -690,7 +690,7 @@ Collection of single-file libraries used in Godot components.
 - `polypartition.{cpp,h}`
   * Upstream: https://github.com/ivanfratric/polypartition (`src/polypartition.{cpp,h}`)
   * Version: git (7bdffb428b2b19ad1c43aa44c714dcc104177e84, 2021)
-  * Modifications: Change from STL to Godot types (see provided patch).
+  * Modifications: Change from STL to Redot types (see provided patch).
   * License: MIT
 - `qoa.h`
   * Upstream: https://github.com/phoboslab/qoa
@@ -834,10 +834,10 @@ Files extracted from upstream source:
 - All `.cpp` and `.h` files in the `src/` folder except for `Export.h` and `RVO.h`
 - `LICENSE`
 
-Important: Nearly all files have Godot-made changes and renames
+Important: Nearly all files have Redot-made changes and renames
 to make the 2D and 3D rvo libraries compatible with each other
 and solve conflicts and also enrich the feature set originally
-proposed by these libraries and better integrate them with Godot.
+proposed by these libraries and better integrate them with Redot.
 
 
 ## spirv-cross
@@ -872,7 +872,7 @@ Files extracted from upstream source:
 - `LICENSE`
 
 Some downstream changes have been made and are identified by
-`// -- GODOT begin --` and `// -- GODOT end --` comments.
+`// -- redot begin --` and `// -- redot end --` comments.
 They can be reapplied using the patches included in the `patches`
 folder, in order.
 
@@ -927,7 +927,7 @@ Files extracted from upstream source:
 - `LICENSE`
 
 Some downstream changes have been made and are identified by
-`// -- GODOT start --` and `// -- GODOT end --` comments.
+`// -- redot start --` and `// -- redot end --` comments.
 They can be reapplied using the patches included in the `vhacd`
 folder.
 
@@ -971,7 +971,7 @@ SDK release: https://github.com/KhronosGroup/Vulkan-Utility-Libraries/blob/main/
 
 `vk_mem_alloc.h` is taken from https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator
 Version: 3.1.0 (009ecd192c1289c7529bff248a16cfe896254816, 2024)
-`vk_mem_alloc.cpp` is a Godot file and should be preserved on updates.
+`vk_mem_alloc.cpp` is a Redot file and should be preserved on updates.
 
 Patches in the `patches` directory should be re-applied after updates.
 
@@ -1034,10 +1034,10 @@ Files extracted from upstream source:
 File extracted from upstream release tarball:
 
 - Run `cmake .` to generate `config.h` and `wslayver.h`
-  Contents might need tweaking for Godot, review diff
+  Contents might need tweaking for Redot, review diff
 - All `.c` and `.h` files from `lib/`
 - All `.h` in `lib/includes/wslay/` as `wslay/`
-- `wslay/wslay.h` has a small Godot addition to fix MSVC build
+- `wslay/wslay.h` has a small Redot addition to fix MSVC build
   See `patches/msvcfix.diff`
 - `COPYING`
 

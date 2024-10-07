@@ -22,9 +22,9 @@
 #pragma once
 
 #include <stdint.h>
-// -- GODOT start --
+// -- redot start --
 #include <stdlib.h>
-// -- GODOT end --
+// -- redot end --
 
 #if defined (FFX_GCC)
 /// FidelityFX exported functions

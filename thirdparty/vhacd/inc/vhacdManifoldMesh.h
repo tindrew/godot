@@ -19,9 +19,9 @@ All rights reserved.
 #include "vhacdSArray.h"
 #include "vhacdVector.h"
 
-// -- GODOT start --
+// -- redot start --
 #include <cstdint>
-// -- GODOT end --
+// -- redot end --
 
 namespace VHACD {
 class TMMTriangle;

@@ -7,11 +7,11 @@ index c98f61fa53..7f7a009a1e 100644
  #if defined(__EMSCRIPTEN__)
  #include <emscripten.h>
 +
-+// -- GODOT start --
++// -- redot start --
 +extern "C" {
-+extern int godot_js_os_hw_concurrency_get();
++extern int redot_js_os_hw_concurrency_get();
 +}
-+// -- GODOT end --
++// -- redot end --
  #endif
  
  namespace embree
@@ -34,9 +34,9 @@ index c98f61fa53..7f7a009a1e 100644
 -            return 1;
 -        }
 -    });
-+    // -- GODOT start --
-+    nThreads = godot_js_os_hw_concurrency_get();
-+    // -- GODOT end --
++    // -- redot start --
++    nThreads = redot_js_os_hw_concurrency_get();
++    // -- redot end --
  #else
      cpu_set_t set;
      if (pthread_getaffinity_np(pthread_self(), sizeof(set), &set) == 0)

@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  godot.h                                                               */
+/*  redot_core_mbedtls_config.h                                           */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -28,54 +27,33 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-/**
- @file  godot.h
- @brief ENet Godot header
-*/
+#ifndef redot_CORE_MBEDTLS_CONFIG_H
+#define redot_CORE_MBEDTLS_CONFIG_H
 
-#ifndef __ENET_GODOT_H__
-#define __ENET_GODOT_H__
+#include <limits.h>
 
-#ifdef WINDOWS_ENABLED
-#include <stdint.h>
-#include <winsock2.h>
+// For AES
+#define MBEDTLS_CIPHER_MODE_CBC
+#define MBEDTLS_CIPHER_MODE_CFB
+#define MBEDTLS_CIPHER_MODE_CTR
+#define MBEDTLS_CIPHER_MODE_OFB
+#define MBEDTLS_CIPHER_MODE_XTS
+
+#define MBEDTLS_AES_C
+#define MBEDTLS_BASE64_C
+#define MBEDTLS_CTR_DRBG_C
+#define MBEDTLS_ENTROPY_C
+#define MBEDTLS_MD5_C
+#define MBEDTLS_SHA1_C
+#define MBEDTLS_SHA256_C
+#define MBEDTLS_PLATFORM_ZEROIZE_ALT
+#define MBEDTLS_NO_DEFAULT_ENTROPY_SOURCES
+
+// This is only to pass a check in the mbedtls check_config.h header, none of
+// the files we include as part of the core build uses it anyway, we already
+// define MBEDTLS_PLATFORM_ZEROIZE_ALT which is the only relevant function.
+#if defined(__MINGW32__)
+#define MBEDTLS_PLATFORM_C
 #endif
-#ifdef UNIX_ENABLED
-#include <arpa/inet.h>
-#endif
 
-#ifdef MSG_MAXIOVLEN
-#define ENET_BUFFER_MAXIMUM MSG_MAXIOVLEN
-#endif
-
-typedef void *ENetSocket;
-
-#define ENET_SOCKET_NULL NULL
-
-#define ENET_HOST_TO_NET_16(value) (htons(value)) /**< macro that converts host to net byte-order of a 16-bit value */
-#define ENET_HOST_TO_NET_32(value) (htonl(value)) /**< macro that converts host to net byte-order of a 32-bit value */
-
-#define ENET_NET_TO_HOST_16(value) (ntohs(value)) /**< macro that converts net to host byte-order of a 16-bit value */
-#define ENET_NET_TO_HOST_32(value) (ntohl(value)) /**< macro that converts net to host byte-order of a 32-bit value */
-
-typedef struct
-{
-	void *data;
-	size_t dataLength;
-} ENetBuffer;
-
-#define ENET_CALLBACK
-
-#define ENET_API extern
-
-typedef void ENetSocketSet;
-
-typedef struct _ENetAddress
-{
-   uint8_t host[16];
-   uint16_t port;
-   uint8_t wildcard;
-} ENetAddress;
-#define enet_host_equal(host_a, host_b) (memcmp(&host_a, &host_b,16) == 0)
-
-#endif /* __ENET_GODOT_H__ */
+#endif // redot_CORE_MBEDTLS_CONFIG_H

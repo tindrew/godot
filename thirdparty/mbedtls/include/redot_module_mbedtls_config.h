@@ -1,12 +1,11 @@
 /**************************************************************************/
-/*  godot_core_mbedtls_config.h                                           */
+/*  redot_module_mbedtls_config.h                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -28,33 +27,37 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef GODOT_CORE_MBEDTLS_CONFIG_H
-#define GODOT_CORE_MBEDTLS_CONFIG_H
+#ifndef redot_MODULE_MBEDTLS_CONFIG_H
+#define redot_MODULE_MBEDTLS_CONFIG_H
 
-#include <limits.h>
+#include "platform_config.h"
 
-// For AES
-#define MBEDTLS_CIPHER_MODE_CBC
-#define MBEDTLS_CIPHER_MODE_CFB
-#define MBEDTLS_CIPHER_MODE_CTR
-#define MBEDTLS_CIPHER_MODE_OFB
-#define MBEDTLS_CIPHER_MODE_XTS
+#ifdef redot_MBEDTLS_INCLUDE_H
 
-#define MBEDTLS_AES_C
-#define MBEDTLS_BASE64_C
-#define MBEDTLS_CTR_DRBG_C
-#define MBEDTLS_ENTROPY_C
-#define MBEDTLS_MD5_C
-#define MBEDTLS_SHA1_C
-#define MBEDTLS_SHA256_C
-#define MBEDTLS_PLATFORM_ZEROIZE_ALT
-#define MBEDTLS_NO_DEFAULT_ENTROPY_SOURCES
+// Allow platforms to customize the mbedTLS configuration.
+#include redot_MBEDTLS_INCLUDE_H
 
-// This is only to pass a check in the mbedtls check_config.h header, none of
-// the files we include as part of the core build uses it anyway, we already
-// define MBEDTLS_PLATFORM_ZEROIZE_ALT which is the only relevant function.
-#if defined(__MINGW32__)
-#define MBEDTLS_PLATFORM_C
+#else
+
+// Include default mbedTLS config.
+#include <mbedtls/mbedtls_config.h>
+
+// Disable weak cryptography.
+#undef MBEDTLS_KEY_EXCHANGE_DHE_PSK_ENABLED
+#undef MBEDTLS_KEY_EXCHANGE_DHE_RSA_ENABLED
+#undef MBEDTLS_DES_C
+#undef MBEDTLS_DHM_C
+
+#if !(defined(__linux__) && defined(__aarch64__))
+// ARMv8 hardware AES operations. Detection only possible on linux.
+// May technically be supported on some ARM32 arches but doesn't seem
+// to be in our current Linux SDK's neon-fp-armv8.
+#undef MBEDTLS_AESCE_C
 #endif
 
-#endif // GODOT_CORE_MBEDTLS_CONFIG_H
+// Disable deprecated
+#define MBEDTLS_DEPRECATED_REMOVED
+
+#endif // redot_MBEDTLS_INCLUDE_H
+
+#endif // redot_MODULE_MBEDTLS_CONFIG_H

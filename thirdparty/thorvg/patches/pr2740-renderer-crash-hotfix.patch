@@ -6,7 +6,7 @@ Subject: [PATCH] renderer: hotfix a crash
 prevent a nullptr memory access
 regression by f5337015e971d24379d2ee664895503ab8945e13
 
-issue: https://github.com/godotengine/godot/issues/97078
+issue: https://github.com/redotengine/redot/issues/97078
 ---
  src/renderer/tvgShape.h                  | 6 ++++--
  2 files changed, 4 insertions(+), 4 deletions(-)

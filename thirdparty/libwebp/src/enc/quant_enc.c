@@ -556,10 +556,10 @@ static void AddScore(VP8ModeScore* WEBP_RESTRICT const dst,
 //------------------------------------------------------------------------------
 // Performs trellis-optimized quantization.
 
-// -- GODOT start --
-// Prevents Visual Studio debugger from using this Node struct in place of the Godot Node class.
+// -- redot start --
+// Prevents Visual Studio debugger from using this Node struct in place of the Redot Node class.
 #define Node Node_libwebp_quant
-// -- GODOT end --
+// -- redot end --
 
 // Trellis node
 typedef struct {
