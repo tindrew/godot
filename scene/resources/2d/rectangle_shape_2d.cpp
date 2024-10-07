@@ -2,11 +2,10 @@
 /*  rectangle_shape_2d.cpp                                                */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
-/* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
-/* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
+/* Copyright (c) 2014-present Redot Engine contributors (see AUTHORS.md). */
 /*                                                                        */
 /* Permission is hereby granted, free of charge, to any person obtaining  */
 /* a copy of this software and associated documentation files (the        */
@@ -39,7 +38,7 @@ void RectangleShape2D::_update_shape() {
 
 #ifndef DISABLE_DEPRECATED
 bool RectangleShape2D::_set(const StringName &p_name, const Variant &p_value) {
-	if (p_name == "extents") { // Compatibility with Godot 3.x.
+	if (p_name == "extents") { // Compatibility with Redot 3.x.
 		// Convert to `size`, twice as big.
 		set_size((Size2)p_value * 2);
 		return true;
@@ -48,7 +47,7 @@ bool RectangleShape2D::_set(const StringName &p_name, const Variant &p_value) {
 }
 
 bool RectangleShape2D::_get(const StringName &p_name, Variant &r_property) const {
-	if (p_name == "extents") { // Compatibility with Godot 3.x.
+	if (p_name == "extents") { // Compatibility with Redot 3.x.
 		// Convert to `extents`, half as big.
 		r_property = size / 2;
 		return true;
