@@ -28,7 +28,7 @@ if (
     or file_contents.find("Aborted (core dumped)") != -1
     or file_contents.find("terminate called without an active exception") != -1
 ):
-    print("FATAL ERROR: Godot has been crashed.")
+    print("FATAL ERROR: Redot has been crashed.")
     sys.exit(52)
 
 # Finding memory leaks in Godot is quite difficult, because we need to take into

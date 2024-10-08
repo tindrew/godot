@@ -55,6 +55,7 @@ skip = """\
 	*.pot,
 	*.rc,
 	AUTHORS.md,
+	REDOT_AUTHORS.md,
 	COPYRIGHT.txt,
 	core/input/gamecontrollerdb.txt,
 	core/string/locales.h,

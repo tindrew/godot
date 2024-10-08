@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -169,7 +171,7 @@ void AudioEffectRecord::ensure_thread_stopped() {
 void AudioEffectRecord::set_recording_active(bool p_record) {
 	if (p_record) {
 		if (current_instance.is_null()) {
-			WARN_PRINT("Recording should not be set as active before Godot has initialized.");
+			WARN_PRINT("Recording should not be set as active before Redot has initialized.");
 			return;
 		}
 		ensure_thread_stopped();

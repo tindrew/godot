@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -122,7 +124,7 @@ void OpenXRDebugUtilsExtension::on_instance_created(const XrInstance p_instance)
 			ERR_PRINT("OpenXR: Failed to create debug callback [" + OpenXRAPI::get_singleton()->get_error_string(result) + "]");
 		}
 
-		set_object_name(XR_OBJECT_TYPE_INSTANCE, uint64_t(p_instance), "Main Godot OpenXR Instance");
+		set_object_name(XR_OBJECT_TYPE_INSTANCE, uint64_t(p_instance), "Main Redot OpenXR Instance");
 	}
 }
 
