@@ -1,3 +1,4 @@
+
 // Copyright 2011 Google Inc. All Rights Reserved.
 //
 // Use of this source code is governed by a BSD-style license
@@ -556,10 +557,10 @@ static void AddScore(VP8ModeScore* WEBP_RESTRICT const dst,
 //------------------------------------------------------------------------------
 // Performs trellis-optimized quantization.
 
-// -- GODOT start --
-// Prevents Visual Studio debugger from using this Node struct in place of the Godot Node class.
+// -- REDOT start --
+// Prevents Visual Studio debugger from using this Node struct in place of the Redot Node class.
 #define Node Node_libwebp_quant
-// -- GODOT end --
+// -- REDOT end --
 
 // Trellis node
 typedef struct {
@@ -1401,3 +1402,4 @@ int VP8Decimate(VP8EncIterator* WEBP_RESTRICT const it,
   VP8SetSkip(it, is_skipped);
   return is_skipped;
 }
+
