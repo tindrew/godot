@@ -176,7 +176,7 @@ ScrollContainer *EditorAbout::_populate_list(const String &p_name, const List<St
 }
 
 EditorAbout::EditorAbout() {
-	set_title(TTR("About"));
+	set_title(TTR("Thanks from the Redot community!"));
 	set_hide_on_ok(true);
 
 	VBoxContainer *vbc = memnew(VBoxContainer);

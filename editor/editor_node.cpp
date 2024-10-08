@@ -7427,7 +7427,7 @@ EditorNode::EditorNode() {
 	help_menu->add_separator();
 	if (!global_menu || !OS::get_singleton()->has_feature("macos")) {
 		// On macOS  "Quit" and "About" options are in the "app" menu.
-		help_menu->add_icon_shortcut(theme->get_icon(SNAME("Godot"), EditorStringName(EditorIcons)), ED_SHORTCUT_AND_COMMAND("editor/about", TTR("About")), HELP_ABOUT);
+		help_menu->add_icon_shortcut(theme->get_icon(SNAME("Godot"), EditorStringName(EditorIcons)), ED_SHORTCUT_AND_COMMAND("editor/about", TTR("About Engine...")), HELP_ABOUT);
 	}
 	help_menu->add_icon_shortcut(theme->get_icon(SNAME("Heart"), EditorStringName(EditorIcons)), ED_SHORTCUT_AND_COMMAND("editor/support_development", TTR("Support Godot Development")), HELP_SUPPORT_GODOT_DEVELOPMENT);
 
