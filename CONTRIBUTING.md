@@ -114,7 +114,7 @@ and thus bring the oil bath to supercritical liquid conditions, thus causing
 unwanted side effects in the physics engine.
 
 By fixing the regulation system via an added binding to the internal feature,
-this commit now ensures that Godot will not go past the ebullition temperature
+this commit now ensures that Redot will not go past the ebullition temperature
 of cooking oil under normal atmospheric conditions.
 ```
 
