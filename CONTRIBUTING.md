@@ -24,9 +24,7 @@ Redot project which reproduces the issue, with no unnecessary files included.
 Be sure to not include the `.godot` folder in the archive to save space.
 
 Make sure that the bug you are experiencing is reproducible in the latest Redot
-releases. You can find an overview of all historical Godot releases [on the website](https://godotengine.org/download/archive/)
-to confirm whether your current version is the latest one. It's worth testing
-against both the latest stable release and the latest dev snapshot for the next
+releases. It's worth testing against both the latest stable release and the latest dev snapshot for the next
 Redot release.
 
 If you run into a bug which wasn't present in an earlier Redot version (what we
@@ -183,10 +181,7 @@ or a bug you want to fix), the following channels can be used:
   existing issue about a topic you want to discuss, you can participate directly.
   If not, you can open a new issue. Please mind the guidelines outlined above
   for bug reporting.
-- [Feature proposals](https://github.com/Redot-Engine/redot-proposals/issues):
-  To propose a new feature, we have a dedicated issue tracker for that. Don't
-  hesitate to start by talking about your idea on the Redot Discord
-  to make sure that it makes sense in Redot's context.
+- Feature Proposals should be made on the [Redot Discord](https://discord.gg/redot) for now.
 
 Thanks for your interest in contributing!
 
