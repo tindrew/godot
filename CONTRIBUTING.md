@@ -3,7 +3,7 @@
 This document summarizes the most important points for people interested in
 contributing to Redot, especially via bug reports or pull requests.
 
-The Redot [Discord] (https://discord.gg/redot) documentation has a dedicated Contributing section
+The [Redot Discord](https://discord.gg/redot) documentation has a dedicated Contributing section
 which details these points and more, and is a recommended read.
 
 ## Table of contents
