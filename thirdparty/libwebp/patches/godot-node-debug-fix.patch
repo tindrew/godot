@@ -7,7 +7,7 @@ index 6d8202d277..8f9a3c8668 100644
  // Performs trellis-optimized quantization.
  
 +// -- GODOT start --
-+// Prevents Visual Studio debugger from using this Node struct in place of the Godot Node class.
++// Prevents Visual Studio debugger from using this Node struct in place of the Redot Node class.
 +#define Node Node_libwebp_quant
 +// -- GODOT end --
 +

@@ -2,8 +2,8 @@
 /*  test_marshalls.h                                                      */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
@@ -141,7 +141,7 @@ TEST_CASE("[Marshalls] Floating point double precision decoding") {
 }
 
 TEST_CASE("[Marshalls] C string encoding") {
-	char cstring[] = "Godot"; // 5 characters
+	char cstring[] = "Redot"; // 5 characters
 	uint8_t data[6];
 
 	int actual_size = encode_cstring(cstring, data);

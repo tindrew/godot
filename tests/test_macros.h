@@ -2,8 +2,8 @@
 /*  test_macros.h                                                         */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             GODOT ENGINE                               */
-/*                        https://godotengine.org                         */
+/*                             REDOT ENGINE                               */
+/*                        https://redotengine.org                         */
 /**************************************************************************/
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
@@ -48,7 +48,7 @@
 // The test case is marked as failed, but does not fail the entire test run.
 #define TEST_CASE_MAY_FAIL(name) TEST_CASE(name *doctest::may_fail())
 
-// Provide aliases to conform with Godot naming conventions (see error macros).
+// Provide aliases to conform with Redot naming conventions (see error macros).
 #define TEST_COND(cond, ...) DOCTEST_CHECK_FALSE_MESSAGE(cond, __VA_ARGS__)
 #define TEST_FAIL(cond, ...) DOCTEST_FAIL(cond, __VA_ARGS__)
 #define TEST_FAIL_COND(cond, ...) DOCTEST_REQUIRE_FALSE_MESSAGE(cond, __VA_ARGS__)
@@ -123,7 +123,7 @@ DOCTEST_STRINGIFY_VARIANT(PackedVector4Array);
 
 // Register test commands to be launched from the command-line.
 // For instance: REGISTER_TEST_COMMAND("gdscript-parser" &test_parser_func).
-// Example usage: `godot --test gdscript-parser`.
+// Example usage: `redot --test gdscript-parser`.
 
 typedef void (*TestFunc)();
 extern HashMap<String, TestFunc> *test_commands;
