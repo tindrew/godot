@@ -30,9 +30,10 @@ Godot had been developed by [Juan Linietsky](https://github.com/reduz) and
 for several years as an in-house engine, used to publish several work-for-hire
 titles.
 
-Redot is a fork therein of Godot, intending to improve upon Godot in order to fulfill its potential and contribute to the shared codebase of both via a more genuinely community-driven model than Godot.
-
-![Screenshot of a 3D scene in the Godot Engine editor](https://raw.githubusercontent.com/godotengine/godot-design/master/screenshots/editor_tps_demo_1920x1080.jpg)
+Redot is a fork of Godot, intending to improve upon Godot in order to fulfill its potential and contribute to the shared codebase of both through a more genuinely community-driven model than Godot.
+<p align="center">
+	<img src="screnshot.jpg" width="900" alt="Redot Engine screenshot!">
+</p>
 
 ## Getting the engine
 
