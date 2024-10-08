@@ -32,7 +32,7 @@ titles.
 
 Redot is a fork of Godot, intending to improve upon Godot in order to fulfill its potential and contribute to the shared codebase of both through a more genuinely community-driven model than Godot.
 <p align="center">
-	<img src="screnshot.jpg" width="900" alt="Redot Engine screenshot!">
+	<img src="screenshot.jpg" width="900" alt="Redot Engine screenshot!">
 </p>
 
 ## Getting the engine
