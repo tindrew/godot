@@ -39,7 +39,7 @@ Redot is a fork therein of Godot, intending to improve upon Godot in order to fu
 ### Binary downloads
 
 Official binaries for the Redot editor and the export templates will be found
-[on the Redot website](https://redotengine.org/download) once it's set up. They can be downloaded from the Action Artifacts summaries until then, though be warned that early test builds downloaded therein may be incomplete or buggy.
+[on the Redot website](https://redotengine.org/download) once it's set up. 
 
 ### Compiling from source
 
@@ -56,9 +56,9 @@ This document also includes guidelines for reporting bugs.
 
 ## Documentation and demos
 
-The official documentation is maintained by the Redot community in its own [GitHub repository](https://github.com/redotengine/redot-docs).
+The official documentation is maintained by the Redot community in its own [GitHub repository](https://github.com/Redot-Engine/redot-docs).
 
 The class reference is accessible from the Redot editor.
 
-We also maintain official demos in their own [GitHub repository](https://github.com/redotengine/redot-demo-projects)
-as well as a list of [awesome Redot community resources](https://github.com/redotengine/redot-awesome)
+We also maintain official demos in their own [GitHub repository](https://github.com/Redot-Engine/redot-demo-projects)
+as well as a list of [awesome Redot community resources](https://github.com/Redot-Engine/redot-awesome)
