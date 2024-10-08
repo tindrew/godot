@@ -30,7 +30,7 @@ Godot had been developed by [Juan Linietsky](https://github.com/reduz) and
 for several years as an in-house engine, used to publish several work-for-hire
 titles.
 
-Redot is a fork of Godot, intending to improve upon Godot in order to fulfill its potential and contribute to the shared codebase of both through a more genuinely community-driven model than Godot.
+Redot was forked from Godot in [October 2024](https://github.com/Redot-Engine/redot-engine/commit/a12e9de5dd831e1ce0c839f0420b278ef0a6aa5b), intending to improve upon Godot in order to fulfill its potential and contribute to the shared codebase of both through a more genuinely community-driven model than Godot.
 <p align="center">
 	<img src="screenshot.jpg" width="900" alt="Redot Engine screenshot!">
 </p>
@@ -41,8 +41,6 @@ Redot is a fork of Godot, intending to improve upon Godot in order to fulfill it
 
 Official binaries for the Redot editor and the export templates will be found
 [on the Redot website](https://redotengine.org/download) once it's set up.
-
-Early builds are available [here](https://github.com/wesamdev/redot-dev-builds/releases), with no guarantee on their usability or stability.
 
 ### Compiling from source
 
