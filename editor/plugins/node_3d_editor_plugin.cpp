@@ -6816,7 +6816,7 @@ void Node3DEditor::_menu_item_pressed(int p_option) {
 
 void Node3DEditor::_init_indicators() {
 	{
-		origin_enabled = true;
+		origin_enabled = false;
 		grid_enabled = true;
 
 		Ref<Shader> origin_shader = memnew(Shader);
@@ -6943,7 +6943,7 @@ void fragment() {
 		RS::get_singleton()->instance_geometry_set_flag(origin_instance, RS::INSTANCE_FLAG_USE_BAKED_LIGHT, false);
 
 		RenderingServer::get_singleton()->instance_geometry_set_cast_shadows_setting(origin_instance, RS::SHADOW_CASTING_SETTING_OFF);
-
+		RenderingServer::get_singleton()->instance_set_visible(origin_instance, false);
 		Ref<Shader> grid_shader = memnew(Shader);
 		grid_shader->set_code(R"(
 // 3D editor grid shader.
