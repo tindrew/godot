@@ -8449,7 +8449,7 @@ void Node3DEditor::clear() {
 		RenderingServer::get_singleton()->instance_set_visible(origin_instance, true);
 	}
 
-	view_menu->get_popup()->set_item_checked(view_menu->get_popup()->get_item_index(MENU_VIEW_ORIGIN), true);
+	view_menu->get_popup()->set_item_checked(view_menu->get_popup()->get_item_index(MENU_VIEW_ORIGIN), false);
 	for (int i = 0; i < 3; ++i) {
 		if (grid_enable[i]) {
 			grid_visible[i] = true;
