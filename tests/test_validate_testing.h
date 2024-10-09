@@ -2,8 +2,8 @@
 /*  test_validate_testing.h                                               */
 /**************************************************************************/
 /*                         This file is part of:                          */
-/*                             REDOT ENGINE                               */
-/*                        https://redotengine.org                         */
+/*                             GODOT ENGINE                               */
+/*                        https://godotengine.org                         */
 /**************************************************************************/
 /* Copyright (c) 2024-present Redot Engine contributors                   */
 /*                                          (see REDOT_AUTHORS.md)        */
