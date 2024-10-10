@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -104,7 +106,8 @@ void ProjectSettingsEditor::_update_advanced(bool p_is_advanced) {
 }
 
 void ProjectSettingsEditor::_advanced_toggled(bool p_button_pressed) {
-	EditorSettings::get_singleton()->set_project_metadata("project_settings", "advanced_mode", p_button_pressed);
+	EditorSettings::get_singleton()->set("_project_settings_advanced_mode", p_button_pressed);
+	EditorSettings::get_singleton()->save();
 	_update_advanced(p_button_pressed);
 }
 
@@ -768,8 +771,7 @@ ProjectSettingsEditor::ProjectSettingsEditor(EditorData *p_data) {
 	set_ok_button_text(TTR("Close"));
 	set_hide_on_ok(true);
 
-	bool use_advanced = EditorSettings::get_singleton()->get_project_metadata("project_settings", "advanced_mode", false);
-
+	bool use_advanced = EDITOR_DEF("_project_settings_advanced_mode", false);
 	if (use_advanced) {
 		advanced->set_pressed(true);
 	}

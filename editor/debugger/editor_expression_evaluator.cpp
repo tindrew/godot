@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -64,10 +66,7 @@ void EditorExpressionEvaluator::_evaluate() {
 		return;
 	}
 
-	Array expr_data;
-	expr_data.push_back(expression);
-	expr_data.push_back(editor_debugger->get_stack_script_frame());
-	editor_debugger->send_message("evaluate", expr_data);
+	editor_debugger->request_remote_evaluate(expression, editor_debugger->get_stack_script_frame());
 
 	expression_input->clear();
 }

@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -251,6 +253,13 @@ void ScriptEditorDebugger::request_remote_tree() {
 
 const SceneDebuggerTree *ScriptEditorDebugger::get_remote_tree() {
 	return scene_tree;
+}
+
+void ScriptEditorDebugger::request_remote_evaluate(const String &p_expression, int p_stack_frame) {
+	Array msg;
+	msg.push_back(p_expression);
+	msg.push_back(p_stack_frame);
+	_put_msg("evaluate", msg);
 }
 
 void ScriptEditorDebugger::update_remote_object(ObjectID p_obj_id, const String &p_prop, const Variant &p_value) {
@@ -1709,7 +1718,7 @@ void ScriptEditorDebugger::_item_menu_id_pressed(int p_option) {
 			// Construct a GitHub repository URL and open it in the user's default web browser.
 			// If the commit hash is available, use it for greater accuracy. Otherwise fall back to tagged release.
 			String git_ref = String(VERSION_HASH).is_empty() ? String(VERSION_NUMBER) + "-stable" : String(VERSION_HASH);
-			OS::get_singleton()->shell_open(vformat("https://github.com/godotengine/godot/blob/%s/%s#L%d",
+			OS::get_singleton()->shell_open(vformat("https://github.com/Redot-Engine/redot-engine/blob/%s/%s#L%d",
 					git_ref, file, line_number));
 		} break;
 		case ACTION_DELETE_BREAKPOINT: {

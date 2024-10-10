@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -60,6 +62,8 @@ struct HashMapElement {
 	HashMapElement(const TKey &p_key, const TValue &p_value) :
 			data(p_key, p_value) {}
 };
+
+bool _hashmap_variant_less_than(const Variant &p_left, const Variant &p_right);
 
 template <typename TKey, typename TValue,
 		typename Hasher = HashMapHasherDefault,
@@ -245,7 +249,7 @@ public:
 	_FORCE_INLINE_ uint32_t get_capacity() const { return hash_table_size_primes[capacity_index]; }
 	_FORCE_INLINE_ uint32_t size() const { return num_elements; }
 
-	/* Standard Godot Container API */
+	/* Standard Redot Container API */
 
 	bool is_empty() const {
 		return num_elements == 0;
@@ -269,6 +273,47 @@ public:
 		tail_element = nullptr;
 		head_element = nullptr;
 		num_elements = 0;
+	}
+
+	void sort() {
+		if (elements == nullptr || num_elements < 2) {
+			return; // An empty or single element HashMap is already sorted.
+		}
+		// Use insertion sort because we want this operation to be fast for the
+		// common case where the input is already sorted or nearly sorted.
+		HashMapElement<TKey, TValue> *inserting = head_element->next;
+		while (inserting != nullptr) {
+			HashMapElement<TKey, TValue> *after = nullptr;
+			for (HashMapElement<TKey, TValue> *current = inserting->prev; current != nullptr; current = current->prev) {
+				if (_hashmap_variant_less_than(inserting->data.key, current->data.key)) {
+					after = current;
+				} else {
+					break;
+				}
+			}
+			HashMapElement<TKey, TValue> *next = inserting->next;
+			if (after != nullptr) {
+				// Modify the elements around `inserting` to remove it from its current position.
+				inserting->prev->next = next;
+				if (next == nullptr) {
+					tail_element = inserting->prev;
+				} else {
+					next->prev = inserting->prev;
+				}
+				// Modify `before` and `after` to insert `inserting` between them.
+				HashMapElement<TKey, TValue> *before = after->prev;
+				if (before == nullptr) {
+					head_element = inserting;
+				} else {
+					before->next = inserting;
+				}
+				after->prev = inserting;
+				// Point `inserting` to its new surroundings.
+				inserting->prev = before;
+				inserting->next = after;
+			}
+			inserting = next;
+		}
 	}
 
 	TValue &get(const TKey &p_key) {

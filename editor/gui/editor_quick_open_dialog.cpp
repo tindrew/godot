@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -709,7 +711,7 @@ void QuickOpenResultContainer::_notification(int p_what) {
 			file_details_path->add_theme_color_override(SceneStringName(font_color), text_color);
 			no_results_label->add_theme_color_override(SceneStringName(font_color), text_color);
 
-			panel_container->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SNAME("QuickOpenBackgroundPanel"), EditorStringName(EditorStyles)));
+			panel_container->add_theme_style_override(SceneStringName(panel), get_theme_stylebox(SceneStringName(panel), SNAME("Tree")));
 
 			if (content_display_mode == QuickOpenDisplayMode::LIST) {
 				display_mode_toggle->set_icon(get_editor_theme_icon(SNAME("FileThumbnail")));

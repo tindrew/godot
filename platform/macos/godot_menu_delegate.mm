@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -102,7 +104,11 @@
 					} else {
 						// Otherwise redirect event to the engine.
 						if (DisplayServer::get_singleton()) {
-							[[[NSApplication sharedApplication] keyWindow] sendEvent:event];
+							if ([[NSApplication sharedApplication] keyWindow].sheet) {
+								[[[[NSApplication sharedApplication] keyWindow] sheetParent] sendEvent:event];
+							} else {
+								[[[NSApplication sharedApplication] keyWindow] sendEvent:event];
+							}
 						}
 					}
 

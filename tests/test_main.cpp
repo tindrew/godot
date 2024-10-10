@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -125,6 +127,7 @@
 #include "tests/scene/test_parallax_2d.h"
 #include "tests/scene/test_path_2d.h"
 #include "tests/scene/test_path_follow_2d.h"
+#include "tests/scene/test_physics_material.h"
 #include "tests/scene/test_sprite_frames.h"
 #include "tests/scene/test_style_box_texture.h"
 #include "tests/scene/test_theme.h"
@@ -141,6 +144,8 @@
 #include "tests/scene/test_color_picker.h"
 #include "tests/scene/test_graph_node.h"
 #include "tests/scene/test_option_button.h"
+#include "tests/scene/test_tab_bar.h"
+#include "tests/scene/test_tab_container.h"
 #include "tests/scene/test_text_edit.h"
 #include "tests/scene/test_tree.h"
 #endif // ADVANCED_GUI_DISABLED
@@ -188,7 +193,7 @@
 int test_main(int argc, char *argv[]) {
 	bool run_tests = true;
 
-	// Convert arguments to Godot's command-line.
+	// Convert arguments to Redot's command-line.
 	List<String> args;
 
 	for (int i = 0; i < argc; i++) {
@@ -227,10 +232,10 @@ int test_main(int argc, char *argv[]) {
 	}
 
 	if (test_args.size() > 0) {
-		// Convert Godot command line arguments back to standard arguments.
+		// Convert Redot command line arguments back to standard arguments.
 		char **doctest_args = new char *[test_args.size()];
 		for (uint32_t x = 0; x < test_args.size(); x++) {
-			// Operation to convert Godot string to non wchar string.
+			// Operation to convert Redot string to non wchar string.
 			CharString cs = test_args[x].utf8();
 			const char *str = cs.get_data();
 			// Allocate the string copy.
@@ -467,4 +472,4 @@ private:
 	}
 };
 
-REGISTER_LISTENER("GodotTestCaseListener", 1, GodotTestCaseListener);
+REGISTER_LISTENER("RedotTestCaseListener", 1, GodotTestCaseListener);

@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -86,6 +88,7 @@ class EditorResourcePicker : public HBoxContainer {
 	void _update_resource_preview(const String &p_path, const Ref<Texture2D> &p_preview, const Ref<Texture2D> &p_small_preview, ObjectID p_obj);
 
 	void _resource_selected();
+	void _resource_changed();
 	void _file_selected(const String &p_path);
 
 	void _resource_saved(Object *p_resource);
@@ -134,6 +137,7 @@ public:
 	void set_toggle_mode(bool p_enable);
 	bool is_toggle_mode() const;
 	void set_toggle_pressed(bool p_pressed);
+	bool is_toggle_pressed() const;
 
 	void set_editable(bool p_editable);
 	bool is_editable() const;

@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -264,7 +266,7 @@ public class GodotEditText extends EditText {
 				isModifiedKey;
 	}
 
-	boolean hasHardwareKeyboard() {
+	public boolean hasHardwareKeyboard() {
 		Configuration config = getResources().getConfiguration();
 		boolean hasHardwareKeyboardConfig = config.keyboard != Configuration.KEYBOARD_NOKEYS &&
 				config.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO;

@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -65,6 +67,7 @@ public:
 		Callable callable;
 		Ref<Texture2D> icon;
 		Ref<Shortcut> shortcut;
+		PopupMenu *submenu = nullptr;
 	};
 	HashMap<String, ContextMenuItem> context_menu_items;
 	HashMap<Ref<Shortcut>, Callable> context_menu_shortcuts;
@@ -80,6 +83,7 @@ public:
 	void add_menu_shortcut(const Ref<Shortcut> &p_shortcut, const Callable &p_callable);
 	void add_context_menu_item(const String &p_name, const Callable &p_callable, const Ref<Texture2D> &p_texture);
 	void add_context_menu_item_from_shortcut(const String &p_name, const Ref<Shortcut> &p_shortcut, const Ref<Texture2D> &p_texture);
+	void add_context_submenu_item(const String &p_name, PopupMenu *p_menu, const Ref<Texture2D> &p_texture);
 };
 
 VARIANT_ENUM_CAST(EditorContextMenuPlugin::ContextMenuSlot);

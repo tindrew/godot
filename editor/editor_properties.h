@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -683,10 +685,12 @@ class EditorPropertyResource : public EditorProperty {
 
 	void _open_editor_pressed();
 	void _update_preferred_shader();
+	bool _should_stop_editing() const;
 
 protected:
 	virtual void _set_read_only(bool p_read_only) override;
 	void _notification(int p_what);
+	static void _bind_methods();
 
 public:
 	virtual void update_property() override;

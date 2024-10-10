@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -292,6 +294,11 @@ void Dictionary::_ref(const Dictionary &p_from) const {
 void Dictionary::clear() {
 	ERR_FAIL_COND_MSG(_p->read_only, "Dictionary is in read-only state.");
 	_p->variant_map.clear();
+}
+
+void Dictionary::sort() {
+	ERR_FAIL_COND_MSG(_p->read_only, "Dictionary is in read-only state.");
+	_p->variant_map.sort();
 }
 
 void Dictionary::merge(const Dictionary &p_dictionary, bool p_overwrite) {

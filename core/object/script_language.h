@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -112,7 +114,7 @@ class Script : public Resource {
 	OBJ_SAVE_TYPE(Script);
 
 protected:
-	// Scripts are reloaded via the Script Editor when edited in Godot,
+	// Scripts are reloaded via the Script Editor when edited in Redot,
 	// the LSP server when edited in a connected external editor, or
 	// through EditorFileSystem::_update_script_documentation when updated directly on disk.
 	virtual bool editor_can_reload_from_file() override { return false; }

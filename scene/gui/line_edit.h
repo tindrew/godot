@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -207,9 +209,6 @@ private:
 		float base_scale = 1.0;
 	} theme_cache;
 
-	void _edit();
-	void _unedit();
-
 	void _close_ime_window();
 	void _update_ime_window_position();
 
@@ -265,6 +264,8 @@ protected:
 	virtual void gui_input(const Ref<InputEvent> &p_event) override;
 
 public:
+	void edit();
+	void unedit();
 	bool is_editing() const;
 
 	bool has_ime_text() const;

@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -275,7 +277,7 @@ public:
 	// they're just an uint32_t to "tag" a GPU command. These are only used for debugging and do not
 	// (or at least shouldn't) alter the execution behavior in any way.
 	//
-	// When a GPU crashes and Godot was built in dev or debug mode; Godot will dump what commands
+	// When a GPU crashes and Redot was built in dev or debug mode; Redot will dump what commands
 	// were being executed and what tag they were marked with.
 	// This makes narrowing down the cause of a crash easier. Note that a GPU can be executing
 	// multiple commands at the same time. It is also useful to identify data hazards.

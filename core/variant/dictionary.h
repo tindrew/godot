@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -64,6 +66,7 @@ public:
 	int size() const;
 	bool is_empty() const;
 	void clear();
+	void sort();
 	void merge(const Dictionary &p_dictionary, bool p_overwrite = false);
 	Dictionary merged(const Dictionary &p_dictionary, bool p_overwrite = false) const;
 

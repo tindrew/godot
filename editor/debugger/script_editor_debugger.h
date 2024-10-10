@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -253,6 +255,8 @@ public:
 
 	void request_remote_tree();
 	const SceneDebuggerTree *get_remote_tree();
+
+	void request_remote_evaluate(const String &p_expression, int p_stack_frame);
 
 	void start(Ref<RemoteDebuggerPeer> p_peer);
 	void stop();

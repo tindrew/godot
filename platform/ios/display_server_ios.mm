@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -44,6 +46,8 @@
 #include "core/io/file_access_pack.h"
 
 #import <sys/utsname.h>
+
+#import <GameController/GameController.h>
 
 static const float kDisplayServerIOSAcceleration = 1.f;
 
@@ -754,6 +758,14 @@ void DisplayServerIOS::virtual_keyboard_set_height(int height) {
 
 int DisplayServerIOS::virtual_keyboard_get_height() const {
 	return virtual_keyboard_height;
+}
+
+bool DisplayServerIOS::has_hardware_keyboard() const {
+	if (@available(iOS 14.0, *)) {
+		return [GCKeyboard coalescedKeyboard];
+	} else {
+		return false;
+	}
 }
 
 void DisplayServerIOS::clipboard_set(const String &p_text) {

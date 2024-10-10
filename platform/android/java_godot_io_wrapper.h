@@ -5,6 +5,8 @@
 /*                             GODOT ENGINE                               */
 /*                        https://godotengine.org                         */
 /**************************************************************************/
+/* Copyright (c) 2024-present Redot Engine contributors                   */
+/*                                          (see REDOT_AUTHORS.md)        */
 /* Copyright (c) 2014-present Godot Engine contributors (see AUTHORS.md). */
 /* Copyright (c) 2007-2014 Juan Linietsky, Ariel Manzur.                  */
 /*                                                                        */
@@ -58,6 +60,7 @@ private:
 	jmethodID _get_unique_id = 0;
 	jmethodID _show_keyboard = 0;
 	jmethodID _hide_keyboard = 0;
+	jmethodID _has_hardware_keyboard = 0;
 	jmethodID _set_screen_orientation = 0;
 	jmethodID _get_screen_orientation = 0;
 	jmethodID _get_system_dir = 0;
@@ -80,6 +83,7 @@ public:
 	Rect2i get_display_safe_area();
 	String get_unique_id();
 	bool has_vk();
+	bool has_hardware_keyboard();
 	void show_vk(const String &p_existing, int p_type, int p_max_input_length, int p_cursor_start, int p_cursor_end);
 	void hide_vk();
 	int get_vk_height();
