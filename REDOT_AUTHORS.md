@@ -25,10 +25,10 @@ name is available.
 
 ## Lead Developer
 
-    
+
 
 ## Developers
-	
+
 	Adam Vondersaar (trashguy)
 	Bioblaze Payne (Bioblaze)
 	ChocolateChipAussie (RadenTheFolf)
