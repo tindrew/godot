@@ -30,9 +30,11 @@ Godot had been developed by [Juan Linietsky](https://github.com/reduz) and
 for several years as an in-house engine, used to publish several work-for-hire
 titles.
 
-Redot was forked from Godot in [October 2024](https://github.com/Redot-Engine/redot-engine/commit/a12e9de5dd831e1ce0c839f0420b278ef0a6aa5b),
+Redot was forked from Godot in [September 2024](https://github.com/Redot-Engine/redot-engine/commit/a12e9de5dd831e1ce0c839f0420b278ef0a6aa5b),
 intending to improve upon Godot in order to fulfill its potential and contribute to the shared
 codebase of both through a more genuinely community-driven model than Godot.
+
+[Keatram - 2D Pixel Cross-Platform MMORPG by Keros](https://kaetram.com)
 <p align="center">
 	<img src="screenshot.jpg" width="900" alt="Redot Engine screenshot!">
 </p>
@@ -42,7 +44,7 @@ codebase of both through a more genuinely community-driven model than Godot.
 ### Binary downloads
 
 Official binaries for the Redot editor and the export templates will be found
-[on the Redot website](https://redotengine.org/download) once it's set up.
+[on the Redot website](https://redotengine.org/download) once it's set up and on the [GitHub page](https://github.com/Redot-Engine/redot-engine) until then.
 
 ### Compiling from source
 
@@ -57,6 +59,7 @@ developers. Please visit our [Discord server](https://discord.gg/redot)!
 To get started contributing to the project, see the [contributing guide](CONTRIBUTING.md).
 This document also includes guidelines for reporting bugs.
 
+Follow [Redot on Twitter](https://x.com/redotengine)!
 ## Documentation and demos
 
 The class reference is accessible from the Redot editor.

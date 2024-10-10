@@ -19,14 +19,27 @@ name is available.
 ## Project Founders
 
     Nicholai
-    Andevrs
+    Andevrs (tindrew)
     Red Otter
-    William
+    William (JohnnyThunder2)
 
 ## Lead Developer
 
-    Bioblaze Payne
+    
 
 ## Developers
-
+	
+	Adam Vondersaar (trashguy)
+	Bioblaze Payne (Bioblaze)
+	ChocolateChipAussie (RadenTheFolf)
+	Chris (Norrox)
+	Craptain (Adikhoff)
+	decryptedchaos
+	George L Albany (spartan322)
+	McDubh (mcdubhghlas)
+	Skogi (SkogiB)
     Starkium
+	Tekisasu-JohnK
+	verypleasentusername
+	zaftnotameni
+	Wesam Almasruri (wesamdev)

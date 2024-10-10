@@ -181,6 +181,7 @@ or a bug you want to fix), the following channels can be used:
   If not, you can open a new issue. Please mind the guidelines outlined above
   for bug reporting.
 - Feature Proposals should be made on the [Redot Discord](https://discord.gg/redot) for now.
+- [Redot](https://x.com/redotengine) on Twitter
 
 Thanks for your interest in contributing!
 
