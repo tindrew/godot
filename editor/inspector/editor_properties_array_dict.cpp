@@ -1603,8 +1603,8 @@ void EditorPropertyStruct::_property_changed(const String &p_property, Variant p
 		p_value = Variant(); // `EditorResourcePicker` resets to `Ref<Resource>()`. See GH-82716.
 	}
 
-	// Structs have value semantics: edit an independent copy and write it back whole. The adapter is
-	// the single source of truth, so update it before emitting to keep sibling fields consistent.
+	// Structs have value semantics: edit an independent copy and write it back whole. Keep the
+	// adapter's working copy synchronized before emitting so sibling fields observe the update.
 	Variant struct_value = object->get_struct();
 	bool valid = false;
 	struct_value.set_named(field, p_value, valid);
