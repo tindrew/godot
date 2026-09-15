@@ -311,9 +311,14 @@ void GodotStep2D::step(GodotSpace2D *p_space, real_t p_delta) {
 	// Pre-solve also prunes each island to its constraints that actually produced
 	// contacts, so afterwards we know how much real solving work there is.
 	uint32_t active_constraint_count = 0;
+	uint32_t active_island_count = 0; // islands still non-empty after pruning
 	for (uint32_t island_index = 0; island_index < island_count; ++island_index) {
 		_pre_solve_island(constraint_islands[island_index]);
-		active_constraint_count += constraint_islands[island_index].size();
+		const uint32_t island_size = constraint_islands[island_index].size();
+		active_constraint_count += island_size;
+		if (island_size > 0) {
+			++active_island_count;
+		}
 	}
 
 	// Record this step's counts so the next step can predict its setup work.
@@ -322,11 +327,12 @@ void GodotStep2D::step(GodotSpace2D *p_space, real_t p_delta) {
 	/* SOLVE CONSTRAINT ISLANDS */
 
 	// Solving distributes one task per island, so it can only parallelize with
-	// more than one island: a single big island (however many constraints) is
-	// one unit of work and would just pay pool overhead. Also gate on the actual
+	// more than one *non-empty* island: a single unit of work would just pay pool
+	// overhead. Pre-solve can prune islands to empty, so gate on the post-prune
+	// non-empty count, not the raw island_count. Also gate on the actual
 	// (post-prune) constraint count, so scenes with many broadphase pairs but few
 	// real contacts (fast, mostly-separated bodies) don't thread for nothing.
-	const bool solve_on_thread_pool = island_count > 1 && active_constraint_count >= min_constraints_for_threading;
+	const bool solve_on_thread_pool = active_island_count > 1 && active_constraint_count >= min_constraints_for_threading;
 
 	// WARNING: `_solve_island` modifies the constraint islands for optimization purpose,
 	// their content is not reliable after these calls and shouldn't be used anymore.
