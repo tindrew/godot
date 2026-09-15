@@ -50,6 +50,7 @@
 #include "core/object/class_db.h"
 #include "core/object/script_language.h"
 #include "core/templates/hash_map.h"
+#include "core/variant/struct.h"
 #include "scene/main/node.h"
 
 #if defined(TOOLS_ENABLED) && !defined(DISABLE_DEPRECATED)
@@ -6588,27 +6589,39 @@ Dictionary GDScriptAnalyzer::make_dictionary_from_element_datatype(const GDScrip
 Variant GDScriptAnalyzer::make_variable_default_value(GDScriptParser::VariableNode *p_variable) {
 	Variant result = Variant();
 
+	bool is_initializer_value_reduced = false;
 	if (p_variable->initializer) {
-		bool is_initializer_value_reduced = false;
 		Variant initializer_value = make_expression_reduced_value(p_variable->initializer, is_initializer_value_reduced);
 		if (is_initializer_value_reduced) {
 			result = initializer_value;
 		}
-	} else {
+	}
+
+	if (!is_initializer_value_reduced) {
 		GDScriptParser::DataType datatype = p_variable->get_datatype();
 		if (datatype.is_hard_type() && !datatype.is_nullable) {
-			if (datatype.kind == GDScriptParser::DataType::BUILTIN && datatype.builtin_type != Variant::OBJECT) {
-				if (datatype.builtin_type == Variant::ARRAY && datatype.has_container_element_type(0)) {
-					result = make_array_from_element_datatype(datatype.get_container_element_type(0));
-				} else if (datatype.builtin_type == Variant::DICTIONARY && datatype.has_container_element_types()) {
-					GDScriptParser::DataType key = datatype.get_container_element_type_or_variant(0);
-					GDScriptParser::DataType value = datatype.get_container_element_type_or_variant(1);
-					result = make_dictionary_from_element_datatype(key, value);
-				} else {
-					VariantInternal::initialize(&result, datatype.builtin_type);
+			if (datatype.kind == GDScriptParser::DataType::BUILTIN && datatype.builtin_type == Variant::STRUCT && datatype.struct_type != nullptr) {
+				// A struct-typed export can't be constant-folded from its `T.new()` initializer, so
+				// materialize the schema default (all fields at their declared defaults) instead.
+				// Without this the export value is NIL and the Inspector shows nothing to edit.
+				resolve_struct(datatype.struct_type);
+				if (datatype.struct_type->struct_info.is_valid()) {
+					result = Variant(Struct(datatype.struct_type->struct_info));
 				}
-			} else if (datatype.kind == GDScriptParser::DataType::ENUM) {
-				result = 0;
+			} else if (!p_variable->initializer) {
+				if (datatype.kind == GDScriptParser::DataType::BUILTIN && datatype.builtin_type != Variant::OBJECT) {
+					if (datatype.builtin_type == Variant::ARRAY && datatype.has_container_element_type(0)) {
+						result = make_array_from_element_datatype(datatype.get_container_element_type(0));
+					} else if (datatype.builtin_type == Variant::DICTIONARY && datatype.has_container_element_types()) {
+						GDScriptParser::DataType key = datatype.get_container_element_type_or_variant(0);
+						GDScriptParser::DataType value = datatype.get_container_element_type_or_variant(1);
+						result = make_dictionary_from_element_datatype(key, value);
+					} else {
+						VariantInternal::initialize(&result, datatype.builtin_type);
+					}
+				} else if (datatype.kind == GDScriptParser::DataType::ENUM) {
+					result = 0;
+				}
 			}
 		}
 	}
