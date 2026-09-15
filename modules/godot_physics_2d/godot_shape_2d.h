@@ -432,7 +432,7 @@ public:
 		Vector2 a = points[p_idx].pos;
 		p_idx++;
 		Vector2 b = points[p_idx == point_count ? 0 : p_idx].pos;
-		return p_xform.basis_xform(b - a).normalized().orthogonal();
+		return (p_xform.xform(b) - p_xform.xform(a)).normalized().orthogonal();
 	}
 
 	virtual PhysicsServer2D::ShapeType get_type() const override { return PhysicsServer2D::SHAPE_CONVEX_POLYGON; }
