@@ -256,20 +256,38 @@ void GodotStep2D::step(GodotSpace2D *p_space, real_t p_delta) {
 	const uint32_t min_constraints_for_threading = p_space->get_solver_min_constraints_for_threading();
 
 	// Setup distributes one task per constraint, but candidate count can greatly
-	// overestimate useful work when most pairs do not produce contacts. Estimate
-	// the current setup workload from the previous step's active/candidate ratio.
-	// If no usable history exists, fall back to the static candidate-count gate.
-	//
-	// Cross-multiply the ratio comparison to avoid division and truncation.
+	// overestimate useful work when most pairs do not produce contacts. Depending
+	// on the space's mode, gate threading on the raw candidate count (STATIC) or
+	// on an estimate of useful work: candidate count scaled by a recent step's
+	// active/candidate ratio (cross-multiplied to avoid division/truncation).
+	// With no usable history, all modes fall back to the static candidate gate.
 	const uint32_t total_constraint_count = all_constraints.size();
 	bool setup_on_thread_pool = false;
 	if (total_constraint_count > 1) {
-		const uint32_t prev_setup = p_space->get_solver_prev_setup_constraint_count();
-		if (prev_setup == 0) {
+		const int mode = p_space->get_solver_setup_threading_mode();
+		const uint32_t prev_setup = p_space->get_solver_prev_setup_at(0);
+		if (mode == PhysicsServer2D::SOLVER_SETUP_THREADING_STATIC || prev_setup == 0) {
 			setup_on_thread_pool = total_constraint_count >= min_constraints_for_threading;
 		} else {
-			const uint32_t prev_active = p_space->get_solver_prev_active_constraint_count();
-			setup_on_thread_pool = (uint64_t)total_constraint_count * prev_active >= (uint64_t)min_constraints_for_threading * prev_setup;
+			// PREDICTED uses just the previous step; PREDICTED_BIASED takes the
+			// max estimate over the last K steps, trading a costly false-serial
+			// (running a suddenly-dense setup serially) for a cheap false-thread
+			// across transitions, which neutralizes the alternating regression.
+			uint32_t window = 1;
+			if (mode == PhysicsServer2D::SOLVER_SETUP_THREADING_PREDICTED_BIASED) {
+				window = (uint32_t)p_space->get_solver_setup_prediction_window();
+			}
+			for (uint32_t back = 0; back < window; back++) {
+				const uint32_t hist_setup = p_space->get_solver_prev_setup_at(back);
+				if (hist_setup == 0) {
+					continue; // no history in this slot
+				}
+				const uint32_t hist_active = p_space->get_solver_prev_active_at(back);
+				if ((uint64_t)total_constraint_count * hist_active >= (uint64_t)min_constraints_for_threading * hist_setup) {
+					setup_on_thread_pool = true;
+					break;
+				}
+			}
 		}
 	}
 	if (setup_on_thread_pool) {

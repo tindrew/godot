@@ -2516,6 +2516,14 @@
 			Maximum broadphase pairing margin, in pixels. Each object's collision pairs are kept alive within a margin that scales with its size (up to this maximum), so large moving objects (such as big [Area2D] sensors) re-pair less often, improving performance in scenes with many large overlapping shapes. Small objects keep a proportionally tiny margin so dense scenes do not accumulate excess pairs. Set to [code]0[/code] to disable and use the legacy pair-count-based margin.
 			[b]Note:[/b] This value is read when a physics space is created, so changing it at runtime does not affect existing physics spaces.
 		</member>
+		<member name="physics/2d/solver/setup_prediction_window" type="int" setter="" getter="" default="2">
+			Number of past steps the [constant PhysicsServer2D.SOLVER_SETUP_THREADING_PREDICTED_BIASED] mode maxes its setup-work estimate over (the [i]K[/i] in max-over-K), clamped to 1–8. [code]1[/code] makes biased behave like plain predicted; larger values bias further toward threading. Only used by the biased mode. See [constant PhysicsServer2D.SPACE_PARAM_SOLVER_SETUP_PREDICTION_WINDOW].
+			[b]Note:[/b] This value is read when a physics space is created, so changing it at runtime does not affect existing physics spaces. Use [method PhysicsServer2D.space_set_param] to change it for an existing space.
+		</member>
+		<member name="physics/2d/solver/setup_threading_mode" type="int" setter="" getter="" default="1">
+			How the 2D solver decides whether to distribute constraint setup across the [WorkerThreadPool]: [code]0[/code] static (raw candidate count), [code]1[/code] predicted (default; scale by the previous step's active/candidate ratio), [code]2[/code] predicted biased (max over the last two steps, biased toward threading). See [enum PhysicsServer2D.SolverSetupThreadingMode] for the trade-offs, and [member physics/2d/solver/min_constraints_for_threading] for the threshold itself. Only affects setup; island solving always uses the actual post-prune work.
+			[b]Note:[/b] This value is read when a physics space is created, so changing it at runtime does not affect existing physics spaces. Use [method PhysicsServer2D.space_set_param] to change it for an existing space.
+		</member>
 		<member name="physics/2d/solver/solver_iterations" type="int" setter="" getter="" default="16">
 			Number of solver iterations for all contacts and constraints. The greater the number of iterations, the more accurate the collisions will be. However, a greater number of iterations requires more CPU power, which can decrease performance. See [constant PhysicsServer2D.SPACE_PARAM_SOLVER_ITERATIONS].
 		</member>
