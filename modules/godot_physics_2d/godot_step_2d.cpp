@@ -248,9 +248,26 @@ void GodotStep2D::step(GodotSpace2D *p_space, real_t p_delta) {
 
 	/* SETUP CONSTRAINTS / PROCESS COLLISIONS */
 
-	uint32_t total_constraint_count = all_constraints.size();
-	WorkerThreadPool::GroupID group_task = WorkerThreadPool::get_singleton()->add_template_group_task(this, &GodotStep2D::_setup_constraint, nullptr, total_constraint_count, -1, true, SNAME("Physics2DConstraintSetup"));
-	WorkerThreadPool::get_singleton()->wait_for_group_task_completion(group_task);
+	// Below this many constraints, running constraint setup and island solving
+	// through the WorkerThreadPool costs more than it saves. So, do it on the
+	// calling thread instead. Tunable per space
+	// (SPACE_PARAM_SOLVER_MIN_CONSTRAINTS_FOR_THREADING) and via the project
+	// setting physics/2d/solver/min_constraints_for_threading.
+	const uint32_t min_constraints_for_threading = p_space->get_solver_min_constraints_for_threading();
+
+	// Setup distributes one task per constraint, so it can only parallelize with
+	// more than one constraint. Avoid the thread pool when there is no parallel
+	// work to distribute.
+	const uint32_t total_constraint_count = all_constraints.size();
+	const bool setup_on_thread_pool = total_constraint_count > 1 && total_constraint_count >= min_constraints_for_threading;
+	if (setup_on_thread_pool) {
+		WorkerThreadPool::GroupID group_task = WorkerThreadPool::get_singleton()->add_template_group_task(this, &GodotStep2D::_setup_constraint, nullptr, total_constraint_count, -1, true, SNAME("Physics2DConstraintSetup"));
+		WorkerThreadPool::get_singleton()->wait_for_group_task_completion(group_task);
+	} else {
+		for (uint32_t i = 0; i < total_constraint_count; i++) {
+			_setup_constraint(i, nullptr);
+		}
+	}
 
 	{ //profile
 		profile_endtime = OS::get_singleton()->get_ticks_usec();
@@ -261,16 +278,33 @@ void GodotStep2D::step(GodotSpace2D *p_space, real_t p_delta) {
 	/* PRE-SOLVE CONSTRAINT ISLANDS */
 
 	// WARNING: This doesn't run on threads, because it involves thread-unsafe processing.
+	// Pre-solve also prunes each island to its constraints that actually produced
+	// contacts, so afterwards we know how much real solving work there is.
+	uint32_t active_constraint_count = 0;
 	for (uint32_t island_index = 0; island_index < island_count; ++island_index) {
 		_pre_solve_island(constraint_islands[island_index]);
+		active_constraint_count += constraint_islands[island_index].size();
 	}
 
 	/* SOLVE CONSTRAINT ISLANDS */
 
+	// Solving distributes one task per island, so it can only parallelize with
+	// more than one island: a single big island (however many constraints) is
+	// one unit of work and would just pay pool overhead. Also gate on the actual
+	// (post-prune) constraint count, so scenes with many broadphase pairs but few
+	// real contacts (fast, mostly-separated bodies) don't thread for nothing.
+	const bool solve_on_thread_pool = island_count > 1 && active_constraint_count >= min_constraints_for_threading;
+
 	// WARNING: `_solve_island` modifies the constraint islands for optimization purpose,
 	// their content is not reliable after these calls and shouldn't be used anymore.
-	group_task = WorkerThreadPool::get_singleton()->add_template_group_task(this, &GodotStep2D::_solve_island, nullptr, island_count, -1, true, SNAME("Physics2DConstraintSolveIslands"));
-	WorkerThreadPool::get_singleton()->wait_for_group_task_completion(group_task);
+	if (solve_on_thread_pool) {
+		WorkerThreadPool::GroupID group_task = WorkerThreadPool::get_singleton()->add_template_group_task(this, &GodotStep2D::_solve_island, nullptr, island_count, -1, true, SNAME("Physics2DConstraintSolveIslands"));
+		WorkerThreadPool::get_singleton()->wait_for_group_task_completion(group_task);
+	} else {
+		for (uint32_t island_index = 0; island_index < island_count; ++island_index) {
+			_solve_island(island_index, nullptr);
+		}
+	}
 
 	{ //profile
 		profile_endtime = OS::get_singleton()->get_ticks_usec();

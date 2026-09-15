@@ -280,6 +280,7 @@ public:
 		SPACE_PARAM_BODY_TIME_TO_SLEEP,
 		SPACE_PARAM_CONSTRAINT_DEFAULT_BIAS,
 		SPACE_PARAM_SOLVER_ITERATIONS,
+		SPACE_PARAM_SOLVER_MIN_CONSTRAINTS_FOR_THREADING,
 	};
 
 	virtual void space_set_param(RID p_space, SpaceParameter p_param, real_t p_value) = 0;
