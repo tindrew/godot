@@ -103,6 +103,13 @@ private:
 	int solver_iterations = 0;
 	int solver_min_constraints_for_threading = 256;
 
+	// Previous completed step's constraint counts, used to predict how much
+	// useful work this step's constraint setup will contain (candidate count is
+	// a poor proxy when most pairs don't actually collide). A setup count of 0
+	// falls back to the static candidate-count gate.
+	uint32_t solver_prev_setup_constraint_count = 0;
+	uint32_t solver_prev_active_constraint_count = 0;
+
 	real_t contact_recycle_radius = 0.0;
 	real_t contact_max_separation = 0.0;
 	real_t contact_max_allowed_penetration = 0.0;
@@ -165,6 +172,12 @@ public:
 
 	_FORCE_INLINE_ int get_solver_iterations() const { return solver_iterations; }
 	_FORCE_INLINE_ int get_solver_min_constraints_for_threading() const { return solver_min_constraints_for_threading; }
+	_FORCE_INLINE_ uint32_t get_solver_prev_setup_constraint_count() const { return solver_prev_setup_constraint_count; }
+	_FORCE_INLINE_ uint32_t get_solver_prev_active_constraint_count() const { return solver_prev_active_constraint_count; }
+	_FORCE_INLINE_ void set_solver_prev_constraint_counts(uint32_t p_setup, uint32_t p_active) {
+		solver_prev_setup_constraint_count = p_setup;
+		solver_prev_active_constraint_count = p_active;
+	}
 	_FORCE_INLINE_ real_t get_contact_recycle_radius() const { return contact_recycle_radius; }
 	_FORCE_INLINE_ real_t get_contact_max_separation() const { return contact_max_separation; }
 	_FORCE_INLINE_ real_t get_contact_max_allowed_penetration() const { return contact_max_allowed_penetration; }
