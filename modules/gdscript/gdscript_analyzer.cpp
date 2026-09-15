@@ -50,6 +50,7 @@
 #include "core/object/class_db.h"
 #include "core/object/script_language.h"
 #include "core/templates/hash_map.h"
+#include "core/variant/struct.h"
 #include "scene/main/node.h"
 
 #if defined(TOOLS_ENABLED) && !defined(DISABLE_DEPRECATED)
@@ -6585,31 +6586,65 @@ Dictionary GDScriptAnalyzer::make_dictionary_from_element_datatype(const GDScrip
 	return dictionary;
 }
 
+// True when `p_initializer` is a no-argument construction `T.new()` of the given struct type. Such a
+// call can't be constant-folded, but it is exactly the struct's schema default, so an export can
+// still show a meaningful default. Arg'd constructors and other unreducible initializers are left
+// out, matching how other types treat an initializer they can't fold (the export value stays unset).
+static bool _is_default_struct_constructor(const GDScriptParser::ExpressionNode *p_initializer, const GDScriptParser::DataType &p_struct_type) {
+	if (p_initializer == nullptr || p_initializer->type != GDScriptParser::Node::CALL) {
+		return false;
+	}
+	const GDScriptParser::CallNode *call = static_cast<const GDScriptParser::CallNode *>(p_initializer);
+	if (!call->arguments.is_empty() || call->function_name != SNAME("new")) {
+		return false;
+	}
+	const GDScriptParser::DataType call_type = call->get_datatype();
+	return call_type.is_set() && !call_type.is_meta_type &&
+			call_type.kind == GDScriptParser::DataType::BUILTIN && call_type.builtin_type == Variant::STRUCT &&
+			call_type.struct_type == p_struct_type.struct_type;
+}
+
+Variant GDScriptAnalyzer::make_struct_schema_default(GDScriptParser::StructNode *p_struct) {
+	resolve_struct(p_struct);
+	if (p_struct->struct_info.is_valid()) {
+		return Variant(Struct(p_struct->struct_info));
+	}
+	return Variant();
+}
+
 Variant GDScriptAnalyzer::make_variable_default_value(GDScriptParser::VariableNode *p_variable) {
 	Variant result = Variant();
+
+	GDScriptParser::DataType datatype = p_variable->get_datatype();
+	const bool is_struct = datatype.is_hard_type() && !datatype.is_nullable &&
+			datatype.kind == GDScriptParser::DataType::BUILTIN && datatype.builtin_type == Variant::STRUCT &&
+			datatype.struct_type != nullptr;
 
 	if (p_variable->initializer) {
 		bool is_initializer_value_reduced = false;
 		Variant initializer_value = make_expression_reduced_value(p_variable->initializer, is_initializer_value_reduced);
 		if (is_initializer_value_reduced) {
 			result = initializer_value;
+		} else if (is_struct && _is_default_struct_constructor(p_variable->initializer, datatype)) {
+			// `@export var s: T = T.new()`: not constant-foldable, but equal to the schema default.
+			result = make_struct_schema_default(datatype.struct_type);
 		}
-	} else {
-		GDScriptParser::DataType datatype = p_variable->get_datatype();
-		if (datatype.is_hard_type() && !datatype.is_nullable) {
-			if (datatype.kind == GDScriptParser::DataType::BUILTIN && datatype.builtin_type != Variant::OBJECT) {
-				if (datatype.builtin_type == Variant::ARRAY && datatype.has_container_element_type(0)) {
-					result = make_array_from_element_datatype(datatype.get_container_element_type(0));
-				} else if (datatype.builtin_type == Variant::DICTIONARY && datatype.has_container_element_types()) {
-					GDScriptParser::DataType key = datatype.get_container_element_type_or_variant(0);
-					GDScriptParser::DataType value = datatype.get_container_element_type_or_variant(1);
-					result = make_dictionary_from_element_datatype(key, value);
-				} else {
-					VariantInternal::initialize(&result, datatype.builtin_type);
-				}
-			} else if (datatype.kind == GDScriptParser::DataType::ENUM) {
-				result = 0;
+	} else if (datatype.is_hard_type() && !datatype.is_nullable) {
+		if (is_struct) {
+			// No initializer: use the struct's schema default (parallel to `int` -> 0, `Array` -> []).
+			result = make_struct_schema_default(datatype.struct_type);
+		} else if (datatype.kind == GDScriptParser::DataType::BUILTIN && datatype.builtin_type != Variant::OBJECT) {
+			if (datatype.builtin_type == Variant::ARRAY && datatype.has_container_element_type(0)) {
+				result = make_array_from_element_datatype(datatype.get_container_element_type(0));
+			} else if (datatype.builtin_type == Variant::DICTIONARY && datatype.has_container_element_types()) {
+				GDScriptParser::DataType key = datatype.get_container_element_type_or_variant(0);
+				GDScriptParser::DataType value = datatype.get_container_element_type_or_variant(1);
+				result = make_dictionary_from_element_datatype(key, value);
+			} else {
+				VariantInternal::initialize(&result, datatype.builtin_type);
 			}
+		} else if (datatype.kind == GDScriptParser::DataType::ENUM) {
+			result = 0;
 		}
 	}
 
